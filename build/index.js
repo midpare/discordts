@@ -8,7 +8,7 @@ var mongoose_1 = __importDefault(require("mongoose"));
 require("dotenv/config");
 var handler = new Array('commands', 'interactions', 'events', 'coinList');
 handler.forEach(function (element) {
-    require(__dirname + "/scr/handler/" + element)(client_1.default);
+    require(__dirname + "/handler/" + element)(client_1.default);
 });
 mongoose_1.default.connect(process.env.DB_URI || '');
 client_1.default.login(process.env.TOKEN);

@@ -5,7 +5,7 @@ import 'dotenv/config'
 const handler = new Array('commands', 'interactions', 'events', 'coinList')
 
 handler.forEach((element: string) => {
-  require(`${__dirname}/scr/handler/${element}`)(client)
+  require(`${__dirname}/handler/${element}`)(client)
 })
 
 

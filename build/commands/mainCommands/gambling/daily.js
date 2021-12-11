@@ -38,6 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '출석체크',
+    category: 'gambling',
+    use: '출석체크',
+    description: '하루에 한번 50,000 ~ 100,000만원의 돈을 획득합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
@@ -49,15 +52,13 @@ module.exports = {
                         return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                     case 1:
                         user = _b.sent();
-                        if (!user)
-                            return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')];
                         today = new Date();
                         date = '' + today.getFullYear() + today.getMonth() + today.getDate();
                         if (user.date == parseFloat(date))
                             return [2 /*return*/, msg.reply('오늘은 이미 받았습니다.')];
                         money = Math.floor(Math.random() * (50000) + 50000);
                         gambling_1.gambling.updateOne({ id: id }, { $inc: { money: money }, $set: { date: date } })
-                            .then(function () { return msg.reply(money.toLocaleString() + "\uC6D0\uC774 \uC9C0\uAE09\uB410\uC2B5\uB2C8\uB2E4!\n" + user.name + "\uC758 \uD604\uC7AC \uC794\uC561\uC740 " + user.money.toLocaleString() + " -> " + (user.money + money).toLocaleString() + " \uC6D0\uC785\uB2C8\uB2E4."); });
+                            .then(function () { return msg.reply(money.toLocaleString() + "\uC6D0\uC774 \uC9C0\uAE09\uB410\uC2B5\uB2C8\uB2E4!\n" + user.name + "\uC758 \uD604\uC7AC \uC794\uC561\uC740 " + user.money.toLocaleString() + "\uC6D0 -> " + (user.money + money).toLocaleString() + " \uC6D0\uC785\uB2C8\uB2E4."); });
                         return [2 /*return*/];
                 }
             });

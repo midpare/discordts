@@ -3,11 +3,12 @@ import { commandType } from "../../../typings/command";
 
 export = <commandType> {
   name: '대출',
+  category: 'gambling',
+  use: '대출 <돈>',
+  description: '최대 100만원까지의 돈을 대출합니다.',
   execute: async ({msg, args}) => {
     const id = msg.author.id
     const user = await gambling.findOne({id})
-    if (!user)
-      return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')
     if (!args[0]) 
       return msg.reply('정확한 금액을 입력해주시기바랍니다.')
     const debt = parseFloat(args[0])

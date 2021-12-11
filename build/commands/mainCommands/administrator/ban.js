@@ -2,6 +2,9 @@
 module.exports = {
     name: 'ban',
     aliases: ['밴', '벤', '차단'],
+    category: 'admin',
+    use: 'ban <유저> <사유>',
+    description: '서버에서 맨션한 <유저>를 차단합니다.',
     execute: function (_a) {
         var _b;
         var msg = _a.msg, args = _a.args;

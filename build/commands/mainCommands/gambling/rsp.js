@@ -38,6 +38,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: 'rsp',
+    aliases: ['가위바위보'],
+    category: 'gambling',
+    use: 'rsp <가위/바위/보> <돈>',
+    description: '<돈>을 걸고 가위바위보 도박을 진행합니다. (승리시: 2.5배, 비길시: 0.6배, 패배시: 0배)',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
@@ -49,8 +53,6 @@ module.exports = {
                         return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                     case 1:
                         user = _b.sent();
-                        if (!user)
-                            return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')];
                         if (user.gamLevel % 2 != 0)
                             return [2 /*return*/, msg.reply('이 도박을 할 수 있는 권한이 없습니다 \n!상점에서 도박권을 구매하십시오')];
                         money = parseFloat(args[1]);

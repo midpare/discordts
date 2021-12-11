@@ -8,6 +8,7 @@ const gamblingInfo = new Schema({
   debt: Number,
   gamLevel: Number,
   baseMoneyCoolTime: Number,
+  bankruptcy: String,
   stock: [{name: String, count: Number, money: Number}, {_id: false}]
 })
 

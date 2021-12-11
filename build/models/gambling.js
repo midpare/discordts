@@ -10,6 +10,7 @@ var gamblingInfo = new mongoose_1.Schema({
     debt: Number,
     gamLevel: Number,
     baseMoneyCoolTime: Number,
+    bankruptcy: String,
     stock: [{ name: String, count: Number, money: Number }, { _id: false }]
 });
 var gambling = (0, mongoose_1.model)('gambling', gamblingInfo);

@@ -41,6 +41,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var player_1 = __importDefault(require("../../../clients/player"));
 module.exports = {
     name: 'pause',
+    category: 'music',
+    use: 'pause',
+    description: '노래를 멈춥니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {

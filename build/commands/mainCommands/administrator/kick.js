@@ -2,6 +2,9 @@
 module.exports = {
     name: 'kick',
     aliases: ['킥', '강퇴'],
+    category: 'admin',
+    use: 'kick <유저> <사유>',
+    description: '서버에서 맨션한 <유저>를 강퇴합니다.',
     execute: function (_a) {
         var _b;
         var msg = _a.msg, args = _a.args;

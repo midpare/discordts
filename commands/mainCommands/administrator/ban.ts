@@ -3,6 +3,9 @@ import { commandType } from '../../../typings/command'
 export = <commandType> {
   name: 'ban',
   aliases: ['밴', '벤', '차단'],
+  category: 'admin',
+  use: 'ban <유저> <사유>',
+  description: '서버에서 맨션한 <유저>를 차단합니다.',
   execute: ({msg, args}) => {
     if(!msg.member.permissions.has('BAN_MEMBERS')) 
       return msg.reply('이 명령어를 사용할 권한이 없습니다.')

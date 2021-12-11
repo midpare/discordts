@@ -39,6 +39,9 @@ var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '기초자금',
     aliases: ['초기자금'],
+    category: 'gambling',
+    use: '기초자금',
+    description: '기초자금 25,500원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 60초',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
@@ -50,8 +53,6 @@ module.exports = {
                         return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                     case 1:
                         user = _b.sent();
-                        if (!user)
-                            return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다')];
                         if (user.money != 0 || user.stock[0])
                             return [2 /*return*/, msg.reply('보유하신 자산이 있어 기초자금을 지급할 수 없습니다.')];
                         date = new Date();

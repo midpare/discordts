@@ -39,6 +39,9 @@ var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '송금',
     aliases: ['이체', '돈보내기'],
+    category: 'gambling',
+    use: '송금 <유저> <돈>',
+    description: '자신의 돈을 맨션한 <유저>에게 <돈>만큼 송금합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
@@ -51,8 +54,6 @@ module.exports = {
                         return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                     case 1:
                         user = _c.sent();
-                        if (!user)
-                            return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다')];
                         target = (_b = msg.mentions.members) === null || _b === void 0 ? void 0 : _b.first();
                         if (!target)
                             return [2 /*return*/, msg.reply('송금할 유저를 맨션해주시기바랍니다.')];

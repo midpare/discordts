@@ -35,17 +35,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var discord_js_1 = require("discord.js");
 var school_1 = require("../../../models/school");
 var function_1 = require("../../../handler/function");
+var client_1 = __importDefault(require("../../../clients/client"));
 var apiKey = process.env.SCHOOL_API_KEY || '';
 var OOE = { '서울특별시': 'B10', '부산광역시': 'C10', '대구광역시': 'D10', '인천광역시': 'E10', '광주광역시': 'F10', '대전광역시': 'G10', '울산광역시': 'H10', '세종특별자치시': 'I10', '경기도': 'J10', '강원도': 'K10', '충청북도': 'M10', '충청남도': 'N10', '전라북도': 'P10', '전라남도': 'Q10', '경상북도': 'R10', '경상남도': 'S10', '제주특별자치도': 'T10' };
 module.exports = {
     name: '학교',
+    category: 'school',
+    use: '학교',
+    description: '학교 명령어',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
-            var embed, id, name, dateVariable, weekArr, week, findWeek, weekDay, user, _b, schoolName, grade, classNumber, text, cityCode, cityName, i, basicSchoolOptions, basicSchool, schoolCode, classOptions, classInfo, newSchoolInfo, timeTableNumber, timeTableDate, timeTableOptions, timeTableDateSplit, timeTableYear, timeTableMonth, timeTableDay, timeTable, i, mealNumber, mealDate, mealOptions, meal, mealDateSplit, mealYear, mealMonth, mealDay;
+            var embed, id, dateVariable, weekArr, week, findWeek, weekDay, user, commands, alias, _b, timeTableNumber, timeTableDate, timeTableOptions, timeTableDateSplit, timeTableYear, timeTableMonth, timeTableDay, timeTable, i, mealNumber, mealDate, mealOptions, meal, mealDateSplit, mealYear, mealMonth, mealDay;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
@@ -53,7 +60,6 @@ module.exports = {
                             return [2 /*return*/];
                         embed = new discord_js_1.MessageEmbed();
                         id = msg.author.id;
-                        name = msg.author.username;
                         dateVariable = new Date();
                         weekArr = ['일', '월', '화', '수', '목', '금', '토'];
                         week = dateVariable.getDay();
@@ -62,86 +68,26 @@ module.exports = {
                         return [4 /*yield*/, school_1.school.findOne({ id: id })];
                     case 1:
                         user = _c.sent();
+                        commands = client_1.default.subCommands.get('school');
+                        alias = client_1.default.subAliases.get('school');
+                        if (commands) {
+                            commands.get(args[0]).execute({ msg: msg, args: args });
+                            return [2 /*return*/];
+                        }
+                        else if (alias) {
+                            alias.get(args[0]).execute(msg, { args: args });
+                            return [2 /*return*/];
+                        }
                         _b = args[0];
                         switch (_b) {
-                            case '정보등록': return [3 /*break*/, 2];
-                            case '정보확인': return [3 /*break*/, 5];
-                            case weekDay + "\uC2DC\uAC04\uD45C": return [3 /*break*/, 6];
-                            case weekDay + "\uAE09\uC2DD" || weekDay + "\uAE09\uC2DD\uC815\uBCF4": return [3 /*break*/, 9];
+                            case weekDay + "\uC2DC\uAC04\uD45C": return [3 /*break*/, 2];
+                            case weekDay + "\uAE09\uC2DD" || weekDay + "\uAE09\uC2DD\uC815\uBCF4": return [3 /*break*/, 5];
                         }
-                        return [3 /*break*/, 12];
+                        return [3 /*break*/, 8];
                     case 2:
-                        if (!args[1] || !args[2] || !args[3] || !args[4])
-                            return [2 /*return*/, msg.reply('정확한 명령어를 입력해주시기바랍니다.\n!학교 정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>')];
-                        schoolName = args[2];
-                        grade = args[3].split('')[0];
-                        classNumber = void 0;
-                        text = args[4].split('');
-                        !Number.isInteger(text[3]) ? classNumber = text[0] : classNumber = text[0] + text[1];
-                        if (!Number.isInteger(parseFloat(grade)) || !Number.isInteger(parseFloat(classNumber)))
-                            return [2 /*return*/, msg.reply('정확한 학년반을 입력해주시기바랍니다. ex 1학년 2반')];
-                        cityCode = '';
-                        cityName = '';
-                        for (i in OOE) {
-                            if (args[1] == i) {
-                                cityCode = OOE[i];
-                                cityName = i;
-                            }
-                        }
-                        if (cityCode == '')
-                            return [2 /*return*/, msg.reply('정확한 시도위치를 입력해주시기바랍니다.')];
-                        basicSchoolOptions = {
-                            uri: ' https://open.neis.go.kr/hub/schoolInfo?Type=json&Size=999',
-                            qs: {
-                                KEY: apiKey,
-                                ATPT_OFCDC_SC_CODE: cityCode,
-                                SCHUL_NM: schoolName,
-                            }
-                        };
-                        return [4 /*yield*/, (0, function_1.requestGet)(basicSchoolOptions)];
-                    case 3:
-                        basicSchool = _c.sent();
-                        if (basicSchool.RESULT != undefined)
-                            return [2 /*return*/, msg.reply('입력한 정보와 일치하는 학교가 없습니다.')];
-                        schoolCode = basicSchool.schoolInfo[1].row[0].SD_SCHUL_CODE;
-                        classOptions = {
-                            uri: 'https://open.neis.go.kr/hub/classInfo?Type=json&Size=999',
-                            qs: {
-                                KEY: apiKey,
-                                ATPT_OFCDC_SC_CODE: cityCode,
-                                SD_SCHUL_CODE: schoolCode,
-                                AY: dateVariable.getFullYear().toString(),
-                                GRADE: grade
-                            }
-                        };
-                        return [4 /*yield*/, (0, function_1.requestGet)(classOptions)];
-                    case 4:
-                        classInfo = _c.sent();
-                        if (classInfo.RESULT != undefined || parseFloat(classNumber) >= classInfo.classInfo[1].row.length + 1)
-                            return [2 /*return*/, msg.reply('입력한 반 정보와 일치하는 반이 없습니다.')];
-                        if (!user) {
-                            newSchoolInfo = new school_1.school({ id: id, name: name, cityCode: cityCode, cityName: cityName, schoolCode: schoolCode, schoolName: schoolName, grade: grade, class: classNumber });
-                            newSchoolInfo.save()
-                                .then(function () { return msg.reply('성공적으로 유저 정보를 등록했습니다!'); });
-                        }
-                        else {
-                            school_1.school.updateOne({ id: id }, { $set: { cityCode: cityCode, cityName: cityName, schoolCode: schoolCode, schoolName: schoolName, grade: grade, class: classNumber } })
-                                .then(function () { return msg.reply('성공적으로 유저 정보를 업데이트했습니다!'); });
-                        }
-                        return [3 /*break*/, 12];
-                    case 5:
-                        if (!user)
-                            return [2 /*return*/, msg.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.')];
-                        embed
-                            .setTitle(msg.author.username + "\uB2D8\uC758 \uD559\uAD50\uC815\uBCF4")
-                            .setDescription(user.cityName + " " + user.schoolName + " " + user.grade + "\uD559\uB144 " + user.class + "\uBC18")
-                            .setColor('GREEN');
-                        msg.channel.send({ embeds: [embed] });
-                        return [3 /*break*/, 12];
-                    case 6:
                         timeTableNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
                         return [4 /*yield*/, (0, function_1.dateCal)(dateVariable, timeTableNumber)];
-                    case 7:
+                    case 3:
                         timeTableDate = _c.sent();
                         if (!user)
                             return [2 /*return*/, msg.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.')];
@@ -161,7 +107,7 @@ module.exports = {
                         timeTableMonth = timeTableDateSplit[4] + timeTableDateSplit[5];
                         timeTableDay = timeTableDateSplit[6] + timeTableDateSplit[7];
                         return [4 /*yield*/, (0, function_1.requestGet)(timeTableOptions)];
-                    case 8:
+                    case 4:
                         timeTable = _c.sent();
                         if (timeTable.misTimetable == undefined || timeTable.misTimetable[1].row[0].ITRT_CNTNT === '토요휴업일') {
                             embed
@@ -179,11 +125,11 @@ module.exports = {
                             embed.addField(i + 1 + "\uAD50\uC2DC", "" + timeTable.misTimetable[1].row[i].ITRT_CNTNT);
                         }
                         msg.channel.send({ embeds: [embed] });
-                        return [3 /*break*/, 12];
-                    case 9:
+                        return [3 /*break*/, 8];
+                    case 5:
                         mealNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
                         return [4 /*yield*/, (0, function_1.dateCal)(dateVariable, mealNumber)];
-                    case 10:
+                    case 6:
                         mealDate = _c.sent();
                         if (!user)
                             return [2 /*return*/, msg.reply("정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.")];
@@ -197,7 +143,7 @@ module.exports = {
                             }
                         };
                         return [4 /*yield*/, (0, function_1.requestGet)(mealOptions)];
-                    case 11:
+                    case 7:
                         meal = _c.sent();
                         mealDateSplit = mealDate.split('');
                         mealYear = mealDateSplit[0] + mealDateSplit[1] + mealDateSplit[2] + mealDateSplit[3];
@@ -209,8 +155,8 @@ module.exports = {
                             .addField('급식정보', meal.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/<br\/>/gi, '\n').replace(/[0-9.]/gi, ''))
                             .setColor('AQUA');
                         msg.channel.send({ embeds: [embed] });
-                        return [3 /*break*/, 12];
-                    case 12: return [2 /*return*/];
+                        return [3 /*break*/, 8];
+                    case 8: return [2 /*return*/];
                 }
             });
         });

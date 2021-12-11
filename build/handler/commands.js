@@ -41,29 +41,52 @@ var globPromise = (0, util_1.promisify)(glob_1.glob);
 module.exports = function (client) {
     return __awaiter(this, void 0, void 0, function () {
         var mainCommandFiles, subCommandFiles;
+        var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, globPromise(__dirname + "/../commands/mainCommands/**/*{.ts,.js}")];
                 case 1:
                     mainCommandFiles = _a.sent();
-                    mainCommandFiles.forEach(function (value) {
-                        var file = require(value);
-                        if (client.mainCommands.get(file.name))
-                            throw "command name duplicate! command path: " + value + ", command name: " + file.name;
-                        try {
-                            client.mainCommands.set(file.name, file);
-                            if (file.aliases) {
-                                file.aliases.forEach(function (element) {
-                                    if (client.mainAliases.get(element))
-                                        throw "command name duplicate! command path: " + value + ", command aliases: " + element;
-                                    client.mainAliases.set(element, file);
-                                });
+                    mainCommandFiles.forEach(function (value) { return __awaiter(_this, void 0, void 0, function () {
+                        var file;
+                        return __generator(this, function (_a) {
+                            file = require(value);
+                            if (client.mainCommands.get(file.name))
+                                throw "command name duplicate! command path: " + value + ", command name: " + file.name;
+                            try {
+                                if (file.aliases) {
+                                    file.aliases.forEach(function (element) {
+                                        if (client.mainAliases.get(element))
+                                            throw "command name duplicate! command path: " + value + ", command aliases: " + element;
+                                        client.mainAliases.set(element, file);
+                                    });
+                                }
+                                // if (file.subCategory) {
+                                //   const commands = new Map()
+                                //   const aliases = new Map()
+                                //   const categorydirection = await globPromise(`${__dirname}/../commands/subCommands/${file.subCategory}/**/*{.ts,.js}`)
+                                //   categorydirection.forEach((value) => {
+                                //     const categoryFiles = require(value)
+                                //     if (categoryFiles.aliases) {
+                                //       categoryFiles.aliases.forEach((element: string) => {
+                                //         aliases.set(element, categoryFiles)
+                                //       })
+                                //     }
+                                //     commands.set(categoryFiles.name, categoryFiles)
+                                //   })
+                                //   client.mainAliases.set(file.name, aliases)
+                                //   client.mainCommands.set(file.name, commands)
+                                // } else {
+                                client.mainCommands.set(file.name, file);
+                                // }
                             }
-                        }
-                        catch (error) {
-                            console.log(error);
-                        }
-                    });
+                            catch (error) {
+                                console.log(error);
+                            }
+                            return [2 /*return*/];
+                        });
+                    }); });
+                    setTimeout(function () { return console.log(client.mainAliases); }, 2000);
                     return [4 /*yield*/, globPromise(__dirname + "/../commands/subCommands/**/*{.ts,.js}")];
                 case 2:
                     subCommandFiles = _a.sent();

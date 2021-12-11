@@ -4,11 +4,12 @@ import { commandType } from "../../../typings/command";
 export = <commandType> {
   name: '빚갚기',
   aliases: ['돈갚기'],
+  category: 'gambling',
+  use: '빚갚기 <돈>',
+  description: '자신의 빚을 갚습니다.',
   execute: async ({msg, args}) => {
     const id = msg.author.id
     const user = await gambling.findOne({id})
-    if (!user)
-      return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')
     if (!args[0])
       return msg.reply('정확한 금액을 입력해주시기바랍니다.')
     const money = parseFloat(args[0])

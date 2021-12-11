@@ -3,12 +3,12 @@ import { commandType } from '../../../typings/command'
 
 export = <commandType> {
   name : '하프',
+  category: 'gambling',
+  use: '하프',
+  description: '자신의 돈의 절반을 걸고 도박을 진행합니다. (성공시: 2배, 실패시: 0배)',
   execute: async ({msg, args}) => {
     const id = msg.author.id
     const user = await gambling.findOne({id})
-
-    if (!user) 
-    return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')
   
     if (user.money == 0) 
       return msg.reply('돈이 없을때는 도박을 할 수 없습니다.')

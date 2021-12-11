@@ -1,0 +1,82 @@
+import { commandType } from "../../../typings/command";
+import { school } from '../../../models/school'
+import { schoolApiType } from '../../../typings/school'
+import { requestGet } from "../../../handler/function";
+import 'dotenv/config'
+const OOE: any = {'서울특별시' : 'B10', '부산광역시': 'C10', '대구광역시': 'D10', '인천광역시': 'E10', '광주광역시': 'F10', '대전광역시': 'G10', '울산광역시': 'H10', '세종특별자치시': 'I10', '경기도': 'J10', '강원도': 'K10', '충청북도' : 'M10', '충청남도': 'N10', '전라북도': 'P10', '전라남도': 'Q10', '경상북도': 'R10', '경상남도': 'S10', '제주특별자치도': 'T10'}
+
+export = <commandType> {
+  name: '정보등록',
+  category: 'school',
+  use: '정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
+  description: '자신의 학교정보를 등록해 학교 명령어 사용을 가능하게합니다.',
+  execute: async ({msg, args}) => {
+    if (!args[1] || !args[2] || !args[3] || !args[4])
+      return msg.reply('정확한 명령어를 입력해주시기바랍니다.\n!학교 정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>')
+
+    const apiKey = process.env.SCHOOL_API_KEY || ''
+    const id = msg.author.id
+    const name = msg.author.username
+    const user = await school.findOne({id})
+    const date = new Date()
+    const schoolName = args[2]
+    const grade = args[3].split('')[0]
+    let classNumber: string
+    const text = args[4].split('')
+    !Number.isInteger(text[3]) ? classNumber = text[0] : classNumber = text[0] + text[1]
+
+    if (!Number.isInteger(parseFloat(grade)) || !Number.isInteger(parseFloat(classNumber)))
+      return msg.reply('정확한 학년반을 입력해주시기바랍니다. ex 1학년 2반')
+
+    let cityCode: string = ''
+    let cityName: string = ''
+    for (let i in OOE) {
+      if (args[1] == i) {
+        cityCode = OOE[i]
+        cityName = i
+      }
+    }
+
+    if (cityCode == '')
+      return msg.reply('정확한 시도위치를 입력해주시기바랍니다.')
+
+    const basicSchoolOptions: schoolApiType = {
+      uri: ' https://open.neis.go.kr/hub/schoolInfo?Type=json&Size=999',
+      qs: {
+        KEY: apiKey,
+        ATPT_OFCDC_SC_CODE: cityCode,
+        SCHUL_NM: schoolName,
+      }
+    }
+
+    const basicSchool: any = await requestGet(basicSchoolOptions)
+    if (basicSchool.RESULT != undefined)
+      return msg.reply('입력한 정보와 일치하는 학교가 없습니다.')
+    const schoolCode = basicSchool.schoolInfo[1].row[0].SD_SCHUL_CODE 
+
+    const classOptions: schoolApiType = {
+      uri: 'https://open.neis.go.kr/hub/classInfo?Type=json&Size=999',
+      qs: {
+        KEY: apiKey,
+        ATPT_OFCDC_SC_CODE: cityCode,
+        SD_SCHUL_CODE: schoolCode,
+        AY: date.getFullYear().toString(),
+        GRADE: grade
+      }
+    }
+
+    const classInfo: any = await requestGet(classOptions)
+
+    if (classInfo.RESULT != undefined || parseFloat(classNumber) >= classInfo.classInfo[1].row.length + 1)
+      return msg.reply('입력한 반 정보와 일치하는 반이 없습니다.')
+
+    if (!user) {
+      const newSchoolInfo = new school({ id, name, cityCode, cityName, schoolCode, schoolName, grade, class: classNumber })
+      newSchoolInfo.save()
+      .then(() => msg.reply('성공적으로 유저 정보를 등록했습니다!'))
+    } else {
+      school.updateOne({id}, { $set: { cityCode, cityName, schoolCode, schoolName, grade, class: classNumber } })
+      .then(() => msg.reply('성공적으로 유저 정보를 업데이트했습니다!'))
+    }
+  }
+}

@@ -35,21 +35,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var warning_1 = require("../../../models/warning");
+var gambling_1 = require("../../../models/gambling");
+var function_1 = require("../../../handler/function");
 module.exports = {
-    name: "경고확인",
+    name: '파산',
+    category: 'gambling',
+    use: '파산',
+    description: '모든 돈과 빚을 0원으로 만들고 3일간 도박을 하지 못합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
-            var id, user;
+            var id, user, date, today;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         id = msg.author.id;
-                        return [4 /*yield*/, warning_1.warning.findOne({ id: id })];
+                        return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                     case 1:
                         user = _b.sent();
-                        msg.reply(user.name + " \uB2D8\uC758 \uACBD\uACE0 \uD69F\uC218\uB294 " + user.warning.toString() + "\uD68C \uC785\uB2C8\uB2E4.");
+                        date = new Date();
+                        return [4 /*yield*/, (0, function_1.dateCal)(date, 0)];
+                    case 2:
+                        today = _b.sent();
+                        gambling_1.gambling.updateOne({ id: id }, { $set: { bankruptcy: today, money: 0, debt: 0 } }).then(function () {
+                            msg.reply("\uC131\uACF5\uC801\uC73C\uB85C " + user.name + "\uB2D8\uC774 \uD30C\uC0B0\uD588\uC2B5\uB2C8\uB2E4!");
+                        });
                         return [2 /*return*/];
                 }
             });

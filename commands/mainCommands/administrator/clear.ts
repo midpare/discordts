@@ -3,6 +3,9 @@ import { commandType } from '../../../typings/command'
 export = <commandType> {
   name : "clear",
   aliases: ['클리어'],
+  category: 'admin',
+  use: 'clear <숫자>',
+  description: '메시지를 보낸 채팅방에 <숫자>만큼의 채팅을 지웁니다.',
   execute: ({msg, args}) => {
     const count = parseFloat(args[0])
     

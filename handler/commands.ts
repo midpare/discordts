@@ -5,23 +5,23 @@ const globPromise = promisify(glob)
 
 export  = async function (client: any) {
   const mainCommandFiles = await globPromise(`${__dirname}/../commands/mainCommands/**/*{.ts,.js}`)
-  mainCommandFiles.forEach((value) => {
+  mainCommandFiles.forEach(async (value) => {
     const file = require(value)
     if (client.mainCommands.get(file.name))
       throw `command name duplicate! command path: ${value}, command name: ${file.name}`
     try {
-      client.mainCommands.set(file.name, file)
       if (file.aliases) {
         file.aliases.forEach((element: string) => {
           if (client.mainAliases.get(element)) 
             throw `command name duplicate! command path: ${value}, command aliases: ${element}`
           client.mainAliases.set(element, file)
         })
-      }
+      } 
     } catch(error) {
       console.log(error)
     }
   })
+  setTimeout(() => console.log(client.mainAliases), 2000)
 
   const subCommandFiles = await globPromise(`${__dirname}/../commands/subCommands/**/*{.ts,.js}`)
   subCommandFiles.forEach((value) => {

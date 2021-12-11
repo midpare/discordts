@@ -35,33 +35,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var gambling_1 = require("../../../models/gambling");
 module.exports = {
-    name: '가입',
-    category: 'gambling',
-    use: '가입',
-    description: '도박 관련 명령어를 사용할수있게 가입을 합니다.',
+    name: 'list',
+    category: 'music',
+    use: 'list',
+    description: '현재 노래 리스트를 확인합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
-            var id, name, today, date, user, newUser;
             return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        id = msg.author.id;
-                        name = msg.author.username;
-                        today = new Date();
-                        date = '' + today.getFullYear() + today.getMonth() + (today.getDate() - 1);
-                        return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
-                    case 1:
-                        user = _b.sent();
-                        if (user)
-                            return [2 /*return*/, msg.reply('이미 가입된 유저입니다.')];
-                        newUser = new gambling_1.gambling({ id: id, name: name, date: date, money: 0, debt: 0, gamLevel: 1 });
-                        newUser.save()
-                            .then(function () { return msg.reply('성공적으로 가입이 완료되었습니다!'); });
-                        return [2 /*return*/];
-                }
+                return [2 /*return*/];
             });
         });
     }

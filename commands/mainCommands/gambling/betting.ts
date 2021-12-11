@@ -5,6 +5,9 @@ import client from "../../../clients/client";
 
 export = <commandType> {
   name: '베팅',
+  category: 'gambling',
+  use: '베팅',
+  description: '베팅을 합니다.',
   execute: async ({msg, args}) => {
     const id = msg.author.id
     const command = client.subCommands.get('betting').get(args[0])
@@ -38,8 +41,6 @@ export = <commandType> {
 
     async function bettingFunction (bet: any) {
       const user = await gambling.findOne({id})
-      if (!user)
-      return msg.reply("가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.")
 
       if (money > user.money)
         return msg.reply(`자신의 돈보다 많은돈은 입력해실 수 없습니다. \n현재잔액: ${user.money.toLocaleString()}원`)

@@ -39,34 +39,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var client_1 = __importDefault(require("../../../clients/client"));
-var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '코인',
+    category: 'gambling',
+    subCategory: 'coin',
+    use: '코인',
+    description: '코인명령어를 사용합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
-            var id, user, commands, alias;
+            var commands, alias;
             return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        id = msg.author.id;
-                        return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
-                    case 1:
-                        user = _b.sent();
-                        if (!user)
-                            return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다')];
-                        commands = client_1.default.subCommands.get('coin').get(args[0]);
-                        alias = client_1.default.subAliases.get('coin').get(args[0]);
-                        if (commands) {
-                            commands.execute({ msg: msg, args: args });
-                        }
-                        else if (alias) {
-                            alias.execute({ msg: msg, args: args });
-                        }
-                        else
-                            return [2 /*return*/];
-                        return [2 /*return*/];
+                commands = client_1.default.subCommands.get('coin').get(args[0]);
+                alias = client_1.default.subAliases.get('coin').get(args[0]);
+                if (commands) {
+                    commands.execute({ msg: msg, args: args });
                 }
+                else if (alias) {
+                    alias.execute({ msg: msg, args: args });
+                }
+                else
+                    return [2 /*return*/];
+                return [2 /*return*/];
             });
         });
     }

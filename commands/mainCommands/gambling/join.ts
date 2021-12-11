@@ -2,7 +2,10 @@ import { gambling } from '../../../models/gambling'
 import { commandType } from '../../../typings/command'
 
 export = <commandType> {
-  name: "가입",
+  name: '가입',
+  category: 'gambling',
+  use: '가입',
+  description: '도박 관련 명령어를 사용할수있게 가입을 합니다.',
   execute: async ({msg, args}) => {
     const id = msg.author.id
     const name = msg.author.username

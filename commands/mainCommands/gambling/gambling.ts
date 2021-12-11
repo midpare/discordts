@@ -3,6 +3,9 @@ import { commandType } from '../../../typings/command'
 
 export = <commandType> {
   name : '도박',
+  category: 'gambling',
+  use: '도박 <돈>',
+  description: '자신의 <돈>을 걸고 도박을 진행합니다. (성공시: 2배, 실패시: 0배)',
   execute: async ({msg, args}) => {
     const id = msg.author.id
     const money = parseFloat(args[0])

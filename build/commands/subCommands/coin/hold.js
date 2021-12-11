@@ -35,6 +35,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -49,41 +60,56 @@ module.exports = {
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
-            var id, embed, user, stock, _i, stock_1, element, options, coin, persent, persentShown, profit, profitShown;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var id, embed, user, stock, stock_1, stock_1_1, element, options, coin, persent, persentShown, profit, profitShown, e_1_1;
+            var e_1, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
                         id = msg.author.id;
                         embed = new discord_js_1.MessageEmbed();
                         return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                     case 1:
-                        user = _b.sent();
+                        user = _c.sent();
                         stock = user.stock;
                         if (!stock[0])
                             return [2 /*return*/, msg.reply('보유한 코인이 없습니다.')];
                         embed
                             .setTitle(msg.author.username + "\uB2D8\uC758 \uCF54\uC778 \uBCF4\uC720 \uD604\uD669");
-                        _i = 0, stock_1 = stock;
-                        _b.label = 2;
+                        _c.label = 2;
                     case 2:
-                        if (!(_i < stock_1.length)) return [3 /*break*/, 5];
-                        element = stock_1[_i];
+                        _c.trys.push([2, 7, 8, 9]);
+                        stock_1 = __values(stock), stock_1_1 = stock_1.next();
+                        _c.label = 3;
+                    case 3:
+                        if (!!stock_1_1.done) return [3 /*break*/, 6];
+                        element = stock_1_1.value;
                         options = {
                             uri: "https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT." + client_1.default.coin.get(element.name) + "&count=1&to"
                         };
                         return [4 /*yield*/, (0, function_1.requestGet)(options)];
-                    case 3:
-                        coin = _b.sent();
+                    case 4:
+                        coin = _c.sent();
                         persent = Math.round((coin[0].tradePrice / element.money - 1) * 100 * 100) / 100;
                         persentShown = persent < 0 ? persent : '+' + persent;
                         profit = Math.round((coin[0].tradePrice - element.money) * element.count);
                         profitShown = profit < 0 ? profit.toLocaleString() : '+' + profit.toLocaleString();
                         embed.addField(element.name, "\uC218\uB7C9: " + element.count + "\uAC1C, \uD3C9\uB2E8\uAC00: " + Math.floor(element.money).toLocaleString() + "\uC6D0\n\uC190\uC775: " + profitShown + "\uC6D0(" + persentShown + "%)", false);
-                        _b.label = 4;
-                    case 4:
-                        _i++;
-                        return [3 /*break*/, 2];
+                        _c.label = 5;
                     case 5:
+                        stock_1_1 = stock_1.next();
+                        return [3 /*break*/, 3];
+                    case 6: return [3 /*break*/, 9];
+                    case 7:
+                        e_1_1 = _c.sent();
+                        e_1 = { error: e_1_1 };
+                        return [3 /*break*/, 9];
+                    case 8:
+                        try {
+                            if (stock_1_1 && !stock_1_1.done && (_b = stock_1.return)) _b.call(stock_1);
+                        }
+                        finally { if (e_1) throw e_1.error; }
+                        return [7 /*endfinally*/];
+                    case 9:
                         msg.channel.send({ embeds: [embed] });
                         return [2 /*return*/];
                 }

@@ -3,6 +3,9 @@ import { commandType } from '../../../typings/command'
 
 export = <commandType> {
   name: 'pause',
+  category: 'music',
+  use: 'pause',
+  description: '노래를 멈춥니다.',
   execute: async ({msg, args}) => {
     if (!msg.member.voice.channel)
       return msg.reply('채널에 접속해주시기 바랍니다.')

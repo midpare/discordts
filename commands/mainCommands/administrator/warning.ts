@@ -3,6 +3,9 @@ import { commandType } from '../../../typings/command'
 
 export = <commandType> {
   name : '경고',
+  category: 'admin',
+  use: '경고',
+  description: '서버에서 맨션한 유저에게 경고를 부여합니다.',
   execute: async ({msg, args}) => {
     if (!msg.member.roles.cache.has('910521119713394745') && !msg.member.roles.cache.has('910521119713394744'))
       return msg.reply('이 명령어는 부방장 이상만 사용 가능합니다.')

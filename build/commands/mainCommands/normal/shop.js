@@ -39,6 +39,9 @@ var discord_js_1 = require("discord.js");
 var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: "상점",
+    category: 'normal',
+    use: '상점 <구매/판매> <물품>',
+    description: '상점에서 물품을 구매하거나 판매합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {

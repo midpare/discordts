@@ -3,6 +3,9 @@ import { commandType } from '../../../typings/command'
 export = <commandType> {
   name: 'kick',
   aliases: ['킥', '강퇴'],
+  category: 'admin',
+  use: 'kick <유저> <사유>',
+  description: '서버에서 맨션한 <유저>를 강퇴합니다.',
   execute: ({msg, args}) => {
     if(!msg.member.permissions.has('KICK_MEMBERS')) 
       return msg.reply('이 명령어를 사용할 권한이 없습니다.')

@@ -41,6 +41,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var player_1 = __importDefault(require("../../../clients/player"));
 module.exports = {
     name: 'resume',
+    category: 'music',
+    use: 'resume',
+    description: '노래를 다시 재생합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {

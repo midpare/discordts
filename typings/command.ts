@@ -20,5 +20,8 @@ export interface commandType {
   name: string
   aliases: Array<string>
   category: string
+  subCategory: string
+  use: string
+  description: string
   execute: executeType
 }

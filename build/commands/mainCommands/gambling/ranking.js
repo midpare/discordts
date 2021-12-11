@@ -40,6 +40,9 @@ var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '랭킹',
     aliases: ['순위'],
+    category: 'gambling',
+    use: '랭킹',
+    description: '이 서버의 도박 순위를 확인합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {

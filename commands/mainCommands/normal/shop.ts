@@ -4,6 +4,9 @@ import { commandType } from '../../../typings/command'
 
 export = <commandType> {
   name: "상점",
+  category: 'normal',
+  use: '상점 <구매/판매> <물품>',
+  description: '상점에서 물품을 구매하거나 판매합니다.',
   execute: async ({msg, args}) => {
     const embed = new MessageEmbed()
     const id  = msg.author.id

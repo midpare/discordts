@@ -35,31 +35,69 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var client_1 = __importDefault(require("../clients/client"));
 require("dotenv/config");
+var gambling_1 = require("../models/gambling");
+var function_1 = require("../handler/function");
 var prefix = process.env.PREFIX || '';
 module.exports = {
     name: 'messageCreate',
     event: function (msg) { return __awaiter(void 0, void 0, void 0, function () {
-        var _a, cmd, args, command, aliase;
+        var id, _a, cmd, args, command, aliase, date, today, user;
         return __generator(this, function (_b) {
-            if (msg.author.bot || msg.author.id === client_1.default.user.id || !msg.content.startsWith(prefix))
-                return [2 /*return*/];
-            _a = msg.content.slice(prefix.length).trim().split(/ +/g), cmd = _a[0], args = _a.slice(1);
-            command = client_1.default.mainCommands.get(cmd.toLowerCase());
-            aliase = client_1.default.mainAliases.get(cmd.toLowerCase());
-            if (command) {
-                command.execute({ msg: msg, args: args });
+            switch (_b.label) {
+                case 0:
+                    if (msg.author.bot || msg.author.id === client_1.default.user.id || !msg.content.startsWith(prefix))
+                        return [2 /*return*/];
+                    id = msg.author.id;
+                    _a = __read(msg.content.slice(prefix.length).trim().split(/ +/g)), cmd = _a[0], args = _a.slice(1);
+                    command = client_1.default.mainCommands.get(cmd.toLowerCase());
+                    aliase = client_1.default.mainAliases.get(cmd.toLowerCase());
+                    date = new Date();
+                    return [4 /*yield*/, (0, function_1.dateCal)(date, 0)];
+                case 1:
+                    today = _b.sent();
+                    return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
+                case 2:
+                    user = _b.sent();
+                    if (command.category == 'gambling')
+                        if (command.name != '가입') {
+                            if (!user)
+                                return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')];
+                            if (!user.bankruptcy)
+                                return [2 /*return*/];
+                            if (parseFloat(today) - parseFloat(user.bankruptcy) < 3)
+                                return [2 /*return*/, msg.reply("\uD30C\uC0B0\uD55C\uC9C0 3\uC77C\uC774 \uC9C0\uB098\uC9C0 \uC54A\uC740 \uC720\uC800\uB294 \uB3C4\uBC15\uC744 \uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uD30C\uC0B0\uC77C" + user.bankruptcy)];
+                        }
+                    if (command) {
+                        command.execute({ msg: msg, args: args });
+                    }
+                    else if (aliase) {
+                        aliase.execute({ msg: msg, args: args });
+                    }
+                    else
+                        return [2 /*return*/];
+                    return [2 /*return*/];
             }
-            else if (aliase) {
-                aliase.execute({ msg: msg, args: args });
-            }
-            else
-                return [2 /*return*/];
-            return [2 /*return*/];
         });
     }); }
 };

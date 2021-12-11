@@ -39,6 +39,9 @@ var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '빚갚기',
     aliases: ['돈갚기'],
+    category: 'gambling',
+    use: '빚갚기 <돈>',
+    description: '자신의 빚을 갚습니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
@@ -50,8 +53,6 @@ module.exports = {
                         return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                     case 1:
                         user = _b.sent();
-                        if (!user)
-                            return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')];
                         if (!args[0])
                             return [2 /*return*/, msg.reply('정확한 금액을 입력해주시기바랍니다.')];
                         money = parseFloat(args[0]);

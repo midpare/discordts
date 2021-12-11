@@ -35,31 +35,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var gambling_1 = require("../../../models/gambling");
+var discord_js_1 = require("discord.js");
+var school_1 = require("../../../models/school");
 module.exports = {
-    name: '가입',
-    category: 'gambling',
-    use: '가입',
-    description: '도박 관련 명령어를 사용할수있게 가입을 합니다.',
+    name: '정보확인',
+    aliases: ['정보'],
+    category: 'school',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
-            var id, name, today, date, user, newUser;
+            var id, user, embed;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         id = msg.author.id;
-                        name = msg.author.username;
-                        today = new Date();
-                        date = '' + today.getFullYear() + today.getMonth() + (today.getDate() - 1);
-                        return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
+                        return [4 /*yield*/, school_1.school.findOne({ id: id })];
                     case 1:
                         user = _b.sent();
-                        if (user)
-                            return [2 /*return*/, msg.reply('이미 가입된 유저입니다.')];
-                        newUser = new gambling_1.gambling({ id: id, name: name, date: date, money: 0, debt: 0, gamLevel: 1 });
-                        newUser.save()
-                            .then(function () { return msg.reply('성공적으로 가입이 완료되었습니다!'); });
+                        embed = new discord_js_1.MessageEmbed();
+                        if (!user)
+                            return [2 /*return*/, msg.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.')];
+                        embed
+                            .setTitle(msg.author.username + "\uB2D8\uC758 \uD559\uAD50\uC815\uBCF4")
+                            .setDescription(user.cityName + " " + user.schoolName + " " + user.grade + "\uD559\uB144 " + user.class + "\uBC18")
+                            .setColor('GREEN');
+                        msg.channel.send({ embeds: [embed] });
                         return [2 /*return*/];
                 }
             });

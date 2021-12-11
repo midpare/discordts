@@ -43,6 +43,9 @@ var player_1 = __importDefault(require("../../../clients/player"));
 module.exports = {
     name: 'play',
     aliases: ['p'],
+    category: 'music',
+    use: 'play <제목>',
+    description: '제목의 노래를 현재 음성채널에서 재생합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {

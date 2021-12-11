@@ -43,6 +43,9 @@ var gambling_1 = require("../../../models/gambling");
 var client_1 = __importDefault(require("../../../clients/client"));
 module.exports = {
     name: '베팅',
+    category: 'gambling',
+    use: '베팅',
+    description: '베팅을 합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
@@ -58,8 +61,6 @@ module.exports = {
                             case 0: return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                             case 1:
                                 user = _a.sent();
-                                if (!user)
-                                    return [2 /*return*/, msg.reply("가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.")];
                                 if (money > user.money)
                                     return [2 /*return*/, msg.reply("\uC790\uC2E0\uC758 \uB3C8\uBCF4\uB2E4 \uB9CE\uC740\uB3C8\uC740 \uC785\uB825\uD574\uC2E4 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \n\uD604\uC7AC\uC794\uC561: " + user.money.toLocaleString() + "\uC6D0")];
                                 posArray = bet.list.filter(function (item) { return item.id === user.id; });

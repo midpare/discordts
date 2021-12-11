@@ -38,6 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '빚',
+    category: 'gambling',
+    use: '빚',
+    description: '자신의 현재 빚을 확인합니다.',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
@@ -49,8 +52,6 @@ module.exports = {
                         return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                     case 1:
                         user = _b.sent();
-                        if (!user)
-                            return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다')];
                         msg.reply(user.name + " \uB2D8\uC758 \uBE5A\uC740 " + user.debt.toLocaleString() + "\uC6D0\uC785\uB2C8\uB2E4.");
                         return [2 /*return*/];
                 }

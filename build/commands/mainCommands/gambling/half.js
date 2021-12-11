@@ -38,6 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '하프',
+    category: 'gambling',
+    use: '하프',
+    description: '자신의 돈의 절반을 걸고 도박을 진행합니다. (성공시: 2배, 실패시: 0배)',
     execute: function (_a) {
         var msg = _a.msg, args = _a.args;
         return __awaiter(void 0, void 0, void 0, function () {
@@ -49,8 +52,6 @@ module.exports = {
                         return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                     case 1:
                         user = _b.sent();
-                        if (!user)
-                            return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')];
                         if (user.money == 0)
                             return [2 /*return*/, msg.reply('돈이 없을때는 도박을 할 수 없습니다.')];
                         money = Math.floor(user.money);

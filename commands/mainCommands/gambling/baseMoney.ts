@@ -4,19 +4,18 @@ import { commandType } from '../../../typings/command'
 export = <commandType> {
   name: '기초자금',
   aliases: ['초기자금'],
+  category: 'gambling',
+  use: '기초자금',
+  description: '기초자금 25,500원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 60초',
   execute: async ({msg, args}) => {
     const id = msg.author.id
     const user = await gambling.findOne({id})
-
-    if (!user)
-      return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다')
-    
     if (user.money != 0 || user.stock[0]) 
       return msg.reply('보유하신 자산이 있어 기초자금을 지급할 수 없습니다.')
     
     const date = new Date()
     const second = date.getTime()
-    const coolTime = 60
+    const coolTime = 30
     if (user.baseMoneyCoolTime) {
       const userCoolTime = user.baseMoneyCoolTime
       if ((second - userCoolTime) / 1000 < coolTime)

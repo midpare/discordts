@@ -57,7 +57,7 @@ module.exports = {
                             return [2 /*return*/, msg.reply('보유하신 자산이 있어 기초자금을 지급할 수 없습니다.')];
                         date = new Date();
                         second = date.getTime();
-                        coolTime = 60;
+                        coolTime = 30;
                         if (user.baseMoneyCoolTime) {
                             userCoolTime = user.baseMoneyCoolTime;
                             if ((second - userCoolTime) / 1000 < coolTime)

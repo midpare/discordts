@@ -6,6 +6,8 @@ client.mainCommands = new Collection()
 client.mainAliases = new Collection()
 client.subCommands = new Collection()
 client.subAliases = new Collection()
-client.interactions = new Collection()
 client.coin = new Collection()
+client.interactions = new Collection()
+// client.coin = new Collection()
+
 export default client

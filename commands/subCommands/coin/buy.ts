@@ -26,7 +26,6 @@ export = <commandType> {
     
     if (userCoin) {
       const moneyAve = (userCoin.money * userCoin.count + wholeMoney) / (userCoin.count + count)
-      console.log(moneyAve)
       gambling.updateOne({id, stock: userCoin}, {$set: {'stock.$.money': moneyAve}, $inc: {'stock.$.count': count, money: Math.round(-wholeMoney)}}).then(() => {
         msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`)
       })
@@ -36,7 +35,6 @@ export = <commandType> {
         count: count,
         money: coinMoney
       }
-      console.log(stockObject)
       gambling.updateOne({id}, {$push: {stock: stockObject}, $inc: {money: Math.round(-wholeMoney)}}).then(() => {
         msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`)
       })

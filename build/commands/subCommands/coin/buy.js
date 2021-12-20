@@ -73,7 +73,6 @@ module.exports = {
                             return [2 /*return*/, msg.reply("\uD604\uC7AC \uC794\uC561\uBCF4\uB2E4 \uC0AC\uB824\uB294 \uC218\uB7C9\uC774 \uB9CE\uC2B5\uB2C8\uB2E4. \n\uD604\uC7AC \uC794\uC561: " + user.money.toLocaleString() + "\uC6D0\n\uC0AC\uB824\uB294 \uAE08\uC561: " + wholeMoney.toLocaleString() + "\uC6D0(\uAC1C\uB2F9 " + coinMoney.toLocaleString() + "\uC6D0)")];
                         if (userCoin) {
                             moneyAve_1 = (userCoin.money * userCoin.count + wholeMoney) / (userCoin.count + count);
-                            console.log(moneyAve_1);
                             gambling_1.gambling.updateOne({ id: id, stock: userCoin }, { $set: { 'stock.$.money': moneyAve_1 }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } }).then(function () {
                                 msg.reply("\uC131\uACF5\uC801\uC73C\uB85C " + coinName + " " + count.toLocaleString() + "\uAC1C\uB97C " + wholeMoney.toLocaleString() + "\uC6D0(\uAC1C\uB2F9 " + coinMoney.toLocaleString() + "\uC6D0)\uC5D0 \uCD94\uAC00\uB85C \uAD6C\uB9E4\uD588\uC2B5\uB2C8\uB2E4!\n\uD604\uC7AC \uD3C9\uB2E8\uAC00: " + userCoin.money.toLocaleString() + "\uC6D0 -> " + (Math.floor(moneyAve_1 * 100) / 100).toLocaleString() + "\uC6D0\n\uD604\uC7AC \uAD6C\uB9E4\uB7C9: " + userCoin.count + "\uAC1C -> " + (userCoin.count + count).toLocaleString() + "\uAC1C");
                             });
@@ -84,7 +83,6 @@ module.exports = {
                                 count: count,
                                 money: coinMoney
                             };
-                            console.log(stockObject);
                             gambling_1.gambling.updateOne({ id: id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } }).then(function () {
                                 msg.reply("\uC131\uACF5\uC801\uC73C\uB85C " + coinName + " " + count.toLocaleString() + "\uAC1C\uB97C " + wholeMoney.toLocaleString() + "\uC6D0(\uAC1C\uB2F9 " + coinMoney.toLocaleString() + "\uC6D0)\uC5D0 \uAD6C\uB9E4\uD588\uC2B5\uB2C8\uB2E4!");
                             });

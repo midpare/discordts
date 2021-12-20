@@ -76,27 +76,26 @@ module.exports = {
                     return [4 /*yield*/, (0, function_1.dateCal)(date, 0)];
                 case 1:
                     today = _b.sent();
+                    if (!command) return [3 /*break*/, 3];
                     return [4 /*yield*/, gambling_1.gambling.findOne({ id: id })];
                 case 2:
                     user = _b.sent();
-                    if (command.category == 'gambling')
-                        if (command.name != '가입') {
-                            if (!user)
-                                return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')];
-                            if (!user.bankruptcy)
-                                return [2 /*return*/];
-                            if (parseFloat(today) - parseFloat(user.bankruptcy) < 3)
-                                return [2 /*return*/, msg.reply("\uD30C\uC0B0\uD55C\uC9C0 3\uC77C\uC774 \uC9C0\uB098\uC9C0 \uC54A\uC740 \uC720\uC800\uB294 \uB3C4\uBC15\uC744 \uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uD30C\uC0B0\uC77C" + user.bankruptcy)];
-                        }
-                    if (command) {
-                        command.execute({ msg: msg, args: args });
+                    if (command.category == 'gambling' && command.name != '!가입') {
+                        if (!user)
+                            return [2 /*return*/, msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')];
+                        if (user.bankruptcy && parseFloat(today) - parseFloat(user.bankruptcy) < 3)
+                            return [2 /*return*/, msg.reply("\uD30C\uC0B0\uD55C\uC9C0 3\uC77C\uC774 \uC9C0\uB098\uC9C0 \uC54A\uC740 \uC720\uC800\uB294 \uB3C4\uBC15\uC744 \uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uD30C\uC0B0\uC77C" + user.bankruptcy)];
                     }
-                    else if (aliase) {
+                    command.execute({ msg: msg, args: args });
+                    return [3 /*break*/, 4];
+                case 3:
+                    if (aliase) {
                         aliase.execute({ msg: msg, args: args });
                     }
                     else
                         return [2 /*return*/];
-                    return [2 /*return*/];
+                    _b.label = 4;
+                case 4: return [2 /*return*/];
             }
         });
     }); }

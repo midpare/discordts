@@ -33,7 +33,6 @@ export = <commandType> {
     const user = await warning.findOne({id}) 
 
     const reason = !args[3] ? '없음' : args.slice(3).join(' ')
-    console.log(reason)
 
     switch(args[0]) {
       case '부여' :

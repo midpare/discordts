@@ -72,7 +72,6 @@ module.exports = {
                     case 1:
                         user = _c.sent();
                         reason = !args[3] ? '없음' : args.slice(3).join(' ');
-                        console.log(reason);
                         switch (args[0]) {
                             case '부여':
                                 if (!user) {

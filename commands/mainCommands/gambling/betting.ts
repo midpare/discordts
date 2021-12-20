@@ -1,9 +1,9 @@
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 import { bet1, bet2, betting } from "../../../typings/betting";
 import { gambling } from "../../../models/gambling";
 import client from "../../../clients/client";
 
-export = <commandType> {
+export = <CommandType> {
   name: '베팅',
   category: 'gambling',
   use: '베팅',

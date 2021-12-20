@@ -1,9 +1,9 @@
-export interface schoolApiType {
+export interface SchoolApiType {
   uri: string
-  qs: qs
+  qs: Qs
 }
 
-interface qs {
+interface Qs {
   KEY: string
   ATPT_OFCDC_SC_CODE: string, 
   SD_SCHUL_CODE?: string, 

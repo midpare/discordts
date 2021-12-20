@@ -1,7 +1,7 @@
 import { gambling } from "../../../models/gambling";
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 
-export = <commandType> {
+export = <CommandType> {
   name: '송금',
   aliases: ['이체', '돈보내기'],
   category: 'gambling',

@@ -1,8 +1,8 @@
-import { commandType } from "../../../typings/command"
+import { CommandType } from "../../../typings/command"
 import { gambling } from "../../../models/gambling"
 import { dateCal } from "../../../handler/function"
 
-export = <commandType> {
+export = <CommandType> {
   name: '파산',
   category: 'gambling',
   use: '파산',

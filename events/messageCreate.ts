@@ -1,4 +1,4 @@
-import { extendMessage } from "../typings/command"
+import { ExtendMessage } from "../typings/command"
 import client from "../clients/client"
 import 'dotenv/config'
 import { gambling } from "../models/gambling"
@@ -7,7 +7,7 @@ const prefix = process.env.PREFIX || ''
 
 export = {
   name: 'messageCreate',
-  event: async (msg: extendMessage) => {
+  event: async (msg: ExtendMessage) => {
     if (msg.author.bot || msg.author.id === client.user.id || !msg.content.startsWith(prefix)) return
 
     const id = msg.author.id

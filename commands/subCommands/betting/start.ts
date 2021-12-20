@@ -1,8 +1,8 @@
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 import { bet1, bet2, betting } from '../../../typings/betting'
 import { MessageEmbed } from "discord.js";
 
-export = <commandType> {
+export = <CommandType> {
   name: '시작',
   aliases: ['스타트'],
   category: 'betting',

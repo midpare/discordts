@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js'
 import { school } from '../../../models/school'
-import { commandType } from '../../../typings/command'
+import { CommandType } from '../../../typings/command'
 import { dateCal, requestGet } from '../../../handler/function'
 import client from '../../../clients/client'
 
@@ -24,7 +24,7 @@ interface qs {
   AY?: string
 }
 
-export = <commandType> {
+export = <CommandType> {
   name: '학교',
   category: 'school',
   use: '학교',

@@ -1,8 +1,8 @@
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 import { gambling } from '../../../models/gambling'
 import { bet1, bet2, betting } from '../../../typings/betting'
 
-export = <commandType> {
+export = <CommandType> {
   name: '종료',
   category: 'betting',
   execute: ({msg, args}) => {

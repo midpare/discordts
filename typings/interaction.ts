@@ -1,6 +1,6 @@
 import { GuildMember, Interaction, Message, TextChannel } from "discord.js";
 
-export interface extendInteraction extends Interaction {
+export interface ExtendInteraction extends Interaction {
   member: GuildMember
   customId: string
   channel: TextChannel
@@ -8,9 +8,9 @@ export interface extendInteraction extends Interaction {
   values: string
 }
 
-type executeType = (interaction: extendInteraction) => any
+type ExecuteType = (interaction: ExtendInteraction) => any
 
 export interface interactionType {
   name: string
-  execute: executeType
+  execute: ExecuteType
 }

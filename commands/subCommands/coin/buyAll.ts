@@ -1,9 +1,9 @@
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 import { requestGet } from "../../../handler/function";
 import { gambling } from "../../../models/gambling";
 import client from "../../../clients/client";
 
-export = <commandType> {
+export = <CommandType> {
   name: '풀매도',
   aliases: ['전부판매'],
   category: 'coin',

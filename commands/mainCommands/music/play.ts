@@ -1,9 +1,9 @@
 import { QueryType } from "discord-player"
 import player from '../../../clients/player'
-import { commandType } from '../../../typings/command'
+import { CommandType } from '../../../typings/command'
 
 
-export = <commandType> {
+export = <CommandType> {
   name: 'play',
   aliases: ['p'],
   category: 'music',

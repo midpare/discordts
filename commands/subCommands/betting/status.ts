@@ -1,8 +1,8 @@
 import { MessageEmbed } from 'discord.js'
-import { commandType } from '../../../typings/command'
+import { CommandType } from '../../../typings/command'
 import { bet1, bet2, betting } from '../../../typings/betting'
 
-export = <commandType> {
+export = <CommandType> {
   name: '현황',
   category: 'betting',
   execute: ({msg, args}) => {

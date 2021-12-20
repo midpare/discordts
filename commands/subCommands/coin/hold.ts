@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 import client from "../../../clients/client";
 import { requestGet } from "../../../handler/function";
 import { gambling } from "../../../models/gambling";
 
-export = <commandType> {
+export = <CommandType> {
   name: '보유',
   category: 'coin',
   aliases: ['보유량'],

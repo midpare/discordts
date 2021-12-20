@@ -1,11 +1,11 @@
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 import { school } from '../../../models/school'
-import { schoolApiType } from '../../../typings/school'
+import { SchoolApiType } from '../../../typings/school'
 import { requestGet } from "../../../handler/function";
 import 'dotenv/config'
 const OOE: any = {'서울특별시' : 'B10', '부산광역시': 'C10', '대구광역시': 'D10', '인천광역시': 'E10', '광주광역시': 'F10', '대전광역시': 'G10', '울산광역시': 'H10', '세종특별자치시': 'I10', '경기도': 'J10', '강원도': 'K10', '충청북도' : 'M10', '충청남도': 'N10', '전라북도': 'P10', '전라남도': 'Q10', '경상북도': 'R10', '경상남도': 'S10', '제주특별자치도': 'T10'}
 
-export = <commandType> {
+export = <CommandType> {
   name: '정보등록',
   category: 'school',
   use: '정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
@@ -40,7 +40,7 @@ export = <commandType> {
     if (cityCode == '')
       return msg.reply('정확한 시도위치를 입력해주시기바랍니다.')
 
-    const basicSchoolOptions: schoolApiType = {
+    const basicSchoolOptions: SchoolApiType = {
       uri: ' https://open.neis.go.kr/hub/schoolInfo?Type=json&Size=999',
       qs: {
         KEY: apiKey,
@@ -54,7 +54,7 @@ export = <commandType> {
       return msg.reply('입력한 정보와 일치하는 학교가 없습니다.')
     const schoolCode = basicSchool.schoolInfo[1].row[0].SD_SCHUL_CODE 
 
-    const classOptions: schoolApiType = {
+    const classOptions: SchoolApiType = {
       uri: 'https://open.neis.go.kr/hub/classInfo?Type=json&Size=999',
       qs: {
         KEY: apiKey,

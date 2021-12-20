@@ -1,8 +1,8 @@
 import { MessageEmbed } from "discord.js";
 import { school } from "../../../models/school";
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 
-export = <commandType> {
+export = <CommandType> {
   name: '정보확인',
   aliases: ['정보'],
   category: 'school',

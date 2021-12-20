@@ -1,9 +1,9 @@
-import { extendInteraction } from "../typings/interaction";
+import { ExtendInteraction } from "../typings/interaction";
 import client from "../clients/client";
 
 export = {
   name: 'interactionCreate',
-  event: (interaction: extendInteraction) => {
+  event: (interaction: ExtendInteraction) => {
     const cmd = interaction.customId
     const events = client.interactions.get(cmd)
     if (!events) return

@@ -1,7 +1,7 @@
 import { gambling } from '../../../models/gambling'
-import { commandType } from '../../../typings/command'
+import { CommandType } from '../../../typings/command'
 
-export = <commandType> {
+export = <CommandType> {
   name: '기초자금',
   aliases: ['초기자금'],
   category: 'gambling',

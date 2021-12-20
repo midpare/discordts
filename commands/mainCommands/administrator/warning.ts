@@ -1,7 +1,7 @@
 import { warning } from '../../../models/warning'
-import { commandType } from '../../../typings/command'
+import { CommandType } from '../../../typings/command'
 
-export = <commandType> {
+export = <CommandType> {
   name : '경고',
   category: 'admin',
   use: '경고',

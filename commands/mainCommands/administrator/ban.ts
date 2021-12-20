@@ -1,6 +1,6 @@
-import { commandType } from '../../../typings/command'
+import { CommandType } from '../../../typings/command'
 
-export = <commandType> {
+export = <CommandType> {
   name: 'ban',
   aliases: ['밴', '벤', '차단'],
   category: 'admin',

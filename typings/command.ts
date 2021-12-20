@@ -1,6 +1,6 @@
 import { Guild, GuildMember, Message, MessageMentions, TextChannel, Snowflake } from "discord.js"
 
-export interface extendMessage extends Message{
+export interface ExtendMessage extends Message{
   channel: TextChannel
   member: GuildMember
   mentions: MessageMentions
@@ -9,19 +9,19 @@ export interface extendMessage extends Message{
   members: GuildMember
 }
 
-interface executeOptions {
-  msg: extendMessage
+interface ExecuteOptions {
+  msg: ExtendMessage
   args: Array<string>
 }
 
-type executeType = (options: executeOptions) => any
+type ExecuteType = (options: ExecuteOptions) => any
 
-export interface commandType {
+export interface CommandType {
   name: string
   aliases: Array<string>
   category: string
   subCategory: string
   use: string
   description: string
-  execute: executeType
+  execute: ExecuteType
 }

@@ -1,7 +1,7 @@
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 import { MessageActionRow, MessageButton } from "discord.js";
 
-export = <commandType> {
+export = <CommandType> {
   name: '현황',
   aliases: ['시세', '가격'],
   category: 'coin',

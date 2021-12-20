@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js"
-import { commandType } from '../../../typings/command'
+import { CommandType } from '../../../typings/command'
 
-export = <commandType> {
+export = <CommandType> {
     name : "팀",
     aliases: ['팀'],
     category: 'game',

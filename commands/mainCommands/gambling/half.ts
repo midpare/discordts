@@ -1,7 +1,7 @@
 import { gambling } from '../../../models/gambling'
-import { commandType } from '../../../typings/command'
+import { CommandType } from '../../../typings/command'
 
-export = <commandType> {
+export = <CommandType> {
   name : '하프',
   category: 'gambling',
   use: '하프',

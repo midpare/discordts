@@ -1,6 +1,6 @@
-import { commandType } from "../../../typings/command";
+import { CommandType } from "../../../typings/command";
 
-export = <commandType> {
+export = <CommandType> {
   name: 'list',
   category: 'music',
   use: 'list',

@@ -1,7 +1,7 @@
 import player from "../../../clients/player"
-import { commandType } from '../../../typings/command'
+import { CommandType } from '../../../typings/command'
 
-export = <commandType> {
+export = <CommandType> {
   name: 'pause',
   category: 'music',
   use: 'pause',

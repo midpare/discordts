@@ -21,7 +21,7 @@ export class ExtendClient extends Client {
 
   start() {
     mongoose.connect(process.env.DB_URI || '')
-    this.login('OTAyNzk0ODQ1MjE3NzU1MjM3.YXjnOA.aM8lmJ_Hjut46LDprRh4m9qugp4')
+    this.login(process.env.TOKEN)
     const handler = new Array('commands', 'interactions', 'events', 'coinList')
 
     handler.forEach((element: string) => {

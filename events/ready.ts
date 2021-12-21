@@ -1,4 +1,4 @@
-import client from "../clients/client"
+import { client } from "../clients/client"
 
 export = {
   name: 'ready',

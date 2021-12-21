@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { CommandType } from "../../../typings/command";
-import client from "../../../clients/client";
+import { client } from "../../../clients/client";
 import { requestGet } from "../../../handler/function";
 import { gambling } from "../../../models/gambling";
 

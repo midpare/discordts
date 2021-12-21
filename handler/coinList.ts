@@ -1,5 +1,6 @@
+import { ExtendClient } from "../clients/client"
 import { requestGet } from "./function"
-export = async (client: any) => {
+export = async (client: ExtendClient) => {
   const options = {
     uri: 'https://api.upbit.com/v1/market/all'
   }

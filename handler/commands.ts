@@ -1,9 +1,10 @@
 import { glob } from 'glob'
 import { promisify } from 'util'
+import { ExtendClient } from '../clients/client'
 
 const globPromise = promisify(glob)
 
-export  = async function (client: any) {
+export  = async (client: ExtendClient) => {
   const mainCommandFiles = await globPromise(`${__dirname}/../commands/mainCommands/**/*{.ts,.js}`)
 
   mainCommandFiles.forEach(async (value) => {
@@ -14,12 +15,12 @@ export  = async function (client: any) {
       client.mainCommands.set(file.name, file)
       if (file.aliases) {
         file.aliases.forEach((element: string) => {
-          if (client.mainAliases.get(element)) 
+          if (client.mainAliases.get(element))
             throw `command name duplicate! command path: ${value}, command aliases: ${element}`
           client.mainAliases.set(element, file)
         })
-      } 
-    } catch(error) {
+      }
+    } catch (error) {
       console.log(error)
     }
   })
@@ -33,9 +34,9 @@ export  = async function (client: any) {
     commands.set(file.name, file)
     try {
       if (client.subCommands.get(file.category)) {
-        if (client.subCommands.get(file.category).get(file.name))
+        if (client.subCommands.get(file.category)?.get(file.name))
           throw `subcommand name duplicate! subcommand path: ${value}, subcommand category: ${file.category}, subcommand name: ${file.name}`
-        client.subCommands.get(file.category).set(file.name, file)
+        client.subCommands.get(file.category)?.set(file.name, file)
       } else {
         client.subCommands.set(file.category, commands)
       }
@@ -44,15 +45,15 @@ export  = async function (client: any) {
         file.aliases.forEach((element: string) => {
           aliases.set(element, file)
           if (client.subAliases.get(file.category)) {
-            if (client.subCommands.get(file.category).get(element))
+            if (client.subCommands.get(file.category)?.get(element))
               throw `subcommand name duplicate! subcommand path: ${value}, subcommand cateogory: ${file.category}, subcommand name: ${element}`
-            client.subAliases.get(file.category).set(element, file)
+            client.subAliases.get(file.category)?.set(element, file)
           } else {
             client.subAliases.set(file.category, aliases)
           }
         })
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   })

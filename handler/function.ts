@@ -27,7 +27,7 @@ interface apiType {
 }
 
 export async function requestGet(option: apiType): Promise<unknown> {
-  return new Promise((resolve, reject): any => {
+  return new Promise((resolve, reject) => {
     request.get(option, (err: string, res: any, body: string) => {
       if(err)
         reject(err)

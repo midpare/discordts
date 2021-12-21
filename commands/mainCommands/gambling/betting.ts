@@ -1,7 +1,7 @@
 import { CommandType } from "../../../typings/command";
-import { bet1, bet2, betting } from "../../../typings/betting";
+import { bet, bet1, bet2, betting } from "../../../typings/betting";
 import { gambling } from "../../../models/gambling";
-import client from "../../../clients/client";
+import { client } from "../../../clients/client";
 
 export = <CommandType> {
   name: '베팅',
@@ -10,13 +10,13 @@ export = <CommandType> {
   description: '베팅을 합니다.',
   execute: async ({msg, args}) => {
     const id = msg.author.id
-    const command = client.subCommands.get('betting').get(args[0])
-    const alias = client.subAliases.get('betting').get(args[0])
+    const command = client.subCommands.get('betting')?.get(args[0])
+    const alias = client.subAliases.get('betting')?.get(args[0])
     if (command) {
       command.execute({msg, args})
       return
     } else if (alias) {
-      alias.execute(msg, {args})
+      alias.execute({msg, args})
       return
     }
     if (!betting.betting)
@@ -39,7 +39,7 @@ export = <CommandType> {
         break
     }
 
-    async function bettingFunction (bet: any) {
+    async function bettingFunction (bet: bet) {
       const user = await gambling.findOne({id})
 
       if (money > user.money)

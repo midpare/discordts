@@ -7,7 +7,6 @@ interface betType {
 
 interface betList {
   id: string,
-  team: string,
   money: number
 }
 
@@ -41,4 +40,4 @@ const betting = new betDefault()
 const bet1 = new bet()
 const bet2 = new bet()
 
-export { betting, bet1, bet2 }
+export { betting, bet1, bet2, bet }

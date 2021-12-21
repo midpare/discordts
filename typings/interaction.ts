@@ -10,7 +10,7 @@ export interface ExtendInteraction extends Interaction {
 
 type ExecuteType = (interaction: ExtendInteraction) => any
 
-export interface interactionType {
+export interface InteractionType {
   name: string
   execute: ExecuteType
 }

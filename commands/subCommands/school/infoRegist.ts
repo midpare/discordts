@@ -1,6 +1,6 @@
 import { CommandType } from "../../../typings/command";
 import { school } from '../../../models/school'
-import { SchoolApiType } from '../../../typings/school'
+import { SchoolApiType } from '../../../typings/api'
 import { requestGet } from "../../../handler/function";
 import 'dotenv/config'
 const OOE: any = {'서울특별시' : 'B10', '부산광역시': 'C10', '대구광역시': 'D10', '인천광역시': 'E10', '광주광역시': 'F10', '대전광역시': 'G10', '울산광역시': 'H10', '세종특별자치시': 'I10', '경기도': 'J10', '강원도': 'K10', '충청북도' : 'M10', '충청남도': 'N10', '전라북도': 'P10', '전라남도': 'Q10', '경상북도': 'R10', '경상남도': 'S10', '제주특별자치도': 'T10'}
@@ -46,10 +46,12 @@ export = <CommandType> {
         KEY: apiKey,
         ATPT_OFCDC_SC_CODE: cityCode,
         SCHUL_NM: schoolName,
-      }
+      },
+      method: 'GET',
+      json: true
     }
 
-    const basicSchool: any = await requestGet(basicSchoolOptions)
+    const basicSchool = await requestGet(basicSchoolOptions)
     if (basicSchool.RESULT != undefined)
       return msg.reply('입력한 정보와 일치하는 학교가 없습니다.')
     const schoolCode = basicSchool.schoolInfo[1].row[0].SD_SCHUL_CODE 
@@ -62,10 +64,12 @@ export = <CommandType> {
         SD_SCHUL_CODE: schoolCode,
         AY: date.getFullYear().toString(),
         GRADE: grade
-      }
+      },
+      method: 'GET',
+      json: true
     }
 
-    const classInfo: any = await requestGet(classOptions)
+    const classInfo = await requestGet(classOptions)
 
     if (classInfo.RESULT != undefined || parseFloat(classNumber) >= classInfo.classInfo[1].row.length + 1)
       return msg.reply('입력한 반 정보와 일치하는 반이 없습니다.')

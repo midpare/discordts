@@ -13,7 +13,12 @@ export = <CommandType> {
     const stock = user.stock
     const coinName = args[1]
     const userCoin = stock.filter((element: { name: string }) => element.name == coinName)[0]
-    const coin: any = await requestGet({ uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to` })
+    const apiOptions = {
+      uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to`,
+      method: 'GET',
+      json: true
+    }
+    const coin = await requestGet(apiOptions)
     if (!coinName)
       return msg.reply('판매할 코인을 입력해주시기바랍니다.')
     if (!userCoin)

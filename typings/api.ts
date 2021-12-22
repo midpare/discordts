@@ -1,9 +1,15 @@
-export interface SchoolApiType {
+export interface ApiType {
   uri: string
-  qs: Qs
+  method: string
+  json?: boolean
 }
 
-interface Qs {
+
+export interface SchoolApiType extends ApiType{
+  qs: SchoolQs
+}
+
+interface SchoolQs {
   KEY: string
   ATPT_OFCDC_SC_CODE: string, 
   SD_SCHUL_CODE?: string, 

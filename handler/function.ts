@@ -1,4 +1,5 @@
 import request from 'request'
+import { ApiType } from '../typings/api'
 
 export async function dateCal(date: Date, days: number) {
   const dateVariable = new Date(date)
@@ -21,18 +22,13 @@ export async function dateCal(date: Date, days: number) {
   return day
 }
 
-interface apiType {
-  uri: string
-  qs?: object
-}
-
-export async function requestGet(option: apiType): Promise<unknown> {
+export async function requestGet(option: ApiType): Promise<any> {
   return new Promise((resolve, reject) => {
-    request.get(option, (err: string, res: any, body: string) => {
+    request(option, (err: string, res: any, body: string) => {
       if(err)
         reject(err)
       else 
-        resolve(JSON.parse(body))
+        resolve(body)
     })
   })
 }

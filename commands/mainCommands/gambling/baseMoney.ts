@@ -6,12 +6,12 @@ export = <CommandType> {
   aliases: ['초기자금'],
   category: 'gambling',
   use: '기초자금',
-  description: '기초자금 25,500원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 60초',
+  description: '기초자금 25,000원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 60초',
   execute: async ({msg, args}) => {
     const id = msg.author.id
     const user = await gambling.findOne({id})
     if (user.money != 0 || user.stock[0]) 
-      return msg.reply('보유하신 자산이 있어 기초자금을 지급할 수 없습니다.')
+      return msg.reply('보유하신 돈이나 코인이 있어 기초자금을 지급할 수 없습니다.')
     
     const date = new Date()
     const second = date.getTime()

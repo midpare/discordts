@@ -14,6 +14,7 @@ export class ExtendClient extends Client {
   subAliases: Collection<string, Map<string, CommandType>> = new Collection()
   coin: Collection<string, string> = new Collection()
   interactions: Collection<string, InteractionType> = new Collection()
+  sdCode: Collection<string, string> = new Collection()
 
   constructor() {
     super({ intents: 32767 })
@@ -22,7 +23,7 @@ export class ExtendClient extends Client {
   start() {
     mongoose.connect(process.env.DB_URI || '')
     this.login(process.env.TOKEN)
-    const handler = new Array('commands', 'interactions', 'events', 'coinList')
+    const handler = new Array('commands', 'interactions', 'events', 'coin', 'school')
 
     handler.forEach((element: string) => {
       require(`${__dirname}/../handler/${element}`)(client)

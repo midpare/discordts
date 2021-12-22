@@ -1,7 +1,7 @@
 import { CommandType } from "../../../typings/command";
 import { bet, bet1, bet2, betting } from "../../../typings/betting";
 import { gambling } from "../../../models/gambling";
-import { client } from "../../../clients/client";
+import { client } from "../../../context/client";
 
 export = <CommandType> {
   name: '베팅',

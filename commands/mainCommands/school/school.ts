@@ -2,7 +2,7 @@ import { MessageEmbed } from 'discord.js'
 import { school } from '../../../models/school'
 import { CommandType } from '../../../typings/command'
 import { dateCal, requestGet } from '../../../handler/function'
-import { client } from '../../../clients/client'
+import { client } from '../../../context/client'
 import { SchoolApiType } from '../../../typings/api'
 
 const apiKey = process.env.SCHOOL_API_KEY || ''

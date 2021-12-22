@@ -1,4 +1,4 @@
-import { ChannelManager, Client, ClientUser, Collection } from 'discord.js'
+import { Client, ClientUser, Collection } from 'discord.js'
 import { CommandType } from '../typings/command'
 import mongoose from 'mongoose'
 import 'dotenv/config'

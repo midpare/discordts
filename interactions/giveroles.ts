@@ -1,6 +1,5 @@
 import { InteractionType } from "../typings/interaction";
-import { client } from '../clients/client'
-import { TextChannel } from "discord.js";
+import { client } from '../context/client'
 
 export = <InteractionType> {
   name: 'giveRole',

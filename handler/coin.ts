@@ -1,4 +1,4 @@
-import { ExtendClient } from "../clients/client"
+import { ExtendClient } from "../context/client"
 import { requestGet } from "./function"
 export = async (client: ExtendClient) => {
   const options = {

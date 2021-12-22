@@ -1,4 +1,4 @@
-import player from "../../../clients/player"
+import player from "../../../context/player"
 import { CommandType } from '../../../typings/command'
 
 export = <CommandType> {

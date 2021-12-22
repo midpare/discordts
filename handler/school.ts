@@ -1,4 +1,4 @@
-import { ExtendClient } from "../clients/client"
+import { ExtendClient } from "../context/client"
 
 export = async (client: ExtendClient) => {
   const sds = ['서울특별시', '부산광역시',

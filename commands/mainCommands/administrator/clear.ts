@@ -6,7 +6,7 @@ export = <CommandType> {
   category: 'admin',
   use: 'clear <숫자>',
   description: '메시지를 보낸 채팅방에 <숫자>만큼의 채팅을 지웁니다.',
-  execute: ({msg, args}) => {
+  execute: async ({msg, args}) => {
     const count = parseFloat(args[0])
     
     if (!Number.isInteger(count)) 

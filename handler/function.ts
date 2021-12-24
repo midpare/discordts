@@ -1,7 +1,7 @@
 import request from 'request'
 import { ApiType } from '../typings/api'
 
-export async function dateCal(date: Date, days: number) {
+export function dateCal(date: Date, days: number): string {
   const dateVariable = new Date(date)
   dateVariable.setDate(date.getDate() + days)
   const dateText = dateVariable.toString().split(/ +/)
@@ -32,3 +32,13 @@ export async function requestGet(option: ApiType): Promise<any> {
     })
   })
 }
+
+export function shuffle(arr: Array<any>): typeof arr{
+  const shuffleArr = new Array()
+  while (arr.length) {
+    const roll = Math.floor(Math.random() * arr.length)
+    shuffleArr.push(arr.splice(roll, 1)[0])
+  }
+  return shuffleArr
+}
+

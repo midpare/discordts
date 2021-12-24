@@ -5,7 +5,7 @@ import { bet1, bet2, betting } from '../../../typings/betting'
 export = <CommandType> {
   name: '현황',
   category: 'betting',
-  execute: ({msg, args}) => {
+  execute: async ({msg, args}) => {
     if (!betting.betting)
       return msg.reply('아직 베팅을 시작하지 않았습니다.')
       

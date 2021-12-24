@@ -6,7 +6,7 @@ export = <CommandType> {
   name: '시작',
   aliases: ['스타트'],
   category: 'betting',
-  execute: ({msg, args}) => {
+  execute: async ({msg, args}) => {
     if (betting.betting)
       return msg.reply('이미 시작한 베팅이 있습니다.')
 

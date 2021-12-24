@@ -1,4 +1,4 @@
-import { client } from "../context/client"
+import { client } from "../contexts/client"
 
 export = {
   name: 'ready',

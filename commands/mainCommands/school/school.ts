@@ -2,8 +2,7 @@ import { MessageEmbed } from 'discord.js'
 import { school } from '../../../models/school'
 import { CommandType } from '../../../typings/command'
 import { dateCal, requestGet } from '../../../handler/function'
-import { client } from '../../../context/client'
-import { SchoolApiType } from '../../../typings/api'
+import { client } from '../../../contexts/client'
 
 const apiKey = process.env.SCHOOL_API_KEY || ''
 
@@ -40,7 +39,7 @@ export = <CommandType>{
         const timeTableNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0
         const timeTableWeekDay = weekDay != '' ? weekArr[findWeek] : weekArr[week]
 
-        const timeTableDate = await dateCal(dateVariable, timeTableNumber)
+        const timeTableDate = dateCal(dateVariable, timeTableNumber)
 
         if (!user)
           return msg.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.')
@@ -55,7 +54,8 @@ export = <CommandType>{
             CLASS_NM: user.class,
             ALL_TI_YMD: timeTableDate
           },
-          method: 'GET'
+          method: 'GET',
+          json: false
         }
 
         const timeTableDateSplit = timeTableDate.split('')
@@ -84,11 +84,11 @@ export = <CommandType>{
         const mealNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0
         const mealWeekDay = weekDay != '' ? weekArr[findWeek] : weekArr[week]
 
-        const mealDate = await dateCal(dateVariable, mealNumber)
+        const mealDate = dateCal(dateVariable, mealNumber)
         if (!user)
           return msg.reply("정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.")
 
-        const mealOptions: SchoolApiType = {
+        const mealOptions = {
           uri: 'https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&pSize=999',
           qs: {
             KEY: apiKey,
@@ -96,7 +96,8 @@ export = <CommandType>{
             SD_SCHUL_CODE: user.schoolCode,
             MLSV_YMD: mealDate
           },
-          method: 'GET'
+          method: 'GET',
+          json: false
         }
         const meal = JSON.parse(await requestGet(mealOptions))
         if (meal.RESULT != undefined) {

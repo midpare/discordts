@@ -1,5 +1,5 @@
 import { QueryType } from "discord-player"
-import player from '../../../context/player'
+import player from '../../../contexts/player'
 import { CommandType } from '../../../typings/command'
 
 

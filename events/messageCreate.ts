@@ -1,5 +1,5 @@
 import { ExtendMessage } from "../typings/command"
-import { client } from "../context/client"
+import { client } from "../contexts/client"
 import 'dotenv/config'
 import { gambling } from "../models/gambling"
 import { dateCal } from "../handler/function"
@@ -15,7 +15,7 @@ export = {
     const command = client.mainCommands.get(cmd.toLowerCase())
     const aliase = client.mainAliases.get(cmd.toLowerCase())
     const date = new Date()
-    const today = await dateCal(date, 0)
+    const today = dateCal(date, 0)
     if (command) {
       const user = await gambling.findOne({ id })
       if (command.category == 'gambling' && command.name != '!가입') {

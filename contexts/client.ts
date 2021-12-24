@@ -1,7 +1,6 @@
 import { Client, ClientUser, Collection } from 'discord.js'
 import { CommandType } from '../typings/command'
 import mongoose from 'mongoose'
-import 'dotenv/config'
 import { InteractionType } from '../typings/interaction'
 
 export class ExtendClient extends Client {

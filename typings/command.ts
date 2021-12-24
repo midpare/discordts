@@ -14,7 +14,7 @@ interface ExecuteOptions {
   args: Array<string>
 }
 
-type ExecuteType = (options: ExecuteOptions) => any
+type ExecuteType = (options: ExecuteOptions) => Promise<void>
 
 export interface CommandType {
   name: string

@@ -1,9 +1,9 @@
 import { InteractionType } from "../typings/interaction";
-import { client } from '../context/client'
+import { client } from '../contexts/client'
 
 export = <InteractionType> {
   name: 'giveRole',
-  execute: (interaction) => {
+  execute: async (interaction) => {
     interaction.member.roles.add('910521119713394743')
     interaction.member.roles.remove('910521119713394739')
     interaction.channel.send('성공적으로 역할을 지급받았습니다!').then(() => {

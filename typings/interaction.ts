@@ -8,7 +8,7 @@ export interface ExtendInteraction extends Interaction {
   values: string
 }
 
-type ExecuteType = (interaction: ExtendInteraction) => any
+type ExecuteType = (interaction: ExtendInteraction) => Promise<void>
 
 export interface InteractionType {
   name: string

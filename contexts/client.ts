@@ -1,11 +1,12 @@
 import { Client, ClientUser, Collection } from 'discord.js'
 import { CommandType } from '../typings/command'
 import { InteractionType } from '../typings/interaction'
+import mongoose from 'mongoose'
 
 export class ExtendClient extends Client {
   public user!: ClientUser
   public channels!: any
-  
+
   mainCommands: Collection<string, CommandType> = new Collection()
   mainAliases: Collection<string, CommandType> = new Collection()
   subCommands: Collection<string, Map<string, CommandType>> = new Collection()
@@ -19,9 +20,12 @@ export class ExtendClient extends Client {
   }
 
   start() {
+    mongoose.connect(process.env.DB_URI || '')
+
     this.login(process.env.TOKEN)
-    const handler = new Array('commands', 'interactions', 'events', 'coin', 'school')
     
+    const handler = new Array('commands', 'interactions', 'events', 'coin', 'school')
+
     handler.forEach((element: string) => {
       require(`${__dirname}/../handler/${element}`)(client)
     })

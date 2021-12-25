@@ -24,6 +24,7 @@ export  = async (client: ExtendClient) => {
       console.log(error)
     }
   })
+  
   const subCommandFiles = await globPromise(`${__dirname}/../commands/subCommands/**/*{.ts,.js}`)
   subCommandFiles.forEach((value) => {
     const file = require(value)

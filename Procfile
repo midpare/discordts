@@ -1,1 +1,1 @@
-worker: npm run ts-start
+"start": "ts-node src/index.ts",

@@ -1,1 +1,1 @@
-"start": "ts-node src/index.ts",
+worker: ts-node index.ts

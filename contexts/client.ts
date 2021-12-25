@@ -20,17 +20,16 @@ export class ExtendClient extends Client {
     super({ intents: 32767 })
   }
 
-  start() {
+  async start() {
+    this.setCoinList()
+    this.setSchool()
+
     const handler = new Array('commands', 'interactions', 'events')
     handler.forEach((element: string) => {
       require(`${__dirname}/../handler/${element}`)(client)
     })
 
-    this.setCoinList()
-    this.setSchool()
-
-    mongoose.connect(process.env.DB_URI || '')
-
+    await mongoose.connect(process.env.DB_URI || '')
     this.login(process.env.TOKEN)
   }
 
@@ -50,7 +49,7 @@ export class ExtendClient extends Client {
     })
   }
 
-  async setSchool() {
+  setSchool() {
     const sds = ['서울특별시', '부산광역시',
       '대구광역시', '인천광역시',
       '광주광역시', '대전광역시',

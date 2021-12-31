@@ -3,11 +3,11 @@ import { client } from "../contexts/client"
 import 'dotenv/config'
 import { gambling } from "../models/gambling"
 import { dateCal } from "../handler/function"
-const prefix = process.env.PREFIX || ''
 
 export = {
   name: 'messageCreate',
   event: async (msg: ExtendMessage) => {
+    const prefix = process.env.PREFIX || ''
     if (msg.author.bot || msg.author.id === client.user.id || !msg.content.startsWith(prefix)) return
 
     const id = msg.author.id

@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const school_1 = require("../../../models/school");
 const function_1 = require("../../../handler/function");
-require("dotenv/config");
 const client_1 = require("../../../structures/client");
 module.exports = {
     name: '정보등록',

@@ -8,16 +8,23 @@ export class ExtendClient extends Client {
   public user!: ClientUser
   public channels!: any
 
-  mainCommands: Collection<string, CommandType> = new Collection()
-  mainAliases: Collection<string, CommandType> = new Collection()
-  subCommands: Collection<string, Map<string, CommandType>> = new Collection()
-  subAliases: Collection<string, Map<string, CommandType>> = new Collection()
-  coin: Collection<string, string> = new Collection()
-  interactions: Collection<string, InteractionType> = new Collection()
-  sdCode: Collection<string, string> = new Collection()
+  mainCommands: Collection<string, CommandType>
+  mainAliases: Collection<string, CommandType>
+  subCommands: Collection<string, Map<string, CommandType>>
+  subAliases: Collection<string, Map<string, CommandType>>
+  coin: Collection<string, string>
+  interactions: Collection<string, InteractionType>
+  sdCode: Collection<string, string>
 
   constructor() {
     super({ intents: 32767 })
+    this.mainAliases  = new Collection()
+    this.mainCommands  = new Collection()
+    this.subCommands = new Collection()
+    this.subAliases = new Collection()
+    this.coin = new Collection()
+    this.interactions = new Collection()
+    this.sdCode = new Collection()
   }
 
   async start() {

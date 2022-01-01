@@ -19,8 +19,8 @@ const mongoose_1 = __importDefault(require("mongoose"));
 class ExtendClient extends discord_js_1.Client {
     constructor() {
         super({ intents: 32767 });
-        this.mainCommands = new discord_js_1.Collection();
         this.mainAliases = new discord_js_1.Collection();
+        this.mainCommands = new discord_js_1.Collection();
         this.subCommands = new discord_js_1.Collection();
         this.subAliases = new discord_js_1.Collection();
         this.coin = new discord_js_1.Collection();

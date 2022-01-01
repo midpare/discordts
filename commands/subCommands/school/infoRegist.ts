@@ -1,7 +1,6 @@
 import { CommandType } from "../../../typings/command";
 import { school } from '../../../models/school'
 import { requestGet } from "../../../handler/function";
-import 'dotenv/config'
 import { client } from "../../../structures/client";
 
 export = <CommandType> {

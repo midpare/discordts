@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const client_1 = require("../structures/client");
-require("dotenv/config");
 const gambling_1 = require("../models/gambling");
 const function_1 = require("../handler/function");
 module.exports = {

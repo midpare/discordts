@@ -1,6 +1,5 @@
 import { ExtendMessage } from "../typings/command"
 import { client } from "../structures/client"
-import 'dotenv/config'
 import { gambling } from "../models/gambling"
 import { dateCal } from "../handler/function"
 
@@ -17,7 +16,7 @@ export = {
     const date = new Date()
     const today = dateCal(date, 0)
     if (command) {
-      const user = await gambling.findOne({ id })
+      const user = await gambling.findOne({id})
       if (command.category == 'gambling' && command.name != '!가입') {
         if (!user)
           return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.')

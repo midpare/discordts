@@ -1,5 +1,5 @@
 import { CommandType } from "../../../typings/command";
-import { bet1, bet2, betting } from '../../../typings/betting'
+import { bet1, bet2, betting } from '../../../structures/betting'
 import { MessageEmbed } from "discord.js";
 
 export = <CommandType> {

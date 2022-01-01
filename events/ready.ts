@@ -1,8 +1,8 @@
-import { client } from "../contexts/client"
+import { client } from "../structures/client"
 
 export = {
   name: 'ready',
-  event : () => {
+  event : async () => {
     client.user.setActivity('개발')
     console.log(`Logged in as ${client.user.tag}!`)
   }

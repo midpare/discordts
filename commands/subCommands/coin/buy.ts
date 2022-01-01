@@ -1,6 +1,6 @@
 import { CommandType } from "../../../typings/command";
 import { gambling } from '../../../models/gambling'
-import { client } from '../../../contexts/client'
+import { client } from '../../../structures/client'
 import { requestGet } from "../../../handler/function";
 
 export = <CommandType> {

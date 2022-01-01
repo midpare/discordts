@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const gambling_1 = require("../../../models/gambling");
 const function_1 = require("../../../handler/function");
-const client_1 = require("../../../contexts/client");
+const client_1 = require("../../../structures/client");
 module.exports = {
     name: '풀매수',
     aliases: ['전부구매'],

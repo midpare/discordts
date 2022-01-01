@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js'
 import { CommandType } from '../../../typings/command'
-import { bet1, bet2, betting } from '../../../typings/betting'
+import { bet1, bet2, betting } from '../../../structures/betting'
 
 export = <CommandType> {
   name: '현황',

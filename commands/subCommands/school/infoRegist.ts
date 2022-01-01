@@ -2,7 +2,7 @@ import { CommandType } from "../../../typings/command";
 import { school } from '../../../models/school'
 import { requestGet } from "../../../handler/function";
 import 'dotenv/config'
-import { client } from "../../../contexts/client";
+import { client } from "../../../structures/client";
 
 export = <CommandType> {
   name: '정보등록',

@@ -1,6 +1,6 @@
 import { CommandType } from "../../../typings/command";
 import { gambling } from '../../../models/gambling'
-import { bet, bet1, bet2, betting } from '../../../typings/betting'
+import { bet, bet1, bet2, betting } from '../../../structures/betting'
 
 export = <CommandType> {
   name: '종료',

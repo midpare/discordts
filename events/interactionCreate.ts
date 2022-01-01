@@ -1,9 +1,9 @@
 import { ExtendInteraction } from "../typings/interaction";
-import { client } from "../contexts/client";
+import { client } from "../structures/client";
 
 export = {
   name: 'interactionCreate',
-  event: (interaction: ExtendInteraction) => {
+  event: async (interaction: ExtendInteraction) => {
     const cmd = interaction.customId
     const events = client.interactions.get(cmd)
     if (!events) return

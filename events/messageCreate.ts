@@ -1,5 +1,5 @@
 import { ExtendMessage } from "../typings/command"
-import { client } from "../contexts/client"
+import { client } from "../structures/client"
 import 'dotenv/config'
 import { gambling } from "../models/gambling"
 import { dateCal } from "../handler/function"

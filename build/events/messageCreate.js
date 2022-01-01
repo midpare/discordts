@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const client_1 = require("../contexts/client");
+const client_1 = require("../structures/client");
 require("dotenv/config");
 const gambling_1 = require("../models/gambling");
 const function_1 = require("../handler/function");

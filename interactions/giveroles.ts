@@ -1,5 +1,5 @@
 import { InteractionType } from "../typings/interaction";
-import { client } from '../contexts/client'
+import { client } from '../structures/client'
 
 export = <InteractionType> {
   name: 'giveRole',

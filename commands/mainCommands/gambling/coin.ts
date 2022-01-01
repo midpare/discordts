@@ -1,4 +1,4 @@
-import { client } from "../../../contexts/client";
+import { client } from "../../../structures/client";
 import { gambling } from "../../../models/gambling";
 import { CommandType } from "../../../typings/command";
 

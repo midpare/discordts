@@ -1,6 +1,6 @@
 import { glob } from 'glob'
 import { promisify } from 'util'
-import { ExtendClient } from '../contexts/client'
+import { ExtendClient } from '../structures/client'
 
 const globPromise = promisify(glob)
 

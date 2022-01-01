@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const gambling_1 = require("../../../models/gambling");
-const client_1 = require("../../../contexts/client");
+const client_1 = require("../../../structures/client");
 const function_1 = require("../../../handler/function");
 module.exports = {
     name: '구매',

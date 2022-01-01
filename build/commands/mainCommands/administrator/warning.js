@@ -41,17 +41,15 @@ module.exports = {
             case '부여':
                 if (!user) {
                     const newUser = new warning_1.warning({ id, name, warning: count });
-                    newUser.save().then(() => {
-                        msg.channel.send('```' + `처벌 대상: ${name}#${discriminator}\n가한 처벌: 경고 ${count}회\n현재 경고 횟수: ${count}회\n처벌 사유: ${reason}` + '```').then(() => {
-                            setTimeout(() => msg.delete(), 2000);
-                        });
+                    newUser.save();
+                    msg.channel.send('```' + `처벌 대상: ${name}#${discriminator}\n가한 처벌: 경고 ${count}회\n현재 경고 횟수: ${count}회\n처벌 사유: ${reason}` + '```').then(() => {
+                        setTimeout(() => msg.delete(), 2000);
                     });
                 }
                 else {
-                    warning_1.warning.updateOne({ id }, { $inc: { warning: count } }, { upsert: true }).then(() => {
-                        msg.channel.send('```' + `처벌 대상: ${name}#${discriminator}\n가한 처벌: 경고 ${count}회\n현재 경고 횟수: ${user.warning + count}회\n처벌 사유: ${reason}` + '```').then(() => {
-                            setTimeout(() => msg.delete(), 2000);
-                        });
+                    (yield warning_1.warning.updateOne({ id }, { $inc: { warning: count } }, { upsert: true })).matchedCount;
+                    msg.channel.send('```' + `처벌 대상: ${name}#${discriminator}\n가한 처벌: 경고 ${count}회\n현재 경고 횟수: ${user.warning + count}회\n처벌 사유: ${reason}` + '```').then(() => {
+                        setTimeout(() => msg.delete(), 2000);
                     });
                 }
                 break;
@@ -60,10 +58,9 @@ module.exports = {
                     return msg.reply('이 유저는 차감 할 경고가 없습니다.');
                 if (user.warning - count < 0)
                     return msg.reply('차감하려는 경고 수가 유저의 경고 수보다 많습니다.');
-                warning_1.warning.updateOne({ id }, { $inc: { warning: -count } }).then(() => {
-                    msg.channel.send('```' + `처벌 대상: ${name}#${discriminator}\n가한 처벌: 경고 차감 ${count}회\n현재 경고 횟수: ${user.warning - count}회\n처벌 사유: ${reason}` + '```').then(() => {
-                        setTimeout(() => msg.delete(), 2000);
-                    });
+                (yield warning_1.warning.updateOne({ id }, { $inc: { warning: -count } })).matchedCount;
+                msg.channel.send('```' + `처벌 대상: ${name}#${discriminator}\n가한 처벌: 경고 차감 ${count}회\n현재 경고 횟수: ${user.warning - count}회\n처벌 사유: ${reason}` + '```').then(() => {
+                    setTimeout(() => msg.delete(), 2000);
                 });
                 break;
         }

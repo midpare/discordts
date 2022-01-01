@@ -1,14 +1,15 @@
 import { glob } from 'glob'
 import { promisify } from 'util'
 import { ExtendClient } from '../structures/client'
+import { CommandType } from '../typings/command'
 
 const globPromise = promisify(glob)
 
 export  = async (client: ExtendClient) => {
   const mainCommandFiles = await globPromise(`${__dirname}/../commands/mainCommands/**/*{.ts,.js}`)
 
-  mainCommandFiles.forEach(async (value) => {
-    const file = require(value)
+  mainCommandFiles.forEach((value: string) => {
+    const file: CommandType = require(value)
     if (client.mainCommands.get(file.name))
       throw `command name duplicate! command path: ${value}, command name: ${file.name}`
     try {
@@ -26,8 +27,8 @@ export  = async (client: ExtendClient) => {
   })
   
   const subCommandFiles = await globPromise(`${__dirname}/../commands/subCommands/**/*{.ts,.js}`)
-  subCommandFiles.forEach((value) => {
-    const file = require(value)
+  subCommandFiles.forEach((value: string) => {
+    const file: CommandType = require(value)
     const commands = new Map()
     const aliases = new Map()
     if (!file.category)

@@ -13,7 +13,7 @@ const util_1 = require("util");
 const globPromise = (0, util_1.promisify)(glob_1.glob);
 module.exports = (client) => __awaiter(void 0, void 0, void 0, function* () {
     const mainCommandFiles = yield globPromise(`${__dirname}/../commands/mainCommands/**/*{.ts,.js}`);
-    mainCommandFiles.forEach((value) => __awaiter(void 0, void 0, void 0, function* () {
+    mainCommandFiles.forEach((value) => {
         const file = require(value);
         if (client.mainCommands.get(file.name))
             throw `command name duplicate! command path: ${value}, command name: ${file.name}`;
@@ -30,7 +30,7 @@ module.exports = (client) => __awaiter(void 0, void 0, void 0, function* () {
         catch (error) {
             console.log(error);
         }
-    }));
+    });
     const subCommandFiles = yield globPromise(`${__dirname}/../commands/subCommands/**/*{.ts,.js}`);
     subCommandFiles.forEach((value) => {
         var _a, _b;

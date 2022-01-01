@@ -31,7 +31,7 @@ class ExtendClient extends discord_js_1.Client {
         return __awaiter(this, void 0, void 0, function* () {
             this.setCoinList();
             this.setSchool();
-            const handler = new Array('commands', 'interactions', 'events');
+            const handler = new Array('commands', 'interactions', 'events', 'intervals');
             handler.forEach((element) => {
                 require(`${__dirname}/../handler/${element}`)(exports.client);
             });

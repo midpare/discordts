@@ -31,7 +31,7 @@ export class ExtendClient extends Client {
     this.setCoinList()
     this.setSchool()
 
-    const handler = new Array('commands', 'interactions', 'events')
+    const handler = new Array('commands', 'interactions', 'events', 'intervals')
     handler.forEach((element: string) => {
       require(`${__dirname}/../handler/${element}`)(client)
     })

@@ -1,5 +1,5 @@
 import { requestGet } from "../handler/function"
-import { client } from "../structures/client"
+import { client } from "../contexts/client"
 import { IntervalType } from "../typings/interval"
 
 export = <IntervalType> {

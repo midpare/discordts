@@ -1,10 +1,10 @@
-import player from "../../../structures/player"
+import player from "../../../contexts/player"
 import { CommandType } from '../../../typings/command'
 
 export = <CommandType> {
   name: 'resume',
   category: 'music',
-  use: 'resume',
+  usage: 'resume',
   description: '노래를 다시 재생합니다.',
   execute: async({msg, args}) => {
     if (!msg.member.voice.channel)

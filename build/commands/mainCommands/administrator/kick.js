@@ -12,7 +12,7 @@ module.exports = {
     name: 'kick',
     aliases: ['킥', '강퇴'],
     category: 'admin',
-    use: 'kick <유저> <사유>',
+    usage: 'kick <유저> <사유>',
     description: '서버에서 맨션한 <유저>를 강퇴합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;

@@ -5,7 +5,7 @@ export = <CommandType> {
   name: '기초자금',
   aliases: ['초기자금'],
   category: 'gambling',
-  use: '기초자금',
+  usage: '기초자금',
   description: '기초자금 25,000원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 60초',
   execute: async ({msg, args}) => {
     const id = msg.author.id

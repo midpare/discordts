@@ -13,7 +13,7 @@ module.exports = {
     name: '코인',
     category: 'gambling',
     subCategory: 'coin',
-    use: '코인',
+    usage: '코인',
     description: '코인명령어를 사용합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;

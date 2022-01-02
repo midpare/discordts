@@ -13,7 +13,7 @@ const function_1 = require("../../../handler/function");
 module.exports = {
     name: '파산',
     category: 'gambling',
-    use: '파산',
+    usage: '파산',
     description: '모든 돈과 빚을 0원으로 만들고 3일간 도박을 하지 못합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;

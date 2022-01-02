@@ -5,7 +5,7 @@ import { dateCal } from '../../../handler/function'
 export = <CommandType> {
   name : '출석체크',
   category: 'gambling',
-  use: '출석체크',
+  usage: '출석체크',
   description: '하루에 한번 50,000 ~ 100,000만원의 돈을 획득합니다.',
   execute: async ({msg, args}) => {
     const id = msg.author.id

@@ -12,7 +12,7 @@ const warning_1 = require("../../../models/warning");
 module.exports = {
     name: '경고',
     category: 'admin',
-    use: '경고',
+    usage: '경고',
     description: '서버에서 맨션한 유저에게 경고를 부여합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;

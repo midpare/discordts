@@ -13,7 +13,7 @@ module.exports = {
     name: '잔액',
     aliases: ['돈', '보유금액'],
     category: 'gambling',
-    use: '잔액',
+    usage: '잔액',
     description: '자신의 현재 잔액을 확인합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;

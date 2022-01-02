@@ -1,6 +1,6 @@
 import { CommandType } from "../../../typings/command";
 import { gambling } from '../../../models/gambling'
-import { client } from '../../../structures/client'
+import { client } from '../../../contexts/client'
 import { requestGet } from "../../../handler/function";
 
 export = <CommandType> {
@@ -19,7 +19,6 @@ export = <CommandType> {
       json: true
     }
     const coin = await requestGet(apiOptions)
-    console.log(coin)
     if (!coin)
       return msg.reply('정확한 코인을 입력해주시기바랍니다.')
     const count = parseFloat(args[2]) 

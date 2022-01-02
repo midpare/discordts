@@ -13,7 +13,7 @@ module.exports = {
     name: '송금',
     aliases: ['이체', '돈보내기'],
     category: 'gambling',
-    use: '송금 <유저> <돈>',
+    usage: '송금 <유저> <돈>',
     description: '자신의 돈을 맨션한 <유저>에게 <돈>만큼 송금합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;

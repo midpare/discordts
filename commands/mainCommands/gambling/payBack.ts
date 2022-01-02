@@ -5,7 +5,7 @@ export = <CommandType> {
   name: '빚갚기',
   aliases: ['돈갚기'],
   category: 'gambling',
-  use: '빚갚기 <돈>',
+  usage: '빚갚기 <돈>',
   description: '자신의 빚을 갚습니다.',
   execute: async ({msg, args}) => {
     const id = msg.author.id

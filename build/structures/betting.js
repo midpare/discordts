@@ -1,35 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bet = exports.bet2 = exports.bet1 = exports.betting = void 0;
-class betDefault {
+exports.Bet = exports.bet2 = exports.bet1 = exports.betting = void 0;
+class BetDefault {
     constructor() {
         this.betting = false;
         this.title = '';
     }
 }
-class bet {
+class Bet {
     constructor() {
         this.list = [];
-        this.start = false;
-        this.name = null;
-        this.moneyBefore = 0;
+        this.name = '';
         this.times = 0;
-    }
-    get betName() {
-        return this.name;
     }
     get sum() {
         let result = 0;
-        for (let i = 0; i < this.list.length; i++) {
-            result += this.list[i].money;
-        }
+        this.list.forEach(element => {
+            result += element.money;
+        });
         return result;
     }
 }
-exports.bet = bet;
-const betting = new betDefault();
+exports.Bet = Bet;
+const betting = new BetDefault();
 exports.betting = betting;
-const bet1 = new bet();
+const bet1 = new Bet();
 exports.bet1 = bet1;
-const bet2 = new bet();
+const bet2 = new Bet();
 exports.bet2 = bet2;

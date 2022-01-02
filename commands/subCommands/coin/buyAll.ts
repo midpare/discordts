@@ -1,7 +1,7 @@
 import { CommandType } from "../../../typings/command";
 import { requestGet } from "../../../handler/function";
 import { gambling } from "../../../models/gambling";
-import { client } from "../../../structures/client";
+import { client } from "../../../contexts/client";
 
 export = <CommandType> {
   name: '풀매도',

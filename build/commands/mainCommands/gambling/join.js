@@ -12,7 +12,7 @@ const gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '가입',
     category: 'gambling',
-    use: '가입',
+    usage: '가입',
     description: '도박 관련 명령어를 사용할수있게 가입을 합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;

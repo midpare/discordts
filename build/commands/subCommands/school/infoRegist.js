@@ -14,7 +14,7 @@ const client_1 = require("../../../structures/client");
 module.exports = {
     name: '정보등록',
     category: 'school',
-    use: '정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
+    usage: '정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
     description: '자신의 학교정보를 등록해 학교 명령어 사용을 가능하게합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         if (!args[1] || !args[2] || !args[3] || !args[4])

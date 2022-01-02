@@ -1,5 +1,5 @@
 import { ExtendMessage } from "../typings/command"
-import { client } from "../structures/client"
+import { client } from "../contexts/client"
 import { gambling } from "../models/gambling"
 import { dateCal } from "../handler/function"
 

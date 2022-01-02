@@ -13,7 +13,7 @@ const function_1 = require("../../../handler/function");
 module.exports = {
     name: '출석체크',
     category: 'gambling',
-    use: '출석체크',
+    usage: '출석체크',
     description: '하루에 한번 50,000 ~ 100,000만원의 돈을 획득합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;

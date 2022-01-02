@@ -12,7 +12,7 @@ const gambling_1 = require("../../../models/gambling");
 module.exports = {
     name: '도박',
     category: 'gambling',
-    use: '도박 <돈>',
+    usage: '도박 <돈>',
     description: '자신의 <돈>을 걸고 도박을 진행합니다. (성공시: 2배, 실패시: 0배)',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;

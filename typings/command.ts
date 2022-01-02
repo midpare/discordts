@@ -21,7 +21,7 @@ export interface CommandType {
   aliases: Array<string>
   category: string
   subCategory: string
-  use: string
+  usage: string
   description: string
   execute: ExecuteType
 }

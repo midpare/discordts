@@ -2,14 +2,14 @@ import { MessageEmbed } from 'discord.js'
 import { school } from '../../../models/school'
 import { CommandType } from '../../../typings/command'
 import { dateCal, requestGet } from '../../../handler/function'
-import { client } from '../../../structures/client'
+import { client } from '../../../contexts/client'
 
 const apiKey = process.env.SCHOOL_API_KEY || ''
 
 export = <CommandType>{
   name: '학교',
   category: 'school',
-  use: '학교',
+  usage: '학교',
   description: '학교 명령어',
   execute: async ({ msg, args }) => {
     if (!args[0])

@@ -4,7 +4,7 @@ import { CommandType } from '../../../typings/command'
 export = <CommandType> {
   name : '빚',
   category: 'gambling',
-  use: '빚',
+  usage: '빚',
   description: '자신의 현재 빚을 확인합니다.',
   execute: async ({msg, args}) => {
     const id = msg.author.id 

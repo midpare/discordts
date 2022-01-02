@@ -1,5 +1,5 @@
 import { QueryType } from "discord-player"
-import player from '../../../structures/player'
+import player from '../../../contexts/player'
 import { CommandType } from '../../../typings/command'
 
 
@@ -7,7 +7,7 @@ export = <CommandType> {
   name: 'play',
   aliases: ['p'],
   category: 'music',
-  use: 'play <제목>',
+  usage: 'play <제목>',
   description: '제목의 노래를 현재 음성채널에서 재생합니다.',
   execute: async ({msg, args}) => {
 

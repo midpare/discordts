@@ -6,7 +6,7 @@ export = <CommandType> {
   name : '랭킹',
   aliases: ['순위'],
   category: 'gambling',
-  use: '랭킹',
+  usage: '랭킹',
   description: '이 서버의 도박 순위를 확인합니다.',
   execute: async ({msg, args}) => {
     const users = await gambling.find({money: {$gt: 0}}).sort({money: -1})

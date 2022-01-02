@@ -1,6 +1,6 @@
 import { CommandType } from "../../../typings/command";
 import { gambling } from '../../../models/gambling'
-import { bet, bet1, bet2, betting } from '../../../structures/betting'
+import { Bet, bet1, bet2, betting } from '../../../contexts/betting'
 
 export = <CommandType> {
   name: '종료',
@@ -22,7 +22,7 @@ export = <CommandType> {
         break
     }
 
-    async function result(bet: bet) {
+    async function result(bet: Bet) {
       msg.reply(`${bet.name}팀이 승리했습니다!`)
       for (let i = 0; i < bet.list.length; i++) {
         const id = bet.list[i].id

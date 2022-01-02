@@ -27,7 +27,6 @@ module.exports = {
             json: true
         };
         const coin = yield (0, function_1.requestGet)(apiOptions);
-        console.log(coin);
         if (!coin)
             return msg.reply('정확한 코인을 입력해주시기바랍니다.');
         const count = parseFloat(args[2]);

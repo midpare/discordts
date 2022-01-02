@@ -16,7 +16,7 @@ const apiKey = process.env.SCHOOL_API_KEY || '';
 module.exports = {
     name: '학교',
     category: 'school',
-    use: '학교',
+    usage: '학교',
     description: '학교 명령어',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;

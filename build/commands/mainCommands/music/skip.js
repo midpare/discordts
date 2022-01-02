@@ -15,7 +15,7 @@ const player_1 = __importDefault(require("../../../structures/player"));
 module.exports = {
     name: 'skip',
     category: 'music',
-    use: 'skip',
+    usage: 'skip',
     description: '현재 나오는 노래를 스킵합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         if (!msg.member.voice.channel)

@@ -8,6 +8,7 @@ const gamblingInfo = new mongoose_1.Schema({
     date: Number,
     money: Number,
     debt: Number,
+    principalDebt: Number,
     gamLevel: Number,
     baseMoneyCoolTime: Number,
     bankruptcy: String,

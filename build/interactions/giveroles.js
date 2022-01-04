@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const client_1 = require("../contexts/client");
-module.exports = {
+Object.defineProperty(exports, "__esModule", { value: true });
+const Client_1 = require("../structures/Client");
+const Interaction_1 = require("../structures/Interaction");
+exports.default = new Interaction_1.Interaction({
     name: 'giveRole',
     execute: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
@@ -18,6 +20,6 @@ module.exports = {
         interaction.channel.send('성공적으로 역할을 지급받았습니다!').then(() => {
             setTimeout(() => interaction.channel.bulkDelete(1), 2000);
         });
-        (_a = client_1.client.channels.cache.get('910521192039989288')) === null || _a === void 0 ? void 0 : _a.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다!`);
-    })
-};
+        (_a = Client_1.client.channels.cache.get('910521192039989288')) === null || _a === void 0 ? void 0 : _a.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다!`);
+    }),
+});

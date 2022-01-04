@@ -1,5 +1,5 @@
 import { Player } from 'discord-player'
-import { client } from './client'
+import { client } from './Client'
 
 const player = new Player(client, {
   ytdlOptions: {

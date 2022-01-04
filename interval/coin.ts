@@ -1,8 +1,8 @@
-import { requestGet } from '../handler/function';
-import { client } from '../contexts/client';
-import { IntervalType } from '../typings/interval';
+import { requestGet } from '../structures/Util';
+import { client } from '../structures/Client';
+import { Interval } from '../structures/Interval';
 
-export = <IntervalType> {
+export default new Interval({
   execute: async () => {
     const options = {
       uri: 'https://api.upbit.com/v1/market/all',
@@ -20,4 +20,4 @@ export = <IntervalType> {
   },
   interval: '1d',
   immediate: true,
-}
+});

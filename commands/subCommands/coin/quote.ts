@@ -1,4 +1,4 @@
-import { Command } from '../../../contexts/commands';
+import { Command } from '../../../structures/Commands';
 import { MessageActionRow, MessageButton } from 'discord.js';
 
 export default new Command({

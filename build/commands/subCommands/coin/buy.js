@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const commands_1 = require("../../../contexts/commands");
+const Commands_1 = require("../../../structures/Commands");
 const gambling_1 = require("../../../models/gambling");
-const client_1 = require("../../../contexts/client");
-const function_1 = require("../../../handler/function");
-exports.default = new commands_1.Command({
+const Client_1 = require("../../../structures/Client");
+const Util_1 = require("../../../structures/Util");
+exports.default = new Commands_1.Command({
     name: '구매',
     aliases: ['매수'],
     category: 'coin',
@@ -26,11 +26,11 @@ exports.default = new commands_1.Command({
         const coinName = args[1];
         const userCoin = stock.filter((element) => element.name == coinName)[0];
         const apiOptions = {
-            uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client_1.client.coin.get(coinName)}&count=1&to`,
+            uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${Client_1.client.coin.get(coinName)}&count=1&to`,
             method: 'GET',
             json: true,
         };
-        const coin = yield (0, function_1.requestGet)(apiOptions);
+        const coin = yield (0, Util_1.requestGet)(apiOptions);
         if (!coin)
             return msg.reply('정확한 코인을 입력해주시기바랍니다.');
         const count = parseFloat(args[2]);

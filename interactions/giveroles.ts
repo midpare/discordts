@@ -1,7 +1,7 @@
-import { InteractionType } from '../typings/interaction';
-import { client } from '../contexts/client';
+import { client } from '../structures/Client';
+import { Interaction } from '../structures/Interaction';
 
-export = <InteractionType> {
+export default new Interaction({
   name: 'giveRole',
   execute: async (interaction) => {
     interaction.member.roles.add('910521119713394743');
@@ -10,5 +10,5 @@ export = <InteractionType> {
       setTimeout(() => interaction.channel.bulkDelete(1), 2000);
     });
     client.channels.cache.get('910521192039989288')?.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다!`);
-  }
-}
+  },
+});

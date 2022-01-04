@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
-const commands_1 = require("../../../contexts/commands");
-exports.default = new commands_1.Command({
+const Commands_1 = require("../../../structures/Commands");
+exports.default = new Commands_1.Command({
     name: '올인',
     aliases: ['allIn'],
     category: 'gambling',

@@ -10,9 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const commands_1 = require("../../../contexts/commands");
-const function_1 = require("../../../handler/function");
-exports.default = new commands_1.Command({
+const Commands_1 = require("../../../structures/Commands");
+const Util_1 = require("../../../structures/Util");
+exports.default = new Commands_1.Command({
     name: '팀',
     aliases: ['팀'],
     category: 'game',
@@ -24,7 +24,7 @@ exports.default = new commands_1.Command({
         if (!args[0])
             return msg.reply('기입할 이름을 입력해주세요');
         const length = args.length;
-        const team = (0, function_1.shuffle)(args);
+        const team = (0, Util_1.shuffle)(args);
         for (let i = 0; i < length; i++) {
             if (i < length / 2)
                 embed.addField('1팀', `${team[i]}`, false);

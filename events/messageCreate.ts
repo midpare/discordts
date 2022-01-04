@@ -1,7 +1,7 @@
 import { ExtendMessage } from '../typings/command';
-import { client } from '../contexts/client';
+import { client } from '../structures/Client';
 import { gambling } from '../models/gambling';
-import { dateCal } from '../handler/function';
+import { dateCal } from '../structures/Util';
 
 export = {
   name: 'messageCreate',

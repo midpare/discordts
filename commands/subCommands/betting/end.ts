@@ -1,6 +1,6 @@
-import { Command } from '../../../contexts/commands';
+import { Command } from '../../../structures/Commands';
 import { gambling } from '../../../models/gambling';
-import { Bet, bet1, bet2, betting } from '../../../contexts/betting';
+import { Bet, bet1, bet2, betting } from '../../../structures/Betting';
 
 export default new Command({
   name: '종료',
@@ -26,11 +26,11 @@ export default new Command({
 
     async function result(bet: Bet) {
       msg.reply(`${bet.name}팀이 승리했습니다!`);
-      for (let i = 0; i < bet.list.length; i++) {
-        const id = bet.list[i].id;
-        const moneyResult = bet.list[i].money * bet.times;
+      bet.list.forEach(async (element) => {
+        const id = element.id;
+        const moneyResult = element.money * bet.times;
         (await gambling.updateOne({ id }, { $inc: { money: moneyResult } })).matchedCount;
-      }
+      });
     }
     
     bet1.list = [];

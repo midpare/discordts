@@ -1,5 +1,5 @@
 import { warning } from '../../../models/warning';
-import { Command } from '../../../contexts/commands';
+import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '경고',

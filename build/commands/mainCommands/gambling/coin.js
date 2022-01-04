@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const client_1 = require("../../../contexts/client");
-const commands_1 = require("../../../contexts/commands");
-exports.default = new commands_1.Command({
+const Client_1 = require("../../../structures/Client");
+const Commands_1 = require("../../../structures/Commands");
+exports.default = new Commands_1.Command({
     name: '코인',
     category: 'gambling',
     subCategory: 'coin',
@@ -19,8 +19,8 @@ exports.default = new commands_1.Command({
     description: '코인명령어를 사용합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
-        const command = (_a = client_1.client.subCommands.get('coin')) === null || _a === void 0 ? void 0 : _a.get(args[0]);
-        const alias = (_b = client_1.client.subAliases.get('coin')) === null || _b === void 0 ? void 0 : _b.get(args[0]);
+        const command = (_a = Client_1.client.subCommands.get('coin')) === null || _a === void 0 ? void 0 : _a.get(args[0]);
+        const alias = (_b = Client_1.client.subAliases.get('coin')) === null || _b === void 0 ? void 0 : _b.get(args[0]);
         if (command) {
             command.execute({ msg, args });
         }

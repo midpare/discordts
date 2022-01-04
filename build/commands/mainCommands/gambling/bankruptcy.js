@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const commands_1 = require("../../../contexts/commands");
+const Commands_1 = require("../../../structures/Commands");
 const gambling_1 = require("../../../models/gambling");
-const function_1 = require("../../../handler/function");
-exports.default = new commands_1.Command({
+const Util_1 = require("../../../structures/Util");
+exports.default = new Commands_1.Command({
     name: '파산',
     category: 'gambling',
     usage: '파산',
@@ -21,7 +21,7 @@ exports.default = new commands_1.Command({
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
         const date = new Date();
-        const today = (0, function_1.dateCal)(date, 0);
+        const today = (0, Util_1.dateCal)(date, 0);
         ;
         (yield gambling_1.gambling.updateOne({ id }, { $set: { bankruptcy: today, money: 0, debt: 0 } })).matchedCount;
         msg.reply(`성공적으로 ${user.name}님이 파산했습니다!`);

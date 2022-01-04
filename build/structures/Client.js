@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.client = exports.ExtendClient = void 0;
 const discord_js_1 = require("discord.js");
-const function_1 = require("../handler/function");
+const Util_1 = require("./Util");
 const mongoose_1 = __importDefault(require("mongoose"));
 class ExtendClient extends discord_js_1.Client {
     constructor() {
@@ -46,7 +46,7 @@ class ExtendClient extends discord_js_1.Client {
                 method: 'GET',
                 json: true,
             };
-            const allCoin = yield (0, function_1.requestGet)(options);
+            const allCoin = yield (0, Util_1.requestGet)(options);
             allCoin.forEach((element) => __awaiter(this, void 0, void 0, function* () {
                 if (element.market.startsWith('KRW')) {
                     const coinName = element.korean_name;

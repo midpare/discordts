@@ -10,11 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const commands_1 = require("../../../contexts/commands");
-const client_1 = require("../../../contexts/client");
-const function_1 = require("../../../handler/function");
+const Commands_1 = require("../../../structures/Commands");
+const Client_1 = require("../../../structures/Client");
+const Util_1 = require("../../../structures/Util");
 const gambling_1 = require("../../../models/gambling");
-exports.default = new commands_1.Command({
+exports.default = new Commands_1.Command({
     name: '보유',
     aliases: ['보유량'],
     category: 'coin',
@@ -31,11 +31,11 @@ exports.default = new commands_1.Command({
             .setTitle(`${msg.author.username}님의 코인 보유 현황`);
         for (const element of stock) {
             const apiOptions = {
-                uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client_1.client.coin.get(element.name)}&count=1&to`,
+                uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${Client_1.client.coin.get(element.name)}&count=1&to`,
                 method: 'GET',
                 json: true,
             };
-            const coin = yield (0, function_1.requestGet)(apiOptions);
+            const coin = yield (0, Util_1.requestGet)(apiOptions);
             const persent = Math.round((coin[0].tradePrice / element.money - 1) * 100 * 100) / 100;
             const persentShown = persent < 0 ? persent : '+' + persent;
             const profit = Math.round((coin[0].tradePrice - element.money) * element.count);

@@ -1,8 +1,8 @@
 import { MessageEmbed } from 'discord.js';
 import { school } from '../../../models/school';
-import { Command } from '../../../contexts/commands';
-import { dateCal, requestGet } from '../../../handler/function';
-import { client } from '../../../contexts/client';
+import { Command } from '../../../structures/Commands';
+import { dateCal, requestGet } from '../../../structures/Util';
+import { client } from '../../../structures/Client';
 
 export default new Command({
   name: '학교',

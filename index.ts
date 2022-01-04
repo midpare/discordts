@@ -1,7 +1,3 @@
-import { client } from './contexts/client';
+import { client } from './structures/Client';
 
 client.start();
-
-setTimeout(() => {
-  console.log(client)
-}, 2000);

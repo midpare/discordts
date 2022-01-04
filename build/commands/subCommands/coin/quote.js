@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const commands_1 = require("../../../contexts/commands");
+const Commands_1 = require("../../../structures/Commands");
 const discord_js_1 = require("discord.js");
-exports.default = new commands_1.Command({
+exports.default = new Commands_1.Command({
     name: '현황',
     aliases: ['시세', '가격'],
     category: 'coin',

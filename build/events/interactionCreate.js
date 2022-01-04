@@ -8,12 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const client_1 = require("../contexts/client");
+const Client_1 = require("../structures/Client");
 module.exports = {
     name: 'interactionCreate',
     event: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
         const cmd = interaction.customId;
-        const events = client_1.client.interactions.get(cmd);
+        const events = Client_1.client.interactions.get(cmd);
         if (!events)
             return;
         try {

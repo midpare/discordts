@@ -1,5 +1,5 @@
-import player from '../../../contexts/player';
-import { Command } from '../../../contexts/commands';
+import player from '../../../structures/Player';
+import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: 'resume',

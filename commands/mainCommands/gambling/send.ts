@@ -1,5 +1,5 @@
 import { gambling } from '../../../models/gambling';
-import { Command } from '../../../contexts/commands';
+import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '송금',

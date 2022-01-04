@@ -1,5 +1,5 @@
 import { ExtendInteraction } from '../typings/interaction';
-import { client } from '../contexts/client';
+import { client } from '../structures/Client';
 
 export = {
   name: 'interactionCreate',

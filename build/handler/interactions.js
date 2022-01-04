@@ -34,7 +34,7 @@ module.exports = function (client) {
     return __awaiter(this, void 0, void 0, function* () {
         const interactionFiles = yield globPromise(`${__dirname}/../interactions/**/*{.ts,.js}`);
         interactionFiles.forEach((value) => __awaiter(this, void 0, void 0, function* () {
-            const file = (yield Promise.resolve().then(() => __importStar(require(value))));
+            const file = (yield Promise.resolve().then(() => __importStar(require(value)))).default;
             try {
                 client.interactions.set(file.name, file);
             }

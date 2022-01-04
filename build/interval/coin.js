@@ -8,24 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const function_1 = require("../handler/function");
-const client_1 = require("../contexts/client");
-module.exports = {
+Object.defineProperty(exports, "__esModule", { value: true });
+const Util_1 = require("../structures/Util");
+const Client_1 = require("../structures/Client");
+const Interval_1 = require("../structures/Interval");
+exports.default = new Interval_1.Interval({
     execute: () => __awaiter(void 0, void 0, void 0, function* () {
         const options = {
             uri: 'https://api.upbit.com/v1/market/all',
             method: 'GET',
             json: true,
         };
-        const allCoin = yield (0, function_1.requestGet)(options);
+        const allCoin = yield (0, Util_1.requestGet)(options);
         allCoin.forEach((element) => __awaiter(void 0, void 0, void 0, function* () {
             if (element.market.startsWith('KRW')) {
                 const coinName = element.korean_name;
                 const market = element.market;
-                client_1.client.coin.set(coinName, market);
+                Client_1.client.coin.set(coinName, market);
             }
         }));
     }),
     interval: '1d',
     immediate: true,
-};
+});

@@ -11,10 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const school_1 = require("../../../models/school");
-const commands_1 = require("../../../contexts/commands");
-const function_1 = require("../../../handler/function");
-const client_1 = require("../../../contexts/client");
-exports.default = new commands_1.Command({
+const Commands_1 = require("../../../structures/Commands");
+const Util_1 = require("../../../structures/Util");
+const Client_1 = require("../../../structures/Client");
+exports.default = new Commands_1.Command({
     name: '학교',
     category: 'school',
     usage: '학교',
@@ -32,8 +32,8 @@ exports.default = new commands_1.Command({
         const findWeek = weekArr.indexOf(args[0].split('')[0]);
         const weekDay = findWeek > -1 ? weekArr[findWeek] + '요일' : '';
         const user = yield school_1.school.findOne({ id });
-        const command = (_a = client_1.client.subCommands.get('school')) === null || _a === void 0 ? void 0 : _a.get(args[0]);
-        const alias = (_b = client_1.client.subAliases.get('school')) === null || _b === void 0 ? void 0 : _b.get(args[0]);
+        const command = (_a = Client_1.client.subCommands.get('school')) === null || _a === void 0 ? void 0 : _a.get(args[0]);
+        const alias = (_b = Client_1.client.subAliases.get('school')) === null || _b === void 0 ? void 0 : _b.get(args[0]);
         if (command) {
             command.execute({ msg, args });
             return;
@@ -46,7 +46,7 @@ exports.default = new commands_1.Command({
             case `${weekDay}시간표`:
                 const timeTableNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
                 const timeTableWeekDay = weekDay != '' ? weekArr[findWeek] : weekArr[week];
-                const timeTableDate = (0, function_1.dateCal)(dateVariable, timeTableNumber);
+                const timeTableDate = (0, Util_1.dateCal)(dateVariable, timeTableNumber);
                 if (!user)
                     return msg.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.');
                 const timeTableOptions = {
@@ -66,7 +66,7 @@ exports.default = new commands_1.Command({
                 const timeTableYear = timeTableDateSplit[0] + timeTableDateSplit[1] + timeTableDateSplit[2] + timeTableDateSplit[3];
                 const timeTableMonth = timeTableDateSplit[4] + timeTableDateSplit[5];
                 const timeTableDay = timeTableDateSplit[6] + timeTableDateSplit[7];
-                const timeTable = JSON.parse(yield (0, function_1.requestGet)(timeTableOptions));
+                const timeTable = JSON.parse(yield (0, Util_1.requestGet)(timeTableOptions));
                 if (timeTable.misTimetable == undefined || timeTable.misTimetable[1].row[0].ITRT_CNTNT === '토요휴업일') {
                     embed
                         .setTitle('시간표')
@@ -87,7 +87,7 @@ exports.default = new commands_1.Command({
             case `${weekDay}급식` || `${weekDay}급식정보`:
                 const mealNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
                 const mealWeekDay = weekDay != '' ? weekArr[findWeek] : weekArr[week];
-                const mealDate = (0, function_1.dateCal)(dateVariable, mealNumber);
+                const mealDate = (0, Util_1.dateCal)(dateVariable, mealNumber);
                 if (!user)
                     return msg.reply("정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.");
                 const mealOptions = {
@@ -101,7 +101,7 @@ exports.default = new commands_1.Command({
                     method: 'GET',
                     json: false,
                 };
-                const meal = JSON.parse(yield (0, function_1.requestGet)(mealOptions));
+                const meal = JSON.parse(yield (0, Util_1.requestGet)(mealOptions));
                 if (meal.RESULT != undefined) {
                     embed
                         .setTitle('급식')

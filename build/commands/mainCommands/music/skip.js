@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const player_1 = __importDefault(require("../../../contexts/player"));
-const commands_1 = require("../../../contexts/commands");
-exports.default = new commands_1.Command({
+const Player_1 = __importDefault(require("../../../structures/Player"));
+const Commands_1 = require("../../../structures/Commands");
+exports.default = new Commands_1.Command({
     name: 'skip',
     category: 'music',
     usage: 'skip',
@@ -22,7 +22,7 @@ exports.default = new commands_1.Command({
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         if (!msg.member.voice.channel)
             return msg.reply('채널에 접속해주시기 바랍니다.');
-        const queue = player_1.default.getQueue(msg.guildId);
+        const queue = Player_1.default.getQueue(msg.guildId);
         if (!queue)
             return msg.reply('노래가 재생되고 있지 않습니다.');
         queue.skip();

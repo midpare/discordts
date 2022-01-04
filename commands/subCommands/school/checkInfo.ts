@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { school } from '../../../models/school';
-import { Command } from '../../../contexts/commands';
+import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '정보확인',

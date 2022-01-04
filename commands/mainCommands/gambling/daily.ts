@@ -1,6 +1,6 @@
 import { gambling } from '../../../models/gambling';
-import { Command } from '../../../contexts/commands';
-import { dateCal } from '../../../handler/function';
+import { Command } from '../../../structures/Commands';
+import { dateCal } from '../../../structures/Util';
 
 export default new Command({
   name: '출석체크',

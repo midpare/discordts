@@ -1,7 +1,7 @@
-import { Command } from '../../../contexts/commands';
+import { Command } from '../../../structures/Commands';
 import { gambling } from '../../../models/gambling';
-import { requestGet } from '../../../handler/function';
-import { client } from '../../../contexts/client';
+import { requestGet } from '../../../structures/Util';
+import { client } from '../../../structures/Client';
 
 export default new Command({
   name: '풀매수',

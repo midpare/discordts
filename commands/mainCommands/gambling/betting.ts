@@ -1,7 +1,7 @@
-import { Command } from '../../../contexts/commands';
-import { Bet, bet1, bet2, betting } from '../../../contexts/betting';
+import { Command } from '../../../structures/Commands';
+import { Bet, bet1, bet2, betting } from '../../../structures/Betting';
 import { gambling } from '../../../models/gambling';
-import { client } from '../../../contexts/client';
+import { client } from '../../../structures/Client';
 
 export default new Command({
   name: '베팅',

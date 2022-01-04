@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const commands_1 = require("../../../contexts/commands");
-exports.default = new commands_1.Command({
+const Commands_1 = require("../../../structures/Commands");
+exports.default = new Commands_1.Command({
     name: 'clear',
     aliases: ['클리어'],
     category: 'admin',

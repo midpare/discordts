@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const commands_1 = require("../../../contexts/commands");
+const Commands_1 = require("../../../structures/Commands");
 const school_1 = require("../../../models/school");
-const function_1 = require("../../../handler/function");
-const client_1 = require("../../../contexts/client");
-exports.default = new commands_1.Command({
+const Util_1 = require("../../../structures/Util");
+const Client_1 = require("../../../structures/Client");
+exports.default = new Commands_1.Command({
     name: '정보등록',
     category: 'school',
     usage: '정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
@@ -32,7 +32,7 @@ exports.default = new commands_1.Command({
         const classNumber = !Number.isInteger(text[3]) ? text[0] : text[0] + text[1];
         if (!Number.isInteger(parseFloat(grade)) || !Number.isInteger(parseFloat(classNumber)))
             return msg.reply('정확한 학년반을 입력해주시기바랍니다. ex 1학년 2반');
-        const cityCode = client_1.client.sdCode.get(args[1]);
+        const cityCode = Client_1.client.sdCode.get(args[1]);
         const cityName = args[1];
         if (!cityCode)
             return msg.reply('정확한 시도위치를 입력해주시기바랍니다.');
@@ -46,7 +46,7 @@ exports.default = new commands_1.Command({
             method: 'GET',
             json: false,
         };
-        const basicSchool = JSON.parse(yield (0, function_1.requestGet)(basicSchoolOptions));
+        const basicSchool = JSON.parse(yield (0, Util_1.requestGet)(basicSchoolOptions));
         if (basicSchool.RESULT != undefined)
             return msg.reply('입력한 정보와 일치하는 학교가 없습니다.');
         const schoolCode = basicSchool.schoolInfo[1].row[0].SD_SCHUL_CODE;
@@ -62,7 +62,7 @@ exports.default = new commands_1.Command({
             method: 'GET',
             json: false,
         };
-        const classInfo = JSON.parse(yield (0, function_1.requestGet)(classOptions));
+        const classInfo = JSON.parse(yield (0, Util_1.requestGet)(classOptions));
         if (classInfo.RESULT != undefined || parseFloat(classNumber) >= classInfo.classInfo[1].row.length + 1)
             return msg.reply('입력한 반 정보와 일치하는 반이 없습니다.');
         if (!user) {

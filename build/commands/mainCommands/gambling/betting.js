@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const commands_1 = require("../../../contexts/commands");
-const betting_1 = require("../../../contexts/betting");
+const Commands_1 = require("../../../structures/Commands");
+const Betting_1 = require("../../../structures/Betting");
 const gambling_1 = require("../../../models/gambling");
-const client_1 = require("../../../contexts/client");
-exports.default = new commands_1.Command({
+const Client_1 = require("../../../structures/Client");
+exports.default = new Commands_1.Command({
     name: '베팅',
     category: 'gambling',
     usage: '베팅',
@@ -22,8 +22,8 @@ exports.default = new commands_1.Command({
         var _a, _b;
         const id = msg.author.id;
         const name = msg.author.username;
-        const command = (_a = client_1.client.subCommands.get('betting')) === null || _a === void 0 ? void 0 : _a.get(args[0]);
-        const alias = (_b = client_1.client.subAliases.get('betting')) === null || _b === void 0 ? void 0 : _b.get(args[0]);
+        const command = (_a = Client_1.client.subCommands.get('betting')) === null || _a === void 0 ? void 0 : _a.get(args[0]);
+        const alias = (_b = Client_1.client.subAliases.get('betting')) === null || _b === void 0 ? void 0 : _b.get(args[0]);
         if (command) {
             command.execute({ msg, args });
             return;
@@ -32,16 +32,16 @@ exports.default = new commands_1.Command({
             alias.execute({ msg, args });
             return;
         }
-        if (!betting_1.betting.betting)
+        if (!Betting_1.betting.betting)
             return msg.reply('아직 베팅을 시작하지 않았습니다.');
-        if (args[0] != betting_1.bet1.name && args[0] != betting_1.bet2.name)
+        if (args[0] != Betting_1.bet1.name && args[0] != Betting_1.bet2.name)
             return;
         switch (args[0]) {
-            case betting_1.bet1.name:
-                bettingFunction(betting_1.bet1);
+            case Betting_1.bet1.name:
+                bettingFunction(Betting_1.bet1);
                 break;
-            case betting_1.bet2.name:
-                bettingFunction(betting_1.bet2);
+            case Betting_1.bet2.name:
+                bettingFunction(Betting_1.bet2);
                 break;
         }
         function bettingFunction(bet) {

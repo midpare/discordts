@@ -1,7 +1,7 @@
 import { Client, ClientUser, Collection } from 'discord.js'
 import { CommandType } from '../typings/command'
 import { InteractionType } from '../typings/interaction'
-import { requestGet } from '../handler/function'
+import { requestGet } from './Util'
 import mongoose from 'mongoose'
 
 export class ExtendClient extends Client {

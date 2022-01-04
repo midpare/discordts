@@ -8,21 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const client_1 = require("../contexts/client");
+const Client_1 = require("../structures/Client");
 const gambling_1 = require("../models/gambling");
-const function_1 = require("../handler/function");
+const Util_1 = require("../structures/Util");
 module.exports = {
     name: 'messageCreate',
     event: (msg) => __awaiter(void 0, void 0, void 0, function* () {
         const prefix = process.env.PREFIX || '';
-        if (msg.author.bot || msg.author.id === client_1.client.user.id || !msg.content.startsWith(prefix))
+        if (msg.author.bot || msg.author.id === Client_1.client.user.id || !msg.content.startsWith(prefix))
             return;
         const id = msg.author.id;
         const [cmd, ...args] = msg.content.slice(prefix.length).trim().split(/ +/g);
-        const command = client_1.client.mainCommands.get(cmd.toLowerCase());
-        const aliase = client_1.client.mainAliases.get(cmd.toLowerCase());
+        const command = Client_1.client.mainCommands.get(cmd.toLowerCase());
+        const aliase = Client_1.client.mainAliases.get(cmd.toLowerCase());
         const date = new Date();
-        const today = (0, function_1.dateCal)(date, 0);
+        const today = (0, Util_1.dateCal)(date, 0);
         try {
             if (command) {
                 const user = yield gambling_1.gambling.findOne({ id });

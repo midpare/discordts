@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const betting_1 = require("../../../structures/betting");
+const betting_1 = require("../../../contexts/betting");
 const gambling_1 = require("../../../models/gambling");
-const client_1 = require("../../../structures/client");
+const client_1 = require("../../../contexts/client");
 module.exports = {
     name: '베팅',
     category: 'gambling',

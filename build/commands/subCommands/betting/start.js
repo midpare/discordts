@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const betting_1 = require("../../../structures/betting");
+const betting_1 = require("../../../contexts/betting");
 const discord_js_1 = require("discord.js");
 module.exports = {
     name: '시작',

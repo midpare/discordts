@@ -9,6 +9,10 @@ export = async function (client: ExtendClient) {
   const interactionFiles = await globPromise(`${__dirname}/../interactions/**/*{.ts,.js}`)
   interactionFiles.forEach((value: string) => {
     const file: InteractionType = require(value)
-    client.interactions.set(file.name, file)
+    try {
+      client.interactions.set(file.name, file)
+    } catch(error) {
+      console.error(error)
+    }
   })
 }

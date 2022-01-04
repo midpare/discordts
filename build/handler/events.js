@@ -16,7 +16,12 @@ module.exports = function (client) {
         const eventFiles = yield globPromise(`${__dirname}/../events/**/*{.ts,.js}`);
         eventFiles.forEach((value) => {
             const file = require(value);
-            client.on(file.name, file.event);
+            try {
+                client.on(file.name, file.event);
+            }
+            catch (error) {
+                console.error(error);
+            }
         });
     });
 };

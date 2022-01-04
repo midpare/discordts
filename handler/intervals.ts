@@ -10,8 +10,12 @@ export = async function () {
 
   intervalFiles.forEach((value: string) => {
     const file: IntervalType = require(value)
-    if (file.immediate)
+    try {
+      if (file.immediate)
       file.execute()
     setInterval(file.execute, ms(file.interval))
+    } catch(error) {
+      console.error(error)
+    }
   })
 }

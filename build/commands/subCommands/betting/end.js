@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const gambling_1 = require("../../../models/gambling");
-const betting_1 = require("../../../structures/betting");
+const betting_1 = require("../../../contexts/betting");
 module.exports = {
     name: '종료',
     category: 'betting',

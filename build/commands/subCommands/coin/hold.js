@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const discord_js_1 = require("discord.js");
-const client_1 = require("../../../structures/client");
+const client_1 = require("../../../contexts/client");
 const function_1 = require("../../../handler/function");
 const gambling_1 = require("../../../models/gambling");
 module.exports = {

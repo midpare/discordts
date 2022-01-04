@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.shuffle = exports.requestGet = exports.dateCal = void 0;
+exports.xor = exports.shuffle = exports.requestGet = exports.dateCal = void 0;
 const request_1 = __importDefault(require("request"));
 function dateCal(date, days) {
     const dateVariable = new Date(date);
@@ -53,3 +53,7 @@ function shuffle(arr) {
     return shuffleArr;
 }
 exports.shuffle = shuffle;
+function xor(a, b) {
+    return ((a || b) && !(a && b));
+}
+exports.xor = xor;

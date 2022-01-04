@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const client_1 = require("../structures/client");
+const client_1 = require("../contexts/client");
 const gambling_1 = require("../models/gambling");
 const function_1 = require("../handler/function");
 module.exports = {
@@ -23,20 +23,25 @@ module.exports = {
         const aliase = client_1.client.mainAliases.get(cmd.toLowerCase());
         const date = new Date();
         const today = (0, function_1.dateCal)(date, 0);
-        if (command) {
-            const user = yield gambling_1.gambling.findOne({ id });
-            if (command.category == 'gambling' && command.name != '가입') {
-                if (!user)
-                    return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
-                if (user.bankruptcy && parseFloat(today) - parseFloat(user.bankruptcy) < 3)
-                    return msg.reply(`파산한지 3일이 지나지 않은 유저는 도박을 할 수 없습니다. 파산일${user.bankruptcy}`);
+        try {
+            if (command) {
+                const user = yield gambling_1.gambling.findOne({ id });
+                if (command.category == 'gambling' && command.name != '가입') {
+                    if (!user)
+                        return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
+                    if (user.bankruptcy && parseFloat(today) - parseFloat(user.bankruptcy) < 3)
+                        return msg.reply(`파산한지 3일이 지나지 않은 유저는 도박을 할 수 없습니다. 파산일${user.bankruptcy}`);
+                }
+                command.execute({ msg, args });
             }
-            command.execute({ msg, args });
+            else if (aliase) {
+                aliase.execute({ msg, args });
+            }
+            else
+                return;
         }
-        else if (aliase) {
-            aliase.execute({ msg, args });
+        catch (error) {
+            console.error(error);
         }
-        else
-            return;
     })
 };

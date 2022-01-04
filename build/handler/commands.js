@@ -28,7 +28,7 @@ module.exports = (client) => __awaiter(void 0, void 0, void 0, function* () {
             }
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     });
     const subCommandFiles = yield globPromise(`${__dirname}/../commands/subCommands/**/*{.ts,.js}`);
@@ -65,7 +65,7 @@ module.exports = (client) => __awaiter(void 0, void 0, void 0, function* () {
             }
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     });
 });

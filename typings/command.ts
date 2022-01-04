@@ -18,9 +18,9 @@ type ExecuteType = (options: ExecuteOptions) => Promise<void>
 
 export interface CommandType {
   name: string
-  aliases: Array<string>
+  aliases?: Array<string>
   category: string
-  subCategory: string
+  subCategory?: string
   usage: string
   description: string
   execute: ExecuteType

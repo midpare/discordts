@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const client_1 = require("../structures/client");
+const client_1 = require("../contexts/client");
 module.exports = {
     name: 'interactionCreate',
     event: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
@@ -16,6 +16,11 @@ module.exports = {
         const events = client_1.client.interactions.get(cmd);
         if (!events)
             return;
-        events.execute(interaction);
+        try {
+            events.execute(interaction);
+        }
+        catch (error) {
+            console.error(error);
+        }
     })
 };

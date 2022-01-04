@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const discord_player_1 = require("discord-player");
-const player_1 = __importDefault(require("../../../structures/player"));
+const player_1 = __importDefault(require("../../../contexts/player"));
 module.exports = {
     name: 'play',
     aliases: ['p'],

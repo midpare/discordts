@@ -22,7 +22,7 @@ export  = async (client: ExtendClient) => {
         })
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   })
   
@@ -56,7 +56,7 @@ export  = async (client: ExtendClient) => {
         })
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   })
 }

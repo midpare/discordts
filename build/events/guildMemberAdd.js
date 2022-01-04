@@ -11,6 +11,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 module.exports = {
     name: 'guildMemberAdd',
     event: (user) => __awaiter(void 0, void 0, void 0, function* () {
-        user.roles.add('910521119713394739');
+        try {
+            user.roles.add('910521119713394739');
+        }
+        catch (error) {
+            console.error(error);
+        }
     })
 };

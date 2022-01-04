@@ -16,7 +16,12 @@ module.exports = function (client) {
         const interactionFiles = yield globPromise(`${__dirname}/../interactions/**/*{.ts,.js}`);
         interactionFiles.forEach((value) => {
             const file = require(value);
-            client.interactions.set(file.name, file);
+            try {
+                client.interactions.set(file.name, file);
+            }
+            catch (error) {
+                console.error(error);
+            }
         });
     });
 };

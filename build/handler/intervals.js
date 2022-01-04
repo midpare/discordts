@@ -20,9 +20,14 @@ module.exports = function () {
         const intervalFiles = yield globPromise(`${__dirname}/../interval/**/*{.ts,.js}`);
         intervalFiles.forEach((value) => {
             const file = require(value);
-            if (file.immediate)
-                file.execute();
-            setInterval(file.execute, (0, ms_1.default)(file.interval));
+            try {
+                if (file.immediate)
+                    file.execute();
+                setInterval(file.execute, (0, ms_1.default)(file.interval));
+            }
+            catch (error) {
+                console.error(error);
+            }
         });
     });
 };

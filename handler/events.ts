@@ -8,6 +8,10 @@ export = async function (client: ExtendClient) {
   const eventFiles = await globPromise(`${__dirname}/../events/**/*{.ts,.js}`)
   eventFiles.forEach((value: string) => {
     const file = require(value)
-    client.on(file.name, file.event)
+    try {
+      client.on(file.name, file.event)
+    } catch(error) {
+      console.error(error)
+    }
   })
 }

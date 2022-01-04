@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const discord_js_1 = require("discord.js");
-const betting_1 = require("../../../structures/betting");
+const betting_1 = require("../../../contexts/betting");
 module.exports = {
     name: '현황',
     category: 'betting',

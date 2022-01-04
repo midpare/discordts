@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const function_1 = require("../handler/function");
-const client_1 = require("../structures/client");
+const client_1 = require("../contexts/client");
 module.exports = {
     execute: () => __awaiter(void 0, void 0, void 0, function* () {
         const options = {

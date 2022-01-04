@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const discord_js_1 = require("discord.js");
 const school_1 = require("../../../models/school");
 const function_1 = require("../../../handler/function");
-const client_1 = require("../../../structures/client");
+const client_1 = require("../../../contexts/client");
 const apiKey = process.env.SCHOOL_API_KEY || '';
 module.exports = {
     name: '학교',

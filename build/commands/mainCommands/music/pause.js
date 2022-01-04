@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const player_1 = __importDefault(require("../../../structures/player"));
+const player_1 = __importDefault(require("../../../contexts/player"));
 module.exports = {
     name: 'pause',
     category: 'music',

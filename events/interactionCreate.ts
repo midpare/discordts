@@ -7,7 +7,10 @@ export = {
     const cmd = interaction.customId
     const events = client.interactions.get(cmd)
     if (!events) return
-  
-    events.execute(interaction)
+    try {
+      events.execute(interaction)
+    } catch(error) {
+      console.error(error)
+    }
   }
 }

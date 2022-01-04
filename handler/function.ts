@@ -42,3 +42,6 @@ export function shuffle(arr: Array<any>): typeof arr{
   return shuffleArr
 }
 
+export function xor(a: any, b: any) {
+  return ((a || b) && !(a && b))
+}

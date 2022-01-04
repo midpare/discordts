@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-module.exports = {
-    name: "clear",
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
+    name: 'clear',
     aliases: ['클리어'],
     category: 'admin',
     usage: 'clear <숫자>',
@@ -19,9 +21,9 @@ module.exports = {
             return msg.reply('당신은 이 명령어를 사용할 권한이 없습니다.');
         const count = parseFloat(args[0]);
         if (!Number.isInteger(count))
-            return msg.reply("정확한 자연수를 입력해주시기 바랍니다.\n !clear <숫자>  ");
+            return msg.reply('정확한 자연수를 입력해주시기 바랍니다.\n !clear <숫자>  ');
         if (count < 0 || count > 99)
-            return msg.reply("1에서 99사이의 수를 입력해주시기 바랍니다. \n !clear <숫자>");
+            return msg.reply('1에서 99사이의 수를 입력해주시기 바랍니다. \n !clear <숫자>');
         msg.channel.bulkDelete(count + 1);
-    })
-};
+    }),
+});

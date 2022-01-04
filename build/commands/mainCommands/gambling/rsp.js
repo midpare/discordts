@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: 'rsp',
     aliases: ['가위바위보'],
     category: 'gambling',
@@ -41,17 +43,19 @@ module.exports = {
             human === '가위' ? (winner = bot === '바위' ? '봇' : '인간') : '';
             human === '바위' ? (winner = bot === '보' ? '봇' : '인간') : '';
         }
-        if (winner === '비김') {
-            gambling_1.gambling.updateOne({ id }, { $inc: { money: money * -0.4 } })
-                .then(() => msg.reply(`사람: ${human} 봇: ${bot}\n비겼습니다.\n${money * 0.4}원를 잃게됩니다.\n잔액: ${user.money}원 -> ${user.money - money * 0.4}원`));
+        switch (winner) {
+            case '비김':
+                gambling_1.gambling.updateOne({ id }, { $inc: { money: money * -0.4 } });
+                msg.reply(`사람: ${human} 봇: ${bot}\n비겼습니다.\n${money * 0.4}원를 잃게됩니다.\n잔액: ${user.money}원 -> ${user.money - money * 0.4}원`);
+                break;
+            case '봇':
+                (yield gambling_1.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
+                msg.reply(`사람: ${human} 봇: ${bot}\n${winner}이 승리했습니다.\n${money}원을 잃게 됩니다.\n잔액: ${user.money}원 -> ${user.money - money}원`);
+                break;
+            case '인간':
+                (yield gambling_1.gambling.updateOne({ id }, { $inc: { money: money * 1.5 } })).matchedCount;
+                msg.reply(`사람: ${human} 봇: ${bot}\n${winner}이 승리했습니다.\n${money * 1.5}원을 얻었습니다.\n잔액: ${user.money}원 -> ${user.money + money * 1.5}원`);
+                break;
         }
-        if (winner === '봇') {
-            gambling_1.gambling.updateOne({ id }, { $inc: { money: -money } })
-                .then(() => msg.reply(`사람: ${human} 봇: ${bot}\n${winner}이 승리했습니다.\n${money}원을 잃게 됩니다.\n잔액: ${user.money}원 -> ${user.money - money}원`));
-        }
-        if (winner === '인간') {
-            gambling_1.gambling.updateOne({ id }, { $inc: { money: money * 1.5 } })
-                .then(() => msg.reply(`사람: ${human} 봇: ${bot}\n${winner}이 승리했습니다.\n${money * 1.5}원을 얻었습니다.\n잔액: ${user.money}원 -> ${user.money + money * 1.5}원`));
-        }
-    })
-};
+    }),
+});

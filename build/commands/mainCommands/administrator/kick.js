@@ -8,7 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-module.exports = {
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: 'kick',
     aliases: ['킥', '강퇴'],
     category: 'admin',
@@ -25,8 +27,7 @@ module.exports = {
         if (user.permissions.has('KICK_MEMBERS'))
             return msg.reply('이 사용자는 강퇴할 수 없습니다.');
         user.kick(reason);
-        msg.channel.send('```' + `처벌 대상: ${user.user.username}#${user.user.discriminator}\n가한 처벌: 강퇴 \n처벌 사유: ${reason}` + '```').then(() => {
-            msg.delete();
-        });
-    })
-};
+        msg.channel.send('```' + `처벌 대상: ${user.user.username}#${user.user.discriminator}\n가한 처벌: 강퇴 \n처벌 사유: ${reason}` + '```');
+        msg.delete();
+    }),
+});

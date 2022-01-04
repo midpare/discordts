@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '하프',
     category: 'gambling',
     usage: '하프',
@@ -22,12 +24,12 @@ module.exports = {
         const money = Math.floor(user.money);
         const random = Math.floor(Math.random() * 2);
         if (random == 1) {
-            gambling_1.gambling.updateOne({ id }, { $set: { money: Math.floor(money * 1.5) } })
-                .then(() => msg.reply(`도박에 성공하셨습니다! ${Math.round(user.money * 0.5).toLocaleString()}원이 지급되었습니다. \n현재 잔액: ${user.money.toLocaleString()}원 -> ${Math.round(user.money * 1.5).toLocaleString()}원`));
+            (yield gambling_1.gambling.updateOne({ id }, { $set: { money: Math.floor(money * 1.5) } })).matchedCount;
+            msg.reply(`도박에 성공하셨습니다! ${Math.round(user.money * 0.5).toLocaleString()}원이 지급되었습니다. \n현재 잔액: ${user.money.toLocaleString()}원 -> ${Math.round(user.money * 1.5).toLocaleString()}원`);
         }
         else if (random == 0) {
-            gambling_1.gambling.updateOne({ id }, { $set: { money: Math.floor(money * 0.5) } })
-                .then(() => msg.reply(`도박에 실패하셨습니다! ${Math.round(user.money * 0.5).toLocaleString()}원을 잃었습니다. \n 현재 잔액 ${user.money.toLocaleString()}원 -> ${Math.round(user.money * 0.5).toLocaleString()}원`));
+            (yield gambling_1.gambling.updateOne({ id }, { $set: { money: Math.floor(money * 0.5) } })).matchedCount;
+            msg.reply(`도박에 실패하셨습니다! ${Math.round(user.money * 0.5).toLocaleString()}원을 잃었습니다. \n 현재 잔액 ${user.money.toLocaleString()}원 -> ${Math.round(user.money * 0.5).toLocaleString()}원`);
         }
-    })
-};
+    }),
+});

@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '가입',
     category: 'gambling',
     usage: '가입',
@@ -23,7 +25,7 @@ module.exports = {
         if (user)
             return msg.reply('이미 가입된 유저입니다.');
         const newUser = new gambling_1.gambling({ id, name, date, money: 0, debt: 0, gamLevel: 1 });
-        newUser.save()
-            .then(() => msg.reply('성공적으로 가입이 완료되었습니다!'));
-    })
-};
+        newUser.save();
+        msg.reply('성공적으로 가입이 완료되었습니다!');
+    }),
+});

@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '기초자금',
     aliases: ['초기자금'],
     category: 'gambling',
@@ -29,7 +31,7 @@ module.exports = {
                 return msg.reply(`명령어의 쿨타임이 ${Math.ceil(coolTime - (second - userCoolTime) / 1000)}초 남았습니다.`);
         }
         const baseMoney = 25000;
-        gambling_1.gambling.updateOne({ id }, { $set: { money: baseMoney, baseMoneyCoolTime: second } })
-            .then(() => msg.reply(`기초자금 ${baseMoney.toLocaleString()}원이 지급되었습니다!`));
-    })
-};
+        (yield gambling_1.gambling.updateOne({ id }, { $set: { money: baseMoney, baseMoneyCoolTime: second } })).matchedCount;
+        msg.reply(`기초자금 ${baseMoney.toLocaleString()}원이 지급되었습니다!`);
+    }),
+});

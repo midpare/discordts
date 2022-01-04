@@ -8,9 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
+const commands_1 = require("../../../contexts/commands");
 const function_1 = require("../../../handler/function");
-module.exports = {
+exports.default = new commands_1.Command({
     name: '출석체크',
     category: 'gambling',
     usage: '출석체크',
@@ -23,7 +25,7 @@ module.exports = {
         if (user.date == parseFloat(today))
             return msg.reply('오늘은 이미 받았습니다.');
         const money = Math.floor(Math.random() * (50000) + 50000);
-        gambling_1.gambling.updateOne({ id }, { $inc: { money }, $set: { date: today } })
-            .then(() => msg.reply(`${money.toLocaleString()}원이 지급됐습니다!\n${user.name}의 현재 잔액은 ${user.money.toLocaleString()}원 -> ${(user.money + money).toLocaleString()} 원입니다.`));
-    })
-};
+        (yield gambling_1.gambling.updateOne({ id }, { $inc: { money }, $set: { date: today } })).matchedCount;
+        msg.reply(`${money.toLocaleString()}원이 지급됐습니다!\n${user.name}의 현재 잔액은 ${user.money.toLocaleString()}원 -> ${(user.money + money).toLocaleString()} 원입니다.`);
+    }),
+});

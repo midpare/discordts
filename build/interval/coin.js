@@ -15,7 +15,7 @@ module.exports = {
         const options = {
             uri: 'https://api.upbit.com/v1/market/all',
             method: 'GET',
-            json: true
+            json: true,
         };
         const allCoin = yield (0, function_1.requestGet)(options);
         allCoin.forEach((element) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,5 +27,5 @@ module.exports = {
         }));
     }),
     interval: '1d',
-    immediate: true
+    immediate: true,
 };

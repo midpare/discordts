@@ -12,7 +12,7 @@ const gamblingInfo = new mongoose_1.Schema({
     gamLevel: Number,
     baseMoneyCoolTime: Number,
     bankruptcy: String,
-    stock: [{ name: String, count: Number, money: Number }, { _id: false }]
+    stock: [{ name: String, count: Number, money: Number }, { _id: false }],
 });
 const gambling = (0, mongoose_1.model)('gambling', gamblingInfo);
 exports.gambling = gambling;

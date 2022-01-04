@@ -1,27 +1,27 @@
-import { Guild, GuildMember, Message, MessageMentions, TextChannel, Snowflake } from "discord.js"
+import { Guild, GuildMember, Message, MessageMentions, TextChannel, Snowflake } from 'discord.js';
 
 export interface ExtendMessage extends Message{
-  channel: TextChannel
-  member: GuildMember
-  mentions: MessageMentions
-  guildId: Snowflake
-  guild: Guild
-  members: GuildMember
+  channel: TextChannel;
+  member: GuildMember;
+  mentions: MessageMentions;
+  guildId: Snowflake;
+  guild: Guild;
+  members: GuildMember;
 }
 
 interface ExecuteOptions {
-  msg: ExtendMessage
-  args: Array<string>
+  msg: ExtendMessage;
+  args: Array<string>;
 }
 
-type ExecuteType = (options: ExecuteOptions) => Promise<void>
+type ExecuteType = (options: ExecuteOptions) => any;
 
 export interface CommandType {
-  name: string
-  aliases?: Array<string>
-  category: string
-  subCategory?: string
-  usage: string
-  description: string
-  execute: ExecuteType
+  name: string;
+  aliases?: Array<string>;
+  category: string;
+  subCategory?: string;
+  usage: string;
+  description: string;
+  execute: ExecuteType;
 }

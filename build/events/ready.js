@@ -14,5 +14,5 @@ module.exports = {
     event: () => __awaiter(void 0, void 0, void 0, function* () {
         client_1.client.user.setActivity('개발');
         console.log(`Logged in as ${client_1.client.user.tag}!`);
-    })
+    }),
 };

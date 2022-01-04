@@ -8,14 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
+const commands_1 = require("../../../contexts/commands");
 const client_1 = require("../../../contexts/client");
 const function_1 = require("../../../handler/function");
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+exports.default = new commands_1.Command({
     name: '보유',
-    category: 'coin',
     aliases: ['보유량'],
+    category: 'coin',
+    usage: '코인 보유',
+    description: '현재 갖고있는 코인을 확인합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const embed = new discord_js_1.MessageEmbed();
@@ -29,7 +33,7 @@ module.exports = {
             const apiOptions = {
                 uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client_1.client.coin.get(element.name)}&count=1&to`,
                 method: 'GET',
-                json: true
+                json: true,
             };
             const coin = yield (0, function_1.requestGet)(apiOptions);
             const persent = Math.round((coin[0].tradePrice / element.money - 1) * 100 * 100) / 100;
@@ -39,5 +43,5 @@ module.exports = {
             embed.addField(element.name, `수량: ${element.count}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, false);
         }
         msg.channel.send({ embeds: [embed] });
-    })
-};
+    }),
+});

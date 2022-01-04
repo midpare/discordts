@@ -1,9 +1,9 @@
-import { client } from "../contexts/client"
+import { client } from '../contexts/client';
 
 export = {
   name: 'ready',
   event : async () => {
-    client.user.setActivity('개발')
-    console.log(`Logged in as ${client.user.tag}!`)
-  }
+    client.user.setActivity('개발');
+    console.log(`Logged in as ${client.user.tag}!`);
+  },
 }

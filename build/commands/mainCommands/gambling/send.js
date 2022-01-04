@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '송금',
     aliases: ['이체', '돈보내기'],
     category: 'gambling',
@@ -35,5 +37,5 @@ module.exports = {
         (yield gambling_1.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
         (yield gambling_1.gambling.updateOne({ id: target.id }, { $inc: { money: money } })).matchedCount;
         msg.reply(`성공적으로 ${target.user.username}님에게 ${money.toLocaleString()}원을 송금했습니다!`);
-    })
-};
+    }),
+});

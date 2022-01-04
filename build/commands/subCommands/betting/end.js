@@ -8,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
 const gambling_1 = require("../../../models/gambling");
 const betting_1 = require("../../../contexts/betting");
-module.exports = {
+exports.default = new commands_1.Command({
     name: '종료',
     category: 'betting',
+    usage: '베팅 종료 <팀>',
+    description: '베팅을 종료합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         if (!betting_1.betting.betting)
             return msg.reply('아직 베팅을 시작하지 않았습니다.');
@@ -40,5 +44,5 @@ module.exports = {
         betting_1.bet1.list = [];
         betting_1.bet2.list = [];
         betting_1.betting.betting = false;
-    })
-};
+    }),
+});

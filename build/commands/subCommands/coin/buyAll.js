@@ -8,13 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
 const function_1 = require("../../../handler/function");
 const gambling_1 = require("../../../models/gambling");
 const client_1 = require("../../../contexts/client");
-module.exports = {
+exports.default = new commands_1.Command({
     name: '풀매도',
     aliases: ['전부판매'],
     category: 'coin',
+    usage: '코인 풀매도 <코인이름>',
+    description: '현재 갖고있는 코인을 전부 판매합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
@@ -24,7 +28,7 @@ module.exports = {
         const apiOptions = {
             uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client_1.client.coin.get(coinName)}&count=1&to`,
             method: 'GET',
-            json: true
+            json: true,
         };
         const coin = yield (0, function_1.requestGet)(apiOptions);
         if (!coinName)
@@ -38,8 +42,7 @@ module.exports = {
         const profitShown = money < userCoin.money * count ? profit : '+' + profit;
         const persent = Math.round((coinMoney / userCoin.money - 1) * 100 * 100) / 100;
         const persentShown = persent < 0 ? persent : '+' + persent;
-        gambling_1.gambling.updateOne({ id }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } }).then(() => {
-            msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n손익: ${profitShown}원(${persentShown}%)`);
-        });
-    })
-};
+        (yield gambling_1.gambling.updateOne({ id }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
+        msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n손익: ${profitShown}원(${persentShown}%)`);
+    }),
+});

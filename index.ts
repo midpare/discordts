@@ -1,3 +1,7 @@
-import { client } from './contexts/client'
+import { client } from './contexts/client';
 
-client.start()
+client.start();
+
+setTimeout(() => {
+  console.log(client)
+}, 2000);

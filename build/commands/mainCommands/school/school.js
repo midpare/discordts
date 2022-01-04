@@ -8,18 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const school_1 = require("../../../models/school");
+const commands_1 = require("../../../contexts/commands");
 const function_1 = require("../../../handler/function");
 const client_1 = require("../../../contexts/client");
-const apiKey = process.env.SCHOOL_API_KEY || '';
-module.exports = {
+exports.default = new commands_1.Command({
     name: '학교',
     category: 'school',
     usage: '학교',
     description: '학교 명령어',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
+        const apiKey = process.env.SCHOOL_API_KEY || '';
         if (!args[0])
             return;
         const embed = new discord_js_1.MessageEmbed();
@@ -55,10 +57,10 @@ module.exports = {
                         SD_SCHUL_CODE: user.schoolCode,
                         GRADE: user.grade,
                         CLASS_NM: user.class,
-                        ALL_TI_YMD: timeTableDate
+                        ALL_TI_YMD: timeTableDate,
                     },
                     method: 'GET',
-                    json: false
+                    json: false,
                 };
                 const timeTableDateSplit = timeTableDate.split('');
                 const timeTableYear = timeTableDateSplit[0] + timeTableDateSplit[1] + timeTableDateSplit[2] + timeTableDateSplit[3];
@@ -94,10 +96,10 @@ module.exports = {
                         KEY: apiKey,
                         ATPT_OFCDC_SC_CODE: user.cityCode,
                         SD_SCHUL_CODE: user.schoolCode,
-                        MLSV_YMD: mealDate
+                        MLSV_YMD: mealDate,
                     },
                     method: 'GET',
-                    json: false
+                    json: false,
                 };
                 const meal = JSON.parse(yield (0, function_1.requestGet)(mealOptions));
                 if (meal.RESULT != undefined) {
@@ -120,5 +122,5 @@ module.exports = {
                 msg.channel.send({ embeds: [embed] });
                 break;
         }
-    })
-};
+    }),
+});

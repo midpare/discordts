@@ -8,7 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-module.exports = {
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '이동',
     category: 'admin',
     usage: '이동 <유저/채널> <맨션> <채널>',
@@ -55,5 +57,5 @@ module.exports = {
             default:
                 return msg.reply('유저/채널 중 선택해주시기바랍니다.');
         }
-    })
-};
+    }),
+});

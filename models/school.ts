@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model } from 'mongoose';
 
 const schoolInfo = new Schema({
   id: String,
@@ -9,9 +9,9 @@ const schoolInfo = new Schema({
   schoolName: String,
   grade: String,
   class: String,
-})
+});
 
-const school = model('school', schoolInfo)
+const school = model('school', schoolInfo);
 
-export { school }
+export { school };
 

@@ -5,55 +5,55 @@ import { requestGet } from '../handler/function'
 import mongoose from 'mongoose'
 
 export class ExtendClient extends Client {
-  public user!: ClientUser
-  public channels!: any
+  public user!: ClientUser;
+  public channels!: any;
 
-  mainCommands: Collection<string, CommandType>
-  mainAliases: Collection<string, CommandType>
-  subCommands: Collection<string, Map<string, CommandType>>
-  subAliases: Collection<string, Map<string, CommandType>>
-  coin: Collection<string, string>
-  interactions: Collection<string, InteractionType>
-  sdCode: Collection<string, string>
+  mainCommands: Collection<string, CommandType>;
+  mainAliases: Collection<string, CommandType>;
+  subCommands: Collection<string, Map<string, CommandType>>;
+  subAliases: Collection<string, Map<string, CommandType>>;
+  coin: Collection<string, string>;
+  interactions: Collection<string, InteractionType>;
+  sdCode: Collection<string, string>;
 
   constructor() {
-    super({ intents: 32767 })
-    this.mainAliases  = new Collection()
-    this.mainCommands  = new Collection()
-    this.subCommands = new Collection()
-    this.subAliases = new Collection()
-    this.coin = new Collection()
-    this.interactions = new Collection()
-    this.sdCode = new Collection()
+    super({ intents: 32767 });
+    this.mainAliases = new Collection();
+    this.mainCommands = new Collection();
+    this.subCommands = new Collection();
+    this.subAliases = new Collection();
+    this.coin = new Collection();
+    this.interactions = new Collection();
+    this.sdCode = new Collection();
   }
 
   async start() {
-    this.setCoinList()
-    this.setSchool()
+    this.setCoinList();
+    this.setSchool();
 
-    const handler = new Array('commands', 'interactions', 'events', 'intervals')
+    const handler = new Array('commands', 'interactions', 'events', 'intervals');
     handler.forEach((element: string) => {
-      require(`${__dirname}/../handler/${element}`)(client)
-    })
+      require(`${__dirname}/../handler/${element}`)(this);
+    });
 
-    await mongoose.connect(process.env.DB_URI || '')
-    this.login(process.env.TOKEN)
+    await mongoose.connect(process.env.DB_URI || '');
+    this.login(process.env.TOKEN);
   }
 
   async setCoinList() {
     const options = {
       uri: 'https://api.upbit.com/v1/market/all',
       method: 'GET',
-      json: true
-    }
-    const allCoin = await requestGet(options)
+      json: true,
+    };
+    const allCoin = await requestGet(options);
     allCoin.forEach(async (element: { market: string; korean_name: string }) => {
       if (element.market.startsWith('KRW')) {
-        const coinName = element.korean_name
-        const market = element.market
-        this.coin.set(coinName, market)
+        const coinName = element.korean_name;
+        const market = element.market;
+        this.coin.set(coinName, market);
       }
-    })
+    });
   }
 
   setSchool() {
@@ -65,18 +65,18 @@ export class ExtendClient extends Client {
       '충청북도', '충청남도',
       '전라북도', '전라남도',
       '경상북도', '경상남도',
-      '제주특별자치도']
+      '제주특별자치도'];
     const sdCodes = ['B10', 'C10', 'D10',
       'E10', 'F10', 'G10',
       'H10', 'I10', 'J10',
       'K10', 'M10', 'N10',
       'P10', 'Q10', 'R10',
-      'S10', 'T10']
+      'S10', 'T10'];
     for (let i = 0; i < sds.length; i++) {
-      client.sdCode.set(sds[i], sdCodes[i])
+      this.sdCode.set(sds[i], sdCodes[i]);
     }
   }
 }
 
-export const client = new ExtendClient()
+export const client = new ExtendClient();
 

@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '빚갚기',
     aliases: ['돈갚기'],
     category: 'gambling',
@@ -27,8 +29,7 @@ module.exports = {
             return msg.reply(`갚으려는 금액이 현재 금액보다 많습니다.\n현재 잔액: ${user.money}원`);
         if (user.debt < money)
             return msg.reply(`갚으려는 금액이 현재 빚보다 많습니다.\n현재 빚:${user.debt}원`);
-        gambling_1.gambling.updateOne({ id }, { $inc: { money: -money, debt: -money } }).then(() => {
-            msg.reply(`성공적으로 빚을 ${money.toLocaleString()}원 갚았습니다!\n현재 빚: ${user.debt.toLocaleString()}원 -> ${(user.debt - money).toLocaleString()}원`);
-        });
-    })
-};
+        (yield gambling_1.gambling.updateOne({ id }, { $inc: { money: -money, debt: -money } })).matchedCount;
+        msg.reply(`성공적으로 빚을 ${money.toLocaleString()}원 갚았습니다!\n현재 빚: ${user.debt.toLocaleString()}원 -> ${(user.debt - money).toLocaleString()}원`);
+    }),
+});

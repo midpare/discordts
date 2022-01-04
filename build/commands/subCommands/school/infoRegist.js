@@ -8,10 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
 const school_1 = require("../../../models/school");
 const function_1 = require("../../../handler/function");
 const client_1 = require("../../../contexts/client");
-module.exports = {
+exports.default = new commands_1.Command({
     name: '정보등록',
     category: 'school',
     usage: '정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
@@ -42,7 +44,7 @@ module.exports = {
                 SCHUL_NM: schoolName,
             },
             method: 'GET',
-            json: false
+            json: false,
         };
         const basicSchool = JSON.parse(yield (0, function_1.requestGet)(basicSchoolOptions));
         if (basicSchool.RESULT != undefined)
@@ -55,22 +57,22 @@ module.exports = {
                 ATPT_OFCDC_SC_CODE: cityCode,
                 SD_SCHUL_CODE: schoolCode,
                 AY: date.getFullYear().toString(),
-                GRADE: grade
+                GRADE: grade,
             },
             method: 'GET',
-            json: false
+            json: false,
         };
         const classInfo = JSON.parse(yield (0, function_1.requestGet)(classOptions));
         if (classInfo.RESULT != undefined || parseFloat(classNumber) >= classInfo.classInfo[1].row.length + 1)
             return msg.reply('입력한 반 정보와 일치하는 반이 없습니다.');
         if (!user) {
             const newSchoolInfo = new school_1.school({ id, name, cityCode, cityName, schoolCode, schoolName, grade, class: classNumber });
-            newSchoolInfo.save()
-                .then(() => msg.reply('성공적으로 유저 정보를 등록했습니다!'));
+            newSchoolInfo.save();
+            msg.reply('성공적으로 유저 정보를 등록했습니다!');
         }
         else {
-            school_1.school.updateOne({ id }, { $set: { cityCode, cityName, schoolCode, schoolName, grade, class: classNumber } })
-                .then(() => msg.reply('성공적으로 유저 정보를 업데이트했습니다!'));
+            (yield school_1.school.updateOne({ id }, { $set: { cityCode, cityName, schoolCode, schoolName, grade, class: classNumber } })).matchedCount;
+            msg.reply('성공적으로 유저 정보를 업데이트했습니다!');
         }
-    })
-};
+    }),
+});

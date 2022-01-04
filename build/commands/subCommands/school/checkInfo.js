@@ -8,12 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const school_1 = require("../../../models/school");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '정보확인',
     aliases: ['정보'],
     category: 'school',
+    usage: '학교 정보확인',
+    description: '현재 자신의 학교 정보를 확인합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield school_1.school.findOne({ id });
@@ -25,5 +29,5 @@ module.exports = {
             .setDescription(`${user.cityName} ${user.schoolName} ${user.grade}학년 ${user.class}반`)
             .setColor('GREEN');
         msg.channel.send({ embeds: [embed] });
-    })
-};
+    }),
+});

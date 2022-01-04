@@ -8,9 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
 const gambling_1 = require("../../../models/gambling");
 const function_1 = require("../../../handler/function");
-module.exports = {
+exports.default = new commands_1.Command({
     name: '파산',
     category: 'gambling',
     usage: '파산',
@@ -20,8 +22,8 @@ module.exports = {
         const user = yield gambling_1.gambling.findOne({ id });
         const date = new Date();
         const today = (0, function_1.dateCal)(date, 0);
-        gambling_1.gambling.updateOne({ id }, { $set: { bankruptcy: today, money: 0, debt: 0 } }).then(() => {
-            msg.reply(`성공적으로 ${user.name}님이 파산했습니다!`);
-        });
-    })
-};
+        ;
+        (yield gambling_1.gambling.updateOne({ id }, { $set: { bankruptcy: today, money: 0, debt: 0 } })).matchedCount;
+        msg.reply(`성공적으로 ${user.name}님이 파산했습니다!`);
+    }),
+});

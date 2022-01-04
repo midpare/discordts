@@ -33,7 +33,7 @@ class ExtendClient extends discord_js_1.Client {
             this.setSchool();
             const handler = new Array('commands', 'interactions', 'events', 'intervals');
             handler.forEach((element) => {
-                require(`${__dirname}/../handler/${element}`)(exports.client);
+                require(`${__dirname}/../handler/${element}`)(this);
             });
             yield mongoose_1.default.connect(process.env.DB_URI || '');
             this.login(process.env.TOKEN);
@@ -44,7 +44,7 @@ class ExtendClient extends discord_js_1.Client {
             const options = {
                 uri: 'https://api.upbit.com/v1/market/all',
                 method: 'GET',
-                json: true
+                json: true,
             };
             const allCoin = yield (0, function_1.requestGet)(options);
             allCoin.forEach((element) => __awaiter(this, void 0, void 0, function* () {
@@ -73,7 +73,7 @@ class ExtendClient extends discord_js_1.Client {
             'P10', 'Q10', 'R10',
             'S10', 'T10'];
         for (let i = 0; i < sds.length; i++) {
-            exports.client.sdCode.set(sds[i], sdCodes[i]);
+            this.sdCode.set(sds[i], sdCodes[i]);
         }
     }
 }

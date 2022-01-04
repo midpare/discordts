@@ -8,13 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
 const gambling_1 = require("../../../models/gambling");
 const client_1 = require("../../../contexts/client");
 const function_1 = require("../../../handler/function");
-module.exports = {
+exports.default = new commands_1.Command({
     name: '구매',
-    category: 'coin',
     aliases: ['매수'],
+    category: 'coin',
+    usage: '코인 구매 <코인이름> <구매수량>',
+    description: '현재 코인의 시세로 코인을 구매합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
@@ -24,7 +28,7 @@ module.exports = {
         const apiOptions = {
             uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client_1.client.coin.get(coinName)}&count=1&to`,
             method: 'GET',
-            json: true
+            json: true,
         };
         const coin = yield (0, function_1.requestGet)(apiOptions);
         if (!coin)
@@ -38,19 +42,17 @@ module.exports = {
             return msg.reply(`현재 잔액보다 사려는 수량이 많습니다. \n현재 잔액: ${user.money.toLocaleString()}원\n사려는 금액: ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)`);
         if (userCoin) {
             const moneyAve = (userCoin.money * userCoin.count + wholeMoney) / (userCoin.count + count);
-            gambling_1.gambling.updateOne({ id, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } }).then(() => {
-                msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`);
-            });
+            gambling_1.gambling.updateOne({ id, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } });
+            msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`);
         }
         else {
             const stockObject = {
                 name: coinName,
                 count: count,
-                money: coinMoney
+                money: coinMoney,
             };
-            gambling_1.gambling.updateOne({ id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } }).then(() => {
-                msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`);
-            });
+            (yield gambling_1.gambling.updateOne({ id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } })).matchedCount;
+            msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`);
         }
-    })
-};
+    }),
+});

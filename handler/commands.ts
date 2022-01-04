@@ -1,62 +1,62 @@
-import { glob } from 'glob'
-import { promisify } from 'util'
-import { ExtendClient } from '../contexts/client'
-import { CommandType } from '../typings/command'
+import { glob } from 'glob';
+import { promisify } from 'util';
+import { ExtendClient } from '../contexts/client';
+import { CommandType } from '../typings/command';
 
-const globPromise = promisify(glob)
+const globPromise = promisify(glob);
 
 export  = async (client: ExtendClient) => {
-  const mainCommandFiles = await globPromise(`${__dirname}/../commands/mainCommands/**/*{.ts,.js}`)
+  const mainCommandFiles = await globPromise(`${__dirname}/../commands/mainCommands/**/*{.ts,.js}`);
 
-  mainCommandFiles.forEach((value: string) => {
-    const file: CommandType = require(value)
+  mainCommandFiles.forEach(async (value: string) => {
+    const file: CommandType = (await import(value)).default;
     if (client.mainCommands.get(file.name))
-      throw `command name duplicate! command path: ${value}, command name: ${file.name}`
+      throw `command name duplicate! command path: ${value}, command name: ${file.name}`;
     try {
-      client.mainCommands.set(file.name, file)
+      client.mainCommands.set(file.name, file);
       if (file.aliases) {
         file.aliases.forEach((element: string) => {
           if (client.mainAliases.get(element))
-            throw `command name duplicate! command path: ${value}, command aliases: ${element}`
-          client.mainAliases.set(element, file)
-        })
+            throw `command name duplicate! command path: ${value}, command aliases: ${element}`;
+          client.mainAliases.set(element, file);
+        });
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  })
+  });
   
-  const subCommandFiles = await globPromise(`${__dirname}/../commands/subCommands/**/*{.ts,.js}`)
-  subCommandFiles.forEach((value: string) => {
-    const file: CommandType = require(value)
-    const commands = new Map()
-    const aliases = new Map()
+  const subCommandFiles = await globPromise(`${__dirname}/../commands/subCommands/**/*{.ts,.js}`);
+  subCommandFiles.forEach(async (value: string) => {
+    const file: CommandType = (await import(value)).default;
+    const commands = new Map();
+    const aliases = new Map();
     if (!file.category)
-      throw `there is no category in subCommands command path: ${value}`
-    commands.set(file.name, file)
+      throw `there is no category in subCommands command path: ${value}`;
+    commands.set(file.name, file);
     try {
       if (client.subCommands.get(file.category)) {
         if (client.subCommands.get(file.category)?.get(file.name))
-          throw `subcommand name duplicate! subcommand path: ${value}, subcommand category: ${file.category}, subcommand name: ${file.name}`
-        client.subCommands.get(file.category)?.set(file.name, file)
+          throw `subcommand name duplicate! subcommand path: ${value}, subcommand category: ${file.category}, subcommand name: ${file.name}`;
+        client.subCommands.get(file.category)?.set(file.name, file);
       } else {
-        client.subCommands.set(file.category, commands)
+        client.subCommands.set(file.category, commands);
       }
 
       if (file.aliases) {
         file.aliases.forEach((element: string) => {
-          aliases.set(element, file)
+          aliases.set(element, file);
           if (client.subAliases.get(file.category)) {
             if (client.subCommands.get(file.category)?.get(element))
-              throw `subcommand name duplicate! subcommand path: ${value}, subcommand cateogory: ${file.category}, subcommand name: ${element}`
-            client.subAliases.get(file.category)?.set(element, file)
+              throw `subcommand name duplicate! subcommand path: ${value}, subcommand cateogory: ${file.category}, subcommand name: ${element}`;
+            client.subAliases.get(file.category)?.set(element, file);
           } else {
-            client.subAliases.set(file.category, aliases)
+            client.subAliases.set(file.category, aliases);
           }
-        })
+        });
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  })
+  });
 }

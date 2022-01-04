@@ -8,7 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-module.exports = {
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: 'ban',
     aliases: ['밴', '벤', '차단'],
     category: 'admin',
@@ -25,8 +27,7 @@ module.exports = {
         if (user.permissions.has('BAN_MEMBERS'))
             return msg.reply('이 사용자는 차단할 수 없습니다.');
         user.ban({ reason });
-        msg.channel.send('```' + `처벌 대상: ${user.user.username}#${user.user.discriminator}\n가한 처벌: 차단\n처벌 사유: ${reason}` + '```').then(() => {
-            msg.delete();
-        });
-    })
-};
+        msg.channel.send('```' + `처벌 대상: ${user.user.username}#${user.user.discriminator}\n가한 처벌: 차단\n처벌 사유: ${reason}` + '```');
+        msg.delete();
+    }),
+});

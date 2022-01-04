@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '빚',
     category: 'gambling',
     usage: '빚',
@@ -18,5 +20,5 @@ module.exports = {
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
         msg.reply(`${user.name} 님의 빚은 ${user.debt.toLocaleString()}원입니다.`);
-    })
-};
+    }),
+});

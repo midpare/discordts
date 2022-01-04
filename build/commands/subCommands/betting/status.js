@@ -8,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
+const commands_1 = require("../../../contexts/commands");
 const betting_1 = require("../../../contexts/betting");
-module.exports = {
+exports.default = new commands_1.Command({
     name: '현황',
     category: 'betting',
+    usage: '베팅 현황',
+    description: '현재 베팅의 현황을 확인합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         if (!betting_1.betting.betting)
             return msg.reply('아직 베팅을 시작하지 않았습니다.');
@@ -28,9 +32,9 @@ module.exports = {
         else
             betting_1.bet2.times = Math.round(100 / (100 - persent) * 100) / 100;
         embed
-            .setTitle("베팅 현황")
-            .setDescription("베팅 현황을 확인합니다.")
+            .setTitle('베팅 현황')
+            .setDescription('베팅 현황을 확인합니다.')
             .setFields({ name: `${betting_1.bet1.name}`, value: `${betting_1.bet1.sum.toLocaleString()}원(${Math.round(persent)}%) \n참여인원: ${betting_1.bet1.list.length.toLocaleString()}명 \n배율: ${betting_1.bet1.times}배`, inline: true }, { name: `${betting_1.bet2.name}`, value: `${betting_1.bet2.sum.toLocaleString()}원(${Math.round(100 - persent)}%) \n참여인원: ${betting_1.bet2.list.length.toLocaleString()}명 \n배율: ${betting_1.bet2.times}배`, inline: true });
         msg.channel.send({ embeds: [embed] });
-    })
-};
+    }),
+});

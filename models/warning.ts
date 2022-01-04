@@ -1,12 +1,12 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model } from 'mongoose';
 
 const warningInfo = new Schema({
   id: String,
   name: String,
-  warning: Number
-})
+  warning: Number,
+});
 
-const warning = model('warning', warningInfo)
-export { warning }
+const warning = model('warning', warningInfo);
+export { warning };
 
 

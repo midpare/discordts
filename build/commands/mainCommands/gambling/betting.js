@@ -8,10 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const commands_1 = require("../../../contexts/commands");
 const betting_1 = require("../../../contexts/betting");
 const gambling_1 = require("../../../models/gambling");
 const client_1 = require("../../../contexts/client");
-module.exports = {
+exports.default = new commands_1.Command({
     name: '베팅',
     category: 'gambling',
     usage: '베팅',
@@ -66,5 +68,5 @@ module.exports = {
                 (yield gambling_1.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
             });
         }
-    })
-};
+    }),
+});

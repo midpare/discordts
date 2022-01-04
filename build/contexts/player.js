@@ -5,7 +5,7 @@ const client_1 = require("./client");
 const player = new discord_player_1.Player(client_1.client, {
     ytdlOptions: {
         quality: 'highestaudio',
-        highWaterMark: 1 << 25
-    }
+        highWaterMark: 1 << 25,
+    },
 });
 exports.default = player;

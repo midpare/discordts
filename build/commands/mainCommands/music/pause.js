@@ -11,8 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const player_1 = __importDefault(require("../../../contexts/player"));
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: 'pause',
     category: 'music',
     usage: 'pause',
@@ -25,5 +27,5 @@ module.exports = {
             return msg.reply('노래가 재생되고 있지 않습니다.');
         queue.setPaused(true);
         msg.reply('노래를 정지합니다.');
-    })
-};
+    }),
+});

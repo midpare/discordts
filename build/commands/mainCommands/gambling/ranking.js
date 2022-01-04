@@ -8,9 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '랭킹',
     aliases: ['순위'],
     category: 'gambling',
@@ -25,5 +27,5 @@ module.exports = {
             embed.addField(element.name, `${element.money.toLocaleString()}원`, false);
         });
         msg.channel.send({ embeds: [embed] });
-    })
-};
+    }),
+});

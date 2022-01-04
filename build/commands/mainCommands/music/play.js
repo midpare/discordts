@@ -11,9 +11,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const discord_player_1 = require("discord-player");
 const player_1 = __importDefault(require("../../../contexts/player"));
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: 'play',
     aliases: ['p'],
     category: 'music',
@@ -27,7 +29,7 @@ module.exports = {
             return msg.reply('노래 제목을 입력해주시기 바랍니다.');
         const searchResult = yield player_1.default.search(songTitle, {
             requestedBy: msg.author,
-            searchEngine: discord_player_1.QueryType.AUTO
+            searchEngine: discord_player_1.QueryType.AUTO,
         });
         const queue = player_1.default.createQueue(msg.guild, { metadata: msg.channel });
         if (!queue.connection)
@@ -42,5 +44,5 @@ module.exports = {
         else {
             msg.reply(`${searchResult.tracks[0]}을(를) 리스트에 추가합니다!`);
         }
-    })
-};
+    }),
+});

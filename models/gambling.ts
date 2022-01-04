@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model } from 'mongoose';
 
 const gamblingInfo = new Schema({
   id: String,
@@ -10,8 +10,8 @@ const gamblingInfo = new Schema({
   gamLevel: Number,
   baseMoneyCoolTime: Number,
   bankruptcy: String,
-  stock: [{name: String, count: Number, money: Number}, {_id: false}]
-})
+  stock: [{name: String, count: Number, money: Number}, {_id: false}],
+});
 
-const gambling = model('gambling', gamblingInfo)
-export { gambling }
+const gambling = model('gambling', gamblingInfo);
+export { gambling };

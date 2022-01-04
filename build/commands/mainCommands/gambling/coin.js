@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("../../../contexts/client");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '코인',
     category: 'gambling',
     subCategory: 'coin',
@@ -27,5 +29,5 @@ module.exports = {
         }
         else
             return;
-    })
-};
+    }),
+});

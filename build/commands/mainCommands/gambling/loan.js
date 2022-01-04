@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../../models/gambling");
-module.exports = {
+const commands_1 = require("../../../contexts/commands");
+exports.default = new commands_1.Command({
     name: '대출',
     category: 'gambling',
     usage: '대출 <돈>',
@@ -24,8 +26,7 @@ module.exports = {
             return msg.reply('정확한 금액를 입력해주시기바랍니다');
         if (user.debt + debt > 1000000)
             return msg.reply(`100만원을 초과하는 빚은 빌릴수 없습니다.`);
-        gambling_1.gambling.updateOne({ id }, { $inc: { principalDebt: debt, debt, money: debt } }).then(() => {
-            msg.reply(`성공적으로 ${debt.toLocaleString()}원을 대출했습니다!\n 현재 대출금액 ${user.debt.toLocaleString()}원 -> ${(user.debt + debt).toLocaleString()}원`);
-        });
-    })
-};
+        (yield gambling_1.gambling.updateOne({ id }, { $inc: { principalDebt: debt, debt, money: debt } })).matchedCount;
+        msg.reply(`성공적으로 ${debt.toLocaleString()}원을 대출했습니다!\n 현재 대출금액 ${user.debt.toLocaleString()}원 -> ${(user.debt + debt).toLocaleString()}원`);
+    }),
+});

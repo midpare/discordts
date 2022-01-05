@@ -20,7 +20,6 @@ export interface CommandType {
   name: string;
   aliases?: Array<string>;
   category: string;
-  subCategory?: string;
   usage: string;
   description: string;
   execute: ExecuteType;

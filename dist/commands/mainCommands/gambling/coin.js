@@ -14,7 +14,6 @@ const Commands_1 = require("../../../structures/Commands");
 exports.default = new Commands_1.Command({
     name: '코인',
     category: 'gambling',
-    subCategory: 'coin',
     usage: '코인',
     description: '코인명령어를 사용합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {

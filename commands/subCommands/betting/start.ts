@@ -1,6 +1,6 @@
 import { Command } from '../../../structures/Commands';
 import { bet1, bet2, betting } from '../../../structures/Betting'
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed } from 'discord.js';
 
 export default new Command({
   name: '시작',

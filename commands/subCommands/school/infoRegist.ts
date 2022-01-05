@@ -1,7 +1,7 @@
 import { Command } from '../../../structures/Commands';
 import { school } from '../../../models/school'
-import { requestGet } from "../../../structures/Util";
-import { client } from "../../../structures/Client";
+import { requestGet } from '../../../structures/Util';
+import { client } from '../../../structures/Client';
 
 export default new Command({
   name: '정보등록',

@@ -10,8 +10,8 @@ export class ExtendClient extends Client {
 
   mainCommands: Collection<string, CommandType>;
   mainAliases: Collection<string, CommandType>;
-  subCommands: Collection<string, Map<string, CommandType>>;
-  subAliases: Collection<string, Map<string, CommandType>>;
+  subCommands: Collection<string, Collection<string, CommandType>>;
+  subAliases: Collection<string, Collection<string, CommandType>>;
   coin: Collection<string, string>;
   interactions: Collection<string, InteractionType>;
   sdCode: Collection<string, string>;

@@ -6,7 +6,7 @@ import { client } from '../../../structures/Client';
 
 export default new Command({
   name: '학교',
-  category: 'school',
+  category: '학교',
   usage: '학교',
   description: '학교 명령어',
   execute: async ({ msg, args }) => {

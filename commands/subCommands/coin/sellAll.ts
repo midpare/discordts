@@ -6,7 +6,7 @@ import { client } from '../../../structures/Client';
 export default new Command({
   name: '풀매수',
   aliases: ['전부구매'],
-  category: 'coin',
+  category: '코인',
   usage: '코인 풀매수 <코인이름>',
   description: '갖고있는 모든 돈으로 코인을 구매합니다.',
   execute: async ({ msg, args }) => {

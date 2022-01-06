@@ -5,7 +5,7 @@ import { Command } from '../../../structures/Commands';
 export default new Command({
   name: '정보확인',
   aliases: ['정보'],
-  category: 'school',
+  category: '학교',
   usage: '학교 정보확인',
   description: '현재 자신의 학교 정보를 확인합니다.',
   execute: async ({ msg, args }) => {

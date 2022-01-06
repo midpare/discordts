@@ -3,7 +3,7 @@ import { Command } from '../../../structures/Commands';
 export default new Command({
   name: 'ban',
   aliases: ['밴', '벤', '차단'],
-  category: 'admin',
+  category: '관리자',
   usage: 'ban <유저> <사유>',
   description: '서버에서 맨션한 <유저>를 차단합니다.',
   execute: async ({ msg, args }) => {

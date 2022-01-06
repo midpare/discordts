@@ -4,7 +4,7 @@ import { Command } from '../../../structures/Commands';
 export default new Command({
   name: 'rsp',
   aliases: ['가위바위보'],
-  category: 'gambling',
+  category: '도박',
   usage: 'rsp <가위/바위/보> <돈>',
   description: '<돈>을 걸고 가위바위보 도박을 진행합니다. (승리시: 2.5배, 비길시: 0.6배, 패배시: 0배)',
   execute: async ({ msg, args }) => {

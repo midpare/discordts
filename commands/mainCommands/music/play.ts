@@ -6,7 +6,7 @@ import { Command } from '../../../structures/Commands';
 export default new Command({
   name: 'play',
   aliases: ['p'],
-  category: 'music',
+  category: '노래',
   usage: 'play <제목>',
   description: '제목의 노래를 현재 음성채널에서 재생합니다.',
   execute: async ({ msg, args }) => {

@@ -1,3 +1,4 @@
+import { Collection } from 'discord.js';
 import { glob } from 'glob';
 import { promisify } from 'util';
 import { ExtendClient } from '../structures/Client';
@@ -29,8 +30,8 @@ export  = async (client: ExtendClient) => {
   const subCommandFiles = await globPromise(`${__dirname}/../commands/subCommands/**/*{.ts,.js}`);
   subCommandFiles.forEach(async (value: string) => {
     const file: CommandType = (await import(value)).default;
-    const commands = new Map();
-    const aliases = new Map();
+    const commands: Collection<string, CommandType> = new Collection();
+    const aliases: Collection<string, CommandType> = new Collection();
     if (!file.category)
       throw `there is no category in subCommands command path: ${value}`;
     commands.set(file.name, file);

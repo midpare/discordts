@@ -4,7 +4,7 @@ import { Bet, bet1, bet2, betting } from '../../../structures/Betting';
 
 export default new Command({
   name: '종료',
-  category: 'betting',
+  category: '베팅',
   usage: '베팅 종료 <팀>',
   description: '베팅을 종료합니다.',
   execute: async ({ msg, args }) => {

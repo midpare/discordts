@@ -6,7 +6,7 @@ import { requestGet } from '../../../structures/Util';
 export default new Command({
   name: '구매',
   aliases: ['매수'],
-  category: 'coin',
+  category: '코인',
   usage: '코인 구매 <코인이름> <구매수량>',
   description: '현재 코인의 시세로 코인을 구매합니다.',
   execute: async ({ msg, args }) => {

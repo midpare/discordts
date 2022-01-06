@@ -2,7 +2,7 @@ import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '이동',
-  category: 'admin',
+  category: '관리자',
   usage: '이동 <유저/채널> <맨션> <채널>',
   description: '맨션한 유저나 맨션한 채널에 있는 유저를 다른 채널로 이동시킵니다.',
   execute: async ({ msg, args }) => {

@@ -3,7 +3,7 @@ import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: 'pause',
-  category: 'music',
+  category: '노래',
   usage: 'pause',
   description: '노래를 멈춥니다.',
   execute: async ({ msg, args }) => {

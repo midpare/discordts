@@ -3,7 +3,7 @@ import { Command } from '../../../structures/Commands';
 export default new Command({
   name: 'kick',
   aliases: ['킥', '강퇴'],
-  category: 'admin',
+  category: '관리자',
   usage: 'kick <유저> <사유>',
   description: '서버에서 맨션한 <유저>를 강퇴합니다.',
   execute: async ({ msg, args }) => {

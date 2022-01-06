@@ -3,7 +3,7 @@ import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: 'skip',
-  category: 'music',
+  category: '노래',
   usage: 'skip',
   description: '현재 나오는 노래를 스킵합니다.',
   execute: async ({ msg, args }) => {

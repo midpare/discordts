@@ -3,7 +3,7 @@ import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '경고',
-  category: 'admin',
+  category: '관리자',
   usage: '경고',
   description: '서버에서 맨션한 유저에게 경고를 부여합니다.',
   execute: async ({ msg, args }) => {

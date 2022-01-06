@@ -4,7 +4,7 @@ import { Command } from '../../../structures/Commands';
 export default new Command({
   name: '빚갚기',
   aliases: ['돈갚기'],
-  category: 'gambling',
+  category: '도박',
   usage: '빚갚기 <돈>',
   description: '자신의 빚을 갚습니다.',
   execute: async ({ msg, args }) => {

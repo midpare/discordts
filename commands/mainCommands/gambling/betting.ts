@@ -5,12 +5,10 @@ import { client } from '../../../structures/Client';
 
 export default new Command({
   name: '베팅',
-  category: 'gambling',
+  category: '베팅',
   usage: '베팅',
   description: '베팅을 합니다.',
   execute: async ({ msg, args }) => {
-    const id = msg.author.id;
-    const name = msg.author.username;
     const command = client.subCommands.get('betting')?.get(args[0]);
     const alias = client.subAliases.get('betting')?.get(args[0]);
     if (command) {
@@ -25,6 +23,8 @@ export default new Command({
     if (args[0] != bet1.name && args[0] != bet2.name)
       return;
 
+    const id = msg.author.id;
+    const name = msg.author.username;
 
     switch (args[0]) {
       case bet1.name:

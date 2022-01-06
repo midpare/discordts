@@ -3,7 +3,7 @@ import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: 'resume',
-  category: 'music',
+  category: '노래',
   usage: 'resume',
   description: '노래를 다시 재생합니다.',
   execute: async ({ msg, args }) => {

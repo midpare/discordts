@@ -7,7 +7,7 @@ import { gambling } from '../../../models/gambling';
 export default new Command({
   name: '보유',
   aliases: ['보유량'],
-  category: 'coin',
+  category: '코인',
   usage: '코인 보유',
   description: '현재 갖고있는 코인을 확인합니다.',
   execute: async ({ msg, args }) => {

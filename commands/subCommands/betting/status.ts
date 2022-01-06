@@ -4,7 +4,7 @@ import { bet1, bet2, betting } from '../../../structures/Betting';
 
 export default new Command({
   name: '현황',
-  category: 'betting',
+  category: '베팅',
   usage: '베팅 현황',
   description: '현재 베팅의 현황을 확인합니다.',
   execute: async ({ msg, args }) => {

@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../../structures/Commands';
-import { bet1, bet2, betting } from '../../../structures/Betting';
+import { bet1, bet2, betting } from '../../../structures/game/Betting';
 
 export default new Command({
   name: '현황',

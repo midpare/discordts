@@ -13,11 +13,10 @@ export default new Command({
     const users = new Array();
     switch (args[0]) {
       case '유저':
-        const targetUser = msg.mentions.members?.values() || [];
-        const checkUser = msg.mentions.members?.first();
+        const targetUser = Array.from(msg.mentions.members?.values() || []);
         const userTargetChannel = channels.next().value;
 
-        if (!checkUser)
+        if (!targetUser[0])
           return msg.reply('이동한 유저를 맨션해주시기바랍니다.');
 
         if (!userTargetChannel || !userTargetChannel.isVoice())

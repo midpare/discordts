@@ -22,7 +22,7 @@ export = {
           if (!user)
             return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
 
-          if (user.bankruptcy && parseFloat(today) - parseFloat(user.bankruptcy) < 3)
+          if (user.bankruptcy && parseFloat(today) - user.bankruptcy < 3)
             return msg.reply(`파산한지 3일이 지나지 않은 유저는 도박을 할 수 없습니다. 파산일${user.bankruptcy}`);
         }
         command.execute({ msg, args });

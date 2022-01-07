@@ -11,8 +11,8 @@ export default new Command({
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     const date = new Date();
-    const today = dateCal(date, 0);
-    ;(await gambling.updateOne({ id }, { $set: { bankruptcy: today, money: 0, debt: 0 } })).matchedCount;
+    const today = parseFloat(dateCal(date, 0));
+    ;(await gambling.updateOne({ id }, { $set: { bankruptcy: today, money: 0, debt: 0, principalDebt: 0, stock: [] } })).matchedCount;
     msg.reply(`성공적으로 ${user.name}님이 파산했습니다!`);
   },
 });

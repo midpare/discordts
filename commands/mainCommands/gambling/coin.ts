@@ -6,13 +6,13 @@ export default new Command({
   category: '코인',
   usage: '코인',
   description: '코인명령어를 사용합니다.',
-  execute: async ({msg, args}) => {
-    const command = client.subCommands.get('coin')?.get(args[0]);
-    const alias = client.subAliases.get('coin')?.get(args[0]);
+  execute: async ({ msg, args }) => {
+    const command = client.subCommands.get('코인')?.get(args[0]);
+    const alias = client.subAliases.get('코인')?.get(args[0]);
     if (command) {
-      command.execute({msg, args});
+      command.execute({ msg, args });
     } else if (alias) {
-      alias.execute({msg, args});
+      alias.execute({ msg, args });
     } else return;
   },
 });

@@ -9,8 +9,8 @@ export default new Command({
   usage: '베팅',
   description: '베팅을 합니다.',
   execute: async ({ msg, args }) => {
-    const command = client.subCommands.get('betting')?.get(args[0]);
-    const alias = client.subAliases.get('betting')?.get(args[0]);
+    const command = client.subCommands.get('베팅')?.get(args[0]);
+    const alias = client.subAliases.get('베팅')?.get(args[0]);
     if (command) {
       command.execute({ msg, args });
       return;

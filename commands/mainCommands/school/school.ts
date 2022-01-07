@@ -23,8 +23,8 @@ export default new Command({
     const weekDay = findWeek > -1 ? weekArr[findWeek] + '요일' : '';
     const user = await school.findOne({ id });
 
-    const command = client.subCommands.get('school')?.get(args[0]);
-    const alias = client.subAliases.get('school')?.get(args[0]);
+    const command = client.subCommands.get('학교')?.get(args[0]);
+    const alias = client.subAliases.get('학교')?.get(args[0]);
 
     if (command) {
       command.execute({ msg, args });

@@ -9,7 +9,7 @@ const gamblingInfo = new Schema({
   principalDebt: Number,
   gamLevel: Number,
   baseMoneyCoolTime: Number,
-  bankruptcy: String,
+  bankruptcy: Number,
   stock: [{name: String, count: Number, money: Number}, {_id: false}],
 });
 

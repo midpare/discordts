@@ -13,9 +13,9 @@ export default new Command({
     const embed = new MessageEmbed()
       .setTitle('랭킹')
       .setDescription('유저의 돈 순위를 확인합니다.');
-    users.forEach((element) => {
-      embed.addField(element.name, `${element.money.toLocaleString()}원`, false);
-    });
+    for (const user of users) {
+      embed.addField(user.name, `${user.money.toLocaleString()}원`, false);
+    }
     msg.channel.send({ embeds: [embed] });
   },
 });

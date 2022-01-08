@@ -8,8 +8,8 @@ const globPromise = promisify(glob);
 export = async function () {
   const intervalFiles = await globPromise(`${__dirname}/../interval/**/*{.ts,.js}`);
 
-  intervalFiles.forEach(async (value: string) => {
-    const file: IntervalType = (await import(value)).default;
+  for (const dir of intervalFiles) {
+    const file: IntervalType = (await import(dir)).default;
     try {
       if (file.immediate)
         file.execute();
@@ -17,5 +17,5 @@ export = async function () {
     } catch (error) {
       console.error(error);
     }
-  });
+  }
 }

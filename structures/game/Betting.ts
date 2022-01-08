@@ -16,9 +16,9 @@ class Bet {
 
   get sum() {
     let result: number = 0;
-    this.list.forEach(element => {
-      result += element.money;
-    });
+    for (const user of this.list) {
+      result += user.money;
+    }
     return result;
   }
 }

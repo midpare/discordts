@@ -26,11 +26,12 @@ export default new Command({
 
     async function result(bet: Bet) {
       msg.reply(`${bet.name}팀이 승리했습니다!`);
-      bet.list.forEach(async (element) => {
-        const id = element.id;
-        const moneyResult = element.money * bet.times;
+
+      for (const user of bet.list) {
+        const id = user.id;
+        const moneyResult = user.money * bet.times;
         (await gambling.updateOne({ id }, { $inc: { money: moneyResult } })).matchedCount;
-      });
+      }
     }
     
     bet1.list = [];

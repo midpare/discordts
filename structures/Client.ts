@@ -28,32 +28,15 @@ export class ExtendClient extends Client {
   }
 
   async start() {
-    this.setCoinList();
     this.setSchool();
 
     const handler = new Array('commands', 'interactions', 'events', 'intervals');
-    handler.forEach((element: string) => {
-      require(`${__dirname}/../handler/${element}`)(this);
-    });
+    for (const dir of handler) {
+      require(`${__dirname}/../handler/${dir}`)(this);
+    }
 
     await mongoose.connect(process.env.DB_URI || '');
     this.login(process.env.TOKEN);
-  }
-
-  async setCoinList() {
-    const options = {
-      uri: 'https://api.upbit.com/v1/market/all',
-      method: 'GET',
-      json: true,
-    };
-    const allCoin = await requestGet(options);
-    allCoin.forEach(async (element: { market: string; korean_name: string }) => {
-      if (element.market.startsWith('KRW')) {
-        const coinName = element.korean_name;
-        const market = element.market;
-        this.coin.set(coinName, market);
-      }
-    });
   }
 
   setSchool() {

@@ -7,12 +7,12 @@ const globPromise = promisify(glob);
 
 export = async function (client: ExtendClient) {
   const interactionFiles = await globPromise(`${__dirname}/../interactions/**/*{.ts,.js}`);
-  interactionFiles.forEach(async (value: string) => {
-    const file: InteractionType = (await import(value)).default;
+  for (const dir of interactionFiles) {
+    const file: InteractionType = (await import(dir)).default;
     try {
       client.interactions.set(file.name, file);
     } catch (error) {
       console.error(error);
     }
-  });
+  }
 }

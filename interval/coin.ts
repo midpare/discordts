@@ -10,13 +10,14 @@ export default new Interval({
       json: true,
     };
     const allCoin = await requestGet(options);
-    allCoin.forEach(async (element: { market: string; korean_name: string }) => {
-      if (element.market.startsWith('KRW')) {
-        const coinName = element.korean_name;
-        const market = element.market;
+
+    for (const coin of allCoin) {
+      if (coin.market.startsWith('KRW')) {
+        const coinName = coin.korean_name;
+        const market = coin.market;
         client.coin.set(coinName, market);
       }
-    });
+    }
   },
   interval: '1d',
   immediate: true,

@@ -5,14 +5,15 @@ import { civilWar } from "../../../structures/game/CivilWar";
 
 export default new Command({
   name: '이동',
+  aliases: ['시작'],
   category: '내전',
   usage: '이동',
   description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
   execute: async ({ msg, args }) => {
     if (!civilWar.team1[0])
       return msg.reply('이동할 멤버가 없습니다.');
-    const team1 = civilWar.team1;
-    const team2 = civilWar.team2;
+    let team1 = civilWar.team1;
+    let team2 = civilWar.team2;
 
     const channel1 = <VoiceChannel>client.channels.cache.get('910521120158019624');
     const channel2 = <VoiceChannel>client.channels.cache.get('910521120158019625');
@@ -28,5 +29,8 @@ export default new Command({
         continue;
       team2User.voice.setChannel(channel2);
     }
+    
+    team1 = []
+    team2 = []
   },
 });

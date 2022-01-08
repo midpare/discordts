@@ -1,3 +1,4 @@
+import { VoiceChannel } from "discord.js";
 import { client } from "../../../structures/Client";
 import { Command } from "../../../structures/Commands";
 import { civilWar } from "../../../structures/game/CivilWar";
@@ -13,8 +14,8 @@ export default new Command({
     const team1 = civilWar.team1
     const team2 = civilWar.team2
 
-    const channel1 = client.channels.cache.get('910521120158019624');
-    const channel2 = client.channels.cache.get('910521120158019625');
+    const channel1 = <VoiceChannel>client.channels.cache.get('910521120158019624');
+    const channel2 = <VoiceChannel>client.channels.cache.get('910521120158019625');
 
     console.log(team1)
     console.log(team2)

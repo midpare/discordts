@@ -6,7 +6,7 @@ export interface ExtendMessage extends Message{
   mentions: MessageMentions;
   guildId: Snowflake;
   guild: Guild;
-  members: GuildMember;
+  // members: GuildMember;
 }
 
 interface ExecuteOptions {

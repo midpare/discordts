@@ -29,8 +29,5 @@ export default new Command({
         continue;
       team2User.voice.setChannel(channel2);
     }
-    
-    team1 = []
-    team2 = []
   },
 });

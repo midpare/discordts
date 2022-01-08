@@ -13,9 +13,10 @@ export default new Command({
 
     const team1 = new Array();
     const team2 = new Array();
-    for (let i = 0; i < args.length; i += 2) {
+    for (let i = 0; i < members.length; i += 2) {
       team1.push(members[i]);
-      team2.push(members[i + 1]);
+      
+      members[i + 1] ? team2.push(members[i + 1]) : null;
     }
 
     const embed = new MessageEmbed()

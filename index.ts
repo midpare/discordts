@@ -1,3 +1,3 @@
-import { client } from './structures/Client';
+import { client } from './src/structures/Client';
 
 client.start();

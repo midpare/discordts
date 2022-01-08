@@ -10,6 +10,7 @@ export default new Command({
     if (!msg.member.permissions.has('BAN_MEMBERS'))
       return msg.reply('이 명령어를 사용할 권한이 없습니다.');
 
+    console.log(msg.member.permissions.has('BAN_MEMBERS'))
     const user = msg.mentions.members?.first();
     const reason = !args[1] ? '없음' : args.slice(1).join(' ');
 

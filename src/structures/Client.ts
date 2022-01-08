@@ -30,13 +30,16 @@ export class ExtendClient extends Client {
   async start() {
     this.setSchool();
 
+    this.handler();
+    await mongoose.connect(process.env.DB_URI || '');
+    this.login(process.env.TOKEN);
+  }
+  
+  async handler() {
     const handler = new Array('commands', 'interactions', 'events', 'intervals');
     for (const dir of handler) {
       require(`${__dirname}/../handler/${dir}`)(this);
     }
-
-    await mongoose.connect(process.env.DB_URI || '');
-    this.login(process.env.TOKEN);
   }
 
   setSchool() {

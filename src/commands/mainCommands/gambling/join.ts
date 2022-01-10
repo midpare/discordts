@@ -15,8 +15,8 @@ export default new Command({
     if (user)
       return msg.reply('이미 가입된 유저입니다.');
 
-    const newUser = new gambling({ id, name, date, money: 0, debt: 0, gamLevel: 1 });
-    newUser.save();
+    const newUser = new gambling({ id, name, date });
+    await newUser.save();
     msg.reply('성공적으로 가입이 완료되었습니다!');
   },
-});
+}); 

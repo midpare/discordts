@@ -9,6 +9,8 @@ const schoolInfo = new Schema({
   schoolName: String,
   grade: String,
   class: String,
+}, {
+  versionKey: false
 });
 
 const school = model('school', schoolInfo);

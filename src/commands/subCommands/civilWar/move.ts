@@ -7,7 +7,7 @@ export default new Command({
   name: '이동',
   aliases: ['시작'],
   category: '내전',
-  usage: '이동',
+  usage: '내전 이동',
   description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
   execute: async ({ msg, args }) => {
     if (!civilWar.team1[0])

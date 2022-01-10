@@ -1,7 +1,6 @@
 import { ChannelManager, Client, ClientUser, Collection } from 'discord.js'
 import { CommandType } from '../typings/command'
 import { InteractionType } from '../typings/interaction'
-import { requestGet } from './Util'
 import mongoose from 'mongoose'
 
 export class ExtendClient extends Client {
@@ -31,7 +30,7 @@ export class ExtendClient extends Client {
     this.setSchool();
 
     this.handler();
-    await mongoose.connect(process.env.DB_URI || '');
+    await mongoose.connect(process.env.DB_URI + '/discordbot' || '');
     this.login(process.env.TOKEN);
   }
   

@@ -7,7 +7,7 @@ export default new Command({
   name: '팀',
   aliases: ['팀나누기'],
   category: '내전',
-  usage: '팀 <이름> <이름> ...',
+  usage: '내전 팀 <이름> <이름> ...',
   description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
   execute: async ({ msg, args }) => {
     const members = shuffle(Array.from(msg.mentions.members?.values() || []));

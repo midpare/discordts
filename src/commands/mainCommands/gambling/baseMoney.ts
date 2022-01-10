@@ -24,6 +24,6 @@ export default new Command({
     const baseMoney = 25000;
 
     (await gambling.updateOne({ id }, { $set: { money: baseMoney, baseMoneyCoolTime: second } })).matchedCount;
-    msg.reply(`기초자금 ${baseMoney.toLocaleString()}원이 지급되었습니다!`);
+    msg.reply(`기초자금 ${baseMoney.toLocaleString()}원이 지급되었습니다!`);  
   },
 });

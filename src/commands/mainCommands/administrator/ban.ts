@@ -8,9 +8,8 @@ export default new Command({
   description: '서버에서 맨션한 <유저>를 차단합니다.',
   execute: async ({ msg, args }) => {
     if (!msg.member.permissions.has('BAN_MEMBERS'))
-      return msg.reply('이 명령어를 사용할 권한이 없습니다.');
+      return msg.reply('당신은 이 명령어를 사용할 권한이 없습니다.');
 
-    console.log(msg.member.permissions.has('BAN_MEMBERS'))
     const user = msg.mentions.members?.first();
     const reason = !args[1] ? '없음' : args.slice(1).join(' ');
 

@@ -11,48 +11,45 @@ export default new Command({
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
 
-    if (user.gamLevel % 2 != 0)
-      return msg.reply('이 도박을 할 수 있는 권한이 없습니다 \n!상점에서 도박권을 구매하십시오');
+    const rspArgs = ['가위', '바위', '보'];
+
+    const random = Math.floor(Math.random() * 3);
+    const human = rspArgs.indexOf(args[0]);
+    const bot = random;
+
+    if (human < 0)
+      return msg.reply('가위, 바위, 보 중 하나를 입력해주시기바랍니다.\n !rsp <가위/바위/보> <돈>');
 
     const money = parseFloat(args[1]);
-    if (isNaN(money))
-      return msg.reply('베팅할 돈을 입력해주시기바랍니다.');
+    if (!Number.isInteger(money) || money <= 0)
+      return msg.reply('정확한 금액을 입력해주시기 바랍니다.');
 
     if (money > user.money)
-      return msg.reply('현재 잔액보다 높은돈을 입력하실수없습니다.');
+      return msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
 
-    const rspArgs = ['가위', '바위', '보'];
-    const even = (element: string) => msg.content.includes(element);
 
-    if (!rspArgs.some(even))
-      return msg.reply('가위, 바위, 보 중 하나를 입력해주시기바랍니다.\n !rsp <가위/바위/보> <돈>');
-    const random = Math.floor(Math.random() * 3);
-    const human = args[0];
-    const bot = rspArgs[random];
+    let winner!: string | null;
 
-    let winner: string = '';
+    if (human === bot) winner = null;
+    else if (human === 1 && bot === 3) winner = 'human';
+    else if (human === 2 && bot === 1) winner = 'human';
+    else if (human === 3 && bot === 2) winner = 'human';
+    else winner = 'bot';
 
-    if (human === bot) {
-      winner = '비김';
-    } else {
-      human === '보' ? (winner = bot === '가위' ? '봇' : '인간') : '';
-      human === '가위' ? (winner = bot === '바위' ? '봇' : '인간') : '';
-      human === '바위' ? (winner = bot === '보' ? '봇' : '인간') : '';
-    }
 
     switch (winner) {
-      case '비김':
-        gambling.updateOne({ id }, { $inc: { money: money * -0.4 } });
-        msg.reply(`사람: ${human} 봇: ${bot}\n비겼습니다.\n${money * 0.4}원를 잃게됩니다.\n잔액: ${user.money}원 -> ${user.money - money * 0.4}원`);
+      default:
+        (await gambling.updateOne({ id }, { $inc: { money: money * -0.4 } })).matchedCount;
+        msg.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 비겼습니다.\n${money * 0.4}원를 잃게됩니다.\n잔액: ${user.money}원 -> ${user.money - money * 0.4}원`);
         break;
-      case '봇':
+      case 'bot':
         (await gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
-        msg.reply(`사람: ${human} 봇: ${bot}\n${winner}이 승리했습니다.\n${money}원을 잃게 됩니다.\n잔액: ${user.money}원 -> ${user.money - money}원`);
+        msg.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 승리했습니다.\n${money}원을 잃게 됩니다.\n잔액: ${user.money}원 -> ${user.money - money}원`);
         break;
-      case '인간':
+      case 'human':
         (await gambling.updateOne({ id }, { $inc: { money: money * 1.5 } })).matchedCount;
-        msg.reply(`사람: ${human} 봇: ${bot}\n${winner}이 승리했습니다.\n${money * 1.5}원을 얻었습니다.\n잔액: ${user.money}원 -> ${user.money + money * 1.5}원`);
+        msg.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 패배했습니다.\n${money * 1.5}원을 얻었습니다.\n잔액: ${user.money}원 -> ${user.money + money * 1.5}원`);
         break;
-    }
+      }
   },
 });

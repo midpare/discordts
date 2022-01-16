@@ -10,7 +10,7 @@ export default new Command({
   execute: async ({ msg, args }) => {
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
-    if (user.money == 0)
+    if (user.money <= 0)
       return msg.reply('돈이 없을때는 도박을 할 수 없습니다.');
 
     const random = Math.floor(Math.random() * 2);

@@ -1,7 +1,7 @@
-import { VoiceChannel } from "discord.js";
-import { client } from "../../../structures/Client";
-import { Command } from "../../../structures/Commands";
-import { civilWar } from "../../../structures/game/CivilWar";
+import { VoiceChannel } from 'discord.js';
+import { client } from '../../../structures/Client';
+import { Command } from '../../../structures/Commands';
+import { civilWar } from '../../../structures/game/CivilWar';
 
 export default new Command({
   name: '이동',
@@ -18,16 +18,16 @@ export default new Command({
     const channel1 = <VoiceChannel>client.channels.cache.get('910521120158019624');
     const channel2 = <VoiceChannel>client.channels.cache.get('910521120158019625');
 
-    for (const team1User of team1) {
-      if (!team1User.voice || team1User.voice.channelId == null)
+    for (const user of team1) {
+      if (!user.voice || user.voice.channelId == null)
         continue;
-      team1User.voice.setChannel(channel1);
+      user.voice.setChannel(channel1);
     }
 
-    for (const team2User of team2) {
-      if (!team2User.voice || team2User.voice.channelId == null)
+    for (const user of team2) {
+      if (!user.voice || user.voice.channelId == null)
         continue;
-      team2User.voice.setChannel(channel2);
+      user.voice.setChannel(channel2);
     }
   },
 });

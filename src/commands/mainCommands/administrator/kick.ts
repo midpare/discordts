@@ -10,15 +10,16 @@ export default new Command({
     if (!msg.member.permissions.has('KICK_MEMBERS'))
       return msg.reply('이 명령어를 사용할 권한이 없습니다.');
 
-    const user = msg.mentions.members?.first();
+    const target = msg.mentions.members?.first();
     const reason = !args[1] ? '없음' : args.slice(1).join(' ');
-    if (!user)
-      return msg.reply('강퇴할 사용자를 맨션해 주시기 바랍니다.');
-    if (user.permissions.has('KICK_MEMBERS'))
-      return msg.reply('이 사용자는 강퇴할 수 없습니다.');
+    if (!target)
+      return msg.reply('강퇴할 유저를 맨션해주시기 바랍니다.');
+    if (target.permissions.has('KICK_MEMBERS'))
+      return msg.reply('이 유저는 강퇴할 수 없습니다.');
 
-    user.kick(reason);
-    msg.channel.send('```' + `처벌 대상: ${user.user.username}#${user.user.discriminator}\n가한 처벌: 강퇴 \n처벌 사유: ${reason}` + '```');
+    target.kick(reason);
+    msg.channel.send('```' + `처벌 대상: ${target.user.username}#${target.user.discriminator}\n가한 처벌: 강퇴\n처벌 사유: ${reason}` + '```');
+
     msg.delete();
   },
 });

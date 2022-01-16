@@ -12,9 +12,9 @@ export default new Command({
     const user = await gambling.findOne({ id });
 
     const date = new Date();
-    const today = parseFloat(dateCal(date, 0));
+    const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
     
-    ;(await gambling.updateOne({ id }, { $set: { bankruptcy: today, money: 0, debt: 0, principalDebt: 0, stock: [] } })).matchedCount;
+    (await gambling.updateOne({ id }, { $set: { bankruptcy: parseFloat(today), money: 0, debt: 0, principalDebt: 0, stock: [] } })).matchedCount;
     msg.reply(`성공적으로 ${user.name}님이 파산했습니다!`);
   },
 });

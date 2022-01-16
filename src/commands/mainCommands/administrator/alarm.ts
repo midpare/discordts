@@ -1,6 +1,6 @@
-import { VoiceChannel } from "discord.js";
-import { client } from "../../../structures/Client";
-import { Command } from "../../../structures/Commands";
+import { VoiceChannel } from 'discord.js';
+import { client } from '../../../structures/Client';
+import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '알람',
@@ -23,8 +23,6 @@ export default new Command({
     const previousChannel = target.voice.channel;
     const nextChannel = <VoiceChannel>client.channels.cache.get('910521120770359323')
 
-    let time = false;
-
     await target.voice.setChannel(nextChannel);
     
     const previousInterval = setInterval(() => {
@@ -41,4 +39,4 @@ export default new Command({
       target.voice.setChannel(previousChannel);
     }, 5000);
   }
-})
+});

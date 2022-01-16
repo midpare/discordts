@@ -11,15 +11,12 @@ export default new Command({
     const money = parseFloat(args[0]);
 
     if (!Number.isInteger(money) || money <= 0)
-      return msg.reply('정확한 자연수를 입력해주시길 바랍니다.');
+      return msg.reply('정확한 금액를 입력해주시기 바랍니다.');
 
     const user = await gambling.findOne({ id });
 
-    if (!user)
-      return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
-
     if (money > user.money)
-      return msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다.  \n현재잔액: ${user.money}원`);
+      return msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
 
     const random = Math.floor(Math.random() * 2);
 

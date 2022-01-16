@@ -1,5 +1,5 @@
-import { client } from "../../../structures/Client";
-import { Command } from "../../../structures/Commands";
+import { client } from '../../../structures/Client';
+import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '내전',

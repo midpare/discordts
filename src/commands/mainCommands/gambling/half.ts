@@ -21,7 +21,7 @@ export default new Command({
       msg.reply(`도박에 성공하셨습니다! ${Math.round(user.money * 0.5).toLocaleString()}원이 지급되었습니다. \n현재 잔액: ${user.money.toLocaleString()}원 -> ${Math.round(user.money * 1.5).toLocaleString()}원`);
     } else if (random == 0) {
       (await gambling.updateOne({ id }, { $set: { money: Math.floor(money * 0.5) } })).matchedCount;
-      msg.reply(`도박에 실패하셨습니다! ${Math.round(user.money * 0.5).toLocaleString()}원을 잃었습니다. \n 현재 잔액 ${user.money.toLocaleString()}원 -> ${Math.round(user.money * 0.5).toLocaleString()}원`);
+      msg.reply(`도박에 실패하셨습니다! ${Math.round(user.money * 0.5).toLocaleString()}원이 차감되었습니다. \n현재 잔액: ${user.money.toLocaleString()}원 -> ${Math.round(user.money * 0.5).toLocaleString()}원`);
     }
   },
 });

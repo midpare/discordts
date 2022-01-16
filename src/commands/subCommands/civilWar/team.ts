@@ -11,7 +11,7 @@ export default new Command({
   description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
   execute: async ({ msg, args }) => {
     const members = shuffle(Array.from(msg.mentions.members?.values() || []));
-
+    
     const team1 = new Array();
     const team2 = new Array();
     for (let i = 0; i < members.length; i += 2) {
@@ -19,6 +19,9 @@ export default new Command({
       
       members[i + 1] ? team2.push(members[i + 1]) : null;
     }
+    
+    if (!team2[0])
+      return msg.reply('두명 이상 맨션을 해주시기 바랍니다.');
 
     const embed = new MessageEmbed()
       .setTitle('팀')
@@ -28,7 +31,8 @@ export default new Command({
       );
 
     msg.channel.send({ embeds: [embed] });
-
+    
+    civilWar.allTeam = members;
     civilWar.team1 = team1;
     civilWar.team2 = team2;
   },

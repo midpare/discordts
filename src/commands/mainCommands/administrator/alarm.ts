@@ -4,7 +4,7 @@ import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '알람',
-  category: 'administrator',
+  category: '관리자',
   usage: '알람 <유저>',
   description: '헤드셋과 마이크를 모두 끈 유저를 여러번 이동시킵니다.',
   execute: async ({ msg, args }) => {

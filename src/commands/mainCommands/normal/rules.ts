@@ -11,7 +11,7 @@ export default new Command({
   execute: ({ msg, args }) => {
     const embed = new MessageEmbed()
       .setTitle('규칙');
-
+      
     const rules = Object.assign(wholeRules)
 
     for (const i in rules) {

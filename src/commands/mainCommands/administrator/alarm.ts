@@ -25,22 +25,20 @@ export default new Command({
       return msg.reply('이 유저는 헤드셋을 끄고있지 않습니다.');
 
     const previousChannel = target.voice.channel;
-    const nextChannel = <VoiceChannel>client.channels.cache.get('910521120770359323')
+    const nextChannel = <VoiceChannel>client.channels.cache.get('910521120770359323');
 
     await target.voice.setChannel(nextChannel);
     
     const previousInterval = setInterval(() => {
+      if (target.voice.channelId == null)
+        return;
       target.voice.setChannel(previousChannel);
-    }, 500);
-
-    const nextInterval = setInterval(() => {
       target.voice.setChannel(nextChannel);
-    }, 500);
+    }, 1000);
 
     setTimeout(() => {
       clearInterval(previousInterval);
-      clearInterval(nextInterval);
       target.voice.setChannel(previousChannel);
     }, 5000);
-  }
+  },
 });

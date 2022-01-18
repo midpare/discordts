@@ -1,5 +1,5 @@
 import request from 'request';
-import { ApiType } from '../typings/api';
+import { ApiType } from '../typings/Api';
 
 export function dateCal(date: Date, days: number): string {
   const dateVariable = new Date(date);

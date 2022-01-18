@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { CommandType, ExtendMessage } from '../src/typings/command';
+import { CommandType, ExtendMessage } from '../src/typings/Command';
 import { gambling } from '../src/models/gambling';
 import { Collection, GuildMember, MessageEmbed, MessageMentions } from 'discord.js';
 
@@ -262,7 +262,7 @@ describe('test', () => {
     args = ['10000'];
     await setDebt(5000);
     await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith('갚으려는 금액이 현재 빚보다 많습니다.\n현재 빚:5,000원');
+    expect(msg.reply).toHaveBeenLastCalledWith('갚으려는 금액이 현재 빚보다 많습니다.\n현재 빚: 5,000원');
 
     args = ['5000'];
     await command.execute({ msg, args });

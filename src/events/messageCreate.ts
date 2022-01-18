@@ -1,4 +1,4 @@
-import { ExtendMessage } from '../typings/command';
+import { ExtendMessage } from '../typings/Command';
 import { client } from '../structures/Client';
 import { gambling } from '../models/gambling';
 import { dateCal } from '../structures/Util';

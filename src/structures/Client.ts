@@ -1,12 +1,12 @@
 import { ChannelManager, Client, ClientUser, Collection } from 'discord.js'
-import { CommandType } from '../typings/command'
+import { CommandType } from '../typings/Command'
 import { InteractionType } from '../typings/interaction'
 import mongoose from 'mongoose'
 
 export class ExtendClient extends Client {
   public user!: ClientUser;
   public channels!: ChannelManager;
-
+  
   mainCommands: Collection<string, CommandType>;
   mainAliases: Collection<string, CommandType>;
   subCommands: Collection<string, Collection<string, CommandType>>;

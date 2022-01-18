@@ -11,13 +11,17 @@ export default new Command({
     if (!msg.member.permissions.has('MOVE_MEMBERS'))
       return msg.reply('당신은 명령어를 사용할 권한이 없습니다.');
     const target = msg.mentions.members?.first();
+    
     if (!target)
-      return msg.reply('이동할 유저를 맨션해주시기바랍니다.');
+    return msg.reply('이동할 유저를 맨션해주시기바랍니다.');
+    
+    if (target.user.bot)
+      return msg.reply('봇에게 알람기능을 사용할 수는 없습니다.');
 
     if (target.voice.channelId == null)
       return msg.reply('이 유저는 음성채널에 접속해있지 않습니다.');
 
-    if (!target.voice.selfDeaf && !target.voice.serverDeaf)
+    if (!target.voice.selfDeaf)
       return msg.reply('이 유저는 헤드셋을 끄고있지 않습니다.');
 
     const previousChannel = target.voice.channel;

@@ -1,5 +1,5 @@
 import { Channel, Collection, GuildMember, MessageMentions, Permissions, TextBasedChannel, TextChannel, User, VoiceChannel, VoiceState } from 'discord.js';
-import { ExtendMessage } from '../src/typings/command';
+import { ExtendMessage } from '../src/typings/Command';
 
 describe('administrator', () => {
   let msg: ExtendMessage;

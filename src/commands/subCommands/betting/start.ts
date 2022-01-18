@@ -4,7 +4,7 @@ import { MessageEmbed } from 'discord.js';
 
 export default new Command({
   name: '시작',
-  aliases: ['스타트'],
+  aliases: ['베팅 스타트'],
   category: '베팅',
   usage: '베팅 시작 <제목> <팀1> <팀2>',
   description: '베팅을 시작합니다.',

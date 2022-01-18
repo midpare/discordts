@@ -1,25 +1,27 @@
 import { MessageEmbed } from 'discord.js';
 import { client } from '../../../structures/Client';
 import { Command } from '../../../structures/Commands';
+import { CommandType } from '../../../typings/Command';
 
 
 export default new Command({
   name: 'help',
   aliases: ['도움말', '명령어'],
   category: '기본',
-  usage: 'help <카테고리>',
+  usage: 'help [카테고리]',
   description: '봇의 명령어를 확인합니다.',
   execute: async ({ msg, args }) => {
-    const directories = [...new Set(client.mainCommands.map((command: { category: string }) => command.category))]
+    const directories = [...new Set(client.mainCommands.map((command: CommandType) => command.category))]
     const embed = new MessageEmbed()
     const prefix = process.env.PREFIX
     const categories = new Map();
     for (const category of directories) {
       const subCommands = client.subCommands.get(category);
       if (subCommands) {
-        const getSubCommands = subCommands.map((subCommand: { usage: string, description: string }) => {
+        const getSubCommands = subCommands.map((subCommand: CommandType) => {
           return {
             usage: subCommand.usage,
+            aliases: subCommand.aliases,
             description: subCommand.description,
           };
         });
@@ -27,10 +29,11 @@ export default new Command({
         continue;
       }
       const getMainCommands = client.mainCommands
-        .filter((commands: { category: string }) => commands.category == category)
+        .filter((commands: CommandType) => commands.category == category)
         .map(command => {
           return {
             usage: command.usage,
+            aliases: command.aliases,
             description: command.description,
           };
         });
@@ -53,10 +56,11 @@ export default new Command({
 
     embed
       .setTitle(`${args[0]} 명령어`)
-      .setDescription(`${args[0]} 관련 명령어를 확인합니다.`);
+      .setDescription(`${args[0]} 관련 명령어를 확인합니다.\n<>는 필수, []는 선택사항 입니다.`);
     for (const command of commands) {
-     embed
-        .addField(`${prefix}${command.usage}`, `${command.description}`, false);
+      const value = command.aliases ? `${command.description}\n동의어: ${command.aliases.join(', ')}` : `${command.description}`
+      embed
+        .addField(`${prefix}${command.usage}`, value , false);
     }
     msg.channel.send({ embeds: [embed] });
   }

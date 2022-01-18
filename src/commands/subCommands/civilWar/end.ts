@@ -4,7 +4,7 @@ import { civilWar } from '../../../structures/game/CivilWar';
 
 export default new Command({
   name: '종료',
-  aliases: ['끝'],
+  aliases: ['내전 끝'],
   category: '내전',
   usage: '내전 종료',
   description: '내전을 종료합니다.',

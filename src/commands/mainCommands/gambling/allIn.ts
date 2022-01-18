@@ -3,7 +3,7 @@ import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '올인',
-  aliases: ['allIn'],
+  aliases: ['ㅇㅇ'],
   category: '도박',
   usage: '올인',
   description: '자신의 모든 돈을 걸고 도박을 진행합니다. (성공시: 2배, 실패시: 0배)',

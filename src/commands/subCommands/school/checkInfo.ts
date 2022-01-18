@@ -4,7 +4,7 @@ import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '정보확인',
-  aliases: ['정보'],
+  aliases: ['학교 정보'],
   category: '학교',
   usage: '학교 정보확인',
   description: '현재 자신의 학교 정보를 확인합니다.',

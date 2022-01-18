@@ -28,7 +28,8 @@ export = {
         command.execute({ msg, args });
       } else if (aliase) {
         aliase.execute({ msg, args });
-      } else return;
+      } else
+        return msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`)
     } catch (error) {
       console.error(error);
     }

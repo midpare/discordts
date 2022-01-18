@@ -3,7 +3,7 @@ import { Command } from '../../../structures/Commands';
 
 export default new Command({
   name: '기초자금',
-  aliases: ['초기자금'],
+  aliases: ['초기자금', '돈', 'ㄷ'],
   category: '도박',
   usage: '기초자금',
   description: '기초자금 25,000원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 60초',

@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "start": "npm run build && npx jest && node dist/index.js",
     "test": "npm run build && npx jest",
-    "run": "npm run build && node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "build": "rimraf dist && npx tsc"
   },
   "author": "",

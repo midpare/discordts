@@ -13,7 +13,7 @@ export default new Command({
     const target = msg.mentions.members?.first();
     
     if (!target)
-    return msg.reply('이동할 유저를 맨션해주시기바랍니다.');
+      return msg.reply('이동할 유저를 맨션해주시기바랍니다.');
     
     if (target.user.bot)
       return msg.reply('봇에게 알람기능을 사용할 수는 없습니다.');

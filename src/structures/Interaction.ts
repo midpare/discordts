@@ -1,4 +1,4 @@
-import { InteractionType } from '../typings/interaction';
+import { InteractionType } from '../typings/Interaction';
 
 export class Interaction {
   constructor(options: InteractionType) {

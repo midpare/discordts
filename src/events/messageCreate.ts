@@ -6,7 +6,8 @@ export = {
   name: 'messageCreate',
   event: async (msg: ExtendMessage) => {
     const prefix = process.env.PREFIX || '';
-    if (msg.author.bot || msg.author.id === client.user.id || !msg.content.startsWith(prefix)) return;
+    if (msg.author.bot || msg.author.id === client.user.id || !msg.content.startsWith(prefix)) 
+      return;
 
     const id = msg.author.id;
     const [cmd, ...args] = msg.content.slice(prefix.length).trim().split(/ +/g);
@@ -19,14 +20,16 @@ export = {
     const botTestChannel = client.channels.cache.get('910521119877005368');
     try {
       if (command) {
-        if (msg.channel == botTestChannel) 
+        if (msg.channel == botTestChannel)
           command.execute({ msg, args });
         else {
           switch (command.category) {
-            case '도박' || '코인' || '베팅':
+            case '도박':
+            case '베팅':
+            case '코인':
               if (msg.channel != gambChannel1 && msg.channel != gambChannel2)
                 return msg.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
-  
+
               const user = await gambling.findOne({ id });
               if (!user)
                 return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
@@ -36,7 +39,9 @@ export = {
                 return msg.reply('이 명령어는 노래방에서만 사용할 수 있습니다.');
               break;
             case '기본':
-              break;  
+            case '관리자':
+              command.execute({ msg, args });
+              break;
             default:
               if (msg.channel != cmdChannel)
                 return msg.reply('이 명령어는 명령어사용방에서만 사용할 수 있습니다.');
@@ -46,7 +51,7 @@ export = {
       } else if (aliase) {
         aliase.execute({ msg, args });
       } else
-        return msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`)
+        return msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`);
     } catch (error) {
       console.error(error);
     }

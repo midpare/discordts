@@ -28,27 +28,27 @@ export default new Command({
       return msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
 
 
-    let winner!: string | null;
+    let winner: string | null;
 
     if (human === bot) winner = null;
-    else if (human === 1 && bot === 3) winner = 'human';
+    else if (human === 0 && bot === 2) winner = 'human';
+    else if (human === 1 && bot === 0) winner = 'human';
     else if (human === 2 && bot === 1) winner = 'human';
-    else if (human === 3 && bot === 2) winner = 'human';
     else winner = 'bot';
 
 
     switch (winner) {
       default:
         (await gambling.updateOne({ id }, { $inc: { money: money * -0.4 } })).matchedCount;
-        msg.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 비겼습니다.\n${money * 0.4}원를 잃게됩니다.\n잔액: ${user.money}원 -> ${user.money - money * 0.4}원`);
+        msg.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 비겼습니다.\n${(money * 0.4).toLocaleString()}원를 잃게됩니다.\n잔액: ${user.money.toLocaleString()}원 -> ${(user.money - money * 0.4).toLocaleString()}원`);
         break;
       case 'bot':
         (await gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
-        msg.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 승리했습니다.\n${money}원을 잃게 됩니다.\n잔액: ${user.money}원 -> ${user.money - money}원`);
+        msg.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 봇이 승리했습니다.\n${money.toLocaleString()}원을 잃게 됩니다.\n잔액: ${user.money.toLocaleString()}원 -> ${(user.money - money).toLocaleString()}원`);
         break;
       case 'human':
         (await gambling.updateOne({ id }, { $inc: { money: money * 1.5 } })).matchedCount;
-        msg.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 패배했습니다.\n${money * 1.5}원을 얻었습니다.\n잔액: ${user.money}원 -> ${user.money + money * 1.5}원`);
+        msg.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 사람이 승리했습니다..\n${(money * 1.5).toLocaleString()}원을 얻게 됩니다.\n잔액: ${user.money.toLocaleString()}원 -> ${(user.money + money * 1.5).toLocaleString()}원`);
         break;
       }
   },

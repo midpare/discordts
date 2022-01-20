@@ -24,10 +24,10 @@ export default new Command({
           return msg.reply('음성채널을 맨션해주시기 바랍니다.');
 
         for (const user of targetUsers) {
-          if (user.voice.channelId == null)
+          if (user.voice?.channelId == null)
             continue;
-          user.voice.setChannel(userTargetChannel);
-          users.push(user.user.username);
+          user.voice?.setChannel(userTargetChannel);
+          users.push(user?.user.username);
         }
         
         users.length > 3 ? msg.reply(`성공적으로 ${users[0]}님 외 ${(users.length - 1).toLocaleString()}명이 ${userTargetChannel.name}채널로 이동했습니다!`) : msg.reply(`성공적으로 ${users.join(', ')}님이 ${userTargetChannel.name}채널로 이동했습니다!`);

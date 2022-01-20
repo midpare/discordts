@@ -1,4 +1,4 @@
-import { IntervalType } from '../typings/Interval';
+import { IntervalType } from '../typings/interval';
 
 export class Interval {
   constructor(options: IntervalType) {

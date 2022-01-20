@@ -2,7 +2,7 @@ import { Collection } from 'discord.js';
 import { glob } from 'glob';
 import { promisify } from 'util';
 import { ExtendClient } from '../structures/Client';
-import { CommandType } from '../typings/Command';
+import { CommandType } from '../typings/command';
 
 const globPromise = promisify(glob);
 

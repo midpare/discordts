@@ -1,7 +1,7 @@
 import { glob } from 'glob';
 import { promisify } from 'util';
 import ms from 'ms';
-import { IntervalType } from '../typings/Interval';
+import { IntervalType } from '../typings/interval';
 
 const globPromise = promisify(glob);
 

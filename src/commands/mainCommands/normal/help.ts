@@ -1,7 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 import { client } from '../../../structures/Client';
 import { Command } from '../../../structures/Commands';
-import { CommandType } from '../../../typings/Command';
+import { CommandType } from '../../../typings/command';
 
 
 export default new Command({

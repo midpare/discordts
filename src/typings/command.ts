@@ -21,5 +21,6 @@ export interface CommandType {
   category: string;
   usage: string;
   description: string;
+  stopping?: boolean;
   execute: ExecuteType;
 }

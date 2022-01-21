@@ -11,8 +11,7 @@ export = {
 
     const id = msg.author.id;
     const [cmd, ...args] = msg.content.slice(prefix.length).trim().split(/ +/g);
-    const command = client.mainCommands.get(cmd.toLowerCase());
-    const aliase = client.mainAliases.get(cmd.toLowerCase());
+    const command = client.mainCommands.get(cmd.toLowerCase()) ? client.mainCommands.get(cmd.toLowerCase()) : client.mainAliases.get(cmd.toLowerCase());
     const gambChannel1 = client.channels.cache.get('910521119877005367');
     const gambChannel2 = client.channels.cache.get('915212166330736691');
     const musicChannel = client.channels.cache.get('910521119877005366');
@@ -20,6 +19,9 @@ export = {
     const botTestChannel = client.channels.cache.get('910521119877005368');
     try {
       if (command) {
+        if (command.stopping)
+          return msg.reply('이 명령어는 현재 개발자에 의해 정지돼있습니다.');
+          
         if (msg.channel == botTestChannel)
           command.execute({ msg, args });
         else {
@@ -48,8 +50,6 @@ export = {
               break;
           }
         }
-      } else if (aliase) {
-        aliase.execute({ msg, args });
       } else
         return msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`);
     } catch (error) {

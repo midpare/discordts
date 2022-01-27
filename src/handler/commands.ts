@@ -2,11 +2,11 @@ import { Collection } from 'discord.js';
 import { glob } from 'glob';
 import { promisify } from 'util';
 import { ExtendClient } from '../structures/Client';
-import { CommandType } from '../typings/command';
+import { CommandType } from '../util/typings/command';
 
 const globPromise = promisify(glob);
 
-export = async (client: ExtendClient) => {
+export = async function (client: ExtendClient) {
   const mainCommandFiles = await globPromise(`${__dirname}/../commands/mainCommands/**/*{.ts,.js}`);
   for (const dir of mainCommandFiles) {
     const file: CommandType = (await import(dir)).default;

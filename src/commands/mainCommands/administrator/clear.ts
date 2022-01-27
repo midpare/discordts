@@ -6,10 +6,10 @@ export default new Command({
   category: '관리자',
   usage: 'clear <숫자>',
   description: '메시지를 보낸 채팅방에 <숫자>만큼의 채팅을 지웁니다.',
-  execute: async ({ msg, args }) => {    
+  execute: async ({ msg, args }) => {
     if (!msg.member.permissions.has('MANAGE_MESSAGES'))
       return msg.reply('이 명령어를 사용할 권한이 없습니다.');
-      
+
     const count = parseFloat(args[0]);
     if (!Number.isInteger(count))
       return msg.reply('정확한 자연수를 입력해주시기 바랍니다.\n !clear <숫자>');
@@ -17,6 +17,12 @@ export default new Command({
     if (count < 0 || count > 99)
       return msg.reply('1에서 99사이의 수를 입력해주시기 바랍니다. \n !clear <숫자>');
 
-    msg.channel.bulkDelete(count + 1);
+    const target = msg.mentions.members?.first();
+    if (!target) {
+      msg.channel.bulkDelete(count + 1);
+      return msg.channel.send(`성공적으로 ${count}개의 메시지를 삭제했습니다!`).then(msg => {
+        setTimeout(() => msg.delete(), 1500);
+      });
+    }
   },
 });

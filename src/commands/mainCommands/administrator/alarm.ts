@@ -11,6 +11,7 @@ export default new Command({
     if (!msg.member.permissions.has('MOVE_MEMBERS'))
       return msg.reply('당신은 명령어를 사용할 권한이 없습니다.');
     const target = msg.mentions.members?.first();
+    const nextChannel = <VoiceChannel>client.channels.cache.get('910521120770359323');
     
     if (!target)
       return msg.reply('이동할 유저를 맨션해주시기바랍니다.');
@@ -25,7 +26,6 @@ export default new Command({
       return msg.reply('이 유저는 헤드셋을 끄고있지 않습니다.');
 
     const previousChannel = target.voice.channel;
-    const nextChannel = <VoiceChannel>client.channels.cache.get('910521120770359323');
 
     await target.voice.setChannel(nextChannel);
     

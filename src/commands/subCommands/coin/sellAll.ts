@@ -1,6 +1,6 @@
 import { Command } from '../../../structures/Commands';
 import { gambling } from '../../../models/gambling';
-import { requestGet } from '../../../structures/Util';
+import { requestGet } from '../../../util/Util';
 import { client } from '../../../structures/Client';
 
 export default new Command({

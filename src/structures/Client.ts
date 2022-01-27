@@ -1,6 +1,6 @@
 import { ChannelManager, Client, ClientUser, Collection } from 'discord.js'
-import { CommandType } from '../typings/command'
-import { InteractionType } from '../typings/interaction'
+import { CommandType } from '../util/typings/command'
+import { InteractionType } from '../util/typings/interaction'
 import mongoose from 'mongoose'
 
 export class ExtendClient extends Client {
@@ -27,16 +27,16 @@ export class ExtendClient extends Client {
   }
 
   async start() {
-    this.setSchool();
-
     this.handler();
-    await mongoose.connect(process.env.DB_URI + '/discordbot');
-    this.login(process.env.TOKEN);
+    this.setSchool();
+    super.login(process.env.TOKEN);
+    mongoose.connect(process.env.DB_URI + '/discordbot');
   }
 
   async handler() {
-    for (const dir of ['commands', 'interactions', 'events', 'intervals']) {
-      require(`${__dirname}/../handler/${dir}`)(this);
+    const path = new Array('commands', 'interactions', 'events', 'intervals', 'app')
+    for (const dir of path) {
+      require(`../handler/${dir}`)(this);
     }
   }
 

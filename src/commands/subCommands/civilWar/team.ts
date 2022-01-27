@@ -1,7 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../../structures/Commands';
 import { civilWar } from '../../../structures/game/CivilWar';
-import { shuffle } from '../../../structures/Util';
+import { shuffle } from '../../../util/Util';
 
 export default new Command({
   name: '팀',

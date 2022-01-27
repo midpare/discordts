@@ -1,7 +1,7 @@
 import { Command } from '../../../structures/Commands';
 import { gambling } from '../../../models/gambling';
 import { client } from '../../../structures/Client';
-import { requestGet } from '../../../structures/Util';
+import { requestGet } from '../../../util/Util';
 
 export default new Command({
   name: '판매',

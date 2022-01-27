@@ -8,12 +8,10 @@ export interface ExtendMessage extends Message {
   guild: Guild;
 }
 
-interface ExecuteOptions {
+type ExecuteType = (options: {
   msg: ExtendMessage;
   args: Array<string>;
-}
-
-type ExecuteType = (options: ExecuteOptions) => any;
+}) => any;
 
 export interface CommandType {
   name: string;

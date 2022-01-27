@@ -1,5 +1,5 @@
 import { Command } from '../../../structures/Commands';
-import { requestGet } from '../../../structures/Util';
+import { requestGet } from '../../../util/Util';
 import { gambling } from '../../../models/gambling';
 import { client } from '../../../structures/Client';
 

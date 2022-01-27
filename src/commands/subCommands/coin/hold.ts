@@ -1,7 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../../structures/Commands';
 import { client } from '../../../structures/Client';
-import { requestGet } from '../../../structures/Util';
+import { requestGet } from '../../../util/Util';
 import { gambling } from '../../../models/gambling';
 
 export default new Command({

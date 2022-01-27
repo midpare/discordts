@@ -9,8 +9,6 @@ export default new Command({
   execute: async ({ msg, args }) => {
     const id = msg.author.id;
     const name = msg.author.username;
-    const today = new Date();
-    const date = '' + today.getFullYear() + today.getMonth() + (today.getDate() - 1);
     const user = await gambling.findOne({ id });
     if (user)
       return msg.reply('이미 가입된 유저입니다.');

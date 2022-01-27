@@ -1,4 +1,4 @@
-import { ExtendInteraction } from '../typings/interaction';
+import { ExtendInteraction } from '../util/typings/interaction';
 import { client } from '../structures/Client';
 
 export = {

@@ -1,6 +1,5 @@
 import { Command } from '../../../structures/Commands';
 import { gambling } from '../../../models/gambling';
-import { dateCal } from '../../../structures/Util';
 
 export default new Command({
   name: '파산',

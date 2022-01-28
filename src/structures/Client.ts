@@ -7,22 +7,16 @@ export class ExtendClient extends Client {
   public user!: ClientUser;
   public channels!: ChannelManager;
   
-  mainCommands: Collection<string, CommandType>;
-  mainAliases: Collection<string, CommandType>;
-  subCommands: Collection<string, Collection<string, CommandType>>;
-  subAliases: Collection<string, Collection<string, CommandType>>;
-  coin: Collection<string, string>;
+  commands: Collection<string, CommandType>;
   interactions: Collection<string, InteractionType>;
+  coin: Collection<string, string>;
   sdCode: Collection<string, string>;
 
   constructor() {
     super({ intents: 32767 });
-    this.mainAliases = new Collection();
-    this.mainCommands = new Collection();
-    this.subCommands = new Collection();
-    this.subAliases = new Collection();
-    this.coin = new Collection();
+    this.commands = new Collection();
     this.interactions = new Collection();
+    this.coin = new Collection();
     this.sdCode = new Collection();
   }
 

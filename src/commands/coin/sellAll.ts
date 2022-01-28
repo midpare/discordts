@@ -1,6 +1,6 @@
 import { Command } from '../../structures/Commands';
 import { gambling } from '../../models/gambling';
-import { requestGet } from '../../util/Util';
+import { requestGet } from '../../util/requestGet';
 import { client } from '../../structures/Client';
 
 export default new Command({
@@ -13,7 +13,7 @@ export default new Command({
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     const stock = user.stock;
-    const coinName = args[1];
+    const coinName = args[0];
     const userCoin = stock.filter((element: { name: string }) => element.name == coinName)[0];
     const apiOptions = {
       uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to`,

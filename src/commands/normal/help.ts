@@ -11,13 +11,13 @@ export default new Command({
   usage: 'help [카테고리]',
   description: '봇의 명령어를 확인합니다.',
   execute: async ({ msg, args }) => {
-    const directories = [...new Set(client.commands.map((command: CommandType) => command.category))]
-    console.log(directories);
     const embed = new MessageEmbed()
     const prefix = process.env.PREFIX
+
+    const directories = [...new Set(client.commands.map((command: CommandType) => command.category))]
     const categories = new Map();
     for (const category of directories) {
-      const getMainCommands = client.commands
+      const getCommands = new Set(client.commands
         .filter((commands: CommandType) => commands.category == category)
         .map(command => {
           return {
@@ -25,10 +25,11 @@ export default new Command({
             aliases: command.aliases,
             description: command.description,
           };
-        });
-      categories.set(category, getMainCommands);
+        }));
+      console.log(getCommands)
+      categories.set(category, [...getCommands]);
     }
-
+    
     const commands = categories.get(args[0]);
 
     if (!commands) {
@@ -52,6 +53,6 @@ export default new Command({
         .addField(`${prefix}${command.usage}`, value , false);
     }
     msg.channel.send({ embeds: [embed] });
-  }
+  },
 });
 

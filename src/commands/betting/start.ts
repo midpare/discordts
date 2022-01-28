@@ -12,16 +12,16 @@ export default new Command({
     if (betting.betting)
       return msg.reply('이미 시작한 베팅이 있습니다.');
 
-    if (!args[1])
+    if (!args[0])
       return msg.reply('제목을 입력해주시기바랍니다.');
 
-    if (!args[2] || !args[3])
+    if (!args[1] || !args[2])
       return msg.reply('베팅 이름을 입력해주시기바랍니다.');
 
     const embed = new MessageEmbed();
-    betting.title = args[1];
-    bet1.name = args[2];
-    bet2.name = args[3];
+    betting.title = args[0];
+    bet1.name = args[1];
+    bet2.name = args[2];
 
     embed
       .setTitle(betting.title)

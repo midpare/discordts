@@ -1,7 +1,7 @@
 import { Command } from '../../structures/Commands';
 import { gambling } from '../../models/gambling';
 import { client } from '../../structures/Client';
-import { requestGet } from '../../util/Util';
+import { requestGet } from '../../util/requestGet';
 
 export default new Command({
   name: '코인 판매',
@@ -13,8 +13,8 @@ export default new Command({
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     const stock = user.stock;
-    const userCoin = stock.filter((element: { name: string }) => element.name == args[1])[0];
-    const coinName = args[1];
+    const coinName = args[0];
+    const userCoin = stock.filter((element: { name: string }) => element.name == coinName)[0];
 
     const apiOptions = {
       uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to`,
@@ -27,7 +27,7 @@ export default new Command({
     if (!userCoin)
       return msg.reply('이 코인을 가지고 있지 않습니다.');
 
-    const count = parseFloat(args[2]);
+    const count = parseFloat(args[1]);
     if (!Number.isInteger(count) || count <= 0)
       return msg.reply('정확한 수량을 입력해주시기바랍니다.');
     if (userCoin.count < count)

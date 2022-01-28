@@ -11,7 +11,7 @@ export default new Command({
     if (!betting.betting)
       return msg.reply('아직 베팅을 시작하지 않았습니다.');
 
-    const winner = args[1];
+    const winner = args[0];
     if (winner != bet1.name && winner != bet2.name)
       return msg.reply(`${bet1.name}과 ${bet2.name}중 승리팀을 선택해주시기 바랍니다.`);
 

@@ -1,7 +1,7 @@
 import { Command } from '../../structures/Commands';
 import { gambling } from '../../models/gambling';
 import { client } from '../../structures/Client';
-import { requestGet } from '../../util/Util';
+import { requestGet } from '../../util/requestGet';
 
 export default new Command({
   name: '코인 구매',
@@ -13,7 +13,7 @@ export default new Command({
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     const stock = user.stock;
-    const coinName = args[1];
+    const coinName = args[0];
     const userCoin = stock.filter((element: { name: string }) => element.name == coinName)[0];
     const apiOptions = {
       uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to`,
@@ -23,7 +23,7 @@ export default new Command({
     const coin = await requestGet(apiOptions);
     if (!coin)
       return msg.reply('정확한 코인을 입력해주시기바랍니다.');
-    const count = parseFloat(args[2]);
+    const count = parseFloat(args[1]);
     if (!Number.isInteger(count) || count <= 0)
       return msg.reply('정확한 구매 수량을 입력해주시기바랍니다.');
     const coinMoney = coin[0].tradePrice;
@@ -41,7 +41,7 @@ export default new Command({
         count: count,
         money: coinMoney,
       };
-      (await gambling.updateOne({ id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } })).matchedCount        
+      (await gambling.updateOne({ id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } })).matchedCount;     
       msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`);
     }
   },

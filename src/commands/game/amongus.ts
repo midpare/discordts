@@ -1,5 +1,6 @@
 import { VoiceChannel } from "discord.js";
 import { Command } from "../../structures/Commands";
+
 const dead = new Array();
 export default new Command({
   name: '어몽어스',

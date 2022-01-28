@@ -10,8 +10,11 @@ export = {
       return;
 
     const id = msg.author.id;
-    const [cmd, ...args] = msg.content.slice(prefix.length).trim().split(/ +/g);
-    const command = client.mainCommands.get(cmd.toLowerCase()) ? client.mainCommands.get(cmd.toLowerCase()) : client.mainAliases.get(cmd.toLowerCase());
+    const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+    const getCmd = (start: number, end: number) => {
+      return args.slice(start, end).join(' ').toLowerCase();
+    }
+    const command = client.commands.get(getCmd(0, 2)) ? client.commands.get(getCmd(0, 2)) : client.commands.get(getCmd(0, 1));
     const gambChannel1 = client.channels.cache.get('910521119877005367');
     const gambChannel2 = client.channels.cache.get('915212166330736691');
     const musicChannel = client.channels.cache.get('910521119877005366');

@@ -1,4 +1,4 @@
-import { ExtendMessage, CommandType } from '../util/typings/command';
+import { ExtendMessage, CommandType } from '../util/types/command';
 import { client } from '../structures/Client';
 import { gambling } from '../models/gambling';
 

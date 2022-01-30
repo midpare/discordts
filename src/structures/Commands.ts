@@ -1,4 +1,4 @@
-import { CommandType, ExtendMessage } from '../util/typings/command';
+import { CommandType, ExtendMessage } from '../util/types/command';
 
 export class Command {
   public name: string;

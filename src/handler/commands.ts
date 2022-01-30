@@ -1,7 +1,7 @@
 import { glob } from 'glob';
 import { promisify } from 'util';
 import { ExtendClient } from '../structures/Client';
-import { CommandType } from '../util/typings/command';
+import { CommandType } from '../util/types/command';
 
 const globPromise = promisify(glob);
 

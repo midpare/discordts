@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../structures/Commands';
-import wholeRules from '../../util/language/rules.json'
+import wholeRules from '../../util/language/rules.json';
 
 export default new Command({
   name: '규칙',
@@ -12,7 +12,7 @@ export default new Command({
     const embed = new MessageEmbed()
       .setTitle('규칙');
       
-    const rules = Object.assign(wholeRules)
+    const rules = Object.assign(wholeRules);
 
     for (const i in rules) {
       embed.addField(i, rules[i].join('\n'), false);

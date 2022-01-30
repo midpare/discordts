@@ -15,4 +15,4 @@ const gamblingInfo = new Schema({
   versionKey: false
 });
 
-export const gambling = model('gambling', gamblingInfo);
+export const gambling = model('gambling', gamblingInfo); 

@@ -1,5 +1,5 @@
-import { VoiceChannel } from "discord.js";
-import { Command } from "../../structures/Commands";
+import { VoiceChannel } from 'discord.js';
+import { Command } from '../../structures/Commands';
 
 const dead = new Array();
 export default new Command({
@@ -8,7 +8,7 @@ export default new Command({
   usage: '어몽어스 <시작/종료>',
   description: '어몽어스를 시작하고 종료합니다.',
   execute: ({ msg, args }) => {
-    if (!msg.member.permissions.has("MUTE_MEMBERS"))
+    if (!msg.member.permissions.has('MUTE_MEMBERS'))
       return msg.reply('이 명령어를 사용할 권한이 없습니다.');
     const channel = msg.member.voice.channel;
     if (!(channel instanceof VoiceChannel))

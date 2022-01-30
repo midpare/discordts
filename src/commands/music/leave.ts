@@ -1,5 +1,5 @@
-import { Command } from "../../structures/Commands";
-import { music } from "../../structures/Music";
+import { Command } from '../../structures/Commands';
+import { music } from '../../structures/Music';
 
 export default new Command({
   name: 'leave',

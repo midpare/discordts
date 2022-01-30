@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../structures/Commands';
-import wholeRules from '../../../config/rules.json';
+import wholeRules from '../../util/language/rules.json'
 
 export default new Command({
   name: '규칙',

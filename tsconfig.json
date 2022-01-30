@@ -10,7 +10,7 @@
     "forceConsistentCasingInFileNames": true,           
     "strict": true,                                     
     "noImplicitAny": true,              
-    "noUnusedLocals": true,              
     "noFallthroughCasesInSwitch": true,
-  }
+  },
+  "exclude": ["__tests__", "jest.config.ts"]
 }

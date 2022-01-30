@@ -1,5 +1,5 @@
-import { joinVoiceChannel, DiscordGatewayAdapterCreator } from "@discordjs/voice";
-import { Snowflake, VoiceBasedChannel } from "discord.js";
+import { joinVoiceChannel, DiscordGatewayAdapterCreator } from '@discordjs/voice';
+import { Snowflake, VoiceBasedChannel } from 'discord.js';
 
 export class Music {
   public channelId: Snowflake | null = null

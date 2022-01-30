@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const warningInfo = new Schema({
   id: String,
   name: String,
-  warning: Number,
+  warning: { type: Number, default: 0 },
 }, {
   versionKey: false
 });

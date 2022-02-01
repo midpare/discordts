@@ -1,7 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../../structures/Commands';
-import { civilWar } from '../../../structures/game/CivilWar';
-import { shuffle } from '../../../util/shuffle';
+import { civilWar } from '../../../util/structures/CivilWar';
+import { shuffle } from '../../../util/functions/shuffle';
 
 export default new Command({
   name: '내전 팀',

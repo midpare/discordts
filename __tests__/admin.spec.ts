@@ -23,7 +23,7 @@ describe('admin', () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.DB_URI + '/testDB');
     client.channels.cache.set('910521119877005363', punishChannel);
-  }); 
+  });
 
   afterAll(async () => {
     await warning.deleteMany({});
@@ -229,7 +229,7 @@ describe('admin', () => {
 
     expect(user).toMatchObject(mockUser);
     expect(punishChannel.send).toHaveBeenLastCalledWith(message.admin.warning.give.success(mentionUser.user, 4, 4, 'test warning reason'))
-    
+
 
     args = ['', '3', 'test', 'warning', 'reason'];
     await command.execute({ msg, args });
@@ -264,18 +264,18 @@ describe('admin', () => {
     args = ['', '3'];
     await command.execute({ msg, args });
     expect(msg.reply).toHaveBeenLastCalledWith(message.admin.warning.deduction.noneWarning);
-    
+
     const newUser = new warning({ id: 'test id', name: 'test username' });
     await newUser.save();
     await command.execute({ msg, args });
     expect(msg.reply).toHaveBeenLastCalledWith(message.admin.warning.deduction.noneWarning);
-    
+
     args = ['', '7'];
     (await warning.updateOne({ id: 'test id' }, { $inc: { warning: 5 } })).matchedCount;
     await command.execute({ msg, args });
     expect(msg.reply).toHaveBeenLastCalledWith(message.admin.warning.deduction.overWarning);
 
-    
+
     args = ['', '3', 'test', 'warning', 'reason'];
     await command.execute({ msg, args });
 

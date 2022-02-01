@@ -1,4 +1,4 @@
-import { requestGet } from '../util/requestGet';
+import { requestGet } from '../util/functions/requestGet';
 import { client } from '../structures/Client';
 import { Interval } from '../structures/Interval';
 

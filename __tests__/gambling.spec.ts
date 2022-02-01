@@ -2,35 +2,13 @@ import mongoose from 'mongoose';
 import { CommandType, ExtendMessage } from '../src/util/types/command';
 import { gambling } from '../src/models/gambling';
 import { Collection, GuildMember, MessageEmbed, MessageMentions } from 'discord.js';
+import { message } from '../src/util/language/message';
 
 describe('test', () => {
-  beforeAll(async () => {
-    await mongoose.connect(process.env.DB_URI + '/testDB');
-  });
-
-  afterAll(async () => {
-    await gambling.deleteMany({});
-    await mongoose.connection.close();
-  });
-
   const date = new Date();
   const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
-
-  const msg = ({
-    channel: {
-      send: jest.fn(),
-    },
-    reply: jest.fn(),
-    author: {
-      id: 'test id',
-      username: 'test name',
-    },
-    mentions: {
-      members: new Collection(),
-    } as unknown as MessageMentions,
-  } as unknown) as ExtendMessage;
-
-  const mockUser = {
+  let msg: ExtendMessage;
+  let mockUser = {
     _id: expect.anything(),
     id: 'test id',
     name: 'test name',
@@ -46,11 +24,36 @@ describe('test', () => {
 
   let args: Array<string>;
 
-  afterEach(() => {
+  beforeAll(async () => {
+    await mongoose.connect(process.env.DB_URI + '/testDB');
+  });
+
+  afterAll(async () => {
+    await gambling.deleteMany({});
+    await mongoose.connection.close();
+  });
+
+  beforeEach(() => {
     mockUser.money = 0;
     mockUser.debt = 0;
     mockUser.principalDebt = 0;
+    mockUser.stock = [];
+
     args = [];
+    
+    msg = {
+      channel: {
+        send: jest.fn(),
+      },
+      reply: jest.fn(),
+      author: {
+        id: 'test id',
+        username: 'test name',
+      },
+      mentions: {
+        members: new Collection(),
+      } as unknown as MessageMentions,
+    } as unknown as ExtendMessage;
   });
 
   async function setMoney(money: number) {
@@ -95,11 +98,10 @@ describe('test', () => {
   it('daily', async () => {
     const command = await getCommand('daily');
 
-    
     await setMoney(0);
     await command.execute({ msg, args });
     const user = await gambling.findOne({ id: 'test id' });
-    
+
     mockUser.money = expect.any(Number);
     mockUser.date = parseFloat(today);
 
@@ -117,27 +119,27 @@ describe('test', () => {
 
     await setMoney(10000);
     await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith('test name 님의 잔액은 10,000원입니다.');
+    expect(msg.reply).toHaveBeenLastCalledWith(message.gambling.balance('test name', 10000));
 
     await setMoney(5000);
     await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith('test name 님의 잔액은 5,000원입니다.');
+    expect(msg.reply).toHaveBeenLastCalledWith(message.gambling.balance('test name', 5000));
   });
 
   it('gambling', async () => {
     const command = await getCommand('gambling');
 
     await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith('정확한 금액를 입력해주시기 바랍니다.');
+    expect(msg.reply).toHaveBeenLastCalledWith(message.naturalNumber);
 
     args = ['-1'];
     await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith('정확한 금액를 입력해주시기 바랍니다.');
+    expect(msg.reply).toHaveBeenLastCalledWith(message.naturalNumber);
 
     args = ['2000'];
     await setMoney(1000)
     await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith('현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: 1,000원');
+    expect(msg.reply).toHaveBeenLastCalledWith(message.overMoney(1000));
 
     args = ['3000'];
     await setMoney(10000);
@@ -148,11 +150,11 @@ describe('test', () => {
     if (user.money == 7000) {
       mockUser.money = 7000;
       expect(user).toMatchObject(mockUser);
-      expect(msg.reply).toHaveBeenLastCalledWith('도박에 실패하셨습니다! 3,000원이 차감되었습니다. \n현재 잔액: 10,000원 -> 7,000원');
+      expect(msg.reply).toHaveBeenLastCalledWith(message.gambling.failureGamb(10000, 3000));
     } else if (user.money == 13000) {
       mockUser.money = 13000;
       expect(user).toMatchObject(mockUser);
-      expect(msg.reply).toHaveBeenLastCalledWith('도박에 성공하셨습니다! 3,000원이 지급되었습니다. \n현재 잔액: 10,000원 -> 13,000원');
+      expect(msg.reply).toHaveBeenLastCalledWith(message.gambling.successGamb(10000, 3000));
     }
   });
 
@@ -161,7 +163,7 @@ describe('test', () => {
 
     await setMoney(0);
     await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith('돈이 없을때는 도박을 할 수 없습니다.');
+    expect(msg.reply).toHaveBeenLastCalledWith(message.noneMoney);
 
     await setMoney(10000);
     await command.execute({ msg, args });
@@ -171,11 +173,11 @@ describe('test', () => {
     if (user.money == 0) {
       mockUser.money = 0;
       expect(user).toMatchObject(mockUser);
-      expect(msg.reply).toHaveBeenLastCalledWith('도박에 실패하셨습니다! 모든 돈을 잃었습니다. \n현재 잔액 10,000원 -> 0원');
+      expect(msg.reply).toHaveBeenLastCalledWith(message.gambling.failureGamb(10000, 10000));
     } else if (user.money == 20000) {
       mockUser.money = 20000;
       expect(user).toMatchObject(mockUser);
-      expect(msg.reply).toHaveBeenLastCalledWith('도박에 성공하셨습니다! 10,000원이 지급되었습니다. \n현재 잔액: 10,000원 -> 20,000원');
+      expect(msg.reply).toHaveBeenLastCalledWith(message.gambling.successGamb(10000, 10000));
     }
   })
 
@@ -337,7 +339,7 @@ describe('test', () => {
     expect(sendUser).toMatchObject(mockUser);
     expect(targetUser.money).toBe(10000);
     expect(msg.reply).toHaveBeenLastCalledWith('성공적으로 test send name님에게 10,000원을 송금했습니다!');
-    
+
     await gambling.deleteOne({ id: 'test send id' });
   });
 
@@ -352,22 +354,22 @@ describe('test', () => {
 
     await command.execute({ msg, args });
     const embed = {
-      'author': null, 
-      'color': null, 
-      'title': '랭킹', 
-      'description': '유저의 돈 순위를 확인합니다.', 
+      'author': null,
+      'color': null,
+      'title': '랭킹',
+      'description': '유저의 돈 순위를 확인합니다.',
       'fields': [
         { 'inline': false, 'name': 'test ranking name 2', 'value': '9,092원' },
         { 'inline': false, 'name': 'test ranking name 1', 'value': '8,414원' },
         { 'inline': false, 'name': 'test ranking name 4', 'value': '7,568원' },
         { 'inline': false, 'name': 'test ranking name 3', 'value': '1,411원' },
-      ], 
-      'footer': null, 
-      'image': null, 
+      ],
+      'footer': null,
+      'image': null,
       'provider': null,
-      'thumbnail': null, 
-      'timestamp': null, 
-      'type': 'rich', 
+      'thumbnail': null,
+      'timestamp': null,
+      'type': 'rich',
       'url': null,
       'video': null,
     } as MessageEmbed;
@@ -381,7 +383,7 @@ describe('test', () => {
     const user = await gambling.findOne({ id: 'test id' });
 
     mockUser.bankruptcy = parseFloat(today);
-    
+
     expect(user).toMatchObject(mockUser);
     expect(msg.reply).toHaveBeenLastCalledWith('성공적으로 test name님이 파산했습니다!');
   });

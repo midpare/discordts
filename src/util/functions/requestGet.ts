@@ -1,5 +1,5 @@
 import request from 'request';
-import { ApiType } from './types/api';
+import { ApiType } from '../types/api';
 
 export async function requestGet(option: ApiType): Promise<any> {
   return new Promise((resolve, reject) => {

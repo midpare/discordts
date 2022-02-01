@@ -1,5 +1,6 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../structures/Commands';
+import { message } from '../../util/language/message';
 
 export default new Command({
   name: '도박',
@@ -12,21 +13,21 @@ export default new Command({
     const money = parseFloat(args[0]);
 
     if (!Number.isInteger(money) || money <= 0)
-      return msg.reply('정확한 금액를 입력해주시기 바랍니다.');
+      return msg.reply(message.naturalNumber);
 
     const user = await gambling.findOne({ id });
 
     if (money > user.money)
-      return msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
+      return msg.reply(message.overMoney(user.money));
 
     const random = Math.floor(Math.random() * 2);
 
     if (random == 1) {
       (await gambling.updateOne({ id }, { $inc: { money: money } })).matchedCount;
-      msg.reply(`도박에 성공하셨습니다! ${money.toLocaleString()}원이 지급되었습니다. \n현재 잔액: ${user.money.toLocaleString()}원 -> ${(user.money + money).toLocaleString()}원`);
+      msg.reply(message.gambling.successGamb(user.money, money));
     } else if (random == 0) {
       (await gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
-      msg.reply(`도박에 실패하셨습니다! ${money.toLocaleString()}원이 차감되었습니다. \n현재 잔액: ${user.money.toLocaleString()}원 -> ${(user.money - money).toLocaleString()}원`);
+      msg.reply(message.gambling.failureGamb(user.money, money));
     }
   },
 });

@@ -1,7 +1,7 @@
 import { QueryType } from 'discord-player';
 import player from '../../structures/Player';
 import { Command } from '../../structures/Commands';
-import { findBot } from '../../util/findBot';
+import { findBot } from '../../util/functions/findBot';
 
 
 export default new Command({

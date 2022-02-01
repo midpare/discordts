@@ -1,7 +1,7 @@
 import { Command } from '../../structures/Commands';
 import { gambling } from '../../models/gambling';
 import { client } from '../../structures/Client';
-import { requestGet } from '../../util/requestGet';
+import { requestGet } from '../../util/functions/requestGet';
 
 export default new Command({
   name: '코인 판매',

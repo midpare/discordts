@@ -1,5 +1,5 @@
 import { Command } from '../../structures/Commands';
-import { Bet, bet1, bet2, betting } from '../../structures/game/Betting';
+import { Bet, bet1, bet2, betting } from '../../util/structures/Betting';
 import { gambling } from '../../models/gambling';
 
 export default new Command({

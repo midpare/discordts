@@ -1,6 +1,6 @@
 import { Command } from '../../structures/Commands';
 import { gambling } from '../../models/gambling';
-import { Bet, bet1, bet2, betting } from '../../structures/game/Betting';
+import { Bet, bet1, bet2, betting } from '../../util/structures/Betting';
 
 export default new Command({
   name: '베팅 종료',

@@ -1,5 +1,6 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../structures/Commands';
+import { message } from '../../util/language/message';
 
 export default new Command({
   name: '올인',
@@ -11,16 +12,16 @@ export default new Command({
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     if (user.money <= 0)
-      return msg.reply('돈이 없을때는 도박을 할 수 없습니다.');
+      return msg.reply(message.noneMoney);
 
     const random = Math.floor(Math.random() * 2);
 
     if (random == 1) {
       (await gambling.updateOne({ id }, { $mul: { money: 2 } })).matchedCount;
-      msg.reply(`도박에 성공하셨습니다! ${user.money.toLocaleString()}원이 지급되었습니다. \n현재 잔액: ${user.money.toLocaleString()}원 -> ${(user.money * 2).toLocaleString()}원`);
+      msg.reply(message.gambling.successGamb(user.money, user.money));
     } else if (random == 0) {
       (await gambling.updateOne({ id }, { $set: { money: 0 } })).matchedCount;
-      msg.reply(`도박에 실패하셨습니다! 모든 돈을 잃었습니다. \n현재 잔액 ${user.money.toLocaleString()}원 -> 0원`);
+      msg.reply(message.gambling.failureGamb(user.money, user.money));
     }
   },
 });

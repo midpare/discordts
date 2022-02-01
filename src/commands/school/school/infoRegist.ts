@@ -1,6 +1,6 @@
 import { Command } from '../../../structures/Commands';
 import { school } from '../../../models/school'
-import { requestGet } from '../../../util/requestGet';
+import { requestGet } from '../../../util/functions/requestGet';
 import { client } from '../../../structures/Client';
 
 export default new Command({

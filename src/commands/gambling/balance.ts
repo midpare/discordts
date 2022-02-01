@@ -1,5 +1,6 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../structures/Commands';
+import { message } from '../../util/language/message';
 
 export default new Command({
   name: '잔액',
@@ -10,6 +11,6 @@ export default new Command({
   execute: async ({ msg, args }) => {
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
-    msg.reply(`${user.name} 님의 잔액은 ${user.money.toLocaleString()}원입니다.`);
+    msg.reply(message.gambling.balance(user.name, user.money));
   },
 });

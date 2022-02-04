@@ -7,9 +7,13 @@ export default new Command({
   usage: '투표 종료',
   description: '자신이 시작한 투표를 종료합니다.',
   execute: ({ msg, args }) => {
-    if (!client.vote.get(msg.author.id))
-      return msg.reply(`${msg.author.username}님이 시작한 투표가 없습니다`);
+    const vote = client.vote.get(msg.channelId)
+    if (!vote)
+      return msg.reply(`이 채널에 시작한 투표가 없습니다`);
     
-    
+    if (vote.starter != msg.author.id)
+      return msg.reply(`이 투표는 ${msg.author.username}님이 시작한 투표가 아닙니다.`);
+
+    vote.collector.stop();
   }
 })

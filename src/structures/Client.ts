@@ -1,30 +1,37 @@
-import { ChannelManager, Client, ClientUser, Collection } from 'discord.js'
+import { CacheType, ChannelManager, Client, ClientUser, Collection, Guild, Interaction, InteractionCollector, Snowflake } from 'discord.js'
 import { CommandType } from '../util/types/command'
 import { InteractionType } from '../util/types/interaction'
 import mongoose from 'mongoose'
+import { vote } from '../util/types/vote';
+import { Betting } from '../util/structures/Betting';
 
 export class ExtendClient extends Client {
   public user!: ClientUser;
   public channels!: ChannelManager;
   
-  commands: Collection<string, CommandType>;
-  interactions: Collection<string, InteractionType>;
-  coin: Collection<string, string>;
-  sdCode: Collection<string, string>;
+  public commands: Collection<string, CommandType>;
+  public interactions: Collection<string, InteractionType>;
+  public coin: Collection<string, string>;
+  public sdCode: Collection<string, string>;
+  public vote: Collection<Snowflake, vote>;
+  public betting: Collection<Snowflake, Betting>;
 
   constructor() {
     super({ intents: 32767 });
+
     this.commands = new Collection();
     this.interactions = new Collection();
     this.coin = new Collection();
     this.sdCode = new Collection();
+    this.vote = new Collection();
+    this.betting = new Collection();
   }
 
   async start() {
     this.handler();
     this.setSchool();
     super.login(process.env.TOKEN);
-    mongoose.connect(process.env.DB_URI + '/discordbot');
+    mongoose.connect(process.env.DB_URI || '');
   }
 
   async handler() {

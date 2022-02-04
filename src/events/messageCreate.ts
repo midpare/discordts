@@ -26,9 +26,6 @@ export = {
     if (!command)
       return msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`);
 
-    if (command.stopping)
-      return msg.reply('이 명령어는 현재 개발자에 의해 정지돼있습니다.');
-
     const gambChannel1 = client.channels.cache.get('910521119877005367');
     const gambChannel2 = client.channels.cache.get('915212166330736691');
     const musicChannel = client.channels.cache.get('910521119877005366');
@@ -44,7 +41,7 @@ export = {
             return msg.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
 
           const user = await gambling.findOne({ id });
-          if (!user)
+          if (command.name != '가입' && !user)
             return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
           break;
         case '노래':

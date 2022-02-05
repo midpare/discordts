@@ -1,5 +1,6 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../structures/Commands';
+import { messages } from '../../util/language/message';
 
 export default new Command({
   name: '빚갚기',
@@ -13,15 +14,15 @@ export default new Command({
 
     const money = parseFloat(args[0]);
     if (!Number.isInteger(money) || money <= 0)
-      return msg.reply('정확한 금액을 입력해주시기 바랍니다.');
+      return msg.reply(messages.naturalNumber);
 
     if (user.money < money)
-      return msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
+      return msg.reply(messages.overMoney(user.money));
 
     if (user.debt < money)
-      return msg.reply(`갚으려는 금액이 현재 빚보다 많습니다.\n현재 빚: ${user.debt.toLocaleString()}원`);
+      return msg.reply(messages.gambling.payBack.overMoney(user.debt));
 
     (await gambling.updateOne({ id }, { $inc: { money: -money, debt: -money, principalDebt: -money } })).matchedCount;
-    msg.reply(`성공적으로 빚을 ${money.toLocaleString()}원 갚았습니다!\n현재 빚: ${user.debt.toLocaleString()}원 -> ${(user.debt - money).toLocaleString()}원`);
+    msg.reply(messages.gambling.payBack.success(user.debt, money));
   },
 }); 

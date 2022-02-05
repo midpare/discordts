@@ -1,5 +1,5 @@
 import { Command } from '../../structures/Commands';
-import { message } from '../../util/language/message';
+import { messages } from '../../util/language/message';
 import { client } from '../../structures/Client';
 import { TextChannel } from 'discord.js';
 
@@ -11,20 +11,20 @@ export default new Command({
   description: '서버에서 맨션한 <유저>를 차단합니다.',
   execute: async ({ msg, args }) => {
     if (!msg.member.permissions.has('BAN_MEMBERS'))
-      return msg.reply(message.missingPermissionUser);
+      return msg.reply(messages.missingPermissionUser);
 
     const channel = <TextChannel>client.channels.cache.get('910521119877005363');
     const target = msg.mentions.members?.first();
-    const reason = !args[1] ? message.none : args.slice(1).join(' ');
+    const reason = !args[1] ? messages.none : args.slice(1).join(' ');
 
     if (!target)
-      return msg.reply(message.admin.ban.missingMentionUser);
+      return msg.reply(messages.admin.ban.missingMentionUser);
 
     if (target.permissions.has('BAN_MEMBERS'))
-      return msg.reply(message.admin.ban.missingPermissionTarget);
+      return msg.reply(messages.admin.ban.missingPermissionTarget);
 
     target.ban({ reason });
-    channel.send(message.admin.ban.success(target.user, reason));
+    channel.send(messages.admin.ban.success(target.user, reason));
     msg.delete();
   },
 });

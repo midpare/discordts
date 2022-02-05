@@ -1,7 +1,7 @@
 import { VoiceChannel } from 'discord.js';
 import { client } from '../../structures/Client';
 import { Command } from '../../structures/Commands';
-import { message } from '../../util/language/message';
+import { messages } from '../../util/language/message';
 
 export default new Command({
   name: '알람',
@@ -10,21 +10,21 @@ export default new Command({
   description: '헤드셋과 마이크를 모두 끈 유저를 여러번 이동시킵니다.',
   execute: async ({ msg, args }) => {
     if (!msg.member.permissions.has('MOVE_MEMBERS'))
-      return msg.reply(message.missingPermissionUser);
+      return msg.reply(messages.missingPermissionUser);
     const target = msg.mentions.members?.first();
     const nextChannel = <VoiceChannel>client.channels.cache.get('910521120770359323');
   
     if (!target)
-      return msg.reply(message.admin.alarm.missingMentionUser);
+      return msg.reply(messages.admin.alarm.missingMentionUser);
     
     if (target.user.bot)
-      return msg.reply(message.admin.alarm.bot);
+      return msg.reply(messages.admin.alarm.bot);
     
     if (target.voice.channelId == null)
-      return msg.reply(message.missingVoiceChannelUser);
+      return msg.reply(messages.missingVoiceChannelUser);
 
     if (!target.voice.selfDeaf)
-      return msg.reply(message.admin.alarm.missingSelfDeaf);
+      return msg.reply(messages.admin.alarm.missingSelfDeaf);
 
     const previousChannel = target.voice.channel;
     await target.voice.setChannel(nextChannel);

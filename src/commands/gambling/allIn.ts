@@ -1,6 +1,6 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../structures/Commands';
-import { message } from '../../util/language/message';
+import { messages } from '../../util/language/message';
 
 export default new Command({
   name: '올인',
@@ -12,16 +12,16 @@ export default new Command({
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     if (user.money <= 0)
-      return msg.reply(message.noneMoney);
+      return msg.reply(messages.noneMoney);
 
     const random = Math.floor(Math.random() * 2);
 
     if (random == 1) {
       (await gambling.updateOne({ id }, { $mul: { money: 2 } })).matchedCount;
-      msg.reply(message.gambling.successGamb(user.money, user.money));
+      msg.reply(messages.gambling.successGamb(user.money, user.money));
     } else if (random == 0) {
       (await gambling.updateOne({ id }, { $set: { money: 0 } })).matchedCount;
-      msg.reply(message.gambling.failureGamb(user.money, user.money));
+      msg.reply(messages.gambling.failureGamb(user.money, user.money));
     }
   },
 });

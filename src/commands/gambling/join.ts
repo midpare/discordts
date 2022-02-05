@@ -1,5 +1,6 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../structures/Commands';
+import { messages } from '../../util/language/message';
 
 export default new Command({
   name: '가입',
@@ -11,10 +12,10 @@ export default new Command({
     const name = msg.author.username;
     const user = await gambling.findOne({ id });
     if (user)
-      return msg.reply('이미 가입된 유저입니다.');
+      return msg.reply(messages.gambling.join.alreadyJoin);
 
     const newUser = new gambling({ id, name, stock: [] });
     await newUser.save();
-    msg.reply('성공적으로 가입이 완료되었습니다!');
+    msg.reply(messages.gambling.join.success);
   },
 }); 

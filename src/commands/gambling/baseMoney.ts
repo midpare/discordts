@@ -1,5 +1,6 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../structures/Commands';
+import { messages } from '../../util/language/message';
 
 export default new Command({
   name: '기초자금',
@@ -11,19 +12,18 @@ export default new Command({
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     if (user.money != 0 || user.stock[0])
-      return msg.reply('보유하신 돈이나 코인이 있어 기초자금을 지급할 수 없습니다.');
+      return msg.reply(messages.gambling.baseMoney.haveMoney);
 
-    const date = new Date();
-    const second = date.getTime();
+    const second = new Date().getTime();
     const coolTime = 30;
     if (user.baseMoneyCoolTime) {
       const userCoolTime = user.baseMoneyCoolTime;
       if ((second - userCoolTime) / 1000 < coolTime)
-        return msg.reply(`명령어의 쿨타임이 ${Math.ceil(coolTime - (second - userCoolTime) / 1000)}초 남았습니다.`);
+        return msg.reply(messages.coolTime(Math.ceil(coolTime - (second - userCoolTime) / 1000)));
     }
     const baseMoney = 25000;
 
     (await gambling.updateOne({ id }, { $set: { money: baseMoney, baseMoneyCoolTime: second } })).matchedCount;
-    msg.reply(`기초자금 ${baseMoney.toLocaleString()}원이 지급되었습니다!`);  
+    msg.reply(messages.gambling.baseMoney.success(baseMoney));  
   },
 });

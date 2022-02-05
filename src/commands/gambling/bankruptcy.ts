@@ -1,6 +1,7 @@
 import { Command } from '../../structures/Commands';
 import { gambling } from '../../models/gambling';
-import { MessageActionRow, MessageButton, Collection } from 'discord.js';
+import { MessageActionRow, MessageButton } from 'discord.js';
+import { messages } from '../../util/language/message';
 
 const interactionUser = new Array();
 export default new Command({
@@ -19,11 +20,11 @@ export default new Command({
 
     const row = new MessageActionRow().addComponents(
       new MessageButton()
-        .setLabel('예')
+        .setLabel(messages.yes)
         .setStyle('SUCCESS')
         .setCustomId('yes'),
       new MessageButton()
-        .setLabel('아니요')
+        .setLabel(messages.no)
         .setStyle('DANGER')
         .setCustomId('no'),
     );

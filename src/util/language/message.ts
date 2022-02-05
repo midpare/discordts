@@ -1,6 +1,12 @@
 import { User } from 'discord.js';
 
 class Messages {
+  public yes = '예';
+
+  public no = '아니요';
+
+  public none = '없음';
+
   public missingPermissionUser = '이 명령어를 사용할 권한이 없습니다.'
 
   public missingMentionUser = (object: string) => `${object}할 유저를 맨션해주시기 바랍니다.`;
@@ -19,7 +25,7 @@ class Messages {
 
   public punishment = (user: User, punishment: string, reason: string) => '```' + `처벌 대상: ${user.username}#${user.discriminator}\n가한 처벌: ${punishment}\n처벌 사유: ${reason}`;
 
-  public none = '없음';
+  public coolTime = (second: number) => `명령어의 쿨타임이 ${second}초 남았습니다.`;
 
   public admin = {  
     onlyDeveloper: '개발자 전용 명령어입니다.',
@@ -75,9 +81,43 @@ class Messages {
 
   public gambling = {
     balance: (name: string, money: number) => `${name}님의 현재 잔액은 ${money.toLocaleString()}원입니다.`,
+
+    debt:  (name: string, debt: number) => `${name}님의 현재 빚은 ${debt.toLocaleString()}원입니다.`,
+
     successGamb: (balance: number, money: number) => `도박에 성공하셨습니다! ${money.toLocaleString()}원이 지급되었습니다.\n현재 잔액: ${balance.toLocaleString()}원 -> ${(balance + money).toLocaleString()}원`,
+
     failureGamb: (balance: number, money: number) => `도박에 실패하셨습니다! ${money.toLocaleString()}원이 차감되었습니다.\n현재 잔액: ${balance.toLocaleString()}원 -> ${(balance - money).toLocaleString()}원`,
-  }
+
+    baseMoney: {
+      haveMoney: '보유하신 돈이나 코인이 있어 기초자금을 지급할 수 없습니다.',
+
+      success: (money: number) => `기초자금 ${money.toLocaleString()}원이 지급되었습니다!`,
+    },
+
+    daily: {
+      today: '오늘은 이미 받았습니다.',
+
+      success: (balance: number, money: number) => `${money.toLocaleString()}원이 지급되었습니다!\n현재 잔액: ${balance.toLocaleString()}원 -> ${(balance + money).toLocaleString()}원`
+    },
+
+    join: {
+      alreadyJoin: '이미 가입된 유저입니다.',
+
+      success: '성공적으로 가입이 완료되었습니다!'
+    },
+
+    loan: {
+      overMoney: '100만원을 초과하는 빚은 빌릴 수 없습니다.',
+
+      success: (now: number, debt: number) => `성공적으로 ${debt.toLocaleString()}원을 대출했습니다!\n현재 대출금액: ${now.toLocaleString()}원 -> ${(now + debt).toLocaleString()}원`
+    },
+
+    payBack: {
+      overMoney: (debt: number) => `갚으려는 금액이 현재 빚보다 많습니다.\n현재 빚: ${debt.toLocaleString()}원`,
+
+      success: (now: number, money: number) => `성공적으로 빚을 ${money.toLocaleString()}원 갚았습니다!\n현재 빚: ${now.toLocaleString()}원 -> ${(now - money).toLocaleString()}원`
+    }
+  };
 }
 
-export const message = new Messages();
+export const messages = new Messages();

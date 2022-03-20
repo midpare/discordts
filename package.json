@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run build && node --max_old_space_size=2048 dist/index.js",
     "build": "rimraf dist && npx tsc",
     "test": "npm run tsc && npx jest"
   },

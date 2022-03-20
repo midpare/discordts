@@ -1,4 +1,4 @@
-import { CacheType, ChannelManager, Client, ClientUser, Collection, Guild, Interaction, InteractionCollector, Snowflake } from 'discord.js'
+import { ChannelManager, Client, ClientUser, Collection, Snowflake } from 'discord.js'
 import { CommandType } from '../util/types/command'
 import { InteractionType } from '../util/types/interaction'
 import mongoose from 'mongoose'

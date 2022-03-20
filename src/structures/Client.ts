@@ -30,8 +30,8 @@ export class ExtendClient extends Client {
   async start() {
     this.handler();
     this.setSchool();
-    super.login(process.env.TOKEN);
-    mongoose.connect(process.env.DB_URI || '');
+    super.login(process.env.DISCORD_TOKEN);
+    mongoose.connect(process.env.MONGO_DB_URI + "/discordbot");
   }
 
   async handler() {

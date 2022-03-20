@@ -7,7 +7,7 @@ let db: any;
 
 describe('test', () => {
   beforeAll(async () => {
-    connection = await MongoClient.connect(process.env.DB_URI || '');
+    connection = await MongoClient.connect(process.env.MONGO_DB_URI || '');
     db = await connection.db('myfirstdb');
   });
 

@@ -26,7 +26,7 @@ describe('test', () => {
   let args: Array<string>;
 
   beforeAll(async () => {
-    await mongoose.connect(process.env.DB_URI + '/testDB');
+    await mongoose.connect(process.env.MONGO_DB_URI + '/testDB');
   });
 
   afterAll(async () => {

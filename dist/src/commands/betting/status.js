@@ -1,0 +1,38 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
+const Client_1 = require("../../structures/Client");
+const Commands_1 = require("../../structures/Commands");
+exports.default = new Commands_1.Command({
+    name: '베팅 현황',
+    category: '베팅',
+    usage: '베팅 현황',
+    description: '현재 베팅의 현황을 확인합니다.',
+    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+        const guildId = msg.guildId;
+        const betting = Client_1.client.betting.get(guildId);
+        if (!betting)
+            return msg.reply('아직 베팅을 시작하지 않았습니다.');
+        const embed = new discord_js_1.MessageEmbed();
+        const persent = betting.persent;
+        // bet1.times = Math.round(100 / (persent) * 100) / 100;
+        // if (persent == 100)
+        //   bet2.times = 0;
+        // else
+        //   bet2.times = Math.round(100 / (100 - persent) * 100) / 100;
+        embed
+            .setTitle('베팅 현황')
+            .setDescription('베팅 현황을 확인합니다.')
+            .setFields({ name: `${betting.bet1.name}`, value: `${betting.bet1.sum.toLocaleString()}원(${Math.round(persent.bet1)}%) \n참여인원: ${betting.bet1.user.length.toLocaleString()}명 \n배율: ${Math.round(betting.times.bet1 * 100) / 100}배`, inline: true }, { name: `${betting.bet2.name}`, value: `${betting.bet2.sum.toLocaleString()}원(${Math.round(persent.bet2)}%) \n참여인원: ${betting.bet2.user.length.toLocaleString()}명 \n배율: ${Math.round(betting.times.bet1 * 100) / 100}배`, inline: true });
+        msg.channel.send({ embeds: [embed] });
+    }),
+});

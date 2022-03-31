@@ -10,7 +10,8 @@ export default new Command({
   description: '헤드셋과 마이크를 모두 끈 유저를 여러번 이동시킵니다.',
   execute: async ({ msg, args }) => {
     const target = msg.mentions.members?.first();
-    const nextChannel = <VoiceChannel>client.channels.cache.get('910521120770359323');
+    const channel1 = <VoiceChannel>client.channels.cache.get('910521120770359323');
+    const channel2 = <VoiceChannel>client.channels.cache.get('910521120770359324');
   
     if (!target)
       return msg.reply(messages.admin.alarm.missingMentionUser);
@@ -24,19 +25,19 @@ export default new Command({
     if (!target.voice.selfDeaf)
       return msg.reply(messages.admin.alarm.missingSelfDeaf);
 
-    const previousChannel = target.voice.channel;
-    await target.voice.setChannel(nextChannel);
+    const userChannel = target.voice.channel;
+    await target.voice.setChannel(channel1);
     
     const previousInterval = setInterval(() => {
-      if (target.voice.channelId == null)
+      if (target.voice.channelId == null || !target.voice.selfDeaf)
         return;
-      target.voice.setChannel(previousChannel);
-      target.voice.setChannel(nextChannel);
+        target.voice.setChannel(channel1);
+        target.voice.setChannel(channel2);
     }, 1000);
 
     setTimeout(() => {
       clearInterval(previousInterval);
-      target.voice.setChannel(previousChannel);
+      target.voice.setChannel(userChannel);
     }, 5000);
   },
 });

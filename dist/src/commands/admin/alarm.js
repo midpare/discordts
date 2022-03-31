@@ -20,7 +20,8 @@ exports.default = new Commands_1.Command({
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
-        const nextChannel = Client_1.client.channels.cache.get('910521120770359323');
+        const channel1 = Client_1.client.channels.cache.get('910521120770359323');
+        const channel2 = Client_1.client.channels.cache.get('910521120770359324');
         if (!target)
             return msg.reply(message_1.messages.admin.alarm.missingMentionUser);
         if (target.user.bot)
@@ -29,17 +30,17 @@ exports.default = new Commands_1.Command({
             return msg.reply(message_1.messages.missingVoiceChannelUser);
         if (!target.voice.selfDeaf)
             return msg.reply(message_1.messages.admin.alarm.missingSelfDeaf);
-        const previousChannel = target.voice.channel;
-        yield target.voice.setChannel(nextChannel);
+        const userChannel = target.voice.channel;
+        yield target.voice.setChannel(channel1);
         const previousInterval = setInterval(() => {
-            if (target.voice.channelId == null)
+            if (target.voice.channelId == null || !target.voice.selfDeaf)
                 return;
-            target.voice.setChannel(previousChannel);
-            target.voice.setChannel(nextChannel);
+            target.voice.setChannel(channel1);
+            target.voice.setChannel(channel2);
         }, 1000);
         setTimeout(() => {
             clearInterval(previousInterval);
-            target.voice.setChannel(previousChannel);
+            target.voice.setChannel(userChannel);
         }, 5000);
     }),
 });

@@ -8,7 +8,7 @@ export default new Command({
   usage: '베팅 현황',
   description: '현재 베팅의 현황을 확인합니다.',
   execute: async ({ msg, args }) => {
-    const guildId = msg.guildId
+    const guildId = msg.guildId ?? ''
     const betting = client.betting.get(guildId);
     if (!betting)
       return msg.reply('아직 베팅을 시작하지 않았습니다.');

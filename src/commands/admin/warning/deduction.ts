@@ -10,7 +10,7 @@ export default new Command({
   usage: '경고 차감 <유저> <횟수> [사유]',
   description: '유저의 경고를 차감합니다.',
   execute: async ({ msg, args }) => {
-    if (!msg.member.roles.cache.has('910521119713394745') && !msg.member.roles.cache.has('910521119713394744'))
+    if (!msg.member?.roles.cache.has('910521119713394745') && !msg.member?.roles.cache.has('910521119713394744'))
       return msg.reply(messages.missingPermissionUser);
 
     const target = msg.mentions.members?.first();

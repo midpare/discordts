@@ -32,7 +32,7 @@ class ExtendClient extends discord_js_1.Client {
         return __awaiter(this, void 0, void 0, function* () {
             this.handler();
             this.setSchool();
-            _super.login.call(this, process.env.DISCORD_TOKEN);
+            _super.login.call(this);
             mongoose_1.default.connect(process.env.MONGO_DB_URI + "/discordbot");
         });
     }

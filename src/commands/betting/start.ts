@@ -10,8 +10,8 @@ export default new Command({
   usage: '베팅 시작 <제목> <팀1> <팀2>',
   description: '베팅을 시작합니다.',
   execute: async ({ msg, args }) => {
-    const id = msg.guildId
-    const prefix = process.env.PREFIX || ''
+    const id = msg.guildId ?? ''
+    const prefix = process.env.PREFIX ?? ''
     if (client.betting.get(id))
       return msg.reply('이미 시작한 베팅이 있습니다.');
 

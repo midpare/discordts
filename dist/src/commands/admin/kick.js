@@ -19,11 +19,11 @@ exports.default = new Commands_1.Command({
     usage: 'kick <유저> [사유]',
     description: '서버에서 맨션한 <유저>를 강퇴합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a;
-        if (!msg.member.permissions.has('KICK_MEMBERS'))
+        var _a, _b;
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has('KICK_MEMBERS')))
             return msg.reply(message_1.messages.missingPermissionUser);
         const channel = Client_1.client.channels.cache.get('910521119877005363');
-        const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
+        const target = (_b = msg.mentions.members) === null || _b === void 0 ? void 0 : _b.first();
         const reason = !args[1] ? message_1.messages.none : args.slice(1).join(' ');
         if (!target)
             return msg.reply(message_1.messages.admin.kick.missingMentionUser);

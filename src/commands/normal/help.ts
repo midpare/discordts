@@ -19,17 +19,10 @@ export default new Command({
     for (const category of directories) {
       const getCommands = new Set(client.commands
         .filter((commands: CommandType) => commands.category == category)
-        .map(command => {
-          return {
-            usage: command.usage,
-            aliases: command.aliases,
-            description: command.description,
-          };
-        }));
-      console.log(getCommands)
+        .map((command: CommandType) => command.name)
+      );
       categories.set(category, [...getCommands]);
     }
-    
     const commands = categories.get(args[0]);
 
     if (!commands) {
@@ -47,10 +40,13 @@ export default new Command({
     embed
       .setTitle(`${args[0]} 명령어`)
       .setDescription(`${args[0]} 관련 명령어를 확인합니다.\n<>는 필수, []는 선택사항 입니다.`);
-    for (const command of commands) {
-      const value = command.aliases ? `${command.description}\n동의어: ${command.aliases.join(', ')}` : `${command.description}`
-      embed
-        .addField(`${prefix}${command.usage}`, value , false);
+    for (const element of commands) {
+      const command = client.commands.get(element);
+      if (command) {
+        const aliases = command.aliases ? `\n동의어: ${command.aliases}` : '';
+        embed
+          .addField(`${prefix}${command.usage}`, `${command.description}${aliases}`, false);
+      }
     }
     msg.channel.send({ embeds: [embed] });
   },

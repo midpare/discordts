@@ -7,7 +7,7 @@ class Command {
         this.aliases = commandOptions.aliases ? commandOptions.aliases : null;
         this.category = commandOptions.category;
         this.usage = commandOptions.usage;
-        this.description = commandOptions.usage;
+        this.description = commandOptions.description;
         this.execute = commandOptions.execute;
     }
 }

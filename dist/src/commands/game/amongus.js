@@ -9,8 +9,8 @@ exports.default = new Commands_1.Command({
     usage: '어몽어스 <시작/종료>',
     description: '어몽어스를 시작하고 종료합니다.',
     execute: ({ msg, args }) => {
-        var _a;
-        if (!msg.member.permissions.has('MUTE_MEMBERS'))
+        var _a, _b;
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has('MUTE_MEMBERS')))
             return msg.reply('이 명령어를 사용할 권한이 없습니다.');
         const channel = msg.member.voice.channel;
         if (!(channel instanceof discord_js_1.VoiceChannel))
@@ -32,7 +32,7 @@ exports.default = new Commands_1.Command({
                 }
                 break;
             case '사망':
-                const user = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
+                const user = (_b = msg.mentions.members) === null || _b === void 0 ? void 0 : _b.first();
                 if (!user)
                     return msg.reply('유저를 맨션해주시기 바랍니다.');
                 if (dead.includes(user))

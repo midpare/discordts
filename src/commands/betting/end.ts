@@ -7,7 +7,7 @@ export default new Command({
   usage: '베팅 종료 <팀>',
   description: '베팅을 종료합니다.',
   execute: async ({ msg, args }) => {
-    const id = msg.guildId
+    const id = msg.guildId ?? ''
     const betting = client.betting.get(id)
     if (!betting)
       return msg.reply('아직 베팅을 시작하지 않았습니다.');
@@ -28,6 +28,6 @@ export default new Command({
     }
 
     msg.channel.send(`${winner}팀이 승리했습니다!`);
-    client.betting.delete(msg.guildId);
+    client.betting.delete(id);
   },
 });

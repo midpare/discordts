@@ -9,18 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const Client_1 = require("../structures/Client");
+const discord_js_1 = require("discord.js");
 module.exports = {
     name: 'interactionCreate',
     event: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
-        const cmd = interaction.customId;
-        const events = Client_1.client.interactions.get(cmd);
-        if (!events)
-            return;
-        try {
-            events.execute(interaction);
-        }
-        catch (error) {
-            console.error(error);
+        if (interaction instanceof discord_js_1.ButtonInteraction) {
+            const cmd = interaction.customId;
+            const events = Client_1.client.interactions.get(cmd);
+            if (!events)
+                return;
+            try {
+                events.execute(interaction);
+            }
+            catch (error) {
+                console.error(error);
+            }
         }
     }),
 };

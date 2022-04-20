@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../structures/Commands");
 const message_1 = require("../../util/language/message");
 exports.default = new Commands_1.Command({
@@ -18,13 +19,16 @@ exports.default = new Commands_1.Command({
     usage: 'clear <숫자>',
     description: '메시지를 보낸 채팅방에 <숫자>만큼의 채팅을 지웁니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
-        if (!msg.member.permissions.has('MANAGE_MESSAGES'))
+        var _a;
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has('MANAGE_MESSAGES')))
             return msg.reply(message_1.messages.missingPermissionUser);
         const count = parseFloat(args[0]);
         if (!Number.isInteger(count))
             return msg.reply(message_1.messages.naturalNumber);
         if (count < 0 || count > 99)
             return msg.reply(message_1.messages.betweenNumber(1, 99));
+        if (!(msg.channel instanceof discord_js_1.NewsChannel || msg.channel instanceof discord_js_1.TextChannel || msg.channel instanceof discord_js_1.ThreadChannel))
+            return;
         msg.channel.bulkDelete(count + 1);
         const send = yield msg.reply(message_1.messages.admin.clear.success(count));
         setTimeout(() => {

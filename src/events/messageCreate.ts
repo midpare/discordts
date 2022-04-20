@@ -1,10 +1,11 @@
-import { ExtendMessage, CommandType } from '../util/types/command';
+import { CommandType } from '../util/types/command';
 import { client } from '../structures/Client';
 import { gambling } from '../models/gambling';
+import { Message } from 'discord.js';
 
 export = {
   name: 'messageCreate',
-  event: async (msg: ExtendMessage) => {
+  event: async (msg: Message) => {
     const prefix = process.env.PREFIX || '';
     if (msg.author.bot || msg.author.id === client.user.id || !msg.content.startsWith(prefix))
       return;

@@ -10,7 +10,7 @@ export default new Command({
   usage: 'kick <유저> [사유]',
   description: '서버에서 맨션한 <유저>를 강퇴합니다.',
   execute: async ({ msg, args }) => {
-    if (!msg.member.permissions.has('KICK_MEMBERS'))
+    if (!msg.member?.permissions.has('KICK_MEMBERS'))
       return msg.reply(messages.missingPermissionUser);
 
     const channel = <TextChannel>client.channels.cache.get('910521119877005363');

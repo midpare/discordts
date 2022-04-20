@@ -17,7 +17,8 @@ exports.default = new Commands_1.Command({
     usage: '베팅',
     description: '베팅을 합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
-        const guildId = msg.guildId;
+        var _a;
+        const guildId = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
         const money = parseFloat(args[1]);
         const betting = Client_1.client.betting.get(guildId);
         if (!betting)

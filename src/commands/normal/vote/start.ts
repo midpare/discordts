@@ -9,6 +9,8 @@ export default new Command({
   usage: '투표 시작 <제목> <이름1>, <이름2>...',
   description: '<제목>의 투표를 시작합니다 이름들은 ","로 구분합니다.',
   execute: async ({ msg, args }) => {
+    if (!msg.guild)
+      return
     const id = msg.author.id;
     const title = args[0];
     const initialNames = args.slice(1).join(' ').split(',').map(element => element.trim())

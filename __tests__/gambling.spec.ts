@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
-import { CommandType, ExtendMessage } from '../src/util/types/command';
+import { CommandType } from '../src/util/types/command';
 import { gambling } from '../src/models/gambling';
-import { Collection, GuildMember, MessageEmbed, MessageMentions, InteractionCollector, MessageActionRow, MessageButton, Interaction } from 'discord.js';
+import { Collection, GuildMember, MessageEmbed, MessageMentions, Message } from 'discord.js';
 import { messages } from '../src/util/language/message';
 import eventEmitter from 'events'
 
 describe('test', () => {
   const date = new Date();
   const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
-  let msg: ExtendMessage;
+  let msg: Message;
   let mockUser = {
     _id: expect.anything(),
     id: 'test id',
@@ -55,7 +55,7 @@ describe('test', () => {
       mentions: {
         members: new Collection(),
       } as unknown as MessageMentions,
-    } as unknown as ExtendMessage;
+    } as unknown as Message;
   });
 
   async function setMoney(money: number) {

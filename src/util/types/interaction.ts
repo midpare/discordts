@@ -1,14 +1,6 @@
-import { GuildMember, Interaction, Message, TextChannel } from 'discord.js';
+import { Interaction } from 'discord.js';
 
-export interface ExtendInteraction extends Interaction {
-  member: GuildMember;
-  customId: string;
-  channel: TextChannel;
-  reply: Message['reply'];
-  values: string;
-}
-
-type ExecuteType = (interaction: ExtendInteraction) => Promise<void>;
+type ExecuteType = (interaction: Interaction) => Promise<void>;
 
 export interface InteractionType {
   name: string;

@@ -19,10 +19,10 @@ exports.default = new Commands_1.Command({
     usage: '경고 차감 <유저> <횟수> [사유]',
     description: '유저의 경고를 차감합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a;
-        if (!msg.member.roles.cache.has('910521119713394745') && !msg.member.roles.cache.has('910521119713394744'))
+        var _a, _b, _c;
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.roles.cache.has('910521119713394745')) && !((_b = msg.member) === null || _b === void 0 ? void 0 : _b.roles.cache.has('910521119713394744')))
             return msg.reply(message_1.messages.missingPermissionUser);
-        const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
+        const target = (_c = msg.mentions.members) === null || _c === void 0 ? void 0 : _c.first();
         const count = parseFloat(args[1]);
         const channel = Client_1.client.channels.cache.get('910521119877005363');
         if (!target)

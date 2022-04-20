@@ -20,8 +20,9 @@ exports.default = new Commands_1.Command({
     usage: '베팅 시작 <제목> <팀1> <팀2>',
     description: '베팅을 시작합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = msg.guildId;
-        const prefix = process.env.PREFIX || '';
+        var _a, _b;
+        const id = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
+        const prefix = (_b = process.env.PREFIX) !== null && _b !== void 0 ? _b : '';
         if (Client_1.client.betting.get(id))
             return msg.reply('이미 시작한 베팅이 있습니다.');
         if (!args[0])

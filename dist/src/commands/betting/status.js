@@ -18,7 +18,8 @@ exports.default = new Commands_1.Command({
     usage: '베팅 현황',
     description: '현재 베팅의 현황을 확인합니다.',
     execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
-        const guildId = msg.guildId;
+        var _a;
+        const guildId = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
         const betting = Client_1.client.betting.get(guildId);
         if (!betting)
             return msg.reply('아직 베팅을 시작하지 않았습니다.');

@@ -1,6 +1,5 @@
 import { User, Message, Snowflake } from "discord.js";
 import { gambling } from "../../models/gambling";
-import { ExtendMessage } from "../types/command";
 
 export class Betting {
   public readonly title: string;
@@ -65,7 +64,7 @@ export class BetNode {
     this.user = new Array();
   }
 
-  public async addUser(msg: ExtendMessage, bettor: User, money: number): Promise<Message<boolean> | void> {
+  public async addUser(msg: Message, bettor: User, money: number): Promise<Message<boolean> | void> {
     const id = bettor.id;
     const name = bettor.username;
     const user = await gambling.findOne({ id });

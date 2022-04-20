@@ -7,7 +7,7 @@ export default new Command({
   usage: '베팅',
   description: '베팅을 합니다.',
   execute: async ({ msg, args }) => {
-    const guildId = msg.guildId
+    const guildId = msg.guildId ?? '';
     const money = parseFloat(args[1]);
     const betting = client.betting.get(guildId)
 

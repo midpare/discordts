@@ -1,4 +1,5 @@
-import { CommandType, ExtendMessage } from '../util/types/command';
+import { Message } from 'discord.js';
+import { CommandType } from '../util/types/command';
 
 export class Command {
   public name: string;
@@ -7,7 +8,7 @@ export class Command {
   public usage: string;
   public description: string;
   public execute: (options: {
-    msg: ExtendMessage;
+    msg: Message;
     args: Array<string>;
   }) => any;
   constructor(commandOptions: CommandType) {
@@ -15,7 +16,7 @@ export class Command {
     this.aliases = commandOptions.aliases ? commandOptions.aliases : null;
     this.category = commandOptions.category;
     this.usage = commandOptions.usage;
-    this.description = commandOptions.usage;
+    this.description = commandOptions.description;
     this.execute = commandOptions.execute;
   }
 }

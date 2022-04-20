@@ -10,7 +10,7 @@ export default new Command({
   usage: 'ban <유저> [사유]',
   description: '서버에서 맨션한 <유저>를 차단합니다.',
   execute: async ({ msg, args }) => {
-    if (!msg.member.permissions.has('BAN_MEMBERS'))
+    if (!msg.member?.permissions.has('BAN_MEMBERS'))
       return msg.reply(messages.missingPermissionUser);
 
     const channel = <TextChannel>client.channels.cache.get('910521119877005363');

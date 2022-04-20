@@ -1,15 +1,7 @@
 import { Guild, GuildMember, Message, MessageMentions, TextChannel, Snowflake } from 'discord.js';
 
-export interface ExtendMessage extends Message {
-  channel: TextChannel;
-  member: GuildMember;
-  mentions: MessageMentions;
-  guildId: Snowflake;
-  guild: Guild;
-}
-
 type ExecuteType = (options: {
-  msg: ExtendMessage;
+  msg: Message;
   args: Array<string>;
 }) => any;
 

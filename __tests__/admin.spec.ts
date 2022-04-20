@@ -1,12 +1,12 @@
-import { Collection, GuildMember, MessageMentions, Permissions, Role, TextChannel, VoiceChannel, VoiceState } from 'discord.js';
+import { Collection, GuildMember, Message, MessageMentions, Permissions, Role, TextChannel, VoiceChannel, VoiceState, NewsChannel, ThreadChannel} from 'discord.js';
 import mongoose from 'mongoose';
 import { warning } from '../src/models/warning';
 import { client } from '../src/structures/Client';
 import { messages } from '../src/util/language/message';
-import { CommandType, ExtendMessage } from '../src/util/types/command';
+import { CommandType } from '../src/util/types/command';
 
 describe('admin', () => {
-  let msg: ExtendMessage;
+  let msg: Message;
   let args: Array<string>;
   let mentionUser: GuildMember;
   const mockUser = {
@@ -48,7 +48,7 @@ describe('admin', () => {
         channels: new Collection(),
       } as MessageMentions,
       delete: jest.fn(),
-    } as unknown as ExtendMessage;
+    } as unknown as Message;
 
     args = [];
 
@@ -150,6 +150,8 @@ describe('admin', () => {
 
     args = ['5'];
     command.execute({ msg, args });
+    if (!(msg.channel instanceof NewsChannel || msg.channel instanceof TextChannel || msg.channel instanceof ThreadChannel))
+      return
     expect(msg.channel.bulkDelete).toHaveBeenCalledWith(6);
     expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.clear.success(5))
   });

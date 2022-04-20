@@ -17,7 +17,7 @@ exports.default = new Commands_1.Command({
     category: '도박',
     usage: '송금 <유저> <돈>',
     description: '자신의 돈을 맨션한 <유저>에게 <돈>만큼 송금합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });

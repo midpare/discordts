@@ -1,13 +1,17 @@
 import { CommandType } from '../util/types/command';
-import { client } from '../structures/Client';
+import { ExtendClient } from '../structures/Client';
 import { gambling } from '../models/gambling';
 import { Message } from 'discord.js';
 
 export = {
   name: 'messageCreate',
   event: async (msg: Message) => {
+    const client = msg.client
+    if (!(client instanceof ExtendClient))
+      return
+
     const prefix = process.env.PREFIX || '';
-    if (msg.author.bot || msg.author.id === client.user.id || !msg.content.startsWith(prefix))
+    if (msg.author.bot || msg.author.id === client.user?.id || !msg.content.startsWith(prefix))
       return;
 
     const id = msg.author.id;
@@ -59,7 +63,7 @@ export = {
       }
     }
     try {
-      command.execute({ msg, args });
+      command.execute({ msg, args, client });
     } catch (error) {
       console.error(error);
     }

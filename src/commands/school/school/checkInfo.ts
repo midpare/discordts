@@ -8,7 +8,7 @@ export default new Command({
   category: '학교',
   usage: '학교 정보확인',
   description: '현재 자신의 학교 정보를 확인합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
     const user = await school.findOne({ id });
     const embed = new MessageEmbed();

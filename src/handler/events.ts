@@ -14,4 +14,4 @@ export = async function (client: ExtendClient) {
       console.error(error);
     }
   }
-}
+}  

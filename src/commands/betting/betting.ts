@@ -1,12 +1,11 @@
 import { Command } from '../../structures/Commands';
-import { client } from '../../structures/Client';
 
 export default new Command({
   name: '베팅',
   category: '베팅',
   usage: '베팅',
   description: '베팅을 합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const guildId = msg.guildId ?? '';
     const money = parseFloat(args[1]);
     const betting = client.betting.get(guildId)

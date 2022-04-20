@@ -18,7 +18,7 @@ exports.default = new Commands_1.Command({
     category: '도박',
     usage: '출석체크',
     description: '하루에 한번 50,000 ~ 100,000만원의 돈을 획득합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
         const date = new Date();

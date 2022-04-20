@@ -17,7 +17,7 @@ exports.default = new Commands_1.Command({
     category: '도박',
     usage: '대출 <돈>',
     description: '최대 100만원까지의 돈을 대출합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
         const debt = parseFloat(args[0]);

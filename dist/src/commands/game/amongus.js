@@ -8,7 +8,7 @@ exports.default = new Commands_1.Command({
     category: '게임',
     usage: '어몽어스 <시작/종료>',
     description: '어몽어스를 시작하고 종료합니다.',
-    execute: ({ msg, args }) => {
+    execute: ({ msg, args, client }) => {
         var _a, _b;
         if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has('MUTE_MEMBERS')))
             return msg.reply('이 명령어를 사용할 권한이 없습니다.');

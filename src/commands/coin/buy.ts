@@ -1,6 +1,5 @@
 import { Command } from '../../structures/Commands';
 import { gambling } from '../../models/gambling';
-import { client } from '../../structures/Client';
 import { requestGet } from '../../util/functions/requestGet';
 
 export default new Command({
@@ -9,7 +8,7 @@ export default new Command({
   category: '코인',
   usage: '코인 구매 <코인이름> <구매수량>',
   description: '현재 코인의 시세로 코인을 구매합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     const stock = user.stock;

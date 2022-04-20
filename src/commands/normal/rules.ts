@@ -8,7 +8,7 @@ export default new Command({
   category: '기본',
   usage: '규칙',
   description: '서버 규칙을 확인합니다.',
-  execute: ({ msg, args }) => {
+  execute: ({ msg, args, client }) => {
     const embed = new MessageEmbed()
       .setTitle('규칙');
       

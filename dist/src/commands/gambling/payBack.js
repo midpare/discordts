@@ -18,7 +18,7 @@ exports.default = new Commands_1.Command({
     category: '도박',
     usage: '빚갚기 <돈>',
     description: '자신의 빚을 갚습니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
         const money = parseFloat(args[0]);

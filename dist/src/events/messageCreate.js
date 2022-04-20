@@ -13,13 +13,17 @@ const gambling_1 = require("../models/gambling");
 module.exports = {
     name: 'messageCreate',
     event: (msg) => __awaiter(void 0, void 0, void 0, function* () {
+        var _a;
+        const client = msg.client;
+        if (!(client instanceof Client_1.ExtendClient))
+            return;
         const prefix = process.env.PREFIX || '';
-        if (msg.author.bot || msg.author.id === Client_1.client.user.id || !msg.content.startsWith(prefix))
+        if (msg.author.bot || msg.author.id === ((_a = client.user) === null || _a === void 0 ? void 0 : _a.id) || !msg.content.startsWith(prefix))
             return;
         const id = msg.author.id;
         const args = msg.content.slice(prefix.length).trim().split(/ +/g);
         const getCmd = (start, end) => {
-            return Client_1.client.commands.get(args.slice(start, end).join(' ').toLowerCase());
+            return client.commands.get(args.slice(start, end).join(' ').toLowerCase());
         };
         let command;
         if (getCmd(0, 2)) {
@@ -32,11 +36,11 @@ module.exports = {
         }
         if (!command)
             return msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`);
-        const gambChannel1 = Client_1.client.channels.cache.get('910521119877005367');
-        const gambChannel2 = Client_1.client.channels.cache.get('915212166330736691');
-        const musicChannel = Client_1.client.channels.cache.get('910521119877005366');
-        const cmdChannel = Client_1.client.channels.cache.get('932162287224127520');
-        const botTestChannel = Client_1.client.channels.cache.get('910521119877005368');
+        const gambChannel1 = client.channels.cache.get('910521119877005367');
+        const gambChannel2 = client.channels.cache.get('915212166330736691');
+        const musicChannel = client.channels.cache.get('910521119877005366');
+        const cmdChannel = client.channels.cache.get('932162287224127520');
+        const botTestChannel = client.channels.cache.get('910521119877005368');
         if (msg.channel != botTestChannel) {
             switch (command.category) {
                 case '도박':
@@ -62,7 +66,7 @@ module.exports = {
             }
         }
         try {
-            command.execute({ msg, args });
+            command.execute({ msg, args, client });
         }
         catch (error) {
             console.error(error);

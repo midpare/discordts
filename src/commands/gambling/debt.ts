@@ -7,7 +7,7 @@ export default new Command({
   category: '도박',
   usage: '빚',
   description: '자신의 현재 빚을 확인합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     msg.reply(messages.gambling.debt(user.name, user.debt));

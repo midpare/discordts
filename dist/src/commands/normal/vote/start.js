@@ -10,14 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Client_1 = require("../../../structures/Client");
 const Commands_1 = require("../../../structures/Commands");
 exports.default = new Commands_1.Command({
     name: '투표 시작',
     category: '기본',
     usage: '투표 시작 <제목> <이름1>, <이름2>...',
     description: '<제목>의 투표를 시작합니다 이름들은 ","로 구분합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         if (!msg.guild)
             return;
         const id = msg.author.id;
@@ -26,7 +25,7 @@ exports.default = new Commands_1.Command({
         const row = new discord_js_1.MessageActionRow();
         const embed = new discord_js_1.MessageEmbed();
         const names = new discord_js_1.Collection();
-        if (Client_1.client.vote.get(msg.channelId))
+        if (client.vote.get(msg.channelId))
             return msg.reply('이미 이 채널에 시작한 투표가 있습니다.');
         if (!title)
             return msg.reply('투표 제목을 입력해주시기 바랍니다.');
@@ -51,7 +50,7 @@ exports.default = new Commands_1.Command({
             .setTitle(title)
             .setDescription(`${initialNames.join(', ')} 중 투표해주시기 바랍니다.`);
         const initialMessage = yield msg.channel.send({ embeds: [embed], components: [row] });
-        const collector = new discord_js_1.InteractionCollector(Client_1.client, {
+        const collector = new discord_js_1.InteractionCollector(client, {
             channel: msg.channel,
             componentType: 'BUTTON',
             guild: msg.guild,
@@ -64,10 +63,10 @@ exports.default = new Commands_1.Command({
             title,
             names,
         };
-        Client_1.client.vote.set(msg.channelId, vote);
+        client.vote.set(msg.channelId, vote);
         collector.on('collect', (interaction) => __awaiter(void 0, void 0, void 0, function* () {
             const interactionId = interaction.user.id;
-            const vote = Client_1.client.vote.get(interaction.channelId);
+            const vote = client.vote.get(interaction.channelId);
             const voteName = interaction.customId.split(',')[1];
             const voteNode = vote === null || vote === void 0 ? void 0 : vote.names.get(voteName);
             if (!vote || !voteNode)

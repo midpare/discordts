@@ -1,14 +1,13 @@
-import { Command } from '../../../structures/Commands';
+import { Command } from '../../../structures/Commands'
 import { school } from '../../../models/school'
 import { requestGet } from '../../../util/functions/requestGet';
-import { client } from '../../../structures/Client';
 
 export default new Command({
   name: '학교 정보등록',
   category: '학교',
   usage: '학교 정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
   description: '자신의 학교정보를 등록해 학교 명령어 사용을 가능하게합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     if (!args[0] || !args[1] || !args[2] || !args[3])
       return msg.reply('정확한 명령어를 입력해주시기바랍니다.\n!학교 정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>');
 

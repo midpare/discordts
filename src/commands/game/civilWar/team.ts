@@ -9,7 +9,7 @@ export default new Command({
   category: '게임',
   usage: '내전 팀 <이름> <이름> ...',
   description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const members = shuffle(Array.from(msg.mentions.members?.values() || []));
     
     const team1 = new Array();

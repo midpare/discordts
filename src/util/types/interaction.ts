@@ -1,6 +1,10 @@
 import { Interaction } from 'discord.js';
+import { ExtendClient } from '../../structures/Client';
 
-type ExecuteType = (interaction: Interaction) => Promise<void>;
+type ExecuteType = (options: {
+  interaction: Interaction, 
+  client: ExtendClient
+}) => Promise<void>;
 
 export interface InteractionType {
   name: string;

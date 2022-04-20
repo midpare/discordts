@@ -10,17 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../structures/Commands");
-const Client_1 = require("../../structures/Client");
 exports.default = new Commands_1.Command({
     name: '베팅',
     category: '베팅',
     usage: '베팅',
     description: '베팅을 합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const guildId = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
         const money = parseFloat(args[1]);
-        const betting = Client_1.client.betting.get(guildId);
+        const betting = client.betting.get(guildId);
         if (!betting)
             return msg.reply('아직 베팅을 시작하지 않았습니다.');
         if (!money)

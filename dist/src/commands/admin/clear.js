@@ -18,7 +18,7 @@ exports.default = new Commands_1.Command({
     category: '관리자',
     usage: 'clear <숫자>',
     description: '메시지를 보낸 채팅방에 <숫자>만큼의 채팅을 지웁니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has('MANAGE_MESSAGES')))
             return msg.reply(message_1.messages.missingPermissionUser);

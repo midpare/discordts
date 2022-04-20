@@ -6,7 +6,7 @@ export default new Command({
   category: '기본',
   usage: '테스트',
   description: '테스트',
-  execute: ({ msg, args }) => {
+  execute: ({ msg, args, client }) => {
     const row = new MessageActionRow().addComponents(
       new MessageButton()
         .setCustomId('test customId')

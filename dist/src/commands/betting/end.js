@@ -10,16 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../structures/Commands");
-const Client_1 = require("../../structures/Client");
 exports.default = new Commands_1.Command({
     name: '베팅 종료',
     category: '베팅',
     usage: '베팅 종료 <팀>',
     description: '베팅을 종료합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const id = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
-        const betting = Client_1.client.betting.get(id);
+        const betting = client.betting.get(id);
         if (!betting)
             return msg.reply('아직 베팅을 시작하지 않았습니다.');
         const bet1 = betting.bet1;
@@ -36,6 +35,6 @@ exports.default = new Commands_1.Command({
                 break;
         }
         msg.channel.send(`${winner}팀이 승리했습니다!`);
-        Client_1.client.betting.delete(id);
+        client.betting.delete(id);
     }),
 });

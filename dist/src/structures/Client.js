@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.client = exports.ExtendClient = void 0;
+exports.ExtendClient = void 0;
 const discord_js_1 = require("discord.js");
 const mongoose_1 = __importDefault(require("mongoose"));
 class ExtendClient extends discord_js_1.Client {
@@ -66,4 +66,3 @@ class ExtendClient extends discord_js_1.Client {
     }
 }
 exports.ExtendClient = ExtendClient;
-exports.client = new ExtendClient();

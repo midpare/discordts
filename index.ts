@@ -1,4 +1,5 @@
-import { Message } from 'discord.js';
-import { client } from './src/structures/Client';
+import { ExtendClient } from "./src/structures/Client";
+
+const client = new ExtendClient();
 
 client.start();

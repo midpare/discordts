@@ -10,26 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Client_1 = require("../../structures/Client");
 const Commands_1 = require("../../structures/Commands");
 exports.default = new Commands_1.Command({
     name: '베팅 현황',
     category: '베팅',
     usage: '베팅 현황',
     description: '현재 베팅의 현황을 확인합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const guildId = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
-        const betting = Client_1.client.betting.get(guildId);
+        const betting = client.betting.get(guildId);
         if (!betting)
             return msg.reply('아직 베팅을 시작하지 않았습니다.');
         const embed = new discord_js_1.MessageEmbed();
         const persent = betting.persent;
-        // bet1.times = Math.round(100 / (persent) * 100) / 100;
-        // if (persent == 100)
-        //   bet2.times = 0;
-        // else
-        //   bet2.times = Math.round(100 / (100 - persent) * 100) / 100;
         embed
             .setTitle('베팅 현황')
             .setDescription('베팅 현황을 확인합니다.')

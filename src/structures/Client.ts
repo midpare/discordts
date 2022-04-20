@@ -62,6 +62,3 @@ export class ExtendClient extends Client {
     }
   }
 }
-
-export const client = new ExtendClient();
-

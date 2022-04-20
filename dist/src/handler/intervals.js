@@ -38,15 +38,15 @@ const glob_1 = require("glob");
 const util_1 = require("util");
 const ms_1 = __importDefault(require("ms"));
 const globPromise = (0, util_1.promisify)(glob_1.glob);
-module.exports = function () {
+module.exports = function (client) {
     return __awaiter(this, void 0, void 0, function* () {
         const intervalFiles = yield globPromise(`${__dirname}/../interval/**/*{.ts,.js}`);
         for (const dir of intervalFiles) {
             const file = (yield Promise.resolve().then(() => __importStar(require(dir)))).default;
             try {
                 if (file.immediate)
-                    file.execute();
-                setInterval(file.execute, (0, ms_1.default)(file.interval));
+                    file.execute(client);
+                setInterval(file.execute, (0, ms_1.default)(file.interval), client);
             }
             catch (error) {
                 console.error(error);

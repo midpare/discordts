@@ -13,17 +13,18 @@ const discord_js_1 = require("discord.js");
 module.exports = {
     name: 'interactionCreate',
     event: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
-        if (interaction instanceof discord_js_1.ButtonInteraction) {
-            const cmd = interaction.customId;
-            const events = Client_1.client.interactions.get(cmd);
-            if (!events)
-                return;
-            try {
-                events.execute(interaction);
-            }
-            catch (error) {
-                console.error(error);
-            }
+        const client = interaction.client;
+        if (!(client instanceof Client_1.ExtendClient) || !(interaction instanceof discord_js_1.ButtonInteraction))
+            return;
+        const cmd = interaction.customId;
+        const events = client.interactions.get(cmd);
+        if (!events)
+            return;
+        try {
+            events.execute({ interaction, client });
+        }
+        catch (error) {
+            console.error(error);
         }
     }),
 };

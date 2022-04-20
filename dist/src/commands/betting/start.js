@@ -12,18 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../structures/Commands");
 const Betting_1 = require("../../util/structures/Betting");
 const discord_js_1 = require("discord.js");
-const Client_1 = require("../../structures/Client");
 exports.default = new Commands_1.Command({
     name: '베팅 시작',
     aliases: ['베팅 스타트'],
     category: '베팅',
     usage: '베팅 시작 <제목> <팀1> <팀2>',
     description: '베팅을 시작합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         const id = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
         const prefix = (_b = process.env.PREFIX) !== null && _b !== void 0 ? _b : '';
-        if (Client_1.client.betting.get(id))
+        if (client.betting.get(id))
             return msg.reply('이미 시작한 베팅이 있습니다.');
         if (!args[0])
             return msg.reply('제목을 입력해주시기바랍니다.');
@@ -36,6 +35,6 @@ exports.default = new Commands_1.Command({
             .setDescription(`${betting.bet1.name}와 ${betting.bet2.name}중 베팅해주시기바랍니다.`)
             .addFields({ name: `${betting.bet1.name}`, value: `${prefix}베팅 ${betting.bet1.name} 로 베팅해주시기바랍니다.`, inline: true }, { name: `${betting.bet2.name}`, value: `${prefix}베팅 ${betting.bet2.name} 로 베팅해주시기바랍니다.`, inline: true });
         msg.channel.send({ embeds: [embed] });
-        Client_1.client.betting.set(id, betting);
+        client.betting.set(id, betting);
     }),
 });

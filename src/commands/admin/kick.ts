@@ -1,6 +1,5 @@
 import { Command } from '../../structures/Commands';
 import { messages } from '../../util/language/message';
-import { client } from '../../structures/Client';
 import { TextChannel } from 'discord.js';
 
 export default new Command({
@@ -9,7 +8,7 @@ export default new Command({
   category: '관리자',
   usage: 'kick <유저> [사유]',
   description: '서버에서 맨션한 <유저>를 강퇴합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     if (!msg.member?.permissions.has('KICK_MEMBERS'))
       return msg.reply(messages.missingPermissionUser);
 

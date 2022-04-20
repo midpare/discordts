@@ -10,10 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const requestGet_1 = require("../util/functions/requestGet");
-const Client_1 = require("../structures/Client");
 const Interval_1 = require("../structures/Interval");
 exports.default = new Interval_1.Interval({
-    execute: () => __awaiter(void 0, void 0, void 0, function* () {
+    execute: (client) => __awaiter(void 0, void 0, void 0, function* () {
         const options = {
             uri: 'https://api.upbit.com/v1/market/all',
             method: 'GET',
@@ -24,7 +23,7 @@ exports.default = new Interval_1.Interval({
             if (coin.market.startsWith('KRW')) {
                 const coinName = coin.korean_name;
                 const market = coin.market;
-                Client_1.client.coin.set(coinName, market);
+                client.coin.set(coinName, market);
             }
         }
     }),

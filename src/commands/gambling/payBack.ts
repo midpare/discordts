@@ -8,7 +8,7 @@ export default new Command({
   category: '도박',
   usage: '빚갚기 <돈>',
   description: '자신의 빚을 갚습니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
 

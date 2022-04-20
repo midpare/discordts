@@ -1,4 +1,3 @@
-import { client } from "../../../structures/Client";
 import { Command } from "../../../structures/Commands";
 
 export default new Command({
@@ -6,7 +5,7 @@ export default new Command({
   category: '기본',
   usage: '투표 종료',
   description: '자신이 시작한 투표를 종료합니다.',
-  execute: ({ msg, args }) => {
+  execute: ({ msg, args, client }) => {
     const vote = client.vote.get(msg.channelId)
     if (!vote)
       return msg.reply(`이 채널에 시작한 투표가 없습니다`);

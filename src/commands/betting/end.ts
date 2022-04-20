@@ -1,12 +1,11 @@
 import { Command } from '../../structures/Commands';
-import { client } from '../../structures/Client';
 
 export default new Command({
   name: '베팅 종료',
   category: '베팅',
   usage: '베팅 종료 <팀>',
   description: '베팅을 종료합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const id = msg.guildId ?? ''
     const betting = client.betting.get(id)
     if (!betting)

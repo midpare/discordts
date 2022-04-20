@@ -18,7 +18,7 @@ exports.default = new Commands_1.Command({
     category: '도박',
     usage: '잔액',
     description: '자신의 현재 잔액을 확인합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
         msg.reply(message_1.messages.gambling.balance(user.name, user.money));

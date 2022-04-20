@@ -1,5 +1,4 @@
 import { MessageEmbed } from 'discord.js';
-import { client } from '../../structures/Client';
 import { Command } from '../../structures/Commands';
 
 export default new Command({
@@ -7,7 +6,7 @@ export default new Command({
   category: '베팅',
   usage: '베팅 현황',
   description: '현재 베팅의 현황을 확인합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const guildId = msg.guildId ?? ''
     const betting = client.betting.get(guildId);
     if (!betting)
@@ -15,13 +14,6 @@ export default new Command({
 
     const embed = new MessageEmbed();
     const persent = betting.persent;
-
-    // bet1.times = Math.round(100 / (persent) * 100) / 100;
-
-    // if (persent == 100)
-    //   bet2.times = 0;
-    // else
-    //   bet2.times = Math.round(100 / (100 - persent) * 100) / 100;
 
     embed
       .setTitle('베팅 현황')

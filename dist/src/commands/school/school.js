@@ -19,7 +19,7 @@ exports.default = new Commands_1.Command({
     category: '학교',
     usage: '학교',
     description: '학교 명령어',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const apiKey = process.env.SCHOOL_API_KEY || '';
         if (!args[0])
             return;

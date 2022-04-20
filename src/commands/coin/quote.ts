@@ -7,7 +7,7 @@ export default new Command({
   category: '코인',
   usage: '코인 현황',
   description: '현재 코인들의 현황을 업비트에서 확인합니다.',
-  execute: ({ msg, args }) => {
+  execute: ({ msg, args, client }) => {
     const coinRow = new MessageActionRow().addComponents(
       new MessageButton()
         .setURL('https://upbit.com/exchange')

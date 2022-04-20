@@ -1,10 +1,9 @@
-import { client } from '../structures/Client';
 import { Interaction } from '../structures/Interaction';
 import { ButtonInteraction, TextChannel } from 'discord.js';
 
 export default new Interaction({
   name: 'giveRole',
-  execute: async (interaction) => {
+  execute: async ({interaction, client}) => {
     if (interaction instanceof ButtonInteraction) {
       interaction.member.roles.add('910521119713394743');
       interaction.member.roles.remove('910521119713394739');

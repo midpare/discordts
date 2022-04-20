@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Client_1 = require("../../structures/Client");
 const Commands_1 = require("../../structures/Commands");
 exports.default = new Commands_1.Command({
     name: 'help',
@@ -18,13 +17,13 @@ exports.default = new Commands_1.Command({
     category: '기본',
     usage: 'help [카테고리]',
     description: '봇의 명령어를 확인합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const embed = new discord_js_1.MessageEmbed();
         const prefix = process.env.PREFIX;
-        const directories = [...new Set(Client_1.client.commands.map((command) => command.category))];
+        const directories = [...new Set(client.commands.map((command) => command.category))];
         const categories = new Map();
         for (const category of directories) {
-            const getCommands = new Set(Client_1.client.commands
+            const getCommands = new Set(client.commands
                 .filter((commands) => commands.category == category)
                 .map((command) => command.name));
             categories.set(category, [...getCommands]);
@@ -45,7 +44,7 @@ exports.default = new Commands_1.Command({
             .setTitle(`${args[0]} 명령어`)
             .setDescription(`${args[0]} 관련 명령어를 확인합니다.\n<>는 필수, []는 선택사항 입니다.`);
         for (const element of commands) {
-            const command = Client_1.client.commands.get(element);
+            const command = client.commands.get(element);
             if (command) {
                 const aliases = command.aliases ? `\n동의어: ${command.aliases}` : '';
                 embed

@@ -9,7 +9,7 @@ export default new Command({
   category: '학교',
   usage: '학교',
   description: '학교 명령어',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const apiKey = process.env.SCHOOL_API_KEY || '';
     if (!args[0])
       return;

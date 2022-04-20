@@ -7,7 +7,7 @@ export default new Command({
   category: '도박',
   usage: '대출 <돈>',
   description: '최대 100만원까지의 돈을 대출합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
 

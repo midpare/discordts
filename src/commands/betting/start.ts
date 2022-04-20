@@ -1,7 +1,6 @@
 import { Command } from '../../structures/Commands';
 import { Betting } from '../../util/structures/Betting'
 import { MessageEmbed } from 'discord.js';
-import { client } from '../../structures/Client';
 
 export default new Command({
   name: '베팅 시작',
@@ -9,7 +8,7 @@ export default new Command({
   category: '베팅',
   usage: '베팅 시작 <제목> <팀1> <팀2>',
   description: '베팅을 시작합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const id = msg.guildId ?? ''
     const prefix = process.env.PREFIX ?? ''
     if (client.betting.get(id))

@@ -7,7 +7,7 @@ export default new Command({
   category: '도박',
   usage: '송금 <유저> <돈>',
   description: '자신의 돈을 맨션한 <유저>에게 <돈>만큼 송금합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
 

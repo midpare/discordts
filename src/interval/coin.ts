@@ -1,9 +1,8 @@
 import { requestGet } from '../util/functions/requestGet';
-import { client } from '../structures/Client';
 import { Interval } from '../structures/Interval';
 
 export default new Interval({
-  execute: async () => {
+  execute: async (client) => {
     const options = {
       uri: 'https://api.upbit.com/v1/market/all',
       method: 'GET',

@@ -7,7 +7,7 @@ exports.default = new Commands_1.Command({
     category: '기본',
     usage: '테스트',
     description: '테스트',
-    execute: ({ msg, args }) => {
+    execute: ({ msg, args, client }) => {
         const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
             .setCustomId('test customId')
             .setLabel('test label')

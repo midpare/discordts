@@ -19,7 +19,7 @@ exports.default = new Commands_1.Command({
     category: '게임',
     usage: '내전 팀 <이름> <이름> ...',
     description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const members = (0, shuffle_1.shuffle)(Array.from(((_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.values()) || []));
         const team1 = new Array();

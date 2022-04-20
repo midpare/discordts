@@ -1,6 +1,5 @@
 import { Command } from '../../../structures/Commands';
 import { warning } from '../../../models/warning';
-import { client } from '../../../structures/Client';
 import { TextChannel } from 'discord.js';
 import { messages } from '../../../util/language/message';
 
@@ -9,7 +8,7 @@ export default new Command({
   category: '관리자',
   usage: '경고 차감 <유저> <횟수> [사유]',
   description: '유저의 경고를 차감합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     if (!msg.member?.roles.cache.has('910521119713394745') && !msg.member?.roles.cache.has('910521119713394744'))
       return msg.reply(messages.missingPermissionUser);
 
@@ -35,5 +34,6 @@ export default new Command({
 
     (await warning.updateOne({ id }, { $inc: { warning: -count } })).matchedCount;
     channel.send(messages.admin.warning.deduction.success(target.user, count, user.warning - count, reason));
+    msg.delete();
   },
 });

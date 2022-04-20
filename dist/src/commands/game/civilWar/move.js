@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Client_1 = require("../../../structures/Client");
 const Commands_1 = require("../../../structures/Commands");
 const CivilWar_1 = require("../../../util/structures/CivilWar");
 exports.default = new Commands_1.Command({
@@ -18,13 +17,13 @@ exports.default = new Commands_1.Command({
     category: '게임',
     usage: '내전 이동',
     description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         if (!CivilWar_1.civilWar.team1[0])
             return msg.reply('이동할 멤버가 없습니다.');
         let team1 = CivilWar_1.civilWar.team1;
         let team2 = CivilWar_1.civilWar.team2;
-        const channel1 = Client_1.client.channels.cache.get('910521120158019624');
-        const channel2 = Client_1.client.channels.cache.get('910521120158019625');
+        const channel1 = client.channels.cache.get('910521120158019624');
+        const channel2 = client.channels.cache.get('910521120158019625');
         for (const user of team1) {
             if (!user.voice || user.voice.channelId == null)
                 continue;

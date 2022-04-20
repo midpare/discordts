@@ -12,13 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../../structures/Commands");
 const school_1 = require("../../../models/school");
 const requestGet_1 = require("../../../util/functions/requestGet");
-const Client_1 = require("../../../structures/Client");
 exports.default = new Commands_1.Command({
     name: '학교 정보등록',
     category: '학교',
     usage: '학교 정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
     description: '자신의 학교정보를 등록해 학교 명령어 사용을 가능하게합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         if (!args[0] || !args[1] || !args[2] || !args[3])
             return msg.reply('정확한 명령어를 입력해주시기바랍니다.\n!학교 정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>');
         const apiKey = process.env.SCHOOL_API_KEY || '';
@@ -32,7 +31,7 @@ exports.default = new Commands_1.Command({
         const classNumber = !Number.isInteger(text[3]) ? text[0] : text[0] + text[1];
         if (!Number.isInteger(parseFloat(grade)) || !Number.isInteger(parseFloat(classNumber)))
             return msg.reply('정확한 학년반을 입력해주시기바랍니다. ex 1학년 2반');
-        const cityCode = Client_1.client.sdCode.get(args[0]);
+        const cityCode = client.sdCode.get(args[0]);
         const cityName = args[0];
         if (!cityCode)
             return msg.reply('정확한 시도위치를 입력해주시기바랍니다.');

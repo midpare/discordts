@@ -1,5 +1,7 @@
+import { ExtendClient } from "../../structures/Client";
+
 export interface IntervalType {
-  execute: () => Promise<void>;
+  execute: (client: ExtendClient) => Promise<void>;
   interval: string;
   immediate: boolean;
 }

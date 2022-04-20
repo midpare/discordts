@@ -12,21 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../structures/Commands");
 const requestGet_1 = require("../../util/functions/requestGet");
 const gambling_1 = require("../../models/gambling");
-const Client_1 = require("../../structures/Client");
 exports.default = new Commands_1.Command({
     name: '코인 풀매도',
     aliases: ['코인 전부판매'],
     category: '코인',
     usage: '코인 풀매도 <코인이름>',
     description: '현재 갖고있는 코인을 전부 판매합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
         const stock = user.stock;
         const coinName = args[0];
         const userCoin = stock.filter((element) => element.name == coinName)[0];
         const apiOptions = {
-            uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${Client_1.client.coin.get(coinName)}&count=1&to`,
+            uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to`,
             method: 'GET',
             json: true,
         };

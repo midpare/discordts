@@ -1,5 +1,4 @@
 import { MessageEmbed } from 'discord.js';
-import { client } from '../../structures/Client';
 import { Command } from '../../structures/Commands';
 import { CommandType } from '../../util/types/command';
 
@@ -10,7 +9,7 @@ export default new Command({
   category: '기본',
   usage: 'help [카테고리]',
   description: '봇의 명령어를 확인합니다.',
-  execute: async ({ msg, args }) => {
+  execute: async ({ msg, args, client }) => {
     const embed = new MessageEmbed()
     const prefix = process.env.PREFIX
 

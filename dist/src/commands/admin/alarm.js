@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Client_1 = require("../../structures/Client");
 const Commands_1 = require("../../structures/Commands");
 const message_1 = require("../../util/language/message");
 exports.default = new Commands_1.Command({
@@ -17,11 +16,11 @@ exports.default = new Commands_1.Command({
     category: '관리자',
     usage: '알람 <유저>',
     description: '헤드셋과 마이크를 모두 끈 유저를 여러번 이동시킵니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
-        const channel1 = Client_1.client.channels.cache.get('910521120770359323');
-        const channel2 = Client_1.client.channels.cache.get('910521120770359324');
+        const channel1 = client.channels.cache.get('910521120770359323');
+        const channel2 = client.channels.cache.get('910521120770359324');
         if (!target)
             return msg.reply(message_1.messages.admin.alarm.missingMentionUser);
         if (target.user.bot)

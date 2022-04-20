@@ -11,18 +11,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../structures/Commands");
 const message_1 = require("../../util/language/message");
-const Client_1 = require("../../structures/Client");
 exports.default = new Commands_1.Command({
     name: 'kick',
     aliases: ['킥', '강퇴'],
     category: '관리자',
     usage: 'kick <유저> [사유]',
     description: '서버에서 맨션한 <유저>를 강퇴합니다.',
-    execute: ({ msg, args }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has('KICK_MEMBERS')))
             return msg.reply(message_1.messages.missingPermissionUser);
-        const channel = Client_1.client.channels.cache.get('910521119877005363');
+        const channel = client.channels.cache.get('910521119877005363');
         const target = (_b = msg.mentions.members) === null || _b === void 0 ? void 0 : _b.first();
         const reason = !args[1] ? message_1.messages.none : args.slice(1).join(' ');
         if (!target)

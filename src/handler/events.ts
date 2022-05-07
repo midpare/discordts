@@ -9,7 +9,6 @@ export = async function (client: ExtendClient) {
   
   for (const dir of eventFiles) {
     const file = (await import(dir)).default;
-    console.log(file);
     try {
       client.on(file.name, file.execute);
     } catch(error) {

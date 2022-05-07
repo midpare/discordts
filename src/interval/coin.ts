@@ -1,5 +1,5 @@
 import { requestGet } from '../util/functions/requestGet';
-import { Interval } from '../structures/Interval';
+import { Interval } from '../managers/Interval';
 
 export default new Interval({
   execute: async (client) => {

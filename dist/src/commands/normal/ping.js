@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../structures/Commands");
+const Commands_1 = require("../../managers/Commands");
 exports.default = new Commands_1.Command({
     name: 'ping',
     category: '기본',

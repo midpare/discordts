@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Command = void 0;
 class Command {
-    constructor(commandOptions) {
-        this.name = commandOptions.name;
-        this.aliases = commandOptions.aliases ? commandOptions.aliases : null;
-        this.category = commandOptions.category;
-        this.usage = commandOptions.usage;
-        this.description = commandOptions.description;
-        this.execute = commandOptions.execute;
+    constructor(options) {
+        this.name = options.name;
+        this.aliases = options.aliases ? options.aliases : null;
+        this.category = options.category;
+        this.usage = options.usage;
+        this.description = options.description;
+        this.execute = options.execute;
     }
 }
 exports.Command = Command;

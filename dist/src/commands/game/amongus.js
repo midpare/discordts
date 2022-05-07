@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Commands_1 = require("../../structures/Commands");
+const Commands_1 = require("../../managers/Commands");
 const dead = new Array();
 exports.default = new Commands_1.Command({
     name: '어몽어스',

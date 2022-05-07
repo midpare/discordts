@@ -6,5 +6,5 @@ const attendanceInfo = new Schema({
   versionKey: false
 });
 
-const attendance = model('attendance', attendanceInfo);
-export { attendance };
+export const attendance = model('attendance', attendanceInfo);
+

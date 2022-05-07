@@ -9,7 +9,7 @@ export = async function (client: ExtendClient) {
   for (const dir of eventFiles) {
     const file = (await import(dir));
     try {
-      client.on(file.name, file.event);
+      client.on(file.name, file.execute);
     } catch(error) {
       console.error(error);
     }

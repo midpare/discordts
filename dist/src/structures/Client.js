@@ -22,7 +22,6 @@ class ExtendClient extends discord_js_1.Client {
         this.interactions = new discord_js_1.Collection();
         this.coin = new discord_js_1.Collection();
         this.sdCode = new discord_js_1.Collection();
-        this.vote = new discord_js_1.Collection();
         this.betting = new discord_js_1.Collection();
     }
     start() {
@@ -45,7 +44,8 @@ class ExtendClient extends discord_js_1.Client {
         });
     }
     setSchool() {
-        const sds = ['서울특별시', '부산광역시',
+        const sds = [
+            '서울특별시', '부산광역시',
             '대구광역시', '인천광역시',
             '광주광역시', '대전광역시',
             '울산광역시', '세종특별자치시',
@@ -53,13 +53,16 @@ class ExtendClient extends discord_js_1.Client {
             '충청북도', '충청남도',
             '전라북도', '전라남도',
             '경상북도', '경상남도',
-            '제주특별자치도'];
-        const sdCodes = ['B10', 'C10', 'D10',
+            '제주특별자치도'
+        ];
+        const sdCodes = [
+            'B10', 'C10', 'D10',
             'E10', 'F10', 'G10',
             'H10', 'I10', 'J10',
             'K10', 'M10', 'N10',
             'P10', 'Q10', 'R10',
-            'S10', 'T10'];
+            'S10', 'T10'
+        ];
         for (let i = 0; i < sds.length; i++) {
             this.sdCode.set(sds[i], sdCodes[i]);
         }

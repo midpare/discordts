@@ -1,5 +1,5 @@
 import { MessageActionRow, MessageButton } from "discord.js";
-import { Command } from "../../structures/Commands";
+import { Command } from "../../managers/Commands";
 
 export default new Command({
   name: 'test',

@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Commands_1 = require("../../../structures/Commands");
-const CivilWar_1 = require("../../../util/structures/CivilWar");
+const Commands_1 = require("../../../managers/Commands");
+const CivilWar_1 = require("../../../structures/CivilWar");
 const shuffle_1 = require("../../../util/functions/shuffle");
 exports.default = new Commands_1.Command({
     name: '내전 팀',

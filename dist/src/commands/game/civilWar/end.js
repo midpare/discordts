@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../../structures/Commands");
-const CivilWar_1 = require("../../../util/structures/CivilWar");
+const Commands_1 = require("../../../managers/Commands");
+const CivilWar_1 = require("../../../structures/CivilWar");
 exports.default = new Commands_1.Command({
     name: '내전 종료',
     aliases: ['내전 끝'],

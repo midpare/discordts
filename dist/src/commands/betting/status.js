@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Commands_1 = require("../../structures/Commands");
+const Commands_1 = require("../../managers/Commands");
 exports.default = new Commands_1.Command({
     name: '베팅 현황',
     category: '베팅',

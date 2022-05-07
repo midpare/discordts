@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../../structures/Commands");
-const CivilWar_1 = require("../../../util/structures/CivilWar");
+const Commands_1 = require("../../../managers/Commands");
+const CivilWar_1 = require("../../../structures/CivilWar");
 exports.default = new Commands_1.Command({
     name: '내전 이동',
     aliases: ['내전 시작'],

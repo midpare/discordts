@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Commands_1 = require("../../structures/Commands");
+const Commands_1 = require("../../managers/Commands");
 exports.default = new Commands_1.Command({
     name: 'help',
     aliases: ['도움말', '명령어'],
@@ -38,19 +38,20 @@ exports.default = new Commands_1.Command({
                     .addField(`${prefix}help ${category}`, `${category} 관련 명령어를 확인합니다.`, false);
             }
             msg.channel.send({ embeds: [embed] });
-            return;
         }
-        embed
-            .setTitle(`${args[0]} 명령어`)
-            .setDescription(`${args[0]} 관련 명령어를 확인합니다.\n<>는 필수, []는 선택사항 입니다.`);
-        for (const element of commands) {
-            const command = client.commands.get(element);
-            if (command) {
-                const aliases = command.aliases ? `\n동의어: ${command.aliases}` : '';
-                embed
-                    .addField(`${prefix}${command.usage}`, `${command.description}${aliases}`, false);
+        else {
+            embed
+                .setTitle(`${args[0]} 명령어`)
+                .setDescription(`${args[0]} 관련 명령어를 확인합니다.\n<>는 필수, []는 선택사항 입니다.`);
+            for (const element of commands) {
+                const command = client.commands.get(element);
+                if (command) {
+                    const aliases = command.aliases ? `\n동의어: ${command.aliases}` : '';
+                    embed
+                        .addField(`${prefix}${command.usage}`, `${command.description}${aliases}`, false);
+                }
             }
+            msg.channel.send({ embeds: [embed] });
         }
-        msg.channel.send({ embeds: [embed] });
     }),
 });

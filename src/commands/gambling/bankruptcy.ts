@@ -1,4 +1,4 @@
-import { Command } from '../../structures/Commands';
+import { Command } from '../../managers/Commands';
 import { gambling } from '../../models/gambling';
 import { MessageActionRow, MessageButton } from 'discord.js';
 import { messages } from '../../util/language/message';

@@ -1,4 +1,4 @@
-import { Command } from '../../../structures/Commands'
+import { Command } from '../../../managers/Commands'
 import { school } from '../../../models/school'
 import { requestGet } from '../../../util/functions/requestGet';
 

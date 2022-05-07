@@ -1,4 +1,4 @@
-export function shuffle(arr: Array<any>): typeof arr {
+export function shuffle<T>(arr: Array<T>): Array<T> {
   const shuffleArr = new Array();
   while (arr.length) {
     const roll = Math.floor(Math.random() * arr.length);

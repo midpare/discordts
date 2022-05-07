@@ -1,5 +1,5 @@
 import { User, Message, Snowflake } from "discord.js";
-import { gambling } from "../../models/gambling";
+import { gambling } from "../models/gambling";
 
 export class Betting {
   public readonly title: string;

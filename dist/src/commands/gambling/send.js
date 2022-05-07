@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../models/gambling");
-const Commands_1 = require("../../structures/Commands");
+const Commands_1 = require("../../managers/Commands");
 exports.default = new Commands_1.Command({
     name: '송금',
     aliases: ['이체', '돈보내기'],

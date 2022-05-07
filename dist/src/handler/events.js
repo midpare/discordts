@@ -40,7 +40,7 @@ module.exports = function (client) {
         for (const dir of eventFiles) {
             const file = (yield Promise.resolve().then(() => __importStar(require(dir))));
             try {
-                client.on(file.name, file.event);
+                client.on(file.name, file.execute);
             }
             catch (error) {
                 console.error(error);

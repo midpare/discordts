@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../../structures/Commands");
+const Commands_1 = require("../../../managers/Commands");
 const warning_1 = require("../../../models/warning");
 const message_1 = require("../../../util/language/message");
 exports.default = new Commands_1.Command({

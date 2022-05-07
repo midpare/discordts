@@ -1,4 +1,4 @@
-import { Command } from '../../structures/Commands';
+import { Command } from '../../managers/Commands';
 import { requestGet } from '../../util/functions/requestGet';
 import { gambling } from '../../models/gambling';
 

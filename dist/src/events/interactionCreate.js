@@ -8,11 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const Client_1 = require("../structures/Client");
 const discord_js_1 = require("discord.js");
-module.exports = {
+const Event_1 = require("../managers/Event");
+exports.default = new Event_1.Event({
     name: 'interactionCreate',
-    event: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
         const client = interaction.client;
         if (!(client instanceof Client_1.ExtendClient) || !(interaction instanceof discord_js_1.ButtonInteraction))
             return;
@@ -27,4 +29,4 @@ module.exports = {
             console.error(error);
         }
     }),
-};
+});

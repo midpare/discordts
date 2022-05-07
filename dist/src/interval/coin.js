@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const requestGet_1 = require("../util/functions/requestGet");
-const Interval_1 = require("../structures/Interval");
+const Interval_1 = require("../managers/Interval");
 exports.default = new Interval_1.Interval({
     execute: (client) => __awaiter(void 0, void 0, void 0, function* () {
         const options = {

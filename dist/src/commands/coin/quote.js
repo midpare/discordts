@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../structures/Commands");
+const Commands_1 = require("../../managers/Commands");
 const discord_js_1 = require("discord.js");
 exports.default = new Commands_1.Command({
     name: '코인 현황',

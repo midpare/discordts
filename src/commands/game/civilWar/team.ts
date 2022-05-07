@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
-import { Command } from '../../../structures/Commands';
-import { civilWar } from '../../../util/structures/CivilWar';
+import { Command } from '../../../managers/Commands';
+import { civilWar } from '../../../structures/CivilWar';
 import { shuffle } from '../../../util/functions/shuffle';
 
 export default new Command({

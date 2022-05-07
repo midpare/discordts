@@ -1,4 +1,4 @@
-import { Command } from '../../structures/Commands';
+import { Command } from '../../managers/Commands';
 import { messages } from '../../util/language/message';
 import { TextChannel } from 'discord.js';
 

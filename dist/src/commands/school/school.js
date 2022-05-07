@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const school_1 = require("../../models/school");
-const Commands_1 = require("../../structures/Commands");
+const Commands_1 = require("../../managers/Commands");
 const dateCal_1 = require("../../util/functions/dateCal");
 const requestGet_1 = require("../../util/functions/requestGet");
 exports.default = new Commands_1.Command({

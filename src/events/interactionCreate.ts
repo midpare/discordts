@@ -1,9 +1,10 @@
 import { ExtendClient } from '../structures/Client';
 import { ButtonInteraction, Interaction } from 'discord.js';
+import { Event } from '../managers/Event';
 
-export = {
+export default new Event ({
   name: 'interactionCreate',
-  event: async (interaction: Interaction) => {
+  execute: async (interaction: Interaction) => {
     const client = interaction.client;
     if (!(client instanceof ExtendClient) || !(interaction instanceof ButtonInteraction))
       return
@@ -18,4 +19,4 @@ export = {
       console.error(error);
     }
   },
-}
+});

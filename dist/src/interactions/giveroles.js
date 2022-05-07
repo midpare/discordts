@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Interaction_1 = require("../structures/Interaction");
+const Interaction_1 = require("../managers/Interaction");
 const discord_js_1 = require("discord.js");
-exports.default = new Interaction_1.Interaction({
+exports.default = new Interaction_1.ExtendInteraction({
     name: 'giveRole',
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;

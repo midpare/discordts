@@ -8,9 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-module.exports = {
+Object.defineProperty(exports, "__esModule", { value: true });
+const Event_1 = require("../managers/Event");
+exports.default = new Event_1.Event({
     name: 'ready',
-    event: () => __awaiter(void 0, void 0, void 0, function* () {
+    execute: () => __awaiter(void 0, void 0, void 0, function* () {
         console.log(`success to login!`);
     }),
-};
+});

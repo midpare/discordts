@@ -8,11 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const Client_1 = require("../structures/Client");
 const gambling_1 = require("../models/gambling");
-module.exports = {
+const Event_1 = require("../managers/Event");
+exports.default = new Event_1.Event({
     name: 'messageCreate',
-    event: (msg) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: (msg) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const client = msg.client;
         if (!(client instanceof Client_1.ExtendClient))
@@ -72,4 +74,4 @@ module.exports = {
             console.error(error);
         }
     }),
-};
+});

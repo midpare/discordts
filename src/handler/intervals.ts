@@ -1,7 +1,7 @@
 import { glob } from 'glob';
 import { promisify } from 'util';
 import ms from 'ms';
-import { IntervalType } from '../util/types/interval';
+import { Interval } from '../managers/Interval';
 import { ExtendClient } from '../structures/Client';
 
 const globPromise = promisify(glob);
@@ -10,7 +10,7 @@ export = async function (client: ExtendClient) {
   const intervalFiles = await globPromise(`${__dirname}/../interval/**/*{.ts,.js}`);
 
   for (const dir of intervalFiles) {
-    const file: IntervalType = (await import(dir)).default;
+    const file: Interval = (await import(dir)).default;
     try {
       if (file.immediate)
         file.execute(client);

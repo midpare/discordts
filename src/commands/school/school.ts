@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { school } from '../../models/school';
-import { Command } from '../../structures/Commands';
+import { Command } from '../../managers/Commands';
 import { dateCal } from '../../util/functions/dateCal';
 import { requestGet } from '../../util/functions/requestGet';
 

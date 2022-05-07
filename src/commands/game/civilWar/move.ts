@@ -1,6 +1,6 @@
 import { VoiceChannel } from 'discord.js';
-import { Command } from '../../../structures/Commands';
-import { civilWar } from '../../../util/structures/CivilWar';
+import { Command } from '../../../managers/Commands';
+import { civilWar } from '../../../structures/CivilWar';
 
 export default new Command({
   name: '내전 이동',

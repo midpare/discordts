@@ -8,14 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-module.exports = {
+Object.defineProperty(exports, "__esModule", { value: true });
+const Event_1 = require("../managers/Event");
+exports.default = new Event_1.Event({
     name: 'guildMemberAdd',
-    event: (user) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: (member) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            user.roles.add('910521119713394739');
+            member.roles.add('910521119713394739');
         }
         catch (error) {
             console.error(error);
         }
     }),
-};
+});

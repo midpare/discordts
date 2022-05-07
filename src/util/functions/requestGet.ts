@@ -1,5 +1,4 @@
 import request from 'request';
-import { ApiType } from '../types/api';
 
 export async function requestGet(option: ApiType): Promise<any> {
   return new Promise((resolve, reject) => {
@@ -10,4 +9,11 @@ export async function requestGet(option: ApiType): Promise<any> {
         resolve(body);
     });
   });
+}
+
+export interface ApiType {
+  uri: string;
+  method: string;
+  json: boolean;
+  qs?: object;
 }

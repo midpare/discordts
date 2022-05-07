@@ -1,11 +1,12 @@
-import { CommandType } from '../util/types/command';
-import { ExtendClient } from '../structures/Client';
+  import { ExtendClient } from '../structures/Client';
 import { gambling } from '../models/gambling';
 import { Message } from 'discord.js';
+import { Command } from '../managers/Commands';
+import { Event } from '../managers/Event';
 
-export = {
+export default new Event ({
   name: 'messageCreate',
-  event: async (msg: Message) => {
+  execute: async (msg: Message) => {
     const client = msg.client
     if (!(client instanceof ExtendClient))
       return
@@ -19,7 +20,7 @@ export = {
     const getCmd = (start: number, end: number) => {
       return client.commands.get(args.slice(start, end).join(' ').toLowerCase());
     }
-    let command: CommandType | undefined;
+    let command: Command | undefined;
     if (getCmd(0, 2)) {
       command = getCmd(0, 2);
       args.splice(0, 2);
@@ -68,4 +69,4 @@ export = {
       console.error(error);
     }
   },
-}
+});

@@ -1,7 +1,7 @@
-import { Interaction } from '../structures/Interaction';
+import { ExtendInteraction } from '../managers/Interaction';
 import { ButtonInteraction, TextChannel } from 'discord.js';
 
-export default new Interaction({
+export default new ExtendInteraction({
   name: 'giveRole',
   execute: async ({interaction, client}) => {
     if (interaction instanceof ButtonInteraction) {

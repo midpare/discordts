@@ -29,7 +29,7 @@ export class ExtendClient extends Client {
   }
 
   async handler() {
-    const path = new Array('commands', 'interactions', 'events', 'intervals', 'app')
+    const path = new Array('commands', 'interactions', 'events', 'intervals')
     for (const dir of path) {
       require(`../handler/${dir}`)(this);
     }

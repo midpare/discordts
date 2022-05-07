@@ -38,7 +38,8 @@ module.exports = function (client) {
     return __awaiter(this, void 0, void 0, function* () {
         const eventFiles = yield globPromise(`${__dirname}/../events/**/*{.ts,.js}`);
         for (const dir of eventFiles) {
-            const file = (yield Promise.resolve().then(() => __importStar(require(dir))));
+            const file = (yield Promise.resolve().then(() => __importStar(require(dir)))).default;
+            console.log(file);
             try {
                 client.on(file.name, file.execute);
             }

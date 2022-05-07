@@ -37,7 +37,7 @@ class ExtendClient extends discord_js_1.Client {
     }
     handler() {
         return __awaiter(this, void 0, void 0, function* () {
-            const path = new Array('commands', 'interactions', 'events', 'intervals', 'app');
+            const path = new Array('commands', 'interactions', 'events', 'intervals');
             for (const dir of path) {
                 require(`../handler/${dir}`)(this);
             }

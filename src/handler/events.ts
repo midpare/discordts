@@ -6,8 +6,10 @@ const globPromise = promisify(glob);
 
 export = async function (client: ExtendClient) {
   const eventFiles = await globPromise(`${__dirname}/../events/**/*{.ts,.js}`);
+  
   for (const dir of eventFiles) {
-    const file = (await import(dir));
+    const file = (await import(dir)).default;
+    console.log(file);
     try {
       client.on(file.name, file.execute);
     } catch(error) {

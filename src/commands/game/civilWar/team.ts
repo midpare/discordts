@@ -1,6 +1,5 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../../managers/Commands';
-import { civilWar } from '../../../structures/CivilWar';
 import { shuffle } from '../../../util/functions/shuffle';
 
 export default new Command({
@@ -32,8 +31,8 @@ export default new Command({
 
     msg.channel.send({ embeds: [embed] });
     
-    civilWar.allTeam = members;
-    civilWar.team1 = team1;
-    civilWar.team2 = team2;
+    client.civilWar.allTeam = members;
+    client.civilWar.team1 = team1;
+    client.civilWar.team2 = team2;
   },
 });

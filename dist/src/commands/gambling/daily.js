@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../models/gambling");
 const Commands_1 = require("../../managers/Commands");
-const message_1 = require("../../util/language/message");
 exports.default = new Commands_1.Command({
     name: '출석체크',
     aliases: ['출첵', 'ㅊㅊ'],
@@ -24,9 +23,9 @@ exports.default = new Commands_1.Command({
         const date = new Date();
         const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
         if (user.date == today)
-            return msg.reply(message_1.messages.gambling.daily.today);
+            return msg.reply(client.messages.gambling.daily.today);
         const money = Math.floor(Math.random() * 50000 + 50000);
         (yield gambling_1.gambling.updateOne({ id }, { $inc: { money }, $set: { date: today } })).matchedCount;
-        msg.reply(message_1.messages.gambling.daily.success(user.money, money));
+        msg.reply(client.messages.gambling.daily.success(user.money, money));
     }),
 });

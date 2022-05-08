@@ -1,6 +1,6 @@
 import { User } from 'discord.js';
 
-class Messages {
+export class Messages {
   public yes = '예';
 
   public no = '아니요';
@@ -119,5 +119,3 @@ class Messages {
     }
   };
 }
-
-export const messages = new Messages();

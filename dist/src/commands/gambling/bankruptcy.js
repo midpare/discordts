@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../managers/Commands");
 const gambling_1 = require("../../models/gambling");
 const discord_js_1 = require("discord.js");
-const message_1 = require("../../util/language/message");
 const interactionUser = new Array();
 exports.default = new Commands_1.Command({
     name: '파산',
@@ -27,10 +26,10 @@ exports.default = new Commands_1.Command({
         const date = new Date();
         const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
         const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
-            .setLabel(message_1.messages.yes)
+            .setLabel(client.messages.yes)
             .setStyle('SUCCESS')
             .setCustomId('yes'), new discord_js_1.MessageButton()
-            .setLabel(message_1.messages.no)
+            .setLabel(client.messages.no)
             .setStyle('DANGER')
             .setCustomId('no'));
         const message = yield msg.reply({ content: '정말 파산하시겠습니까? 돈과 빚이 모두 0원으로 돌아갑니다', components: [row] });

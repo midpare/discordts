@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../managers/Commands");
-const message_1 = require("../../util/language/message");
 exports.default = new Commands_1.Command({
     name: 'clear',
     aliases: ['클리어'],
@@ -21,16 +20,16 @@ exports.default = new Commands_1.Command({
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has('MANAGE_MESSAGES')))
-            return msg.reply(message_1.messages.missingPermissionUser);
+            return msg.reply(client.messages.missingPermissionUser);
         const count = parseFloat(args[0]);
         if (!Number.isInteger(count))
-            return msg.reply(message_1.messages.naturalNumber);
+            return msg.reply(client.messages.naturalNumber);
         if (count < 0 || count > 99)
-            return msg.reply(message_1.messages.betweenNumber(1, 99));
+            return msg.reply(client.messages.betweenNumber(1, 99));
         if (!(msg.channel instanceof discord_js_1.NewsChannel || msg.channel instanceof discord_js_1.TextChannel || msg.channel instanceof discord_js_1.ThreadChannel))
             return;
         msg.channel.bulkDelete(count + 1);
-        const send = yield msg.reply(message_1.messages.admin.clear.success(count));
+        const send = yield msg.reply(client.messages.admin.clear.success(count));
         setTimeout(() => {
             send.delete();
         }, 1500);

@@ -1,8 +1,9 @@
 export function shuffle<T>(arr: Array<T>): Array<T> {
-  const shuffleArr = new Array();
-  while (arr.length) {
-    const roll = Math.floor(Math.random() * arr.length);
-    shuffleArr.push(arr.splice(roll, 1)[0]);
+  for (let i = 0; i < arr.length; i++) {
+    const ranIdx = Math.floor(Math.random() * (arr.length - i)) + i;
+    const prev = arr[i];
+    arr[i] = arr[ranIdx];
+    arr[ranIdx] = prev;
   }
-  return shuffleArr;
+  return arr;
 }

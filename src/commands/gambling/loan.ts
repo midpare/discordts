@@ -1,6 +1,5 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../managers/Commands';
-import { messages } from '../../util/language/message';
 
 export default new Command({
   name: '대출',
@@ -13,12 +12,12 @@ export default new Command({
 
     const debt = parseFloat(args[0]);
     if (!Number.isInteger(debt) || debt <= 0)
-      return msg.reply(messages.naturalNumber);
+      return msg.reply(client.messages.naturalNumber);
 
     if (user.debt + debt > 1000000)
-      return msg.reply(messages.gambling.loan.overMoney);
+      return msg.reply(client.messages.gambling.loan.overMoney);
 
     (await gambling.updateOne({ id }, { $inc: { principalDebt: debt, debt, money: debt } })).matchedCount;
-    msg.reply(messages.gambling.loan.success(user.debt, debt));
+    msg.reply(client.messages.gambling.loan.success(user.debt, debt));
   },
 });

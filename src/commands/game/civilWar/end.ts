@@ -1,5 +1,4 @@
 import { Command } from '../../../managers/Commands';
-import { civilWar } from '../../../structures/CivilWar';
 
 export default new Command({
   name: '내전 종료',
@@ -12,7 +11,7 @@ export default new Command({
     if (!channel || !channel.isVoice())
       return msg.reply('정확한 음성채널을 맨션해주시기 바랍니다.');
 
-    for (const user of civilWar.allTeam) {
+    for (const user of client.civilWar.allTeam) {
       if (!user.voice || user.voice.channelId == null)
         continue;
       user.voice.setChannel(channel);

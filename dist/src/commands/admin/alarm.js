@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../managers/Commands");
-const message_1 = require("../../util/language/message");
 exports.default = new Commands_1.Command({
     name: '알람',
     category: '관리자',
@@ -22,13 +21,13 @@ exports.default = new Commands_1.Command({
         const channel1 = client.channels.cache.get('910521120770359323');
         const channel2 = client.channels.cache.get('910521120770359324');
         if (!target)
-            return msg.reply(message_1.messages.admin.alarm.missingMentionUser);
+            return msg.reply(client.messages.admin.alarm.missingMentionUser);
         if (target.user.bot)
-            return msg.reply(message_1.messages.admin.alarm.bot);
+            return msg.reply(client.messages.admin.alarm.bot);
         if (target.voice.channelId == null)
-            return msg.reply(message_1.messages.missingVoiceChannelUser);
+            return msg.reply(client.messages.missingVoiceChannelUser);
         if (!target.voice.selfDeaf)
-            return msg.reply(message_1.messages.admin.alarm.missingSelfDeaf);
+            return msg.reply(client.messages.admin.alarm.missingSelfDeaf);
         const userChannel = target.voice.channel;
         yield target.voice.setChannel(channel1);
         const previousInterval = setInterval(() => {

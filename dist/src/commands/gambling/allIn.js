@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../models/gambling");
 const Commands_1 = require("../../managers/Commands");
-const message_1 = require("../../util/language/message");
 exports.default = new Commands_1.Command({
     name: '올인',
     aliases: ['ㅇㅇ'],
@@ -22,15 +21,15 @@ exports.default = new Commands_1.Command({
         const id = msg.author.id;
         const user = yield gambling_1.gambling.findOne({ id });
         if (user.money <= 0)
-            return msg.reply(message_1.messages.noneMoney);
+            return msg.reply(client.messages.noneMoney);
         const random = Math.floor(Math.random() * 2);
         if (random == 1) {
             (yield gambling_1.gambling.updateOne({ id }, { $mul: { money: 2 } })).matchedCount;
-            msg.reply(message_1.messages.gambling.successGamb(user.money, user.money));
+            msg.reply(client.messages.gambling.successGamb(user.money, user.money));
         }
         else if (random == 0) {
             (yield gambling_1.gambling.updateOne({ id }, { $set: { money: 0 } })).matchedCount;
-            msg.reply(message_1.messages.gambling.failureGamb(user.money, user.money));
+            msg.reply(client.messages.gambling.failureGamb(user.money, user.money));
         }
     }),
 });

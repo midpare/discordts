@@ -1,6 +1,5 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../managers/Commands';
-import { messages } from '../../util/language/message';
 
 export default new Command({
   name: '기초자금',
@@ -12,18 +11,18 @@ export default new Command({
     const id = msg.author.id;
     const user = await gambling.findOne({ id });
     if (user.money != 0 || user.stock[0])
-      return msg.reply(messages.gambling.baseMoney.haveMoney);
+      return msg.reply(client.messages.gambling.baseMoney.haveMoney);
 
     const second = new Date().getTime();
     const coolTime = 30;
     if (user.baseMoneyCoolTime) {
       const userCoolTime = user.baseMoneyCoolTime;
       if ((second - userCoolTime) / 1000 < coolTime)
-        return msg.reply(messages.coolTime(Math.ceil(coolTime - (second - userCoolTime) / 1000)));
+        return msg.reply(client.messages.coolTime(Math.ceil(coolTime - (second - userCoolTime) / 1000)));
     }
     const baseMoney = 25000;
 
     (await gambling.updateOne({ id }, { $set: { money: baseMoney, baseMoneyCoolTime: second } })).matchedCount;
-    msg.reply(messages.gambling.baseMoney.success(baseMoney));  
+    msg.reply(client.messages.gambling.baseMoney.success(baseMoney));  
   },
 });

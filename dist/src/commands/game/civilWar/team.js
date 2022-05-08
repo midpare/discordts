@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../../managers/Commands");
-const CivilWar_1 = require("../../../structures/CivilWar");
 const shuffle_1 = require("../../../util/functions/shuffle");
 exports.default = new Commands_1.Command({
     name: '내전 팀',
@@ -34,8 +33,8 @@ exports.default = new Commands_1.Command({
             .setTitle('팀')
             .addFields({ name: '1팀', value: `${team1.join(', ')}`, inline: false }, { name: '2팀', value: `${team2.join(', ')}`, inline: false });
         msg.channel.send({ embeds: [embed] });
-        CivilWar_1.civilWar.allTeam = members;
-        CivilWar_1.civilWar.team1 = team1;
-        CivilWar_1.civilWar.team2 = team2;
+        client.civilWar.allTeam = members;
+        client.civilWar.team1 = team1;
+        client.civilWar.team2 = team2;
     }),
 });

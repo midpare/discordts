@@ -1,10 +1,10 @@
 import { Collection, GuildMember, Message, MessageMentions, Permissions, Role, TextChannel, VoiceChannel, VoiceState, NewsChannel, ThreadChannel} from 'discord.js';
 import mongoose from 'mongoose';
+import { Command } from '../src/managers/Commands';
 import { warning } from '../src/models/warning';
-import { client } from '../src/structures/Client';
-import { messages } from '../src/util/language/message';
-import { CommandType } from '../src/util/types/command';
+import { ExtendClient } from '../src/structures/Client';
 
+const client = new ExtendClient
 describe('admin', () => {
   let msg: Message;
   let args: Array<string>;
@@ -73,32 +73,32 @@ describe('admin', () => {
   });
 
 
-  async function getCommand(name: string): Promise<CommandType> {
+  async function getCommand(name: string): Promise<Command> {
     return (await import(`../src/commands/admin/${name}`)).default;
   }
 
   it('kick', async () => {
     const command = await getCommand('kick');
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenCalledWith(messages.missingPermissionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenCalledWith(client.messages.missingPermissionUser);
 
     Object.defineProperty(msg.member, 'permissions', { value: new Permissions(BigInt(1) << BigInt(1)) });
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenCalledWith(messages.admin.kick.missingMentionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenCalledWith(client.messages.admin.kick.missingMentionUser);
 
     Object.defineProperty(mentionUser, 'permissions', { value: new Permissions(BigInt(1) << BigInt(1)) });
     msg.mentions.members?.set('key', mentionUser);
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.kick.missingPermissionTarget);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.kick.missingPermissionTarget);
 
     args = ['', 'test', 'kick', 'reason'];
     Object.defineProperty(mentionUser, 'permissions', { value: new Permissions(BigInt(0)) });
     msg.mentions.members?.set('key', mentionUser);
 
-    command.execute({ msg, args });
-    expect(punishChannel.send).toHaveBeenLastCalledWith(messages.admin.kick.success(mentionUser.user, 'test kick reason'));
+    command.execute({ msg, args, client });
+    expect(punishChannel.send).toHaveBeenLastCalledWith(client.messages.admin.kick.success(mentionUser.user, 'test kick reason'));
     expect(msg.delete).toHaveBeenCalledTimes(1);
     expect(mentionUser.kick).toHaveBeenCalledTimes(1);
   });
@@ -106,25 +106,25 @@ describe('admin', () => {
   it('ban', async () => {
     const command = await getCommand('ban');
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenCalledWith(messages.missingPermissionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenCalledWith(client.messages.missingPermissionUser);
 
     Object.defineProperty(msg.member, 'permissions', { value: new Permissions(BigInt(1) << BigInt(2)) });
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenCalledWith(messages.admin.ban.missingMentionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenCalledWith(client.messages.admin.ban.missingMentionUser);
 
     Object.defineProperty(mentionUser, 'permissions', { value: new Permissions(BigInt(1) << BigInt(2)) });
     msg.mentions.members?.set('key', mentionUser);
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.ban.missingPermissionTarget);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.ban.missingPermissionTarget);
 
     args = ['', 'test', 'ban', 'reason'];
     Object.defineProperty(mentionUser, 'permissions', { value: new Permissions(BigInt(0)) });
     msg.mentions.members?.set('key', mentionUser);
 
-    command.execute({ msg, args });
-    expect(punishChannel.send).toHaveBeenLastCalledWith(messages.admin.ban.success(mentionUser.user, 'test ban reason'));
+    command.execute({ msg, args, client });
+    expect(punishChannel.send).toHaveBeenLastCalledWith(client.messages.admin.ban.success(mentionUser.user, 'test ban reason'));
     expect(msg.delete).toHaveBeenCalledTimes(1);
     expect(mentionUser.ban).toHaveBeenCalledTimes(1);
   });
@@ -132,60 +132,60 @@ describe('admin', () => {
   it('clear', async () => {
     const command = await getCommand('clear');
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenCalledWith(messages.missingPermissionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenCalledWith(client.messages.missingPermissionUser);
 
     args = ['string'];
     Object.defineProperty(msg.member, 'permissions', { value: new Permissions(BigInt(1) << BigInt(13)) });
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.naturalNumber);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.naturalNumber);
 
     args = ['-10'];
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.betweenNumber(1, 99));
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.betweenNumber(1, 99));
 
     args = ['200'];
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.betweenNumber(1, 99));
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.betweenNumber(1, 99));
 
     args = ['5'];
-    command.execute({ msg, args });
+    command.execute({ msg, args, client });
     if (!(msg.channel instanceof NewsChannel || msg.channel instanceof TextChannel || msg.channel instanceof ThreadChannel))
       return
     expect(msg.channel.bulkDelete).toHaveBeenCalledWith(6);
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.clear.success(5))
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.clear.success(5))
   });
 
   it('alarm', async () => {
     const command = await getCommand('alarm');
 
-    command.execute({ msg, args })
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.missingPermissionUser);
+    command.execute({ msg, args, client })
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.missingPermissionUser);
 
     Object.defineProperty(msg.member, 'permissions', { value: new Permissions(BigInt(1) << BigInt(24)) });
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.alarm.missingMentionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.alarm.missingMentionUser);
 
 
     Object.defineProperty(mentionUser.user, 'bot', { value: true });
     msg.mentions.members?.set('key', mentionUser);
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.alarm.bot);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.alarm.bot);
 
 
     Object.defineProperty(mentionUser.user, 'bot', { value: false });
     msg.mentions.members?.set('key', mentionUser);
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.missingVoiceChannelUser)
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.missingVoiceChannelUser)
 
 
     Object.defineProperty(mentionUser.voice, 'channelId', { value: '929974395118694410' });
     msg.mentions.members?.set('key', mentionUser);
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.alarm.missingSelfDeaf);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.alarm.missingSelfDeaf);
 
 
     const voiceChannel = {
@@ -193,98 +193,98 @@ describe('admin', () => {
     } as VoiceChannel;
     client.channels.cache.set('910521120770359323', voiceChannel);
     Object.defineProperty(mentionUser.voice, 'selfDeaf', { value: true });
-    command.execute({ msg, args });
+    command.execute({ msg, args, client });
     expect(mentionUser.voice.setChannel).toHaveBeenCalledWith(voiceChannel);
   });
 
   it('give warning', async () => {
     const command = await getCommand('warning/give');
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.missingPermissionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.missingPermissionUser);
 
     const mockRole = {} as Role;
     msg.member.roles.cache?.set('910521119713394745', mockRole);
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.warning.give.missingMentionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.warning.give.missingMentionUser);
 
     msg.mentions.members?.set('key', mentionUser);
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.naturalNumber);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.naturalNumber);
 
     args = ['', '-1'];
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.naturalNumber);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.naturalNumber);
 
     args = ['', '11'];
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.warning.give.overNumber);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.warning.give.overNumber);
 
     let user = await warning.findOne({ id: 'test id' });
     expect(user).toBeNull();
 
     args = ['', '4', 'test', 'warning', 'reason'];
-    await command.execute({ msg, args });
+    await command.execute({ msg, args, client });
 
     user = await warning.findOne({ id: 'test id' });
     mockUser.warning = 4;
 
     expect(user).toMatchObject(mockUser);
-    expect(punishChannel.send).toHaveBeenLastCalledWith(messages.admin.warning.give.success(mentionUser.user, 4, 4, 'test warning reason'))
+    expect(punishChannel.send).toHaveBeenLastCalledWith(client.messages.admin.warning.give.success(mentionUser.user, 4, 4, 'test warning reason'))
 
 
     args = ['', '3', 'test', 'warning', 'reason'];
-    await command.execute({ msg, args });
+    await command.execute({ msg, args, client });
 
     user = await warning.findOne({ id: 'test id' });
     mockUser.warning = 7
 
     expect(user).toMatchObject(mockUser);
-    expect(punishChannel.send).toHaveBeenLastCalledWith(messages.admin.warning.give.success(mentionUser.user, 3, 7, 'test warning reason'))
+    expect(punishChannel.send).toHaveBeenLastCalledWith(client.messages.admin.warning.give.success(mentionUser.user, 3, 7, 'test warning reason'))
     await warning.deleteOne({ id: 'test id' });
   });
 
   it('deduction warning', async () => {
     const command = await getCommand('warning/deduction');
 
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.missingPermissionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.missingPermissionUser);
 
     const mockRole = {} as Role;
     msg.member.roles.cache?.set('910521119713394745', mockRole);
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.warning.deduction.missingMentionUser);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.warning.deduction.missingMentionUser);
 
     msg.mentions.members?.set('key', mentionUser);
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.naturalNumber);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.naturalNumber);
 
     args = ['', '-1'];
-    command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.naturalNumber);
+    command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.naturalNumber);
 
     args = ['', '3'];
-    await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.warning.deduction.noneWarning);
+    await command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.warning.deduction.noneWarning);
 
     const newUser = new warning({ id: 'test id', name: 'test username' });
     await newUser.save();
-    await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.warning.deduction.noneWarning);
+    await command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.warning.deduction.noneWarning);
 
     args = ['', '7'];
     (await warning.updateOne({ id: 'test id' }, { $inc: { warning: 5 } })).matchedCount;
-    await command.execute({ msg, args });
-    expect(msg.reply).toHaveBeenLastCalledWith(messages.admin.warning.deduction.overWarning);
+    await command.execute({ msg, args, client });
+    expect(msg.reply).toHaveBeenLastCalledWith(client.messages.admin.warning.deduction.overWarning);
 
 
     args = ['', '3', 'test', 'warning', 'reason'];
-    await command.execute({ msg, args });
+    await command.execute({ msg, args, client });
 
     let user = await warning.findOne({ id: 'test id' });
     mockUser.warning = 2;
 
     expect(user).toMatchObject(mockUser);
-    expect(punishChannel.send).toHaveBeenLastCalledWith(messages.admin.warning.deduction.success(mentionUser.user, 3, 2, 'test warning reason'));
+    expect(punishChannel.send).toHaveBeenLastCalledWith(client.messages.admin.warning.deduction.success(mentionUser.user, 3, 2, 'test warning reason'));
   });
 });

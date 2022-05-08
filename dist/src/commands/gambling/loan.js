@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const gambling_1 = require("../../models/gambling");
 const Commands_1 = require("../../managers/Commands");
-const message_1 = require("../../util/language/message");
 exports.default = new Commands_1.Command({
     name: '대출',
     category: '도박',
@@ -22,10 +21,10 @@ exports.default = new Commands_1.Command({
         const user = yield gambling_1.gambling.findOne({ id });
         const debt = parseFloat(args[0]);
         if (!Number.isInteger(debt) || debt <= 0)
-            return msg.reply(message_1.messages.naturalNumber);
+            return msg.reply(client.messages.naturalNumber);
         if (user.debt + debt > 1000000)
-            return msg.reply(message_1.messages.gambling.loan.overMoney);
+            return msg.reply(client.messages.gambling.loan.overMoney);
         (yield gambling_1.gambling.updateOne({ id }, { $inc: { principalDebt: debt, debt, money: debt } })).matchedCount;
-        msg.reply(message_1.messages.gambling.loan.success(user.debt, debt));
+        msg.reply(client.messages.gambling.loan.success(user.debt, debt));
     }),
 });

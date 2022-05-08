@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../managers/Commands");
-const message_1 = require("../../util/language/message");
 exports.default = new Commands_1.Command({
     name: 'ban',
     aliases: ['밴', '벤', '차단'],
@@ -20,16 +19,16 @@ exports.default = new Commands_1.Command({
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has('BAN_MEMBERS')))
-            return msg.reply(message_1.messages.missingPermissionUser);
+            return msg.reply(client.messages.missingPermissionUser);
         const channel = client.channels.cache.get('910521119877005363');
         const target = (_b = msg.mentions.members) === null || _b === void 0 ? void 0 : _b.first();
-        const reason = !args[1] ? message_1.messages.none : args.slice(1).join(' ');
+        const reason = !args[1] ? client.messages.none : args.slice(1).join(' ');
         if (!target)
-            return msg.reply(message_1.messages.admin.ban.missingMentionUser);
+            return msg.reply(client.messages.admin.ban.missingMentionUser);
         if (target.permissions.has('BAN_MEMBERS'))
-            return msg.reply(message_1.messages.admin.ban.missingPermissionTarget);
+            return msg.reply(client.messages.admin.ban.missingPermissionTarget);
         target.ban({ reason });
-        channel.send(message_1.messages.admin.ban.success(target.user, reason));
+        channel.send(client.messages.admin.ban.success(target.user, reason));
         msg.delete();
     }),
 });

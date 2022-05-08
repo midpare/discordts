@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExtendClient = void 0;
 const discord_js_1 = require("discord.js");
 const mongoose_1 = __importDefault(require("mongoose"));
+const CivilWar_1 = require("./CivilWar");
+const message_1 = require("../util/language/message");
 class ExtendClient extends discord_js_1.Client {
     constructor() {
         super({ intents: 32767 });
@@ -23,6 +25,8 @@ class ExtendClient extends discord_js_1.Client {
         this.coin = new discord_js_1.Collection();
         this.sdCode = new discord_js_1.Collection();
         this.betting = new discord_js_1.Collection();
+        this.civilWar = new CivilWar_1.CivilWar();
+        this.messages = new message_1.Messages();
     }
     start() {
         const _super = Object.create(null, {

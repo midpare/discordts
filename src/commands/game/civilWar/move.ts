@@ -1,6 +1,5 @@
 import { VoiceChannel } from 'discord.js';
 import { Command } from '../../../managers/Commands';
-import { civilWar } from '../../../structures/CivilWar';
 
 export default new Command({
   name: '내전 이동',
@@ -9,6 +8,7 @@ export default new Command({
   usage: '내전 이동',
   description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
   execute: async ({ msg, args, client }) => {
+    const civilWar = client.civilWar
     if (!civilWar.team1[0])
       return msg.reply('이동할 멤버가 없습니다.');
     let team1 = civilWar.team1;

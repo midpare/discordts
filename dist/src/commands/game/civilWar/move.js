@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../../managers/Commands");
-const CivilWar_1 = require("../../../structures/CivilWar");
 exports.default = new Commands_1.Command({
     name: '내전 이동',
     aliases: ['내전 시작'],
@@ -18,10 +17,11 @@ exports.default = new Commands_1.Command({
     usage: '내전 이동',
     description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        if (!CivilWar_1.civilWar.team1[0])
+        const civilWar = client.civilWar;
+        if (!civilWar.team1[0])
             return msg.reply('이동할 멤버가 없습니다.');
-        let team1 = CivilWar_1.civilWar.team1;
-        let team2 = CivilWar_1.civilWar.team2;
+        let team1 = civilWar.team1;
+        let team2 = civilWar.team2;
         const channel1 = client.channels.cache.get('910521120158019624');
         const channel2 = client.channels.cache.get('910521120158019625');
         for (const user of team1) {

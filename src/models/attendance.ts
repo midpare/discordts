@@ -7,4 +7,3 @@ const attendanceInfo = new Schema({
 });
 
 export const attendance = model('attendance', attendanceInfo);
-

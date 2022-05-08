@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.messages = void 0;
+exports.Messages = void 0;
 class Messages {
     constructor() {
         this.yes = '예';
@@ -78,4 +78,4 @@ class Messages {
         };
     }
 }
-exports.messages = new Messages();
+exports.Messages = Messages;

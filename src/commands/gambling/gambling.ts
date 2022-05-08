@@ -1,6 +1,5 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../managers/Commands';
-import { messages } from '../../util/language/message';
 
 export default new Command({
   name: '도박',
@@ -13,21 +12,21 @@ export default new Command({
     const money = parseFloat(args[0]);
 
     if (!Number.isInteger(money) || money <= 0)
-      return msg.reply(messages.naturalNumber);
+      return msg.reply(client.messages.naturalNumber);
 
     const user = await gambling.findOne({ id });
 
     if (money > user.money)
-      return msg.reply(messages.overMoney(user.money));
+      return msg.reply(client.messages.overMoney(user.money));
 
     const random = Math.floor(Math.random() * 2);
 
     if (random == 1) {
       (await gambling.updateOne({ id }, { $inc: { money: money } })).matchedCount;
-      msg.reply(messages.gambling.successGamb(user.money, money));
+      msg.reply(client.messages.gambling.successGamb(user.money, money));
     } else if (random == 0) {
       (await gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
-      msg.reply(messages.gambling.failureGamb(user.money, money));
+      msg.reply(client.messages.gambling.failureGamb(user.money, money));
     }
   },
 });

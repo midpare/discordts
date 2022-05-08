@@ -1,6 +1,5 @@
 import { gambling } from '../../models/gambling';
 import { Command } from '../../managers/Commands';
-import { messages } from '../../util/language/message';
 
 export default new Command({
   name: '출석체크',
@@ -16,10 +15,10 @@ export default new Command({
     const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
 
     if (user.date == today)
-      return msg.reply(messages.gambling.daily.today);
+      return msg.reply(client.messages.gambling.daily.today);
 
     const money = Math.floor(Math.random() * 50000 + 50000);
     (await gambling.updateOne({ id }, { $inc: { money }, $set: { date: today } })).matchedCount;
-    msg.reply(messages.gambling.daily.success(user.money, money));
+    msg.reply(client.messages.gambling.daily.success(user.money, money));
   },
 });

@@ -12,8 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const school_1 = require("../../models/school");
 const Commands_1 = require("../../managers/Commands");
-const dateCal_1 = require("../../util/functions/dateCal");
-const requestGet_1 = require("../../util/functions/requestGet");
+const Utils_1 = require("../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: '학교',
     category: '학교',
@@ -35,7 +34,7 @@ exports.default = new Commands_1.Command({
             case `${weekDay}시간표`:
                 const timeTableNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
                 const timeTableWeekDay = weekDay != '' ? weekArr[findWeek] : weekArr[week];
-                const timeTableDate = (0, dateCal_1.dateCal)(dateVariable, timeTableNumber);
+                const timeTableDate = Utils_1.Utils.dateCal(dateVariable, timeTableNumber);
                 if (!user)
                     return msg.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.');
                 const timeTableOptions = {
@@ -55,7 +54,7 @@ exports.default = new Commands_1.Command({
                 const timeTableYear = timeTableDateSplit[0] + timeTableDateSplit[1] + timeTableDateSplit[2] + timeTableDateSplit[3];
                 const timeTableMonth = timeTableDateSplit[4] + timeTableDateSplit[5];
                 const timeTableDay = timeTableDateSplit[6] + timeTableDateSplit[7];
-                const timeTable = JSON.parse(yield (0, requestGet_1.requestGet)(timeTableOptions));
+                const timeTable = JSON.parse(yield Utils_1.Utils.requestGet(timeTableOptions));
                 if (timeTable.misTimetable == undefined || timeTable.misTimetable[1].row[0].ITRT_CNTNT === '토요휴업일') {
                     embed
                         .setTitle('시간표')
@@ -76,7 +75,7 @@ exports.default = new Commands_1.Command({
             case `${weekDay}급식` || `${weekDay}급식정보`:
                 const mealNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
                 const mealWeekDay = weekDay != '' ? weekArr[findWeek] : weekArr[week];
-                const mealDate = (0, dateCal_1.dateCal)(dateVariable, mealNumber);
+                const mealDate = Utils_1.Utils.dateCal(dateVariable, mealNumber);
                 if (!user)
                     return msg.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.');
                 const mealOptions = {
@@ -90,7 +89,7 @@ exports.default = new Commands_1.Command({
                     method: 'GET',
                     json: false,
                 };
-                const meal = JSON.parse(yield (0, requestGet_1.requestGet)(mealOptions));
+                const meal = JSON.parse(yield Utils_1.Utils.requestGet(mealOptions));
                 if (meal.RESULT != undefined) {
                     embed
                         .setTitle('급식')

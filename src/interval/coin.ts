@@ -1,5 +1,5 @@
-import { requestGet } from '../util/functions/requestGet';
 import { Interval } from '../managers/Interval';
+import { Utils } from '../structures/Utils';
 
 export default new Interval({
   execute: async (client) => {
@@ -8,7 +8,7 @@ export default new Interval({
       method: 'GET',
       json: true,
     };
-    const allCoin = await requestGet(options);
+    const allCoin = await Utils.requestGet(options);
 
     for (const coin of allCoin) {
       if (coin.market.startsWith('KRW')) {

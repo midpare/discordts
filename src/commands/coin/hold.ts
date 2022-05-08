@@ -1,7 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../managers/Commands';
-import { requestGet } from '../../util/functions/requestGet';
 import { gambling } from '../../models/gambling';
+import { Utils } from '../../structures/Utils';
 
 export default new Command({
   name: '코인 보유',
@@ -24,7 +24,7 @@ export default new Command({
         method: 'GET',
         json: true,
       };
-      const coin = await requestGet(apiOptions);
+      const coin = await Utils.requestGet(apiOptions);
       const persent = Math.round((coin[0].tradePrice / element.money - 1) * 100 * 100) / 100;
       const persentShown = persent < 0 ? persent : '+' + persent;
 

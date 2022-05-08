@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../managers/Commands");
 const gambling_1 = require("../../models/gambling");
-const requestGet_1 = require("../../util/functions/requestGet");
+const Utils_1 = require("../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: '코인 구매',
     aliases: ['코인 매수'],
@@ -29,7 +29,7 @@ exports.default = new Commands_1.Command({
             method: 'GET',
             json: true,
         };
-        const coin = yield (0, requestGet_1.requestGet)(apiOptions);
+        const coin = yield Utils_1.Utils.requestGet(apiOptions);
         if (!coin)
             return msg.reply('정확한 코인을 입력해주시기바랍니다.');
         const count = parseFloat(args[1]);

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../../managers/Commands");
 const school_1 = require("../../../models/school");
-const requestGet_1 = require("../../../util/functions/requestGet");
+const Utils_1 = require("../../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: '학교 정보등록',
     category: '학교',
@@ -45,7 +45,7 @@ exports.default = new Commands_1.Command({
             method: 'GET',
             json: false,
         };
-        const basicSchool = JSON.parse(yield (0, requestGet_1.requestGet)(basicSchoolOptions));
+        const basicSchool = JSON.parse(yield Utils_1.Utils.requestGet(basicSchoolOptions));
         if (basicSchool.RESULT != undefined)
             return msg.reply('입력한 정보와 일치하는 학교가 없습니다.');
         const schoolCode = basicSchool.schoolInfo[1].row[0].SD_SCHUL_CODE;
@@ -61,7 +61,7 @@ exports.default = new Commands_1.Command({
             method: 'GET',
             json: false,
         };
-        const classInfo = JSON.parse(yield (0, requestGet_1.requestGet)(classOptions));
+        const classInfo = JSON.parse(yield Utils_1.Utils.requestGet(classOptions));
         if (classInfo.RESULT != undefined || parseFloat(classNumber) >= classInfo.classInfo[1].row.length + 1)
             return msg.reply('입력한 반 정보와 일치하는 반이 없습니다.');
         if (!user) {

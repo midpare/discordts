@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../../managers/Commands");
-const shuffle_1 = require("../../../util/functions/shuffle");
+const Utils_1 = require("../../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: '내전 팀',
     aliases: ['내전 팀나누기'],
@@ -20,7 +20,7 @@ exports.default = new Commands_1.Command({
     description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
-        const members = (0, shuffle_1.shuffle)(Array.from(((_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.values()) || []));
+        const members = Utils_1.Utils.shuffle(Array.from(((_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.values()) || []));
         const team1 = new Array();
         const team2 = new Array();
         for (let i = 0; i < members.length; i += 2) {

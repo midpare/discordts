@@ -1,6 +1,6 @@
 import { Command } from '../../managers/Commands';
 import { gambling } from '../../models/gambling';
-import { requestGet } from '../../util/functions/requestGet';
+import { Utils } from '../../structures/Utils';
 
 export default new Command({
   name: '코인 구매',
@@ -19,7 +19,7 @@ export default new Command({
       method: 'GET',
       json: true,
     };
-    const coin = await requestGet(apiOptions);
+    const coin = await Utils.requestGet(apiOptions);
     if (!coin)
       return msg.reply('정확한 코인을 입력해주시기바랍니다.');
     const count = parseFloat(args[1]);

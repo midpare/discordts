@@ -1,6 +1,6 @@
 import { Command } from '../../managers/Commands';
-import { requestGet } from '../../util/functions/requestGet';
 import { gambling } from '../../models/gambling';
+import { Utils } from '../../structures/Utils';
 
 export default new Command({
   name: '코인 풀매도',
@@ -19,7 +19,8 @@ export default new Command({
       method: 'GET',
       json: true,
     };
-    const coin = await requestGet(apiOptions);
+    
+    const coin = await Utils.requestGet(apiOptions);
     if (!coinName)
       return msg.reply('판매할 코인을 입력해주시기바랍니다.');
     if (!userCoin)

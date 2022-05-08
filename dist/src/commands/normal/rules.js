@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../managers/Commands");
-const rules_json_1 = __importDefault(require("../../util/language/rules.json"));
+const rules_json_1 = __importDefault(require("../../language/rules.json"));
 exports.default = new Commands_1.Command({
     name: '규칙',
     aliases: ['룰', '법전'],

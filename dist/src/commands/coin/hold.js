@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../managers/Commands");
-const requestGet_1 = require("../../util/functions/requestGet");
 const gambling_1 = require("../../models/gambling");
+const Utils_1 = require("../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: '코인 보유',
     aliases: ['코인 보유량'],
@@ -34,7 +34,7 @@ exports.default = new Commands_1.Command({
                 method: 'GET',
                 json: true,
             };
-            const coin = yield (0, requestGet_1.requestGet)(apiOptions);
+            const coin = yield Utils_1.Utils.requestGet(apiOptions);
             const persent = Math.round((coin[0].tradePrice / element.money - 1) * 100 * 100) / 100;
             const persentShown = persent < 0 ? persent : '+' + persent;
             const profit = Math.round((coin[0].tradePrice - element.money) * element.count);

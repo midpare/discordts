@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../../managers/Commands';
-import { shuffle } from '../../../util/functions/shuffle';
+import { Utils } from '../../../structures/Utils';
 
 export default new Command({
   name: '내전 팀',
@@ -9,7 +9,7 @@ export default new Command({
   usage: '내전 팀 <이름> <이름> ...',
   description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
   execute: async ({ msg, args, client }) => {
-    const members = shuffle(Array.from(msg.mentions.members?.values() || []));
+    const members = Utils.shuffle(Array.from(msg.mentions.members?.values() || []));
     
     const team1 = new Array();
     const team2 = new Array();

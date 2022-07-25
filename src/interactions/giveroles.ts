@@ -1,10 +1,10 @@
-import { InteractionCommand } from '../managers/Interaction';
+import { Interaction } from '../managers/Interaction';
 import { ButtonInteraction, GuildMemberRoleManager, TextChannel } from 'discord.js';
 
-export default new InteractionCommand<ButtonInteraction>({
+export default new Interaction<ButtonInteraction>({
   name: 'giveRole',
   private: false,
-  execute: async ({ interaction, options, client }) => {
+  execute: async ({ interaction, client }) => {
     const roles = <GuildMemberRoleManager>interaction.member?.roles
 
     roles.add('910521119713394743');

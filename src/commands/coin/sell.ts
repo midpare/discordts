@@ -1,5 +1,4 @@
 import { Command } from '../../managers/Commands';
-import { gambling } from '../../models/gambling';
 import { Utils } from '../../structures/Utils';
 
 export default new Command({

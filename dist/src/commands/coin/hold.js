@@ -18,7 +18,7 @@ exports.default = new Commands_1.Command({
     category: '코인',
     usage: '코인 보유',
     description: '현재 갖고있는 코인을 확인합니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const embed = new discord_js_1.MessageEmbed();
         const user = yield client.models.gambling.findOne({ id });

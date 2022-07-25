@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Interaction_1 = require("../managers/Interaction");
-exports.default = new Interaction_1.InteractionCommand({
+exports.default = new Interaction_1.Interaction({
     name: 'giveRole',
     private: false,
-    execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         const roles = (_a = interaction.member) === null || _a === void 0 ? void 0 : _a.roles;
         roles.add('910521119713394743');

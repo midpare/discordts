@@ -6,7 +6,7 @@ import { Client } from '../structures/Client';
 
 const globPromise = promisify(glob);
 
-export = async function (client: Client) {
+export default async function (client: Client) {
   const intervalFiles = await globPromise(`${__dirname}/../interval/**/*{.ts,.js}`);
 
   for (const dir of intervalFiles) {

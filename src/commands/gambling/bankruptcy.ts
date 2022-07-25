@@ -8,7 +8,7 @@ export default new Command({
   category: '도박',
   usage: '파산',
   description: '모든 돈과 빚을 0원으로 만들고 한시간동안 도박을 하지 못합니다.',
-  execute: async ({ msg, args, client }) => {
+  execute: async ({ msg, client }) => {
     const id = msg.author.id;
     const customIds = Utils.uuid(2)
     const [bankrupctyId, cancelId] = customIds

@@ -1,15 +1,15 @@
 import Discord, { ButtonInteraction, ClientOptions, Collection, SelectMenuInteraction, Snowflake } from 'discord.js'
 import { Betting } from './Betting';
 import { Command } from '../managers/Commands';
-import { InteractionCommand } from '../managers/Interaction';
+import { Interaction } from '../managers/Interaction';
 import { CivilWar } from './CivilWar';
 import { Messages } from '../language/message';
 import { InteractionOptions } from './InteractionOptions';
-import { Model } from '../managers/Model';
+import { Model } from './Model';
 
 export class Client extends Discord.Client {
   public readonly commands: Collection<string, Command>;
-  public readonly interactions: Collection<string, InteractionCommand<ButtonInteraction | SelectMenuInteraction>>;
+  public readonly interactions: Collection<string, Interaction<ButtonInteraction | SelectMenuInteraction>>;
   public readonly interactionOptions: Collection<string, InteractionOptions>;
   public readonly coin: Collection<string, string>;
   public readonly sdCode: Collection<string, string>;

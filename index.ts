@@ -1,12 +1,18 @@
 import mongoose from "mongoose";
 import { Client } from "./src/structures/Client";
+import { glob } from 'glob';
+import { promisify } from 'util';
 
 const client = new Client({ intents: 32767 });
+const globPromise = promisify(glob);
 
-const path = new Array('commands', 'interactions', 'events', 'intervals')
-for (const dir of path) {
-  require(`./src/handler/${dir}`)(client);
-}
+(async () => {
+  const path = await globPromise(`${__dirname}/src/handler/**/*{.ts,.js}`);
+  for (const dir of path) {
+    require(dir).default(client);
+  }
+})();
+
 
 const sds = [
   '서울특별시', '부산광역시',

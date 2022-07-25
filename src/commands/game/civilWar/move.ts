@@ -7,7 +7,7 @@ export default new Command({
   category: '게임',
   usage: '내전 이동',
   description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
-  execute: async ({ msg, args, client }) => {
+  execute: async ({ msg, client }) => {
     const civilWar = client.civilWar
     if (!civilWar.team1[0])
       return msg.reply('이동할 멤버가 없습니다.');

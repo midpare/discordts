@@ -16,7 +16,7 @@ exports.default = new Commands_1.Command({
     category: '도박',
     usage: '기초자금',
     description: '기초자금 25,000원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 30초',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield client.models.gambling.findOne({ id });
         if (user.money != 0 || user.stock[0])

@@ -27,7 +27,7 @@ exports.Client = void 0;
 const discord_js_1 = __importStar(require("discord.js"));
 const CivilWar_1 = require("./CivilWar");
 const message_1 = require("../language/message");
-const Model_1 = require("../managers/Model");
+const Model_1 = require("./Model");
 class Client extends discord_js_1.default.Client {
     constructor(options) {
         super(options);

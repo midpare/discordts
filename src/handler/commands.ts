@@ -4,8 +4,9 @@ import { Client } from '../structures/Client';
 
 const globPromise = promisify(glob);
 
-export = async function (client: Client) {
+export default async function (client: Client) {
   const mainCommandFiles = await globPromise(`${__dirname}/../commands/**/*{.ts,.js}`);
+
   for (const dir of mainCommandFiles) {
     const file = (await import(dir)).default;
     if (client.commands.get(file.name))

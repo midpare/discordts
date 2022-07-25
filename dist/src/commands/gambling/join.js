@@ -16,7 +16,7 @@ exports.default = new Commands_1.Command({
     category: '도박',
     usage: '가입',
     description: '도박 관련 명령어를 사용할수있게 가입을 합니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const name = msg.author.username;
         const user = yield client.models.gambling.findOne({ id });

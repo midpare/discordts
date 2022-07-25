@@ -6,7 +6,7 @@ export default new Command({
   category: '베팅',
   usage: '베팅 현황',
   description: '현재 베팅의 현황을 확인합니다.',
-  execute: async ({ msg, args, client }) => {
+  execute: async ({ msg, client }) => {
     const guildId = msg.guildId ?? ''
     const betting = client.betting.get(guildId);
     if (!betting)

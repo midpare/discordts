@@ -17,7 +17,7 @@ exports.default = new Commands_1.Command({
     category: '도박',
     usage: '랭킹',
     description: '이 서버의 도박 순위를 확인합니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const users = yield client.models.gambling.find({ money: { $gt: 0 } }).sort({ money: -1 });
         const embed = new discord_js_1.MessageEmbed()
             .setTitle('랭킹')

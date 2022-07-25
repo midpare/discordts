@@ -1,10 +1,9 @@
-  import { Client } from '../structures/Client';
-import { gambling } from '../models/gambling';
+import { Client } from '../structures/Client';
 import { Message } from 'discord.js';
 import { Command } from '../managers/Commands';
 import { Event } from '../managers/Event';
 
-export default new Event ({
+export default new Event({
   name: 'messageCreate',
   execute: async (msg: Message) => {
     const client = msg.client
@@ -18,7 +17,7 @@ export default new Event ({
     const id = msg.author.id;
     const args = msg.content.slice(prefix.length).trim().split(/ +/g);
     const time = new Date().getTime();
-    
+
     const getCmd = (start: number, end: number) => {
       return client.commands.get(args.slice(start, end).join(' ').toLowerCase());
     }
@@ -43,16 +42,16 @@ export default new Event ({
         case '도박':
         case '베팅':
         case '코인':
-          if (msg.channel != gambChannel) 
+          if (msg.channel != gambChannel)
             return msg.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
 
           const user = await client.models.gambling.findOne({ id });
           if (cmd.name != '가입' && !user)
             return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
-          
-          if (time - user.bankruptcy < 60 * 60 * 1000) 
+
+          if (time - user.bankruptcy < 60 * 60 * 1000)
             return msg.reply('파산한 유저는 한시간동안 도박을 할 수 없습니다.');
-          
+
           break;
         case '기본':
         case '관리자':

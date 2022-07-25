@@ -1,5 +1,4 @@
 import { User, Message, Snowflake } from "discord.js";
-import { gambling } from "../models/gambling";
 import { Client } from "./Client";
 
 export class Betting {

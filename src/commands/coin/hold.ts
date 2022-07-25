@@ -1,6 +1,5 @@
 import { MessageEmbed } from 'discord.js';
 import { Command } from '../../managers/Commands';
-import { gambling } from '../../models/gambling';
 import { Utils } from '../../structures/Utils';
 
 export default new Command({
@@ -9,7 +8,7 @@ export default new Command({
   category: '코인',
   usage: '코인 보유',
   description: '현재 갖고있는 코인을 확인합니다.',
-  execute: async ({ msg, args, client }) => {
+  execute: async ({ msg, client }) => {
     const id = msg.author.id;
     const embed = new MessageEmbed();
     const user = await client.models.gambling.findOne({ id });

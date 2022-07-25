@@ -5,7 +5,7 @@ export default new Command({
   category: '기본',
   usage: 'ping',
   description: '봇의 작동가능여부를 확인합니다.',
-  execute: ({msg, args}) => {
+  execute: ({ msg }) => {
     msg.reply('pong!');
   },
 });

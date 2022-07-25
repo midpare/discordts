@@ -1,4 +1,3 @@
-import { gambling } from '../../models/gambling';
 import { Command } from '../../managers/Commands';
 
 export default new Command({

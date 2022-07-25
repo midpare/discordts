@@ -11,7 +11,8 @@
     "strict": true,                                     
     "noImplicitAny": true,              
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["./types"]
+    // "noUnusedParameters": true,
+    // "noUnusedLocals": true,
   },
   "exclude": ["__tests__", "jest.config.ts"]
 }

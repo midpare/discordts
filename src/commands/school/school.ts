@@ -1,5 +1,4 @@
 import { MessageEmbed } from 'discord.js';
-import { school } from '../../models/school';
 import { Command } from '../../managers/Commands';
 import { Utils } from '../../structures/Utils';
 

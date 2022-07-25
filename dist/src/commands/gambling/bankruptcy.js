@@ -18,7 +18,7 @@ exports.default = new Commands_1.Command({
     category: '도박',
     usage: '파산',
     description: '모든 돈과 빚을 0원으로 만들고 한시간동안 도박을 하지 못합니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const customIds = Utils_1.Utils.uuid(2);
         const [bankrupctyId, cancelId] = customIds;

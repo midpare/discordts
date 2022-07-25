@@ -1,5 +1,4 @@
 import { MessageEmbed } from 'discord.js';
-import { school } from '../../../models/school';
 import { Command } from '../../../managers/Commands';
 
 export default new Command({
@@ -8,7 +7,7 @@ export default new Command({
   category: '학교',
   usage: '학교 정보확인',
   description: '현재 자신의 학교 정보를 확인합니다.',
-  execute: async ({ msg, args, client }) => {
+  execute: async ({ msg, client }) => {
     const id = msg.author.id;
     const user = await  client.models.school.findOne({ id });
     const embed = new MessageEmbed();

@@ -17,7 +17,7 @@ exports.default = new Commands_1.Command({
     category: '학교',
     usage: '학교 정보확인',
     description: '현재 자신의 학교 정보를 확인합니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield client.models.school.findOne({ id });
         const embed = new discord_js_1.MessageEmbed();

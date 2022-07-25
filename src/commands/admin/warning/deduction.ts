@@ -1,5 +1,4 @@
 import { Command } from '../../../managers/Commands';
-import { warning } from '../../../models/warning';
 import { TextChannel } from 'discord.js';
 
 export default new Command({

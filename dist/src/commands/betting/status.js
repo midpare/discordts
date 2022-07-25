@@ -16,7 +16,7 @@ exports.default = new Commands_1.Command({
     category: '베팅',
     usage: '베팅 현황',
     description: '현재 베팅의 현황을 확인합니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const guildId = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
         const betting = client.betting.get(guildId);

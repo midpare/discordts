@@ -15,7 +15,7 @@ exports.default = new Commands_1.Command({
     category: '관리자',
     usage: '알람 <유저>',
     description: '헤드셋과 마이크를 모두 끈 유저를 여러번 이동시킵니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
         const channel1 = client.channels.cache.get('910521120770359323');

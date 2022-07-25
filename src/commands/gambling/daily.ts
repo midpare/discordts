@@ -1,4 +1,3 @@
-import { gambling } from '../../models/gambling';
 import { Command } from '../../managers/Commands';
 
 export default new Command({
@@ -7,7 +6,7 @@ export default new Command({
   category: '도박',
   usage: '출석체크',
   description: '하루에 한번 50,000 ~ 100,000만원의 돈을 획득합니다.',
-  execute: async ({ msg, args, client }) => {
+  execute: async ({ msg, client }) => {
     const id = msg.author.id;
     const user = await client.models.gambling.findOne({ id });
 

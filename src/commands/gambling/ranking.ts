@@ -1,5 +1,4 @@
 import { MessageEmbed } from 'discord.js';
-import { gambling } from '../../models/gambling';
 import { Command } from '../../managers/Commands';
 
 export default new Command({
@@ -8,7 +7,7 @@ export default new Command({
   category: '도박',
   usage: '랭킹',
   description: '이 서버의 도박 순위를 확인합니다.',
-  execute: async ({ msg, args, client }) => {
+  execute: async ({ msg, client }) => {
     const users = await client.models.gambling.find({ money: { $gt: 0 } }).sort({ money: -1 });
     const embed = new MessageEmbed()
       .setTitle('랭킹')

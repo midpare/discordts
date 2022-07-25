@@ -1,17 +1,19 @@
-import { ExtendInteraction } from '../managers/Interaction';
-import { ButtonInteraction, TextChannel } from 'discord.js';
+import { InteractionCommand } from '../managers/Interaction';
+import { ButtonInteraction, GuildMemberRoleManager, TextChannel } from 'discord.js';
 
-export default new ExtendInteraction({
+export default new InteractionCommand<ButtonInteraction>({
   name: 'giveRole',
-  execute: async ({interaction, client}) => {
-    if (interaction instanceof ButtonInteraction) {
-      interaction.member.roles.add('910521119713394743');
-      interaction.member.roles.remove('910521119713394739');
-      interaction.channel?.send('성공적으로 역할을 지급받았습니다!').then((msg) => {
-        setTimeout(() => msg.delete(), 2000);
-      });
-      const channel = <TextChannel>client.channels.cache.get('910521192039989288');
-      channel.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다!`);
-    }
-  },
+  private: false,
+  execute: async ({ interaction, options, client }) => {
+    const roles = <GuildMemberRoleManager>interaction.member?.roles
+
+    roles.add('910521119713394743');
+    roles.remove('910521119713394739');
+
+    interaction.channel?.send('성공적으로 역할을 지급받았습니다!').then((msg) => {
+      setTimeout(() => msg.delete(), 2000);
+    });
+    const channel = <TextChannel>client.channels.cache.get('910521192039989288');
+    channel.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다!`);
+  }
 });

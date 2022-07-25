@@ -17,42 +17,42 @@ export default new Event ({
 
     const id = msg.author.id;
     const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+    const time = new Date().getTime();
+    
     const getCmd = (start: number, end: number) => {
       return client.commands.get(args.slice(start, end).join(' ').toLowerCase());
     }
-    let command: Command | undefined;
+    let cmd: Command | undefined;
     if (getCmd(0, 2)) {
-      command = getCmd(0, 2);
+      cmd = getCmd(0, 2);
       args.splice(0, 2);
     } else {
-      command = getCmd(0, 1);
+      cmd = getCmd(0, 1);
       args.splice(0, 1);
     }
 
-    if (!command)
+    if (!cmd)
       return msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`);
 
-    const gambChannel1 = client.channels.cache.get('910521119877005367');
-    const gambChannel2 = client.channels.cache.get('915212166330736691');
-    const musicChannel = client.channels.cache.get('910521119877005366');
-    const cmdChannel = client.channels.cache.get('932162287224127520');
+    const gambChannel = client.channels.cache.get('1000969429158481980');
+    const cmdChannel = client.channels.cache.get('1000969483462123591');
     const botTestChannel = client.channels.cache.get('910521119877005368');
 
     if (msg.channel != botTestChannel) {
-      switch (command.category) {
+      switch (cmd.category) {
         case '도박':
         case '베팅':
         case '코인':
-          if (msg.channel != gambChannel1 && msg.channel != gambChannel2)
+          if (msg.channel != gambChannel) 
             return msg.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
 
           const user = await gambling.findOne({ id });
-          if (command.name != '가입' && !user)
+          if (cmd.name != '가입' && !user)
             return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
-          break;
-        case '노래':
-          if (msg.channel != musicChannel)
-            return msg.reply('이 명령어는 노래방에서만 사용할 수 있습니다.');
+          
+          if (time - user.bankruptcy < 60 * 60 * 1000) 
+            return msg.reply('파산한 유저는 한시간동안 도박을 할 수 없습니다.');
+          
           break;
         case '기본':
         case '관리자':
@@ -64,7 +64,7 @@ export default new Event ({
       }
     }
     try {
-      command.execute({ msg, args, client });
+      cmd.execute({ msg, args, client });
     } catch (error) {
       console.error(error);
     }

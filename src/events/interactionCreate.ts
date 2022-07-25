@@ -1,21 +1,36 @@
 import { ExtendClient } from '../structures/Client';
-import { ButtonInteraction, Interaction } from 'discord.js';
+import { ButtonInteraction, Interaction, SelectMenuInteraction } from 'discord.js';
 import { Event } from '../managers/Event';
 
-export default new Event ({
+export default new Event({
   name: 'interactionCreate',
   execute: async (interaction: Interaction) => {
-    const client = interaction.client;
-    if (!(client instanceof ExtendClient) || !(interaction instanceof ButtonInteraction))
-      return
+    const client = <ExtendClient>interaction.client;
 
-    const cmd = interaction.customId;
-    const events = client.interactions.get(cmd);
-    if (!events) 
+    if (!(interaction instanceof ButtonInteraction || interaction instanceof SelectMenuInteraction))
       return;
+
+    const id = interaction.user.id;
+
+    const options = client.interactionOptions.get(interaction.customId);
+    
+    if (!options || options.id != id)
+      return;
+
+    const events = client.interactions.get(options.cmd);
+    
+    if (!events)
+      return;
+      
     try {
-      events.execute({interaction, client});
-    } catch(error) {
+      if (options.cmd != 'cancel')
+        events.execute({ interaction, options, client });
+
+      for (const id of options.customIds) {
+        client.interactionOptions.delete(id)
+      }
+      options.message.delete();
+    } catch (error) {
       console.error(error);
     }
   },

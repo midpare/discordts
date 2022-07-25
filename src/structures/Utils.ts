@@ -54,4 +54,23 @@ export class Utils {
     }
     return arr;
   }
+
+  static uuid(count: number): Array<string> {
+    const box: Array<string> = new Array();
+    let message: string = '';
+
+    for (let i = 0; i < count; i ++) {
+      for (let j = 0; j < 12; j++) {
+        if (j % 2 == 0 && j > 0 && j < 9) {
+          message = message + '-';
+        } else {
+          message = message + (Math.floor((Math.random() + 1) * 0x10000)).toString(16).substring(1);
+        }
+      }
+      box.push(message);
+      message = ''
+    }
+
+    return box;
+  }
 }

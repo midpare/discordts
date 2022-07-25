@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../managers/Commands");
-const gambling_1 = require("../../models/gambling");
 const Utils_1 = require("../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: '코인 풀매도',
@@ -20,7 +19,7 @@ exports.default = new Commands_1.Command({
     description: '현재 갖고있는 코인을 전부 판매합니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
-        const user = yield gambling_1.gambling.findOne({ id });
+        const user = yield client.models.gambling.findOne({ id });
         const stock = user.stock;
         const coinName = args[0];
         const userCoin = stock.filter((element) => element.name == coinName)[0];
@@ -41,7 +40,7 @@ exports.default = new Commands_1.Command({
         const profitShown = money < userCoin.money * count ? profit : '+' + profit;
         const persent = Math.round((coinMoney / userCoin.money - 1) * 100 * 100) / 100;
         const persentShown = persent < 0 ? persent : '+' + persent;
-        (yield gambling_1.gambling.updateOne({ id }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
         msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n손익: ${profitShown}원(${persentShown}%)`);
     }),
 });

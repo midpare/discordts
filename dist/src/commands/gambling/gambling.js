@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const gambling_1 = require("../../models/gambling");
 const Commands_1 = require("../../managers/Commands");
 exports.default = new Commands_1.Command({
     name: '도박',
@@ -22,16 +21,16 @@ exports.default = new Commands_1.Command({
         const money = parseFloat(args[0]);
         if (!Number.isInteger(money) || money <= 0)
             return msg.reply(client.messages.naturalNumber);
-        const user = yield gambling_1.gambling.findOne({ id });
+        const user = yield client.models.gambling.findOne({ id });
         if (money > user.money)
             return msg.reply(client.messages.overMoney(user.money));
         const random = Math.floor(Math.random() * 2);
         if (random == 1) {
-            (yield gambling_1.gambling.updateOne({ id }, { $inc: { money: money } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id }, { $inc: { money: money } })).matchedCount;
             msg.reply(client.messages.gambling.successGamb(user.money, money));
         }
         else if (random == 0) {
-            (yield gambling_1.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
             msg.reply(client.messages.gambling.failureGamb(user.money, money));
         }
     }),

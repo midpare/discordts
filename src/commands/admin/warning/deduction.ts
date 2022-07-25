@@ -23,7 +23,7 @@ export default new Command({
     }
 
     const id = target.id;
-    const user = await warning.findOne({ id });
+    const user = await  client.models.warning.findOne({ id });
     const reason = !args[2] ? client.messages.none : args.slice(2).join(' ');
     if (!user || user.warning <= 0)
       return msg.reply(client.messages.admin.warning.deduction.noneWarning);
@@ -31,7 +31,7 @@ export default new Command({
     if (user.warning - count < 0)
       return msg.reply(client.messages.admin.warning.deduction.overWarning);
 
-    (await warning.updateOne({ id }, { $inc: { warning: -count } })).matchedCount;
+    (await  client.models.warning.updateOne({ id }, { $inc: { warning: -count } })).matchedCount;
     channel.send(client.messages.admin.warning.deduction.success(target.user, count, user.warning - count, reason));
     msg.delete();
   },

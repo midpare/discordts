@@ -10,7 +10,7 @@ export default new Command({
   description: '현재 코인의 시세로 코인을 구매합니다.',
   execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
-    const user = await gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id });
     const stock = user.stock;
     const coinName = args[0];
     const userCoin = stock.filter((element: { name: string }) => element.name == coinName)[0];
@@ -32,7 +32,7 @@ export default new Command({
 
     if (userCoin) {
       const moneyAve = (userCoin.money * userCoin.count + wholeMoney) / (userCoin.count + count);
-      gambling.updateOne({ id, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } });
+      client.models.gambling.updateOne({ id, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } });
       msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`);
     } else {
       const stockObject = {
@@ -40,7 +40,7 @@ export default new Command({
         count: count,
         money: coinMoney,
       };
-      (await gambling.updateOne({ id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } })).matchedCount;     
+      (await client.models.gambling.updateOne({ id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } })).matchedCount;     
       msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`);
     }
   },

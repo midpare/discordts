@@ -14,7 +14,7 @@ export default new Command({
     const apiKey = process.env.SCHOOL_API_KEY || '';
     const id = msg.author.id;
     const name = msg.author.username;
-    const user = await school.findOne({ id });
+    const user = await  client.models.school.findOne({ id });
     const date = new Date();
     const schoolName = args[1];
     const grade = args[2].split('')[0];
@@ -69,7 +69,7 @@ export default new Command({
       newSchoolInfo.save();
       msg.reply('성공적으로 유저 정보를 등록했습니다!');
     } else {
-      (await school.updateOne({ id }, { $set: { cityCode, cityName, schoolCode, schoolName, grade, class: classNumber } })).matchedCount;
+      (await  client.models.school.updateOne({ id }, { $set: { cityCode, cityName, schoolCode, schoolName, grade, class: classNumber } })).matchedCount;
       msg.reply('성공적으로 유저 정보를 업데이트했습니다!');
     }
   },

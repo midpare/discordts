@@ -12,7 +12,7 @@ export default new Command({
   execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
     const embed = new MessageEmbed();
-    const user = await gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id });
     const stock = user.stock;
     if (!stock[0])
       return msg.reply('보유한 코인이 없습니다.');

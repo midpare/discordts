@@ -10,7 +10,7 @@ export default new Command({
   description: '현재 자신의 학교 정보를 확인합니다.',
   execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
-    const user = await school.findOne({ id });
+    const user = await  client.models.school.findOne({ id });
     const embed = new MessageEmbed();
     if (!user)
       return msg.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.');

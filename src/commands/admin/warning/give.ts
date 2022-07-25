@@ -28,7 +28,7 @@ export default new Command({
 
     const id = target.id;
     const name = target.user.username;
-    const user = await warning.findOne({ id });
+    const user = await  client.models.warning.findOne({ id });
     const reason = !args[2] ? client.messages.none : args.slice(2).join(' ');
 
     if (!user) {
@@ -36,7 +36,7 @@ export default new Command({
       await newUser.save();
       channel.send(client.messages.admin.warning.give.success(target.user, count, count, reason));
     } else {
-      (await warning.updateOne({ id }, { $inc: { warning: count } }, { upsert: true })).matchedCount;
+      (await  client.models.warning.updateOne({ id }, { $inc: { warning: count } }, { upsert: true })).matchedCount;
       channel.send(client.messages.admin.warning.give.success(target.user, count, user.warning + count, reason));
     }
     

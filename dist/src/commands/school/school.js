@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const school_1 = require("../../models/school");
 const Commands_1 = require("../../managers/Commands");
 const Utils_1 = require("../../structures/Utils");
 exports.default = new Commands_1.Command({
@@ -29,7 +28,7 @@ exports.default = new Commands_1.Command({
         const week = dateVariable.getDay();
         const findWeek = weekArr.indexOf(args[0].split('')[0]);
         const weekDay = findWeek > -1 ? weekArr[findWeek] + '요일' : '';
-        const user = yield school_1.school.findOne({ id });
+        const user = yield client.models.school.findOne({ id });
         switch (args[0]) {
             case `${weekDay}시간표`:
                 const timeTableNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;

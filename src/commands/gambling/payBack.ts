@@ -9,7 +9,7 @@ export default new Command({
   description: '자신의 빚을 갚습니다.',
   execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
-    const user = await gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id });
 
     const money = parseFloat(args[0]);
     if (!Number.isInteger(money) || money <= 0)
@@ -21,7 +21,7 @@ export default new Command({
     if (user.debt < money)
       return msg.reply(client.messages.gambling.payBack.overMoney(user.debt));
 
-    (await gambling.updateOne({ id }, { $inc: { money: -money, debt: -money, principalDebt: -money } })).matchedCount;
+    (await client.models.gambling.updateOne({ id }, { $inc: { money: -money, debt: -money, principalDebt: -money } })).matchedCount;
     msg.reply(client.messages.gambling.payBack.success(user.debt, money));
   },
 }); 

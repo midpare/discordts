@@ -55,5 +55,22 @@ class Utils {
         }
         return arr;
     }
+    static uuid(count) {
+        const box = new Array();
+        let message = '';
+        for (let i = 0; i < count; i++) {
+            for (let j = 0; j < 12; j++) {
+                if (j % 2 == 0 && j > 0 && j < 9) {
+                    message = message + '-';
+                }
+                else {
+                    message = message + (Math.floor((Math.random() + 1) * 0x10000)).toString(16).substring(1);
+                }
+            }
+            box.push(message);
+            message = '';
+        }
+        return box;
+    }
 }
 exports.Utils = Utils;

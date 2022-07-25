@@ -9,7 +9,7 @@ export default new Command({
   usage: '랭킹',
   description: '이 서버의 도박 순위를 확인합니다.',
   execute: async ({ msg, args, client }) => {
-    const users = await gambling.find({ money: { $gt: 0 } }).sort({ money: -1 });
+    const users = await client.models.gambling.find({ money: { $gt: 0 } }).sort({ money: -1 });
     const embed = new MessageEmbed()
       .setTitle('랭킹')
       .setDescription('유저의 돈 순위를 확인합니다.');

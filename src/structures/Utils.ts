@@ -9,7 +9,7 @@ export interface ApiType {
 }
 
 export class Utils {
-  static dateCal(date: Date, days: number): string {
+  public static dateCal(date: Date, days: number): string {
     const dateVariable = new Date(date);
     dateVariable.setDate(date.getDate() + days);
     const dateText = dateVariable.toString().split(/ +/);
@@ -26,7 +26,7 @@ export class Utils {
     return day;
   }
 
-  static findBot(users: Array<GuildMember>): boolean {
+  public static findBot(users: Array<GuildMember>): boolean {
     for(const user of users) {
       if (user.user.bot)
         return true;
@@ -34,7 +34,7 @@ export class Utils {
     return false
   }
 
-  static async requestGet(option: ApiType): Promise<any> {
+  public static async requestGet(option: ApiType): Promise<any> {
     return new Promise((resolve, reject) => {
       request(option, (err: string, res: any, body: string) => {
         if (err)
@@ -45,7 +45,7 @@ export class Utils {
     });
   } 
 
-  static shuffle<T>(arr: Array<T>): Array<T> {
+  public static shuffle<T>(arr: Array<T>): Array<T> {
     for (let i = 0; i < arr.length; i++) {
       const ranIdx = Math.floor(Math.random() * (arr.length - i)) + i;
       const prev = arr[i];
@@ -55,7 +55,7 @@ export class Utils {
     return arr;
   }
 
-  static uuid(count: number): Array<string> {
+  public static uuid(count: number): Array<string> {
     const box: Array<string> = new Array();
     let message: string = '';
 

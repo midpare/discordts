@@ -32,7 +32,7 @@ exports.default = new Commands_1.Command({
             return msg.reply(client.messages.admin.warning.give.overNumber);
         const id = target.id;
         const name = target.user.username;
-        const user = yield warning_1.warning.findOne({ id });
+        const user = yield client.models.warning.findOne({ id });
         const reason = !args[2] ? client.messages.none : args.slice(2).join(' ');
         if (!user) {
             const newUser = new warning_1.warning({ id, name, warning: count });
@@ -40,7 +40,7 @@ exports.default = new Commands_1.Command({
             channel.send(client.messages.admin.warning.give.success(target.user, count, count, reason));
         }
         else {
-            (yield warning_1.warning.updateOne({ id }, { $inc: { warning: count } }, { upsert: true })).matchedCount;
+            (yield client.models.warning.updateOne({ id }, { $inc: { warning: count } }, { upsert: true })).matchedCount;
             channel.send(client.messages.admin.warning.give.success(target.user, count, user.warning + count, reason));
         }
         msg.delete();

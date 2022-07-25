@@ -19,7 +19,7 @@ exports.default = new Commands_1.Command({
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const name = msg.author.username;
-        const user = yield gambling_1.gambling.findOne({ id });
+        const user = yield client.models.gambling.findOne({ id });
         if (user)
             return msg.reply(client.messages.gambling.join.alreadyJoin);
         const newUser = new gambling_1.gambling({ id, name, stock: [] });

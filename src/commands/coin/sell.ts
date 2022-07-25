@@ -10,7 +10,7 @@ export default new Command({
   description: '현재 코인의 시세로 코인을 판매합니다.',
   execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
-    const user = await gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id });
     const stock = user.stock;
     const coinName = args[0];
     const userCoin = stock.filter((element: { name: string }) => element.name == coinName)[0];
@@ -41,10 +41,10 @@ export default new Command({
     const persentShown = persent < 0 ? persent : '+' + persent;
 
     if (userCoin.count == count) {
-      (await gambling.updateOne({ id }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount
+      (await client.models.gambling.updateOne({ id }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount
       msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n손익: ${profitShown}원(${persentShown}%)`);
     } else {
-      gambling.updateOne({ id, stock: userCoin }, { $inc: { 'stock.$.count': -count, money: Math.round(money) } });
+      client.models.gambling.updateOne({ id, stock: userCoin }, { $inc: { 'stock.$.count': -count, money: Math.round(money) } });
       msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n현재 코인개수: ${userCoin.count}개 -> ${userCoin.count - count}개\n손익: ${profitShown}원(${persentShown}%)`);
     }
   },

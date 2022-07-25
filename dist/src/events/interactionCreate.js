@@ -9,21 +9,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Client_1 = require("../structures/Client");
 const discord_js_1 = require("discord.js");
 const Event_1 = require("../managers/Event");
 exports.default = new Event_1.Event({
     name: 'interactionCreate',
     execute: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
         const client = interaction.client;
-        if (!(client instanceof Client_1.ExtendClient) || !(interaction instanceof discord_js_1.ButtonInteraction))
+        if (!(interaction instanceof discord_js_1.ButtonInteraction || interaction instanceof discord_js_1.SelectMenuInteraction))
             return;
-        const cmd = interaction.customId;
-        const events = client.interactions.get(cmd);
+        const id = interaction.user.id;
+        const options = client.interactionOptions.get(interaction.customId);
+        if (!options || options.id != id)
+            return;
+        const events = client.interactions.get(options.cmd);
         if (!events)
             return;
         try {
-            events.execute({ interaction, client });
+            if (options.cmd != 'cancel')
+                events.execute({ interaction, options, client });
+            for (const id of options.customIds) {
+                client.interactionOptions.delete(id);
+            }
+            options.message.delete();
         }
         catch (error) {
             console.error(error);

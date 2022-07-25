@@ -1,15 +1,18 @@
 import { User, Message, Snowflake } from "discord.js";
 import { gambling } from "../models/gambling";
+import { Client } from "./Client";
 
 export class Betting {
   public readonly title: string;
   public readonly bet1: BetNode;
   public readonly bet2: BetNode;
+  private readonly client: Client;
   
-  constructor(title: string, name1: string, name2: string) {
+  constructor(title: string, name1: string, name2: string, client: Client) {
     this.title = title
-    this.bet1 = new BetNode(name1);
-    this.bet2 = new BetNode(name2);
+    this.bet1 = new BetNode(name1, client);
+    this.bet2 = new BetNode(name2, client);
+    this.client = client
   }
 
   get persent(): Record<string, number> {
@@ -47,7 +50,7 @@ export class Betting {
     for (const user of winnerNode.user) {
       const id = user.id;
       const result = user.money * this.times[winner];
-      (await gambling.updateOne({ id }, { $inc: { money: result } })).matchedCount;
+      (await this.client.models.gambling.updateOne({ id }, { $inc: { money: result } })).matchedCount;
     }
   }
 }
@@ -58,16 +61,18 @@ export class BetNode {
     id: Snowflake;
     money: number;
   }>;
+  private readonly client: Client
 
-  constructor(name: string) {
+  constructor(name: string, client: Client) {
     this.name = name;
     this.user = new Array();
+    this.client = client;
   }
 
   public async addUser(msg: Message, bettor: User, money: number): Promise<Message<boolean> | void> {
     const id = bettor.id;
     const name = bettor.username;
-    const user = await gambling.findOne({ id });
+    const user = await this.client.models.gambling.findOne({ id });
 
     if (money > user.money)
       return msg.reply(`자신의 돈보다 많은돈은 입력해실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
@@ -82,7 +87,7 @@ export class BetNode {
       posArr.money += money;
       msg.reply(`${name}님이 "${this.name}"에 ${money.toLocaleString()}원을 추가로 베팅했습니다! \n현재 베팅액: ${(posArr.money - money).toLocaleString()}원 -> ${posArr.money.toLocaleString()}원 \n현재 잔액 ${user.money.toLocaleString()}원 -> ${(user.money - money).toLocaleString()}원`);
     }
-    (await gambling.updateOne({ id }, { $inc: { money: - money } })).matchedCount;
+    (await this.client.models.gambling.updateOne({ id }, { $inc: { money: - money } })).matchedCount;
   }
 
   get sum(): number {

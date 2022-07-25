@@ -9,13 +9,13 @@ export default new Command({
   description: '자신의 돈을 맨션한 <유저>에게 <돈>만큼 송금합니다.',
   execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
-    const user = await gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id });
 
     const target = msg.mentions.members?.first();
     if (!target)
       return msg.reply('송금할 유저를 맨션해주시기 바랍니다.');
 
-    const targetUser = await gambling.findOne({ id: target.id });
+    const targetUser = await client.models.gambling.findOne({ id: target.id });
     if (!targetUser)
       return msg.reply('송금할 유저가 가입을 하지 않았습니다.');
 
@@ -27,8 +27,8 @@ export default new Command({
     if (user.money < money)
       return msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
 
-    (await gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
-    (await gambling.updateOne({ id: target.id }, { $inc: { money: money } })).matchedCount;
+    (await client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
+    (await client.models.gambling.updateOne({ id: target.id }, { $inc: { money: money } })).matchedCount;
     msg.reply(`성공적으로 ${targetUser.name}님에게 ${money.toLocaleString()}원을 송금했습니다!`);
   },
 });

@@ -10,7 +10,7 @@ export default new Command({
   description: '현재 갖고있는 코인을 전부 판매합니다.',
   execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
-    const user = await gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id });
     const stock = user.stock;
     const coinName = args[0];
     const userCoin = stock.filter((element: { name: string }) => element.name == coinName)[0];
@@ -35,7 +35,7 @@ export default new Command({
     const persent = Math.round((coinMoney / userCoin.money - 1) * 100 * 100) / 100;
     const persentShown = persent < 0 ? persent : '+' + persent;
 
-    (await gambling.updateOne({ id }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
+    (await client.models.gambling.updateOne({ id }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
     msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n손익: ${profitShown}원(${persentShown}%)`);
   },
 });

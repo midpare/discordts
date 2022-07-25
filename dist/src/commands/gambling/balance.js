@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const gambling_1 = require("../../models/gambling");
 const Commands_1 = require("../../managers/Commands");
 exports.default = new Commands_1.Command({
     name: '잔액',
@@ -19,7 +18,7 @@ exports.default = new Commands_1.Command({
     description: '자신의 현재 잔액을 확인합니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
-        const user = yield gambling_1.gambling.findOne({ id });
+        const user = yield client.models.gambling.findOne({ id });
         msg.reply(client.messages.gambling.balance(user.name, user.money));
     }),
 });

@@ -9,7 +9,7 @@ export default new Command({
   execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
     const name = msg.author.username;
-    const user = await gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id });
     if (user)
       return msg.reply(client.messages.gambling.join.alreadyJoin);
 

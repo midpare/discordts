@@ -1,4 +1,4 @@
-  import { ExtendClient } from '../structures/Client';
+  import { Client } from '../structures/Client';
 import { gambling } from '../models/gambling';
 import { Message } from 'discord.js';
 import { Command } from '../managers/Commands';
@@ -8,7 +8,7 @@ export default new Event ({
   name: 'messageCreate',
   execute: async (msg: Message) => {
     const client = msg.client
-    if (!(client instanceof ExtendClient))
+    if (!(client instanceof Client))
       return
 
     const prefix = process.env.PREFIX || '';
@@ -46,7 +46,7 @@ export default new Event ({
           if (msg.channel != gambChannel) 
             return msg.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
 
-          const user = await gambling.findOne({ id });
+          const user = await client.models.gambling.findOne({ id });
           if (cmd.name != '가입' && !user)
             return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
           

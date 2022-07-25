@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../managers/Commands");
-const gambling_1 = require("../../models/gambling");
 const Utils_1 = require("../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: '코인 구매',
@@ -20,7 +19,7 @@ exports.default = new Commands_1.Command({
     description: '현재 코인의 시세로 코인을 구매합니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
-        const user = yield gambling_1.gambling.findOne({ id });
+        const user = yield client.models.gambling.findOne({ id });
         const stock = user.stock;
         const coinName = args[0];
         const userCoin = stock.filter((element) => element.name == coinName)[0];
@@ -41,7 +40,7 @@ exports.default = new Commands_1.Command({
             return msg.reply(`현재 잔액보다 사려는 수량이 많습니다. \n현재 잔액: ${user.money.toLocaleString()}원\n사려는 금액: ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)`);
         if (userCoin) {
             const moneyAve = (userCoin.money * userCoin.count + wholeMoney) / (userCoin.count + count);
-            gambling_1.gambling.updateOne({ id, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } });
+            client.models.gambling.updateOne({ id, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } });
             msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`);
         }
         else {
@@ -50,7 +49,7 @@ exports.default = new Commands_1.Command({
                 count: count,
                 money: coinMoney,
             };
-            (yield gambling_1.gambling.updateOne({ id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } })).matchedCount;
             msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`);
         }
     }),

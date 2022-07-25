@@ -21,7 +21,7 @@ export default new Command({
       return msg.reply('베팅 이름을 입력해주시기바랍니다.');
 
     const embed = new MessageEmbed();
-    const betting = new Betting(args[0], args[1], args[2]);
+    const betting = new Betting(args[0], args[1], args[2], client);
 
     embed
       .setTitle(betting.title)

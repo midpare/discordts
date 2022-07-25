@@ -1,11 +1,11 @@
-import { ExtendClient } from '../structures/Client';
+import { Client } from '../structures/Client';
 import { ButtonInteraction, Interaction, SelectMenuInteraction } from 'discord.js';
 import { Event } from '../managers/Event';
 
 export default new Event({
   name: 'interactionCreate',
   execute: async (interaction: Interaction) => {
-    const client = <ExtendClient>interaction.client;
+    const client = <Client>interaction.client;
 
     if (!(interaction instanceof ButtonInteraction || interaction instanceof SelectMenuInteraction))
       return;

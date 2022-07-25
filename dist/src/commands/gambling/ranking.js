@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const gambling_1 = require("../../models/gambling");
 const Commands_1 = require("../../managers/Commands");
 exports.default = new Commands_1.Command({
     name: '랭킹',
@@ -19,7 +18,7 @@ exports.default = new Commands_1.Command({
     usage: '랭킹',
     description: '이 서버의 도박 순위를 확인합니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const users = yield gambling_1.gambling.find({ money: { $gt: 0 } }).sort({ money: -1 });
+        const users = yield client.models.gambling.find({ money: { $gt: 0 } }).sort({ money: -1 });
         const embed = new discord_js_1.MessageEmbed()
             .setTitle('랭킹')
             .setDescription('유저의 돈 순위를 확인합니다.');

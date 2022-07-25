@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../managers/Commands");
-const gambling_1 = require("../../models/gambling");
 const Utils_1 = require("../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: '코인 보유',
@@ -22,7 +21,7 @@ exports.default = new Commands_1.Command({
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const embed = new discord_js_1.MessageEmbed();
-        const user = yield gambling_1.gambling.findOne({ id });
+        const user = yield client.models.gambling.findOne({ id });
         const stock = user.stock;
         if (!stock[0])
             return msg.reply('보유한 코인이 없습니다.');

@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Client_1 = require("./src/structures/Client");
-const client = new Client_1.ExtendClient({ intents: 32767 });
+const client = new Client_1.Client({ intents: 32767 });
 const path = new Array('commands', 'interactions', 'events', 'intervals');
 for (const dir of path) {
     require(`./src/handler/${dir}`)(client);

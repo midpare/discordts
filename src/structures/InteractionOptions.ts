@@ -1,10 +1,10 @@
 import { Message } from "discord.js";
 
 export class InteractionOptions {
-  public id: string;
-  public cmd: string
-  public customIds: string[];
-  public message: Message;
+  public readonly id: string;
+  public readonly cmd: string
+  public readonly customIds: string[];
+  public readonly message: Message;
 
   constructor(options: InteractionOptions) {
     this.id = options.id;

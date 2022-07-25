@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { ExtendClient } from "./src/structures/Client";
+import { Client } from "./src/structures/Client";
 
-const client = new ExtendClient({ intents: 32767 });
+const client = new Client({ intents: 32767 });
 
 const path = new Array('commands', 'interactions', 'events', 'intervals')
 for (const dir of path) {

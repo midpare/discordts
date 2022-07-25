@@ -23,7 +23,7 @@ exports.default = new Commands_1.Command({
         const apiKey = process.env.SCHOOL_API_KEY || '';
         const id = msg.author.id;
         const name = msg.author.username;
-        const user = yield school_1.school.findOne({ id });
+        const user = yield client.models.school.findOne({ id });
         const date = new Date();
         const schoolName = args[1];
         const grade = args[2].split('')[0];
@@ -70,7 +70,7 @@ exports.default = new Commands_1.Command({
             msg.reply('성공적으로 유저 정보를 등록했습니다!');
         }
         else {
-            (yield school_1.school.updateOne({ id }, { $set: { cityCode, cityName, schoolCode, schoolName, grade, class: classNumber } })).matchedCount;
+            (yield client.models.school.updateOne({ id }, { $set: { cityCode, cityName, schoolCode, schoolName, grade, class: classNumber } })).matchedCount;
             msg.reply('성공적으로 유저 정보를 업데이트했습니다!');
         }
     }),

@@ -10,12 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BetNode = exports.Betting = void 0;
-const gambling_1 = require("../models/gambling");
 class Betting {
-    constructor(title, name1, name2) {
+    constructor(title, name1, name2, client) {
         this.title = title;
-        this.bet1 = new BetNode(name1);
-        this.bet2 = new BetNode(name2);
+        this.bet1 = new BetNode(name1, client);
+        this.bet2 = new BetNode(name2, client);
+        this.client = client;
     }
     get persent() {
         const returner = {
@@ -46,22 +46,23 @@ class Betting {
             for (const user of winnerNode.user) {
                 const id = user.id;
                 const result = user.money * this.times[winner];
-                (yield gambling_1.gambling.updateOne({ id }, { $inc: { money: result } })).matchedCount;
+                (yield this.client.models.gambling.updateOne({ id }, { $inc: { money: result } })).matchedCount;
             }
         });
     }
 }
 exports.Betting = Betting;
 class BetNode {
-    constructor(name) {
+    constructor(name, client) {
         this.name = name;
         this.user = new Array();
+        this.client = client;
     }
     addUser(msg, bettor, money) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = bettor.id;
             const name = bettor.username;
-            const user = yield gambling_1.gambling.findOne({ id });
+            const user = yield this.client.models.gambling.findOne({ id });
             if (money > user.money)
                 return msg.reply(`자신의 돈보다 많은돈은 입력해실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
             const posArr = this.user.find((element) => element.id = id);
@@ -75,7 +76,7 @@ class BetNode {
                 posArr.money += money;
                 msg.reply(`${name}님이 "${this.name}"에 ${money.toLocaleString()}원을 추가로 베팅했습니다! \n현재 베팅액: ${(posArr.money - money).toLocaleString()}원 -> ${posArr.money.toLocaleString()}원 \n현재 잔액 ${user.money.toLocaleString()}원 -> ${(user.money - money).toLocaleString()}원`);
             }
-            (yield gambling_1.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
+            (yield this.client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
         });
     }
     get sum() {

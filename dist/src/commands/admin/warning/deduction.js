@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../../managers/Commands");
-const warning_1 = require("../../../models/warning");
 exports.default = new Commands_1.Command({
     name: '경고 차감',
     category: '관리자',
@@ -29,13 +28,13 @@ exports.default = new Commands_1.Command({
             return msg.reply(client.messages.naturalNumber);
         }
         const id = target.id;
-        const user = yield warning_1.warning.findOne({ id });
+        const user = yield client.models.warning.findOne({ id });
         const reason = !args[2] ? client.messages.none : args.slice(2).join(' ');
         if (!user || user.warning <= 0)
             return msg.reply(client.messages.admin.warning.deduction.noneWarning);
         if (user.warning - count < 0)
             return msg.reply(client.messages.admin.warning.deduction.overWarning);
-        (yield warning_1.warning.updateOne({ id }, { $inc: { warning: -count } })).matchedCount;
+        (yield client.models.warning.updateOne({ id }, { $inc: { warning: -count } })).matchedCount;
         channel.send(client.messages.admin.warning.deduction.success(target.user, count, user.warning - count, reason));
         msg.delete();
     }),

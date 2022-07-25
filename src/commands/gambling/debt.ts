@@ -8,7 +8,7 @@ export default new Command({
   description: '자신의 현재 빚을 확인합니다.',
   execute: async ({ msg, args, client }) => {
     const id = msg.author.id;
-    const user = await gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id });
     msg.reply(client.messages.gambling.debt(user.name, user.debt));
   },
 });

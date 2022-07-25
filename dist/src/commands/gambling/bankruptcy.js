@@ -10,46 +10,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Commands_1 = require("../../managers/Commands");
-const gambling_1 = require("../../models/gambling");
 const discord_js_1 = require("discord.js");
-const interactionUser = new Array();
+const Utils_1 = require("../../structures/Utils");
+const InteractionOptions_1 = require("../../structures/InteractionOptions");
 exports.default = new Commands_1.Command({
     name: '파산',
     category: '도박',
     usage: '파산',
-    description: '모든 돈과 빚을 0원으로 만들고 3일간 도박을 하지 못합니다.',
+    description: '모든 돈과 빚을 0원으로 만들고 한시간동안 도박을 하지 못합니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
-        const user = yield gambling_1.gambling.findOne({ id });
-        if (interactionUser.includes(id))
-            return msg.delete();
-        const date = new Date();
-        const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
+        const customIds = Utils_1.Utils.uuid(2);
+        const [bankrupctyId, cancelId] = customIds;
         const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
             .setLabel(client.messages.yes)
             .setStyle('SUCCESS')
-            .setCustomId('yes'), new discord_js_1.MessageButton()
+            .setCustomId(bankrupctyId), new discord_js_1.MessageButton()
             .setLabel(client.messages.no)
             .setStyle('DANGER')
-            .setCustomId('no'));
-        const message = yield msg.reply({ content: '정말 파산하시겠습니까? 돈과 빚이 모두 0원으로 돌아갑니다', components: [row] });
-        interactionUser.push(id);
-        const collector = msg.channel.createMessageComponentCollector({
-            max: 1,
-        });
-        collector.on('collect', (interaction) => __awaiter(void 0, void 0, void 0, function* () {
-            if (!interaction || interaction.user.id != msg.author.id)
-                return;
-            if (interaction.customId == 'yes') {
-                (yield gambling_1.gambling.updateOne({ id }, { $set: { bankruptcy: parseFloat(today), money: 0, debt: 0, principalDebt: 0, stock: [] } })).matchedCount;
-                msg.reply(`${user.name}님이 파산했습니다!`);
-                message.delete();
-            }
-            else if (interaction.customId == 'no') {
-                msg.delete();
-                message.delete();
-            }
-            interactionUser.splice(interactionUser.findIndex((element) => element == id), 1);
+            .setCustomId(cancelId));
+        const message = yield msg.reply({ content: '정말 파산하시겠습니까? 파산하시면 돈과 빚이 모두 0원으로 돌아가며 한시간동안 도박을 할 수 없습니다.', components: [row] });
+        client.interactionOptions.set(bankrupctyId, new InteractionOptions_1.InteractionOptions({
+            id,
+            cmd: 'bankrupcty',
+            message,
+            customIds,
+        }));
+        client.interactionOptions.set(cancelId, new InteractionOptions_1.InteractionOptions({
+            id,
+            cmd: 'cancel',
+            message,
+            customIds,
         }));
     }),
 });

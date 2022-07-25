@@ -1,20 +1,22 @@
-import { ButtonInteraction, Client, ClientOptions, Collection, SelectMenuInteraction, Snowflake } from 'discord.js'
+import Discord, { ButtonInteraction, ClientOptions, Collection, SelectMenuInteraction, Snowflake } from 'discord.js'
 import { Betting } from './Betting';
 import { Command } from '../managers/Commands';
 import { InteractionCommand } from '../managers/Interaction';
 import { CivilWar } from './CivilWar';
 import { Messages } from '../language/message';
 import { InteractionOptions } from './InteractionOptions';
+import { Model } from '../managers/Model';
 
-export class ExtendClient extends Client {
-  public commands: Collection<string, Command>;
-  public interactions: Collection<string, InteractionCommand<ButtonInteraction | SelectMenuInteraction>>;
-  public interactionOptions: Collection<string, InteractionOptions>;
-  public coin: Collection<string, string>;
-  public sdCode: Collection<string, string>;
-  public betting: Collection<Snowflake, Betting>;
-  public civilWar: CivilWar;
-  public messages: Messages
+export class Client extends Discord.Client {
+  public readonly commands: Collection<string, Command>;
+  public readonly interactions: Collection<string, InteractionCommand<ButtonInteraction | SelectMenuInteraction>>;
+  public readonly interactionOptions: Collection<string, InteractionOptions>;
+  public readonly coin: Collection<string, string>;
+  public readonly sdCode: Collection<string, string>;
+  public readonly betting: Collection<Snowflake, Betting>;
+  public readonly civilWar: CivilWar;
+  public readonly messages: Messages;
+  public readonly models: Model;
 
   constructor(options: ClientOptions) {
     super(options);
@@ -27,5 +29,6 @@ export class ExtendClient extends Client {
     this.betting = new Collection();
     this.civilWar = new CivilWar();
     this.messages = new Messages();
+    this.models = new Model();
   }
 }

@@ -1,19 +1,19 @@
 import { Message } from 'discord.js';
-import { ExtendClient } from '../structures/Client';
+import { Client } from '../structures/Client';
 
 type ExecuteType = (options: {
   msg: Message;
   args: Array<string>;
-  client: ExtendClient;
+  client: Client;
 }) => any;
 
 export class Command {
-  public name: string;
-  public aliases?: Array<string> | null;
-  public category: string;
-  public usage: string;
-  public description: string;
-  public execute: ExecuteType;
+  public readonly name: string;
+  public readonly aliases?: Array<string> | null;
+  public readonly category: string;
+  public readonly usage: string;
+  public readonly description: string;
+  public readonly execute: ExecuteType;
 
   constructor(options: Command) {
     this.name = options.name;

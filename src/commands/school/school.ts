@@ -20,7 +20,7 @@ export default new Command({
     const week = dateVariable.getDay();
     const findWeek = weekArr.indexOf(args[0].split('')[0]);
     const weekDay = findWeek > -1 ? weekArr[findWeek] + '요일' : '';
-    const user = await school.findOne({ id });
+    const user = await  client.models.school.findOne({ id });
 
     switch (args[0]) {
       case `${weekDay}시간표`:

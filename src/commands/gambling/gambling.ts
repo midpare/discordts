@@ -14,7 +14,7 @@ export default new Command({
     if (!Number.isInteger(money) || money <= 0)
       return msg.reply(client.messages.naturalNumber);
 
-    const user = await gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id });
 
     if (money > user.money)
       return msg.reply(client.messages.overMoney(user.money));
@@ -22,10 +22,10 @@ export default new Command({
     const random = Math.floor(Math.random() * 2);
 
     if (random == 1) {
-      (await gambling.updateOne({ id }, { $inc: { money: money } })).matchedCount;
+      (await client.models.gambling.updateOne({ id }, { $inc: { money: money } })).matchedCount;
       msg.reply(client.messages.gambling.successGamb(user.money, money));
     } else if (random == 0) {
-      (await gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
+      (await client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
       msg.reply(client.messages.gambling.failureGamb(user.money, money));
     }
   },

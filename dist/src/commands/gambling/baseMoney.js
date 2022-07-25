@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const gambling_1 = require("../../models/gambling");
 const Commands_1 = require("../../managers/Commands");
 exports.default = new Commands_1.Command({
     name: '기초자금',
@@ -19,7 +18,7 @@ exports.default = new Commands_1.Command({
     description: '기초자금 25,000원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 30초',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
-        const user = yield gambling_1.gambling.findOne({ id });
+        const user = yield client.models.gambling.findOne({ id });
         if (user.money != 0 || user.stock[0])
             return msg.reply(client.messages.gambling.baseMoney.haveMoney);
         const second = new Date().getTime();
@@ -30,7 +29,7 @@ exports.default = new Commands_1.Command({
                 return msg.reply(client.messages.coolTime(Math.ceil(coolTime - (second - userCoolTime) / 1000)));
         }
         const baseMoney = 25000;
-        (yield gambling_1.gambling.updateOne({ id }, { $set: { money: baseMoney, baseMoneyCoolTime: second } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id }, { $set: { money: baseMoney, baseMoneyCoolTime: second } })).matchedCount;
         msg.reply(client.messages.gambling.baseMoney.success(baseMoney));
     }),
 });

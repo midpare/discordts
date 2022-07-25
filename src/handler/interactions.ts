@@ -1,10 +1,10 @@
 import { glob } from 'glob';
 import { promisify } from 'util';
-import { ExtendClient } from '../structures/Client';
+import { Client } from '../structures/Client';
 
 const globPromise = promisify(glob);
 
-export = async function (client: ExtendClient) {
+export = async function (client: Client) {
   const interactionFiles = await globPromise(`${__dirname}/../interactions/**/*{.ts,.js}`);
   for (const dir of interactionFiles) {
     const file = (await import(dir)).default;

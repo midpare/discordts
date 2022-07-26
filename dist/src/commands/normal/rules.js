@@ -5,10 +5,7 @@ const Commands_1 = require("../../managers/Commands");
 const rules_1 = require("../../language/rules");
 exports.default = new Commands_1.Command({
     name: '규칙',
-    aliases: ['룰', '법전'],
-    category: '기본',
-    usage: '규칙',
-    description: '서버 규칙을 확인합니다.',
+    private: true,
     execute: ({ msg }) => {
         const embed = new discord_js_1.EmbedBuilder()
             .setTitle('규칙');

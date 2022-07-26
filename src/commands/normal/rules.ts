@@ -4,10 +4,7 @@ import { Rules } from '../../language/rules';
 
 export default new Command({
   name: '규칙',
-  aliases: ['룰', '법전'],
-  category: '기본',
-  usage: '규칙',
-  description: '서버 규칙을 확인합니다.',
+  private: true,
   execute: ({ msg }) => {
     const embed = new EmbedBuilder()
       .setTitle('규칙');

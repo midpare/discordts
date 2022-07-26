@@ -32,14 +32,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const glob_1 = require("glob");
-const util_1 = require("util");
-const globPromise = (0, util_1.promisify)(glob_1.glob);
+const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
-        const interactionFiles = yield globPromise(`${__dirname}/../interactions/**/*{.ts,.js}`);
-        for (const dir of interactionFiles) {
-            const file = (yield Promise.resolve().then(() => __importStar(require(dir)))).default;
+        const interactionFiles = new Array();
+        Utils_1.Utils.getPath(__dirname + '/../interactions', interactionFiles);
+        for (const path of interactionFiles) {
+            const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             try {
                 client.interactions.set(file.name, file);
             }

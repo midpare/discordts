@@ -20,7 +20,7 @@ exports.default = new Commands_1.Command({
     description: '현재 갖고있는 코인을 확인합니다.',
     execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
-        const embed = new discord_js_1.MessageEmbed();
+        const embed = new discord_js_1.EmbedBuilder();
         const user = yield client.models.gambling.findOne({ id });
         const stock = user.stock;
         if (!stock[0])
@@ -38,7 +38,7 @@ exports.default = new Commands_1.Command({
             const persentShown = persent < 0 ? persent : '+' + persent;
             const profit = Math.round((coin[0].tradePrice - element.money) * element.count);
             const profitShown = profit < 0 ? profit.toLocaleString() : '+' + profit.toLocaleString();
-            embed.addField(element.name, `수량: ${element.count}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, false);
+            embed.addFields({ name: element.name, value: `수량: ${element.count}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, inline: false });
         }
         msg.channel.send({ embeds: [embed] });
     }),

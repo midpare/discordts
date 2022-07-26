@@ -1,5 +1,5 @@
 import { Command } from '../../managers/Commands';
-import { TextChannel } from 'discord.js';
+import { TextChannel, PermissionFlagsBits } from 'discord.js';
 
 export default new Command({
   name: 'ban',
@@ -8,7 +8,7 @@ export default new Command({
   usage: 'ban <유저> [사유]',
   description: '서버에서 맨션한 <유저>를 차단합니다.',
   execute: async ({ msg, args, client }) => {
-    if (!msg.member?.permissions.has('BAN_MEMBERS'))
+    if (!msg.member?.permissions.has(PermissionFlagsBits.BanMembers))
       return msg.reply(client.messages.missingPermissionUser);
 
     const channel = <TextChannel>client.channels.cache.get('910521119877005363');
@@ -18,7 +18,7 @@ export default new Command({
     if (!target)
       return msg.reply(client.messages.admin.ban.missingMentionUser);
 
-    if (target.permissions.has('BAN_MEMBERS'))
+    if (target.permissions.has(PermissionFlagsBits.BanMembers))
       return msg.reply(client.messages.admin.ban.missingPermissionTarget);
 
     target.ban({ reason });

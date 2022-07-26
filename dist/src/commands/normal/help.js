@@ -18,7 +18,7 @@ exports.default = new Commands_1.Command({
     usage: 'help [카테고리]',
     description: '봇의 명령어를 확인합니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const embed = new discord_js_1.MessageEmbed();
+        const embed = new discord_js_1.EmbedBuilder();
         const prefix = process.env.PREFIX;
         const directories = [...new Set(client.commands.map((command) => command.category))];
         const categories = new Map();
@@ -35,7 +35,7 @@ exports.default = new Commands_1.Command({
                 .setDescription('명령어 카테고리를 확인합니다.');
             for (const category of directories) {
                 embed
-                    .addField(`${prefix}help ${category}`, `${category} 관련 명령어를 확인합니다.`, false);
+                    .addFields({ name: `${prefix}help ${category}`, value: `${category} 관련 명령어를 확인합니다.`, inline: false });
             }
             msg.channel.send({ embeds: [embed] });
         }
@@ -45,10 +45,10 @@ exports.default = new Commands_1.Command({
                 .setDescription(`${args[0]} 관련 명령어를 확인합니다.\n<>는 필수, []는 선택사항 입니다.`);
             for (const element of commands) {
                 const command = client.commands.get(element);
-                if (command) {
+                if (command && !command.private) {
                     const aliases = command.aliases ? `\n동의어: ${command.aliases}` : '';
                     embed
-                        .addField(`${prefix}${command.usage}`, `${command.description}${aliases}`, false);
+                        .addFields({ name: `${prefix}${command.usage}`, value: `${command.description}${aliases}`, inline: false });
                 }
             }
             msg.channel.send({ embeds: [embed] });

@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder, Colors } from 'discord.js';
 import { Command } from '../../managers/Commands';
 import { Utils } from '../../structures/Utils';
 
@@ -11,7 +11,7 @@ export default new Command({
     const apiKey = process.env.SCHOOL_API_KEY || '';
     if (!args[0])
       return;
-    const embed = new MessageEmbed();
+    const embed = new EmbedBuilder();
     const id = msg.author.id;
 
     const dateVariable = new Date();
@@ -54,16 +54,16 @@ export default new Command({
           embed
             .setTitle('시간표')
             .setDescription('오늘은 시간표가 없습니다.')
-            .setColor('RED');
+            .setColor(Colors.Red);
           msg.channel.send({ embeds: [embed] });
           return;
         }
         embed
           .setTitle(`${timeTableWeekDay}요일 시간표`)
           .setDescription(`${timeTableYear}-${timeTableMonth}-${timeTableDay}\n${user.grade}학년 ${user.class}반 ${user.schoolName}`)
-          .setColor('GREEN');
+          .setColor(Colors.Green);
         for (let i = 0; i < timeTable.misTimetable[1].row.length; i++) {
-          embed.addField(`${i + 1}교시`, `${timeTable.misTimetable[1].row[i].ITRT_CNTNT}`);
+          embed.addFields({ name: `${i + 1}교시`, value: `${timeTable.misTimetable[1].row[i].ITRT_CNTNT}`, inline: false });
         }
         msg.channel.send({ embeds: [embed] });
         break;
@@ -91,7 +91,7 @@ export default new Command({
           embed
             .setTitle('급식')
             .setDescription('오늘은 급식이 없습니다.')
-            .setColor('RED');
+            .setColor(Colors.Red);
           msg.channel.send({ embeds: [embed] });
           return;
         }
@@ -103,8 +103,8 @@ export default new Command({
         embed
           .setTitle(`${mealWeekDay}요일 급식`)
           .setDescription(`${mealYear}-${mealMonth}-${mealDay}(${user.schoolName})`)
-          .addField('급식정보', meal.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/<br\/>/gi, '\n').replace(/[0-9.]/gi, ''))
-          .setColor('AQUA');
+          .addFields({ name: '급식정보', value: meal.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/<br\/>/gi, '\n').replace(/[0-9.]/gi, ''), inline: false })
+          .setColor(Colors.Aqua);
         msg.channel.send({ embeds: [embed] });
         break;
     }

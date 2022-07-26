@@ -1,16 +1,14 @@
-import { glob } from 'glob';
-import { promisify } from 'util';
 import ms from 'ms';
 import { Interval } from '../managers/Interval';
 import { Client } from '../structures/Client';
-
-const globPromise = promisify(glob);
+import { Utils } from '../structures/Utils';
 
 export default async function (client: Client) {
-  const intervalFiles = await globPromise(`${__dirname}/../interval/**/*{.ts,.js}`);
+  const intervalFiles = new Array();
+  Utils.getPath(__dirname + '/../interval', intervalFiles);
 
-  for (const dir of intervalFiles) {
-    const file: Interval = (await import(dir)).default;
+  for (const path of intervalFiles) {
+    const file: Interval = (await import(path)).default;
     try {
       if (file.immediate)
         file.execute(client);

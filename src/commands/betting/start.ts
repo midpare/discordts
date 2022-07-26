@@ -1,6 +1,6 @@
 import { Command } from '../../managers/Commands';
 import { Betting } from '../../structures/Betting'
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 
 export default new Command({
   name: '베팅 시작',
@@ -20,7 +20,7 @@ export default new Command({
     if (!args[1] || !args[2])
       return msg.reply('베팅 이름을 입력해주시기바랍니다.');
 
-    const embed = new MessageEmbed();
+    const embed = new EmbedBuilder();
     const betting = new Betting(args[0], args[1], args[2], client);
 
     embed

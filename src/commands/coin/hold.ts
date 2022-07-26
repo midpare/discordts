@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { Command } from '../../managers/Commands';
 import { Utils } from '../../structures/Utils';
 
@@ -10,7 +10,7 @@ export default new Command({
   description: '현재 갖고있는 코인을 확인합니다.',
   execute: async ({ msg, client }) => {
     const id = msg.author.id;
-    const embed = new MessageEmbed();
+    const embed = new EmbedBuilder();
     const user = await client.models.gambling.findOne({ id });
     const stock = user.stock;
     if (!stock[0])
@@ -29,7 +29,7 @@ export default new Command({
 
       const profit = Math.round((coin[0].tradePrice - element.money) * element.count);
       const profitShown = profit < 0 ? profit.toLocaleString() : '+' + profit.toLocaleString();
-      embed.addField(element.name, `수량: ${element.count}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, false);
+      embed.addFields({ name: element.name, value: `수량: ${element.count}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, inline: false});
     }
     msg.channel.send({ embeds: [embed] });
   },

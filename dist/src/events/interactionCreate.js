@@ -9,13 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
 const Event_1 = require("../managers/Event");
 exports.default = new Event_1.Event({
     name: 'interactionCreate',
     execute: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
         const client = interaction.client;
-        if (!(interaction instanceof discord_js_1.ButtonInteraction || interaction instanceof discord_js_1.SelectMenuInteraction))
+        if (!interaction.isButton() && !interaction.isSelectMenu())
             return;
         const id = interaction.user.id;
         const options = client.interactionOptions.get(interaction.customId);

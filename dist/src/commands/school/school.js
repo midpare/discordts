@@ -21,7 +21,7 @@ exports.default = new Commands_1.Command({
         const apiKey = process.env.SCHOOL_API_KEY || '';
         if (!args[0])
             return;
-        const embed = new discord_js_1.MessageEmbed();
+        const embed = new discord_js_1.EmbedBuilder();
         const id = msg.author.id;
         const dateVariable = new Date();
         const weekArr = ['일', '월', '화', '수', '목', '금', '토'];
@@ -58,16 +58,16 @@ exports.default = new Commands_1.Command({
                     embed
                         .setTitle('시간표')
                         .setDescription('오늘은 시간표가 없습니다.')
-                        .setColor('RED');
+                        .setColor(discord_js_1.Colors.Red);
                     msg.channel.send({ embeds: [embed] });
                     return;
                 }
                 embed
                     .setTitle(`${timeTableWeekDay}요일 시간표`)
                     .setDescription(`${timeTableYear}-${timeTableMonth}-${timeTableDay}\n${user.grade}학년 ${user.class}반 ${user.schoolName}`)
-                    .setColor('GREEN');
+                    .setColor(discord_js_1.Colors.Green);
                 for (let i = 0; i < timeTable.misTimetable[1].row.length; i++) {
-                    embed.addField(`${i + 1}교시`, `${timeTable.misTimetable[1].row[i].ITRT_CNTNT}`);
+                    embed.addFields({ name: `${i + 1}교시`, value: `${timeTable.misTimetable[1].row[i].ITRT_CNTNT}`, inline: false });
                 }
                 msg.channel.send({ embeds: [embed] });
                 break;
@@ -93,7 +93,7 @@ exports.default = new Commands_1.Command({
                     embed
                         .setTitle('급식')
                         .setDescription('오늘은 급식이 없습니다.')
-                        .setColor('RED');
+                        .setColor(discord_js_1.Colors.Red);
                     msg.channel.send({ embeds: [embed] });
                     return;
                 }
@@ -104,8 +104,8 @@ exports.default = new Commands_1.Command({
                 embed
                     .setTitle(`${mealWeekDay}요일 급식`)
                     .setDescription(`${mealYear}-${mealMonth}-${mealDay}(${user.schoolName})`)
-                    .addField('급식정보', meal.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/<br\/>/gi, '\n').replace(/[0-9.]/gi, ''))
-                    .setColor('AQUA');
+                    .addFields({ name: '급식정보', value: meal.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/<br\/>/gi, '\n').replace(/[0-9.]/gi, ''), inline: false })
+                    .setColor(discord_js_1.Colors.Aqua);
                 msg.channel.send({ embeds: [embed] });
                 break;
         }

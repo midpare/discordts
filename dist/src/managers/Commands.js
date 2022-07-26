@@ -9,6 +9,7 @@ class Command {
         this.category = options.category;
         this.usage = options.usage;
         this.description = options.description;
+        this.private = options.private;
         this.execute = options.execute;
     }
 }

@@ -28,7 +28,7 @@ exports.default = new Commands_1.Command({
             return msg.reply('제목을 입력해주시기바랍니다.');
         if (!args[1] || !args[2])
             return msg.reply('베팅 이름을 입력해주시기바랍니다.');
-        const embed = new discord_js_1.MessageEmbed();
+        const embed = new discord_js_1.EmbedBuilder();
         const betting = new Betting_1.Betting(args[0], args[1], args[2], client);
         embed
             .setTitle(betting.title)

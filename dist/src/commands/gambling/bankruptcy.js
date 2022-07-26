@@ -22,12 +22,12 @@ exports.default = new Commands_1.Command({
         const id = msg.author.id;
         const customIds = Utils_1.Utils.uuid(2);
         const [bankrupctyId, cancelId] = customIds;
-        const row = new discord_js_1.MessageActionRow().addComponents(new discord_js_1.MessageButton()
+        const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
             .setLabel(client.messages.yes)
-            .setStyle('SUCCESS')
-            .setCustomId(bankrupctyId), new discord_js_1.MessageButton()
+            .setStyle(discord_js_1.ButtonStyle.Success)
+            .setCustomId(bankrupctyId), new discord_js_1.ButtonBuilder()
             .setLabel(client.messages.no)
-            .setStyle('DANGER')
+            .setStyle(discord_js_1.ButtonStyle.Danger)
             .setCustomId(cancelId));
         const message = yield msg.reply({ content: '정말 파산하시겠습니까? 파산하시면 돈과 빚이 모두 0원으로 돌아가며 한시간동안 도박을 할 수 없습니다.', components: [row] });
         client.interactionOptions.set(bankrupctyId, new InteractionOptions_1.InteractionOptions({

@@ -1,23 +1,20 @@
-import { glob } from 'glob';
-import { promisify } from 'util';
 import { Client } from '../structures/Client';
-
-const globPromise = promisify(glob);
+import { Utils } from '../structures/Utils';
 
 export default async function (client: Client) {
-  const mainCommandFiles = await globPromise(`${__dirname}/../commands/**/*{.ts,.js}`);
-
-  for (const dir of mainCommandFiles) {
-    const file = (await import(dir)).default;
+  const commandFiles = new Array();
+  Utils.getPath(__dirname + '/../commands', commandFiles);
+  for (const path of commandFiles) {
+    const file = (await import(path)).default;
     if (client.commands.get(file.name))
-      throw `command name duplicate! command path: ${dir}, command name: ${file.name}`;
+      throw `command name duplicate! command path: ${path}, command name: ${file.name}`;
 
     client.commands.set(file.name, file);
 
     if (file.aliases) {
       for (const fileName of file.aliases) {
         if (client.commands.get(fileName))
-          throw `command name duplicate! command path: ${dir}, command name: ${fileName}`;
+          throw `command name duplicate! command path: ${path}, command name: ${fileName}`;
 
         client.commands.set(fileName, file);
       }

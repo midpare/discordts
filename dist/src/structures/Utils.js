@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Utils = void 0;
 const request_1 = __importDefault(require("request"));
+const fs_1 = __importDefault(require("fs"));
 class Utils {
     static dateCal(date, days) {
         const dateVariable = new Date(date);
@@ -56,21 +57,37 @@ class Utils {
         return arr;
     }
     static uuid(count) {
-        const box = new Array();
-        let message = '';
-        for (let i = 0; i < count; i++) {
-            for (let j = 0; j < 12; j++) {
-                if (j % 2 == 0 && j > 0 && j < 9) {
+        if (!count) {
+            let message = '';
+            for (let i = 0; i < 12; i++) {
+                if (i % 2 == 0 && i > 0 && i < 9) {
                     message = message + '-';
                 }
                 else {
                     message = message + (Math.floor((Math.random() + 1) * 0x10000)).toString(16).substring(1);
                 }
             }
-            box.push(message);
-            message = '';
+            return message;
         }
-        return box;
+        else {
+            const box = new Array();
+            for (let i = 0; i < count; i++) {
+                box.push(Utils.uuid());
+            }
+            return box;
+        }
+    }
+    static getPath(basePath, arr) {
+        const files = fs_1.default.readdirSync(basePath, { withFileTypes: true });
+        for (const file of files) {
+            const path = `${basePath}/${file.name}`;
+            if (file.isDirectory()) {
+                Utils.getPath(path, arr);
+            }
+            else {
+                arr.push(path);
+            }
+        }
     }
 }
 exports.Utils = Utils;

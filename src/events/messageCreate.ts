@@ -6,11 +6,12 @@ import { Event } from '../managers/Event';
 export default new Event({
   name: 'messageCreate',
   execute: async (msg: Message) => {
-    const client = msg.client
-    if (!(client instanceof Client))
-      return
-
+    const client = <Client>msg.client
     const prefix = process.env.PREFIX || '';
+
+    console.log(msg.author.bot);
+    console.log(msg.author.id == client.user?.id);
+    console.log(msg);
     if (msg.author.bot || msg.author.id === client.user?.id || !msg.content.startsWith(prefix))
       return;
 
@@ -21,6 +22,7 @@ export default new Event({
     const getCmd = (start: number, end: number) => {
       return client.commands.get(args.slice(start, end).join(' ').toLowerCase());
     }
+
     let cmd: Command | undefined;
     if (getCmd(0, 2)) {
       cmd = getCmd(0, 2);
@@ -29,7 +31,7 @@ export default new Event({
       cmd = getCmd(0, 1);
       args.splice(0, 1);
     }
-
+    
     if (!cmd)
       return msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`);
 

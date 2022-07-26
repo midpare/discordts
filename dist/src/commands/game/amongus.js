@@ -10,10 +10,10 @@ exports.default = new Commands_1.Command({
     description: '어몽어스를 시작하고 종료합니다.',
     execute: ({ msg, args }) => {
         var _a, _b;
-        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has('MUTE_MEMBERS')))
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has(discord_js_1.PermissionFlagsBits.MuteMembers)))
             return msg.reply('이 명령어를 사용할 권한이 없습니다.');
         const channel = msg.member.voice.channel;
-        if (!(channel instanceof discord_js_1.VoiceChannel))
+        if (!channel || !channel.isVoiceBased())
             return msg.reply('음성채널에 들어가주시기 바랍니다.');
         const members = Array.from(channel.members.values());
         switch (args[0]) {

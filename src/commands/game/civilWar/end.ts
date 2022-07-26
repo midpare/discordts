@@ -8,7 +8,7 @@ export default new Command({
   description: '내전을 종료합니다.',
   execute: ({ msg, client }) => {
     const channel = client.channels.cache.get(msg.mentions.channels.first()?.id || '')
-    if (!channel || !channel.isVoice())
+    if (!channel || !channel.isVoiceBased())
       return msg.reply('정확한 음성채널을 맨션해주시기 바랍니다.');
 
     for (const user of client.civilWar.allTeam) {

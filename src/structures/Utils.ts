@@ -1,5 +1,6 @@
 import { GuildMember } from 'discord.js';
 import request from 'request';
+import fs from 'fs';
 
 export interface ApiType {
   uri: string;
@@ -13,21 +14,21 @@ export class Utils {
     const dateVariable = new Date(date);
     dateVariable.setDate(date.getDate() + days);
     const dateText = dateVariable.toString().split(/ +/);
-  
+
     const monthArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const findMonth = monthArr.find(element => element == dateText[1]);
-  
-  
+
+
     const monthName = findMonth != undefined ? findMonth : '';
     const monthIndex = monthArr.indexOf(monthName) + 1;
     const month = monthIndex >= 10 ? monthIndex.toString() : '0' + monthIndex.toString();
     const day = dateText[3] + month + dateText[2];
-  
+
     return day;
   }
 
   public static findBot(users: Array<GuildMember>): boolean {
-    for(const user of users) {
+    for (const user of users) {
       if (user.user.bot)
         return true;
     }
@@ -36,15 +37,15 @@ export class Utils {
 
   public static async requestGet(option: ApiType): Promise<any> {
     return new Promise((resolve, reject) => {
-      request(option, (err: string, res: any, body: string) => {
+      request(option, (err, res, body) => {
         if (err)
           reject(err);
         else
           resolve(body);
       });
     });
-  } 
-
+  }
+  
   public static shuffle<T>(arr: Array<T>): Array<T> {
     for (let i = 0; i < arr.length; i++) {
       const ranIdx = Math.floor(Math.random() * (arr.length - i)) + i;
@@ -55,22 +56,40 @@ export class Utils {
     return arr;
   }
 
-  public static uuid(count: number): Array<string> {
-    const box: Array<string> = new Array();
-    let message: string = '';
+  public static uuid(): string;
+  public static uuid(count: number): Array<string>
 
-    for (let i = 0; i < count; i ++) {
-      for (let j = 0; j < 12; j++) {
-        if (j % 2 == 0 && j > 0 && j < 9) {
+  public static uuid(count?: number): string | Array<string> {
+    if (!count) {
+      let message = '';
+      for (let i = 0; i < 12; i++) {
+        if (i % 2 == 0 && i > 0 && i < 9) {
           message = message + '-';
         } else {
           message = message + (Math.floor((Math.random() + 1) * 0x10000)).toString(16).substring(1);
         }
       }
-      box.push(message);
-      message = ''
-    }
 
-    return box;
+      return message;
+    } else {
+      const box: Array<string> = new Array();
+      for (let i = 0; i < count; i++) {
+        box.push(Utils.uuid());
+      }
+  
+      return box;
+    }
+  }
+  
+  public static getPath(basePath: string, arr: Array<string>) {
+    const files = fs.readdirSync(basePath, { withFileTypes: true })
+    for (const file of files) {
+      const path = `${basePath}/${file.name}`;
+      if (file.isDirectory()) {
+        Utils.getPath(path, arr)
+      } else {
+        arr.push(path);
+      }
+    }
   }
 }

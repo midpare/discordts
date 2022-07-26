@@ -10,9 +10,10 @@ type ExecuteType = (options: {
 export class Command {
   public readonly name: string;
   public readonly aliases?: Array<string> | null;
-  public readonly category: string;
-  public readonly usage: string;
-  public readonly description: string;
+  public readonly category?: string;
+  public readonly usage?: string;
+  public readonly description?: string;
+  public readonly private?: boolean
   public readonly execute: ExecuteType;
 
   constructor(options: Command) {
@@ -21,6 +22,7 @@ export class Command {
     this.category = options.category;
     this.usage = options.usage;
     this.description = options.description;
+    this.private = options.private;
     this.execute = options.execute;
   }
 }

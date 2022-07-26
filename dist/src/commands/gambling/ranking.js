@@ -19,11 +19,11 @@ exports.default = new Commands_1.Command({
     description: '이 서버의 도박 순위를 확인합니다.',
     execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const users = yield client.models.gambling.find({ money: { $gt: 0 } }).sort({ money: -1 });
-        const embed = new discord_js_1.MessageEmbed()
+        const embed = new discord_js_1.EmbedBuilder()
             .setTitle('랭킹')
             .setDescription('유저의 돈 순위를 확인합니다.');
         for (const user of users) {
-            embed.addField(user.name, `${user.money.toLocaleString()}원`, false);
+            embed.addFields({ name: user.name, value: `${user.money.toLocaleString()}원`, inline: false });
         }
         msg.channel.send({ embeds: [embed] });
     }),

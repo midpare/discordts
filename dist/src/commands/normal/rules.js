@@ -13,11 +13,11 @@ exports.default = new Commands_1.Command({
     usage: '규칙',
     description: '서버 규칙을 확인합니다.',
     execute: ({ msg }) => {
-        const embed = new discord_js_1.MessageEmbed()
+        const embed = new discord_js_1.EmbedBuilder()
             .setTitle('규칙');
         const rules = Object.assign(rules_json_1.default);
         for (const i in rules) {
-            embed.addField(i, rules[i].join('\n'), false);
+            embed.addFields({ name: i, value: rules[i].join('\n'), inline: false });
         }
         msg.channel.send({ embeds: [embed] });
     },

@@ -1,5 +1,5 @@
 import { Command } from '../../managers/Commands';
-import { MessageActionRow, MessageButton } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { Utils } from '../../structures/Utils';
 import { InteractionOptions } from '../../structures/InteractionOptions';
 
@@ -13,16 +13,16 @@ export default new Command({
     const customIds = Utils.uuid(2)
     const [bankrupctyId, cancelId] = customIds
 
-    const row = new MessageActionRow().addComponents(
-      new MessageButton()
+    const row: any = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
         .setLabel(client.messages.yes)
-        .setStyle('SUCCESS')
+        .setStyle(ButtonStyle.Success)
         .setCustomId(bankrupctyId),
-      new MessageButton()
+      new ButtonBuilder()
         .setLabel(client.messages.no)
-        .setStyle('DANGER')
+        .setStyle(ButtonStyle.Danger)
         .setCustomId(cancelId),
-    );
+    )
 
 
     const message = await msg.reply({ content: '정말 파산하시겠습니까? 파산하시면 돈과 빚이 모두 0원으로 돌아가며 한시간동안 도박을 할 수 없습니다.', components: [row] })

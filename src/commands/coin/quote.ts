@@ -1,5 +1,5 @@
 import { Command } from '../../managers/Commands';
-import { MessageActionRow, MessageButton } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 
 export default new Command({
   name: '코인 현황',
@@ -8,12 +8,12 @@ export default new Command({
   usage: '코인 현황',
   description: '현재 코인들의 현황을 업비트에서 확인합니다.',
   execute: ({ msg }) => {
-    const coinRow = new MessageActionRow().addComponents(
-      new MessageButton()
+    const row: any = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
         .setURL('https://upbit.com/exchange')
-        .setStyle('LINK')
+        .setStyle(ButtonStyle.Link)
         .setLabel('거래소')
     );
-    msg.channel.send({ content: '이곳을 눌러 현황을 확인하세요', components: [coinRow] });
+    msg.channel.send({ content: '이곳을 눌러 현황을 확인하세요', components: [row] });
   },
 });

@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { Command } from '../../managers/Commands';
 import wholeRules from '../../language/rules.json';
 
@@ -9,13 +9,13 @@ export default new Command({
   usage: '규칙',
   description: '서버 규칙을 확인합니다.',
   execute: ({ msg }) => {
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle('규칙');
       
     const rules = Object.assign(wholeRules);
 
     for (const i in rules) {
-      embed.addField(i, rules[i].join('\n'), false);
+      embed.addFields({ name: i, value: rules[i].join('\n'), inline: false});
     }
 
     msg.channel.send({ embeds: [embed] });

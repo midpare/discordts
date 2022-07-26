@@ -1,27 +1,27 @@
 import { Client } from '../structures/Client';
-import Discord, { ButtonInteraction, SelectMenuInteraction } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, BaseInteraction } from 'discord.js';
 import { Event } from '../managers/Event';
 
 export default new Event({
   name: 'interactionCreate',
-  execute: async (interaction: Discord.Interaction) => {
+  execute: async (interaction: BaseInteraction) => {
     const client = <Client>interaction.client;
 
-    if (!(interaction instanceof ButtonInteraction || interaction instanceof SelectMenuInteraction))
+    if (!interaction.isButton() && !interaction.isSelectMenu())
       return;
 
     const id = interaction.user.id;
 
     const options = client.interactionOptions.get(interaction.customId);
-    
+
     if (!options || options.id != id)
       return;
 
     const events = client.interactions.get(options.cmd);
-    
+
     if (!events)
       return;
-      
+
     try {
       if (options.cmd != 'cancel')
         events.execute({ interaction, options, client });

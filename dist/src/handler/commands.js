@@ -32,21 +32,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const glob_1 = require("glob");
-const util_1 = require("util");
-const globPromise = (0, util_1.promisify)(glob_1.glob);
+const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
-        const mainCommandFiles = yield globPromise(`${__dirname}/../commands/**/*{.ts,.js}`);
-        for (const dir of mainCommandFiles) {
-            const file = (yield Promise.resolve().then(() => __importStar(require(dir)))).default;
+        const commandFiles = new Array();
+        Utils_1.Utils.getPath(__dirname + '/../commands', commandFiles);
+        for (const path of commandFiles) {
+            const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             if (client.commands.get(file.name))
-                throw `command name duplicate! command path: ${dir}, command name: ${file.name}`;
+                throw `command name duplicate! command path: ${path}, command name: ${file.name}`;
             client.commands.set(file.name, file);
             if (file.aliases) {
                 for (const fileName of file.aliases) {
                     if (client.commands.get(fileName))
-                        throw `command name duplicate! command path: ${dir}, command name: ${fileName}`;
+                        throw `command name duplicate! command path: ${path}, command name: ${fileName}`;
                     client.commands.set(fileName, file);
                 }
             }

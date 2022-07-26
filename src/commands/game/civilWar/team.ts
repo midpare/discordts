@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { Command } from '../../../managers/Commands';
 import { Utils } from '../../../structures/Utils';
 
@@ -22,7 +22,7 @@ export default new Command({
     if (!team2[0])
       return msg.reply('두명 이상 맨션을 해주시기 바랍니다.');
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle('팀')
       .addFields(
         { name: '1팀', value: `${team1.join(', ')}`, inline: false},

@@ -32,14 +32,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const glob_1 = require("glob");
-const util_1 = require("util");
-const globPromise = (0, util_1.promisify)(glob_1.glob);
+const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
-        const eventFiles = yield globPromise(`${__dirname}/../events/**/*{.ts,.js}`);
-        for (const dir of eventFiles) {
-            const file = (yield Promise.resolve().then(() => __importStar(require(dir)))).default;
+        const eventFiles = new Array();
+        Utils_1.Utils.getPath(__dirname + '/../events', eventFiles);
+        for (const path of eventFiles) {
+            const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             try {
                 client.on(file.name, file.execute);
             }

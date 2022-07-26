@@ -1,17 +1,15 @@
-import { glob } from 'glob';
-import { promisify } from 'util';
 import { Client } from '../structures/Client';
-
-const globPromise = promisify(glob);
+import { Utils } from '../structures/Utils';
 
 export default async function (client: Client) {
-  const eventFiles = await globPromise(`${__dirname}/../events/**/*{.ts,.js}`);
-  
-  for (const dir of eventFiles) {
-    const file = (await import(dir)).default;
+  const eventFiles = new Array();
+  Utils.getPath(__dirname + '/../events', eventFiles);
+
+  for (const path of eventFiles) {
+    const file = (await import(path)).default;
     try {
       client.on(file.name, file.execute);
-    } catch(error) {
+    } catch (error) {
       console.error(error);
     }
   }

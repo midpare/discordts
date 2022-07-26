@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { Command } from '../../managers/Commands';
 
 export default new Command({
@@ -12,7 +12,7 @@ export default new Command({
     if (!betting)
       return msg.reply('아직 베팅을 시작하지 않았습니다.');
 
-    const embed = new MessageEmbed();
+    const embed = new EmbedBuilder();
     const persent = betting.persent;
 
     embed

@@ -35,15 +35,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const glob_1 = require("glob");
-const util_1 = require("util");
 const ms_1 = __importDefault(require("ms"));
-const globPromise = (0, util_1.promisify)(glob_1.glob);
+const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
-        const intervalFiles = yield globPromise(`${__dirname}/../interval/**/*{.ts,.js}`);
-        for (const dir of intervalFiles) {
-            const file = (yield Promise.resolve().then(() => __importStar(require(dir)))).default;
+        const intervalFiles = new Array();
+        Utils_1.Utils.getPath(__dirname + '/../interval', intervalFiles);
+        for (const path of intervalFiles) {
+            const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             try {
                 if (file.immediate)
                     file.execute(client);

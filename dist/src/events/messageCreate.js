@@ -9,17 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Client_1 = require("../structures/Client");
 const Event_1 = require("../managers/Event");
 exports.default = new Event_1.Event({
     name: 'messageCreate',
     execute: (msg) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a;
+        var _a, _b;
         const client = msg.client;
-        if (!(client instanceof Client_1.Client))
-            return;
         const prefix = process.env.PREFIX || '';
-        if (msg.author.bot || msg.author.id === ((_a = client.user) === null || _a === void 0 ? void 0 : _a.id) || !msg.content.startsWith(prefix))
+        console.log(msg.author.bot);
+        console.log(msg.author.id == ((_a = client.user) === null || _a === void 0 ? void 0 : _a.id));
+        console.log(msg);
+        if (msg.author.bot || msg.author.id === ((_b = client.user) === null || _b === void 0 ? void 0 : _b.id) || !msg.content.startsWith(prefix))
             return;
         const id = msg.author.id;
         const args = msg.content.slice(prefix.length).trim().split(/ +/g);

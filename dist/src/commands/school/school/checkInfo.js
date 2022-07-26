@@ -20,13 +20,13 @@ exports.default = new Commands_1.Command({
     execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield client.models.school.findOne({ id });
-        const embed = new discord_js_1.MessageEmbed();
+        const embed = new discord_js_1.EmbedBuilder();
         if (!user)
             return msg.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.');
         embed
             .setTitle(`${msg.author.username}님의 학교정보`)
             .setDescription(`${user.cityName} ${user.schoolName} ${user.grade}학년 ${user.class}반`)
-            .setColor('GREEN');
+            .setColor(0x32CD32);
         msg.channel.send({ embeds: [embed] });
     }),
 });

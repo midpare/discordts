@@ -8,14 +8,12 @@ exports.default = new Commands_1.Command({
     usage: '내전 종료',
     description: '내전을 종료합니다.',
     execute: ({ msg, client }) => {
-        var _a;
-        const channel = client.channels.cache.get(((_a = msg.mentions.channels.first()) === null || _a === void 0 ? void 0 : _a.id) || '');
-        if (!channel || !channel.isVoiceBased())
-            return msg.reply('정확한 음성채널을 맨션해주시기 바랍니다.');
-        for (const user of client.civilWar.allTeam) {
+        const civilWar = client.civilWar;
+        for (const user of civilWar.teams.flat()) {
             if (!user.voice || user.voice.channelId == null)
                 continue;
-            user.voice.setChannel(channel);
+            user.voice.setChannel(civilWar.channel);
         }
+        civilWar.clear();
     }
 });

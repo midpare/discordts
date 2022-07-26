@@ -13,28 +13,28 @@ const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../../managers/Commands");
 const Utils_1 = require("../../../structures/Utils");
 exports.default = new Commands_1.Command({
-    name: '내전 팀',
-    aliases: ['내전 팀나누기'],
+    name: '내전 시작',
+    aliases: ['내전 팀나누기', '내전 팀'],
     category: '게임',
     usage: '내전 팀 <이름> <이름> ...',
     description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
     execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a;
-        const members = Utils_1.Utils.shuffle(Array.from(((_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.values()) || []));
-        const team1 = new Array();
-        const team2 = new Array();
-        for (let i = 0; i < members.length; i += 2) {
-            team1.push(members[i]);
-            members[i + 1] ? team2.push(members[i + 1]) : null;
+        var _a, _b, _c;
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.voice.channel))
+            return msg.reply('음성채널에 접속해주시기 바랍니다.');
+        const members = Utils_1.Utils.shuffle(Array.from(((_b = msg.member) === null || _b === void 0 ? void 0 : _b.voice.channel.members.values()) || []));
+        const civilWar = client.civilWar;
+        if (members.length < 2)
+            return msg.reply('현재 음성채널에 두명이상 접속해있지 않습니다.');
+        if (!civilWar.isEmpty()) {
+            console.log(civilWar);
+            return msg.reply('이미 시작한 내전이 있습니다.');
         }
-        if (!team2[0])
-            return msg.reply('두명 이상 맨션을 해주시기 바랍니다.');
+        civilWar.setTeam(members);
+        civilWar.setChannel((_c = msg.member) === null || _c === void 0 ? void 0 : _c.voice.channel);
         const embed = new discord_js_1.EmbedBuilder()
             .setTitle('팀')
-            .addFields({ name: '1팀', value: `${team1.join(', ')}`, inline: false }, { name: '2팀', value: `${team2.join(', ')}`, inline: false });
+            .addFields({ name: '1팀', value: `${civilWar.teams[0].join(', ')}`, inline: false }, { name: '2팀', value: `${civilWar.teams[1].join(', ')}`, inline: false });
         msg.channel.send({ embeds: [embed] });
-        client.civilWar.allTeam = members;
-        client.civilWar.team1 = team1;
-        client.civilWar.team2 = team2;
     }),
 });

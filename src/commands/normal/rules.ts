@@ -11,7 +11,7 @@ export default new Command({
     const rules = new Rules();
 
     for (const [name, value] of Object.entries(rules)) {
-      embed.addFields({ name, value: value.join('\n'), inline: false});
+      embed.addFields({ name, value: value.join('\n'), inline: false });
     }
 
     msg.channel.send({ embeds: [embed] });

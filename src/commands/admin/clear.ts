@@ -20,11 +20,33 @@ export default new Command({
 
     if (!msg.channel.isTextBased() || msg.channel.isVoiceBased() || msg.channel.isDMBased())
       return;
-      
-    msg.channel.bulkDelete(count + 1);
-    const send = await msg.reply(client.messages.admin.clear.success(count));
+
+    const target = msg.mentions.members?.first();
+
+    let msgs = await msg.channel.messages.fetch({ limit: 99 });
+    if (target) {
+      msgs = msgs.filter(msg => msg.author.id == target.user.id)
+    }
+
+    if (msgs.size > count) {
+      for (let i = 0; i < msgs.size - count; i++) {
+        const key = msgs.keyAt(i + count);
+        if (key)
+          msgs.delete(key);
+      }
+    }
+ 
+    if (msgs.size == 0)
+      return;
+
+    if (msgs.size == 1)
+      return msgs.first()?.delete();
+
+    msg.channel.bulkDelete(msgs, true);
+    const sent = await msg.channel.send(client.messages.admin.clear.success(count))
+    
     setTimeout(() => {
-      send.delete();
+      sent.delete();
     }, 1500);
   },
 });

@@ -13,18 +13,24 @@ export default new Event({
     const id = interaction.user.id;
 
     const options = client.interactionOptions.get(interaction.customId);
+    let event = client.interactions.get(interaction.customId); 
 
+    if (!options && event) {
+      event.execute({ interaction, options, client });
+      return;
+    }
+    
     if (!options || options.id != id)
       return;
 
-    const events = client.interactions.get(options.cmd);
+    event = client.interactions.get(options.cmd);
 
-    if (!events)
+    if (!event)
       return;
 
     try {
       if (options.cmd != 'cancel')
-        events.execute({ interaction, options, client });
+        event.execute({ interaction, options, client });
 
       for (const id of options.customIds) {
         client.interactionOptions.delete(id)

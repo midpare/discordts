@@ -11,17 +11,17 @@ export default new Command({
     const embed = new EmbedBuilder();
     const prefix = process.env.PREFIX;
 
-    const directories = [...new Set(client.commands.map((command: Command) => command.category))];
+    const directories = [...new Set(client.commands.map((command: Command) => command.category).filter(category => category != undefined))];
     const categories = new Map();
     for (const category of directories) {
       const getCommands = new Set(client.commands
-        .filter((commands: Command) => commands.category == category)
+        .filter((commands: Command) => commands.category == category && !commands.private)
         .map((command: Command) => command.name)
       );
       categories.set(category, [...getCommands]);
     }
     const commands = categories.get(args[0]);
-
+    
     if (!commands) {
       embed
         .setTitle('명령어')

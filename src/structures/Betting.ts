@@ -1,5 +1,5 @@
-import { User, Message, Snowflake } from "discord.js";
-import { Client } from "./Client";
+import { User, Message, Snowflake } from 'discord.js';
+import { Client } from './Client';
 
 export class Betting {
   public readonly title: string;
@@ -79,12 +79,12 @@ export class BetNode {
     const posArr = this.user.find((element: { id: Snowflake }) => element.id = id);
     if (!posArr) {
       this.user.push({ id, money });
-      msg.reply(`${name}님이 "${this.name}"에 ${money.toLocaleString()}원을 베팅했습니다! \n현재잔액 ${user.money.toLocaleString()}원 -> ${(user.money - money).toLocaleString()}원`);
+      msg.reply(`${name}님이 '${this.name}'에 ${money.toLocaleString()}원을 베팅했습니다! \n현재잔액 ${user.money.toLocaleString()}원 -> ${(user.money - money).toLocaleString()}원`);
     } else {
       if (posArr.money + money < 0)
         return msg.reply(`베팅액보다 큰 금액을 뺄 수는 없습니다 \n현재 베팅액: ${posArr.money.toLocaleString()}`);
       posArr.money += money;
-      msg.reply(`${name}님이 "${this.name}"에 ${money.toLocaleString()}원을 추가로 베팅했습니다! \n현재 베팅액: ${(posArr.money - money).toLocaleString()}원 -> ${posArr.money.toLocaleString()}원 \n현재 잔액 ${user.money.toLocaleString()}원 -> ${(user.money - money).toLocaleString()}원`);
+      msg.reply(`${name}님이 '${this.name}'에 ${money.toLocaleString()}원을 추가로 베팅했습니다! \n현재 베팅액: ${(posArr.money - money).toLocaleString()}원 -> ${posArr.money.toLocaleString()}원 \n현재 잔액 ${user.money.toLocaleString()}원 -> ${(user.money - money).toLocaleString()}원`);
     }
     (await this.client.models.gambling.updateOne({ id }, { $inc: { money: - money } })).matchedCount;
   }

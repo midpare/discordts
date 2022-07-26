@@ -1,33 +1,33 @@
 import { User } from 'discord.js';
 
 export class Messages {
-  public yes = '예';
+  public readonly yes = '예';
 
-  public no = '아니요';
+  public readonly no = '아니요';
 
-  public none = '없음';
+  public readonly none = '없음';
 
-  public missingPermissionUser = '이 명령어를 사용할 권한이 없습니다.'
+  public readonly missingPermissionUser = '이 명령어를 사용할 권한이 없습니다.'
 
-  public missingMentionUser = (object: string) => `${object}할 유저를 맨션해주시기 바랍니다.`;
+  public readonly missingMentionUser = (object: string) => `${object}할 유저를 맨션해주시기 바랍니다.`;
 
-  public missingPermissionTarget = (object: string) => `이 유저는 ${object}할 수 없습니다.`;
+  public readonly missingPermissionTarget = (object: string) => `이 유저는 ${object}할 수 없습니다.`;
 
-  public missingVoiceChannelUser = '이 유저는 음성채널에 접속해있지 않습니다.';
+  public readonly missingVoiceChannelUser = '이 유저는 음성채널에 접속해있지 않습니다.';
 
-  public betweenNumber = (min: number, max: number) => `${min}에서 ${max}사이의 수를 입력해주시기 바랍니다.`;
+  public readonly betweenNumber = (min: number, max: number) => `${min}에서 ${max}사이의 수를 입력해주시기 바랍니다.`;
 
-  public naturalNumber = '정확한 자연수를 입력해주시기 바랍니다.';
+  public readonly naturalNumber = '정확한 자연수를 입력해주시기 바랍니다.';
 
-  public noneMoney = '돈이 없을때는 도박을 할 수 없습니다.';
+  public readonly noneMoney = '돈이 없을때는 도박을 할 수 없습니다.';
 
-  public overMoney = (money: number) => `현재 잔액보다 높은 돈은 입력하실 수 없습니다.\n현재 잔액: ${money.toLocaleString()}원`;
+  public readonly overMoney = (money: number) => `현재 잔액보다 높은 돈은 입력하실 수 없습니다.\n현재 잔액: ${money.toLocaleString()}원`;
 
-  public punishment = (user: User, punishment: string, reason: string) => '```' + `처벌 대상: ${user.username}#${user.discriminator}\n가한 처벌: ${punishment}\n처벌 사유: ${reason}`;
+  public readonly punishment = (user: User, punishment: string, reason: string) => '```' + `처벌 대상: ${user.username}#${user.discriminator}\n가한 처벌: ${punishment}\n처벌 사유: ${reason}`;
 
-  public coolTime = (second: number) => `명령어의 쿨타임이 ${second}초 남았습니다.`;
+  public readonly coolTime = (second: number) => `명령어의 쿨타임이 ${second}초 남았습니다.`;
 
-  public admin = {  
+  public readonly admin = {  
     onlyDeveloper: '개발자 전용 명령어입니다.',
 
     alarm: {
@@ -79,7 +79,7 @@ export class Messages {
     },
   };
 
-  public gambling = {
+  public readonly gambling = {
     balance: (name: string, money: number) => `${name}님의 현재 잔액은 ${money.toLocaleString()}원입니다.`,
 
     debt:  (name: string, debt: number) => `${name}님의 현재 빚은 ${debt.toLocaleString()}원입니다.`,

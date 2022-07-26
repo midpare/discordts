@@ -1,11 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../managers/Commands");
-const rules_json_1 = __importDefault(require("../../language/rules.json"));
+const rules_1 = require("../../language/rules");
 exports.default = new Commands_1.Command({
     name: '규칙',
     aliases: ['룰', '법전'],
@@ -15,9 +12,9 @@ exports.default = new Commands_1.Command({
     execute: ({ msg }) => {
         const embed = new discord_js_1.EmbedBuilder()
             .setTitle('규칙');
-        const rules = Object.assign(rules_json_1.default);
-        for (const i in rules) {
-            embed.addFields({ name: i, value: rules[i].join('\n'), inline: false });
+        const rules = new rules_1.Rules();
+        for (const [name, value] of Object.entries(rules)) {
+            embed.addFields({ name, value: value.join('\n'), inline: false });
         }
         msg.channel.send({ embeds: [embed] });
     },

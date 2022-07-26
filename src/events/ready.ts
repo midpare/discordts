@@ -1,4 +1,4 @@
-import { Event } from "../managers/Event";
+import { Event } from '../managers/Event';
 
 export default new Event({
   name: 'ready',

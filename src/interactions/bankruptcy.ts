@@ -1,4 +1,4 @@
-import { Interaction } from "../managers/Interaction";
+import { Interaction } from '../managers/Interaction';
 
 export default new Interaction({
   name: 'bankrupcty',

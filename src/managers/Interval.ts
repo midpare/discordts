@@ -1,4 +1,4 @@
-import { Client } from "../structures/Client";
+import { Client } from '../structures/Client';
 
 type ExecuteType = (client: Client) => Promise<void>
 

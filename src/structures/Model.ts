@@ -1,7 +1,7 @@
-import { gambling } from "../models/gambling";
-import { school } from "../models/school";
-import { warning } from "../models/warning";
-import { attendance } from "../models/attendance";
+import { gambling } from '../models/gambling';
+import { school } from '../models/school';
+import { warning } from '../models/warning';
+import { attendance } from '../models/attendance';
 import Mongoose from 'mongoose';
 
 export class Model {

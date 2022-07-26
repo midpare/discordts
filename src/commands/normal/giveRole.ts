@@ -1,5 +1,5 @@
-import { Command } from "../../managers/Commands";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { Command } from '../../managers/Commands';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 
 export default new Command({
   name: 'giverole',

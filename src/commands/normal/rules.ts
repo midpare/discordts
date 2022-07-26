@@ -1,6 +1,6 @@
 import { EmbedBuilder } from 'discord.js';
 import { Command } from '../../managers/Commands';
-import wholeRules from '../../language/rules.json';
+import { Rules } from '../../language/rules';
 
 export default new Command({
   name: '규칙',
@@ -11,11 +11,10 @@ export default new Command({
   execute: ({ msg }) => {
     const embed = new EmbedBuilder()
       .setTitle('규칙');
-      
-    const rules = Object.assign(wholeRules);
+    const rules = new Rules();
 
-    for (const i in rules) {
-      embed.addFields({ name: i, value: rules[i].join('\n'), inline: false});
+    for (const [name, value] of Object.entries(rules)) {
+      embed.addFields({ name, value: value.join('\n'), inline: false});
     }
 
     msg.channel.send({ embeds: [embed] });

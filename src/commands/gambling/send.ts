@@ -11,20 +11,28 @@ export default new Command({
     const user = await client.models.gambling.findOne({ id });
 
     const target = msg.mentions.members?.first();
-    if (!target)
-      return msg.reply('송금할 유저를 맨션해주시기 바랍니다.');
+    if (!target) {
+      msg.reply('송금할 유저를 맨션해주시기 바랍니다.');
+      return;
+    }
 
     const targetUser = await client.models.gambling.findOne({ id: target.id });
-    if (!targetUser)
-      return msg.reply('송금할 유저가 가입을 하지 않았습니다.');
+    if (!targetUser) {
+      msg.reply('송금할 유저가 가입을 하지 않았습니다.');
+      return;
+    }
 
     const money = parseFloat(args[1]);
 
-    if (!Number.isInteger(money) || money <= 0)
-      return msg.reply('정확한 금액을 입력해주시기 바랍니다.');
+    if (!Number.isInteger(money) || money <= 0) {
+      msg.reply('정확한 금액을 입력해주시기 바랍니다.');
+      return;
+    }
 
-    if (user.money < money)
-      return msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
+    if (user.money < money) {
+      msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
+      return;
+    }
 
     (await client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
     (await client.models.gambling.updateOne({ id: target.id }, { $inc: { money: money } })).matchedCount;

@@ -4,11 +4,11 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 export default new Command({
   name: 'giverole',
   private: true,
-  execute: ({ msg, client }) => {
+  execute: async ({ msg, client }) => {
     if (msg.author.id != '446068726849208341')
       return;
 
-    const row: any = new ActionRowBuilder().addComponents(
+    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId('giveRole')
         .setStyle(ButtonStyle.Primary)

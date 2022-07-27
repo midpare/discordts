@@ -10,8 +10,10 @@ export default new Command({
     const id = msg.author.id;
     const user = await client.models.gambling.findOne({ id });
 
-    if (user.money == 0)
-      return msg.reply(client.messages.noneMoney);
+    if (user.money == 0) {
+      msg.reply(client.messages.noneMoney);
+      return;
+    }
 
     const money = Math.floor(user.money);
     const random = Math.floor(Math.random() * 2);

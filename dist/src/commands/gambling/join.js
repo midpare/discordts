@@ -20,8 +20,10 @@ exports.default = new Commands_1.Command({
         const id = msg.author.id;
         const name = msg.author.username;
         const user = yield client.models.gambling.findOne({ id });
-        if (user)
-            return msg.reply(client.messages.gambling.join.alreadyJoin);
+        if (user) {
+            msg.reply(client.messages.gambling.join.alreadyJoin);
+            return;
+        }
         const newUser = new gambling_1.gambling({ id, name, stock: [] });
         yield newUser.save();
         msg.reply(client.messages.gambling.join.success);

@@ -10,13 +10,17 @@ export default new Command({
     const id = msg.author.id;
     const money = parseFloat(args[0]);
 
-    if (!Number.isInteger(money) || money <= 0)
-      return msg.reply(client.messages.naturalNumber);
+    if (!Number.isInteger(money) || money <= 0) {
+      msg.reply(client.messages.naturalNumber);
+      return;
+    }
 
     const user = await client.models.gambling.findOne({ id });
 
-    if (money > user.money)
-      return msg.reply(client.messages.overMoney(user.money));
+    if (money > user.money) {
+      msg.reply(client.messages.overMoney(user.money));
+      return;
+    }
 
     const random = Math.floor(Math.random() * 2);
 

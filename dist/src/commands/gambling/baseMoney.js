@@ -21,13 +21,17 @@ exports.default = new Commands_1.Command({
         const user = yield client.models.gambling.findOne({ id });
         if (!user)
             return;
-        if (user.money != 0 || user.stock[0])
-            return msg.reply(client.messages.gambling.baseMoney.haveMoney);
+        if (user.money != 0 || user.stock[0]) {
+            msg.reply(client.messages.gambling.baseMoney.haveMoney);
+            return;
+        }
         const time = new Date().getTime();
         const coolTime = 30 * 1000;
         const userCoolTime = user.baseMoneyCoolTime;
-        if (time - userCoolTime < coolTime)
-            return msg.reply(client.messages.coolTime(Math.ceil(coolTime - (time - userCoolTime) / 1000)));
+        if (time - userCoolTime < coolTime) {
+            msg.reply(client.messages.coolTime(Math.ceil(coolTime - (time - userCoolTime) / 1000)));
+            return;
+        }
         const baseMoney = 25000;
         (yield client.models.gambling.updateOne({ id }, { $set: { money: baseMoney, baseMoneyCoolTime: time } })).matchedCount;
         msg.reply(client.messages.gambling.baseMoney.success(baseMoney));

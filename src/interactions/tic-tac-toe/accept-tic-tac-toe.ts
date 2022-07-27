@@ -23,7 +23,7 @@ export default new Interaction({
     let index = 0;
     const buttons = new Array();
     for (let i = 0; i < 3; i++) {
-      const row: any = new ActionRowBuilder();
+      const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder();
       for (let j = 0; j < 3; j++) {
         const button = new ButtonBuilder()
           .setCustomId(customIds[index])

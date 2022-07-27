@@ -21,8 +21,10 @@ exports.default = new Commands_1.Command({
         const user = yield client.models.gambling.findOne({ id });
         const date = new Date();
         const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
-        if (user.date == today)
-            return msg.reply(client.messages.gambling.daily.today);
+        if (user.date == today) {
+            msg.reply(client.messages.gambling.daily.today);
+            return;
+        }
         const money = Math.floor(Math.random() * 50000 + 50000);
         (yield client.models.gambling.updateOne({ id }, { $inc: { money }, $set: { date: today } })).matchedCount;
         msg.reply(client.messages.gambling.daily.success(user.money, money));

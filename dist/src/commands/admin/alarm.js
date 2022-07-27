@@ -20,14 +20,22 @@ exports.default = new Commands_1.Command({
         const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
         const channel1 = client.channels.cache.get('910521120770359323');
         const channel2 = client.channels.cache.get('910521120770359324');
-        if (!target)
-            return msg.reply(client.messages.admin.alarm.missingMentionUser);
-        if (target.user.bot)
-            return msg.reply(client.messages.admin.alarm.bot);
-        if (target.voice.channelId == null)
-            return msg.reply(client.messages.missingVoiceChannelUser);
-        if (!target.voice.selfDeaf)
-            return msg.reply(client.messages.admin.alarm.missingSelfDeaf);
+        if (!target) {
+            msg.reply(client.messages.admin.alarm.missingMentionUser);
+            return;
+        }
+        if (target.user.bot) {
+            msg.reply(client.messages.admin.alarm.bot);
+            return;
+        }
+        if (target.voice.channelId == null) {
+            msg.reply(client.messages.missingVoiceChannelUser);
+            return;
+        }
+        if (!target.voice.selfDeaf) {
+            msg.reply(client.messages.admin.alarm.missingSelfDeaf);
+            return;
+        }
         const userChannel = target.voice.channel;
         yield target.voice.setChannel(channel1);
         const previousInterval = setInterval(() => {

@@ -19,17 +19,21 @@ export default new Event({
       return;
     }
 
-    if (!options)
-      return interaction.reply({ content: '사용되지 않거나 종료된 상호작용입니다.', ephemeral: true })
+    if (!options) {
+      interaction.reply({ content: '사용되지 않거나 종료된 상호작용입니다.', ephemeral: true });
+      return;
+    }
 
     event = client.interactions.get(options.cmd);
-    if (!event || !options.ids.includes(id))
-      return interaction.reply({ content: '이 상호작용을 사용할 수 없습니다.', ephemeral: true })
+    if (!event || !options.ids.includes(id)) {
+      interaction.reply({ content: '이 상호작용을 사용할 수 없습니다.', ephemeral: true });
+      return;
+    }
 
     try {
       event.execute({ interaction, options, client });
       for (const id of options.customIds) {
-        client.interactionOptions.delete(id)
+        client.interactionOptions.delete(id);
       }
 
       if (event.deleted) {

@@ -29,8 +29,10 @@ export default new Event({
       args.splice(0, 1);
     }
 
-    if (!event)
-      return msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`);
+    if (!event) {
+      msg.reply(`정확한 명령어를 입력해주시기 바랍니다.\n${prefix}help`);
+      return;
+    }
 
     const gambChannel = client.channels.cache.get('1000969429158481980');
     const cmdChannel = client.channels.cache.get('1000969483462123591');
@@ -41,27 +43,35 @@ export default new Event({
         case '도박':
         case '베팅':
         case '코인':
-          if (msg.channel != gambChannel)
-            return msg.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
+          if (msg.channel != gambChannel) {
+            msg.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
+            return;
+          }
 
           const user = await client.models.gambling.findOne({ id });
-          if (event.name != '가입' && !user)
-            return msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
+          if (event.name != '가입' && !user) {
+            msg.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
+            return;
+          }
 
           const leftTime = 1000 * 60 * 60 - time + user.bankruptcy;
           const leftminute = Math.floor(leftTime / (1000 * 60));
           const leftsecond = leftTime / 1000 - leftminute * 60;
 
-          if (leftTime > 0)
-            return msg.reply(`파산한 유저는 한시간동안 도박을 할 수 없습니다.\n남은 시간: ${leftminute}분 ${Math.floor(leftsecond)}초`);
+          if (leftTime > 0) {
+            msg.reply(`파산한 유저는 한시간동안 도박을 할 수 없습니다.\n남은 시간: ${leftminute}분 ${Math.floor(leftsecond)}초`);
+            return;
+          }
 
           break;
         case '기본':
         case '관리자':
           break;
         default:
-          if (msg.channel != cmdChannel)
-            return msg.reply('이 명령어는 명령어사용방에서만 사용할 수 있습니다.');
+          if (msg.channel != cmdChannel) {
+            msg.reply('이 명령어는 명령어사용방에서만 사용할 수 있습니다.');
+            return;
+          }
           break;
       }
     }

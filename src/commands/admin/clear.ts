@@ -8,15 +8,21 @@ export default new Command({
   usage: 'clear <숫자>',
   description: '메시지를 보낸 채팅방에 <숫자>만큼의 채팅을 지웁니다.',
   execute: async ({ msg, args, client }) => {
-    if (!msg.member?.permissions.has(PermissionFlagsBits.ManageMessages))
-      return msg.reply(client.messages.missingPermissionUser);
+    if (!msg.member?.permissions.has(PermissionFlagsBits.ManageMessages)) {
+      msg.reply(client.messages.missingPermissionUser);
+      return;
+    }
 
     const count = parseFloat(args[0]);
-    if (!Number.isInteger(count))
-      return msg.reply(client.messages.naturalNumber);
+    if (!Number.isInteger(count)) {
+      msg.reply(client.messages.naturalNumber);
+      return;
+    }
 
-    if (count < 0 || count > 99)
-      return msg.reply(client.messages.betweenNumber(1, 99));
+    if (count < 0 || count > 99) {
+      msg.reply(client.messages.betweenNumber(1, 99));
+      return;
+    }
 
     if (!msg.channel.isTextBased() || msg.channel.isVoiceBased() || msg.channel.isDMBased())
       return;
@@ -39,8 +45,10 @@ export default new Command({
     if (msgs.size == 0)
       return;
 
-    if (msgs.size == 1)
-      return msgs.first()?.delete();
+    if (msgs.size == 1) {
+      msgs.first()?.delete();
+      return;
+    }
 
     msg.channel.bulkDelete(msgs, true);
     const sent = await msg.channel.send(client.messages.admin.clear.success(count))

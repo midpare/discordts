@@ -23,13 +23,19 @@ exports.default = new Commands_1.Command({
         const random = Math.floor(Math.random() * 3);
         const human = rspArgs.indexOf(args[0]);
         const bot = random;
-        if (human < 0)
-            return msg.reply('가위, 바위, 보 중 하나를 입력해주시기바랍니다.\n !rsp <가위/바위/보> <돈>');
+        if (human < 0) {
+            msg.reply('가위, 바위, 보 중 하나를 입력해주시기바랍니다.\n !rsp <가위/바위/보> <돈>');
+            return;
+        }
         const money = parseFloat(args[1]);
-        if (!Number.isInteger(money) || money <= 0)
-            return msg.reply('정확한 금액을 입력해주시기 바랍니다.');
-        if (money > user.money)
-            return msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
+        if (!Number.isInteger(money) || money <= 0) {
+            msg.reply('정확한 금액을 입력해주시기 바랍니다.');
+            return;
+        }
+        if (money > user.money) {
+            msg.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
+            return;
+        }
         let winner;
         if (human === bot)
             winner = null;

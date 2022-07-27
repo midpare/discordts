@@ -22,12 +22,18 @@ exports.default = new Commands_1.Command({
         var _a, _b;
         const id = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
         const prefix = (_b = process.env.PREFIX) !== null && _b !== void 0 ? _b : '';
-        if (client.betting.get(id))
-            return msg.reply('이미 시작한 베팅이 있습니다.');
-        if (!args[0])
-            return msg.reply('제목을 입력해주시기바랍니다.');
-        if (!args[1] || !args[2])
-            return msg.reply('베팅 이름을 입력해주시기바랍니다.');
+        if (client.betting.get(id)) {
+            msg.reply('이미 시작한 베팅이 있습니다.');
+            return;
+        }
+        if (!args[0]) {
+            msg.reply('제목을 입력해주시기바랍니다.');
+            return;
+        }
+        if (!args[1] || !args[2]) {
+            msg.reply('베팅 이름을 입력해주시기바랍니다.');
+            return;
+        }
         const embed = new discord_js_1.EmbedBuilder();
         const betting = new Betting_1.Betting(args[0], args[1], args[2], client);
         embed

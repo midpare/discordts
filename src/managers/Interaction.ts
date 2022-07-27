@@ -6,7 +6,7 @@ type ExecuteType<T extends ButtonInteraction | SelectMenuInteraction> = (options
   interaction: T,
   options: InteractionOptions | undefined
   client: Client
-}) => Promise<any>;
+}) => Promise<void>;
 
 export class Interaction<T extends ButtonInteraction | SelectMenuInteraction> {
   public readonly name: string;

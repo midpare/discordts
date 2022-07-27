@@ -13,8 +13,10 @@ export default new Command({
     const date = new Date();
     const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
 
-    if (user.date == today)
-      return msg.reply(client.messages.gambling.daily.today);
+    if (user.date == today) {
+      msg.reply(client.messages.gambling.daily.today);
+      return;
+    }
 
     const money = Math.floor(Math.random() * 50000 + 50000);
     (await client.models.gambling.updateOne({ id }, { $inc: { money }, $set: { date: today } })).matchedCount;

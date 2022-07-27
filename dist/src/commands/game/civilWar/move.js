@@ -17,8 +17,10 @@ exports.default = new Commands_1.Command({
     description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
     execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const civilWar = client.civilWar;
-        if (civilWar.isEmpty())
-            return msg.reply('이동할 멤버가 없습니다.');
+        if (civilWar.isEmpty()) {
+            msg.reply('이동할 멤버가 없습니다.');
+            return;
+        }
         const channel1 = client.channels.cache.get('1000704196552704010');
         const channel2 = client.channels.cache.get('1000704543652323328');
         for (const user of civilWar.teams[0]) {

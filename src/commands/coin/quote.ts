@@ -7,8 +7,8 @@ export default new Command({
   category: '코인',
   usage: '코인 현황',
   description: '현재 코인들의 현황을 업비트에서 확인합니다.',
-  execute: ({ msg }) => {
-    const row: any = new ActionRowBuilder().addComponents(
+  execute: async ({ msg }) => {
+    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setURL('https://upbit.com/exchange')
         .setStyle(ButtonStyle.Link)

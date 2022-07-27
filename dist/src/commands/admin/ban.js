@@ -19,15 +19,21 @@ exports.default = new Commands_1.Command({
     description: '서버에서 맨션한 <유저>를 차단합니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
-        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has(discord_js_1.PermissionFlagsBits.BanMembers)))
-            return msg.reply(client.messages.missingPermissionUser);
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has(discord_js_1.PermissionFlagsBits.BanMembers))) {
+            msg.reply(client.messages.missingPermissionUser);
+            return;
+        }
         const channel = client.channels.cache.get('910521119877005363');
         const target = (_b = msg.mentions.members) === null || _b === void 0 ? void 0 : _b.first();
         const reason = !args[1] ? client.messages.none : args.slice(1).join(' ');
-        if (!target)
-            return msg.reply(client.messages.admin.ban.missingMentionUser);
-        if (target.permissions.has(discord_js_1.PermissionFlagsBits.BanMembers))
-            return msg.reply(client.messages.admin.ban.missingPermissionTarget);
+        if (!target) {
+            msg.reply(client.messages.admin.ban.missingMentionUser);
+            return;
+        }
+        if (target.permissions.has(discord_js_1.PermissionFlagsBits.BanMembers)) {
+            msg.reply(client.messages.admin.ban.missingPermissionTarget);
+            return;
+        }
         target.ban({ reason });
         channel.send(client.messages.admin.ban.success(target.user, reason));
         msg.delete();

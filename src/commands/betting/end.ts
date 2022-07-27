@@ -8,14 +8,18 @@ export default new Command({
   execute: async ({ msg, args, client }) => {
     const id = msg.guildId ?? ''
     const betting = client.betting.get(id)
-    if (!betting)
-      return msg.reply('아직 베팅을 시작하지 않았습니다.');
+    if (!betting) {
+      msg.reply('아직 베팅을 시작하지 않았습니다.');
+      return;
+    }
 
     const bet1 = betting.bet1;
     const bet2 = betting.bet2;
     const winner = args[0];
-    if (winner != bet1.name && winner != bet2.name)
-      return msg.reply(`${bet1.name}과 ${bet2.name}중 승리팀을 선택해주시기 바랍니다.`);
+    if (winner != bet1.name && winner != bet2.name) {
+      msg.reply(`${bet1.name}과 ${bet2.name}중 승리팀을 선택해주시기 바랍니다.`);
+      return;
+    }
 
     switch (winner) {
       case bet1.name:

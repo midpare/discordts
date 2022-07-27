@@ -20,14 +20,19 @@ exports.default = new Commands_1.Command({
     description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
     execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c;
-        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.voice.channel))
-            return msg.reply('음성채널에 접속해주시기 바랍니다.');
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.voice.channel)) {
+            msg.reply('음성채널에 접속해주시기 바랍니다.');
+            return;
+        }
         const members = Utils_1.Utils.shuffle(Array.from(((_b = msg.member) === null || _b === void 0 ? void 0 : _b.voice.channel.members.values()) || []));
         const civilWar = client.civilWar;
-        if (members.length < 2)
-            return msg.reply('현재 음성채널에 두명이상 접속해있지 않습니다.');
+        if (members.length < 2) {
+            msg.reply('현재 음성채널에 두명이상 접속해있지 않습니다.');
+            return;
+        }
         if (!civilWar.isEmpty()) {
-            return msg.reply('이미 시작한 내전이 있습니다.');
+            msg.reply('이미 시작한 내전이 있습니다.');
+            return;
         }
         civilWar.setTeam(members);
         civilWar.setChannel((_c = msg.member) === null || _c === void 0 ? void 0 : _c.voice.channel);

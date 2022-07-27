@@ -20,12 +20,18 @@ exports.default = new Commands_1.Command({
         const id = msg.author.id;
         const user = yield client.models.gambling.findOne({ id });
         const money = parseFloat(args[0]);
-        if (!Number.isInteger(money) || money <= 0)
-            return msg.reply(client.messages.naturalNumber);
-        if (user.money < money)
-            return msg.reply(client.messages.overMoney(user.money));
-        if (user.debt < money)
-            return msg.reply(client.messages.gambling.payBack.overMoney(user.debt));
+        if (!Number.isInteger(money) || money <= 0) {
+            msg.reply(client.messages.naturalNumber);
+            return;
+        }
+        if (user.money < money) {
+            msg.reply(client.messages.overMoney(user.money));
+            return;
+        }
+        if (user.debt < money) {
+            msg.reply(client.messages.gambling.payBack.overMoney(user.debt));
+            return;
+        }
         (yield client.models.gambling.updateOne({ id }, { $inc: { money: -money, debt: -money, principalDebt: -money } })).matchedCount;
         msg.reply(client.messages.gambling.payBack.success(user.debt, money));
     }),

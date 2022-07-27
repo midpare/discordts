@@ -25,8 +25,10 @@ exports.default = new Interaction_1.Interaction({
         const position = options.etc.position;
         if (!tictactoe)
             return;
-        if (tictactoe.turn.id != interaction.user.id)
-            return interaction.reply({ content: '자신의 턴을 기다려주세요', ephemeral: true });
+        if (tictactoe.turn.id != interaction.user.id) {
+            interaction.reply({ content: '자신의 턴을 기다려주세요', ephemeral: true });
+            return;
+        }
         const winner = tictactoe.set(position);
         if (winner) {
             const user = (0, discord_js_1.bold)(winner.user.username);

@@ -13,7 +13,7 @@ export default new Command({
     const customIds = Utils.uuid(2)
     const [yes, no] = customIds
 
-    const row: any = new ActionRowBuilder().addComponents(
+    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setLabel(client.messages.yes)
         .setStyle(ButtonStyle.Success)

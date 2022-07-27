@@ -23,8 +23,10 @@ exports.default = new Commands_1.Command({
         const embed = new discord_js_1.EmbedBuilder();
         const user = yield client.models.gambling.findOne({ id });
         const stock = user.stock;
-        if (!stock[0])
-            return msg.reply('보유한 코인이 없습니다.');
+        if (!stock[0]) {
+            msg.reply('보유한 코인이 없습니다.');
+            return;
+        }
         embed
             .setTitle(`${msg.author.username}님의 코인 보유 현황`);
         for (const element of stock) {

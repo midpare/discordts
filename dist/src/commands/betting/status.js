@@ -20,8 +20,10 @@ exports.default = new Commands_1.Command({
         var _a;
         const guildId = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
         const betting = client.betting.get(guildId);
-        if (!betting)
-            return msg.reply('아직 베팅을 시작하지 않았습니다.');
+        if (!betting) {
+            msg.reply('아직 베팅을 시작하지 않았습니다.');
+            return;
+        }
         const embed = new discord_js_1.EmbedBuilder();
         const persent = betting.persent;
         embed

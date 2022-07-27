@@ -20,16 +20,27 @@ export default new Command({
       json: true,
     };
     const coin = await Utils.requestGet(apiOptions);
-    if (!coinName)
-      return msg.reply('판매할 코인을 입력해주시기바랍니다.');
-    if (!userCoin)
-      return msg.reply('이 코인을 가지고 있지 않습니다.');
+    if (!coinName) {
+      msg.reply('판매할 코인을 입력해주시기바랍니다.');
+      return;
+    }
+
+    if (!userCoin) {
+      msg.reply('이 코인을 가지고 있지 않습니다.');
+      return;
+    }
 
     const count = parseFloat(args[1]);
-    if (!Number.isInteger(count) || count <= 0)
-      return msg.reply('정확한 수량을 입력해주시기바랍니다.');
-    if (userCoin.count < count)
-      return msg.reply(`파려는 코인의 개수가 현재 코인개수보다 많습니다.\n현재 개수: ${userCoin.count}개`);
+    if (!Number.isInteger(count) || count <= 0) {
+      msg.reply('정확한 수량을 입력해주시기바랍니다.');
+      return;
+    }
+
+    if (userCoin.count < count) {
+      msg.reply(`파려는 코인의 개수가 현재 코인개수보다 많습니다.\n현재 개수: ${userCoin.count}개`);
+      return;
+    }
+
     const coinMoney = coin[0].tradePrice;
     const money = coinMoney * count;
 

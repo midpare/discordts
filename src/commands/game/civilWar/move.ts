@@ -9,8 +9,10 @@ export default new Command({
   execute: async ({ msg, client }) => {
     const civilWar = client.civilWar
 
-    if (civilWar.isEmpty())
-      return msg.reply('이동할 멤버가 없습니다.');
+    if (civilWar.isEmpty()) {
+      msg.reply('이동할 멤버가 없습니다.');
+      return;
+    }
 
     const channel1 = <VoiceChannel>client.channels.cache.get('1000704196552704010');
     const channel2 = <VoiceChannel>client.channels.cache.get('1000704543652323328');

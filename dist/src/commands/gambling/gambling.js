@@ -19,11 +19,15 @@ exports.default = new Commands_1.Command({
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const money = parseFloat(args[0]);
-        if (!Number.isInteger(money) || money <= 0)
-            return msg.reply(client.messages.naturalNumber);
+        if (!Number.isInteger(money) || money <= 0) {
+            msg.reply(client.messages.naturalNumber);
+            return;
+        }
         const user = yield client.models.gambling.findOne({ id });
-        if (money > user.money)
-            return msg.reply(client.messages.overMoney(user.money));
+        if (money > user.money) {
+            msg.reply(client.messages.overMoney(user.money));
+            return;
+        }
         const random = Math.floor(Math.random() * 2);
         if (random == 1) {
             (yield client.models.gambling.updateOne({ id }, { $inc: { money: money } })).matchedCount;

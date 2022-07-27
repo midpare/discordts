@@ -29,15 +29,21 @@ exports.default = new Commands_1.Command({
             json: true,
         };
         const coin = yield Utils_1.Utils.requestGet(apiOptions);
-        if (!coin)
-            return msg.reply('정확한 코인을 입력해주시기바랍니다.');
+        if (!coin) {
+            msg.reply('정확한 코인을 입력해주시기바랍니다.');
+            return;
+        }
         const count = parseFloat(args[1]);
-        if (!Number.isInteger(count) || count <= 0)
-            return msg.reply('정확한 구매 수량을 입력해주시기바랍니다.');
+        if (!Number.isInteger(count) || count <= 0) {
+            msg.reply('정확한 구매 수량을 입력해주시기바랍니다.');
+            return;
+        }
         const coinMoney = coin[0].tradePrice;
         const wholeMoney = coinMoney * count;
-        if (user.money < wholeMoney)
-            return msg.reply(`현재 잔액보다 사려는 수량이 많습니다. \n현재 잔액: ${user.money.toLocaleString()}원\n사려는 금액: ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)`);
+        if (user.money < wholeMoney) {
+            msg.reply(`현재 잔액보다 사려는 수량이 많습니다. \n현재 잔액: ${user.money.toLocaleString()}원\n사려는 금액: ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)`);
+            return;
+        }
         if (userCoin) {
             const moneyAve = (userCoin.money * userCoin.count + wholeMoney) / (userCoin.count + count);
             client.models.gambling.updateOne({ id, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } });

@@ -9,16 +9,21 @@ export default new Command({
   usage: '내전 팀 <이름> <이름> ...',
   description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
   execute: async ({ msg, client }) => {
-    if (!msg.member?.voice.channel)
-      return msg.reply('음성채널에 접속해주시기 바랍니다.');
+    if (!msg.member?.voice.channel) {
+      msg.reply('음성채널에 접속해주시기 바랍니다.');
+      return;
+    }
 
     const members = Utils.shuffle(Array.from(msg.member?.voice.channel.members.values() || []));
     const civilWar = client.civilWar;
-    if (members.length < 2)
-      return msg.reply('현재 음성채널에 두명이상 접속해있지 않습니다.');
+    if (members.length < 2) {
+      msg.reply('현재 음성채널에 두명이상 접속해있지 않습니다.');
+      return;
+    }
     
     if (!civilWar.isEmpty()) {
-      return msg.reply('이미 시작한 내전이 있습니다.');
+      msg.reply('이미 시작한 내전이 있습니다.');
+      return;
     }
 
 

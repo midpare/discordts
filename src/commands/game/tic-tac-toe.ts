@@ -12,15 +12,19 @@ export default new Command({
   execute: async ({ msg, args, client }) => {
     const target = msg.mentions.members?.first();
     const id = msg.author.id
-    if (!target)
-      return msg.reply(client.messages.missingMentionUser('틱택토를 '));
+    if (!target) {
+      msg.reply(client.messages.missingMentionUser('틱택토를 '));
+      return;
+    }
     
-    if (!msg.member || target.id == id)
-      return msg.reply('자신을 맨션할 수 없습니다.');
+    if (!msg.member || target.id == id) {
+      msg.reply('자신을 맨션할 수 없습니다.');
+      return;
+    }
 
     const customIds = Utils.uuid(2);
     const [yes, no] = customIds;
-    const row: any = new ActionRowBuilder().addComponents(
+    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId(yes)
         .setStyle(ButtonStyle.Success)

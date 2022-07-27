@@ -7,12 +7,16 @@ export default new Command({
   category: '게임',
   usage: '어몽어스 <시작/종료>',
   description: '어몽어스를 시작하고 종료합니다.',
-  execute: ({ msg, args }) => {
-    if (!msg.member?.permissions.has(PermissionFlagsBits.MuteMembers))
-      return msg.reply('이 명령어를 사용할 권한이 없습니다.');
+  execute: async ({ msg, args }) => {
+    if (!msg.member?.permissions.has(PermissionFlagsBits.MuteMembers)) {
+      msg.reply('이 명령어를 사용할 권한이 없습니다.');
+      return;
+    }
     const channel = msg.member.voice.channel;
-    if (!channel || !channel.isVoiceBased())
-      return msg.reply('음성채널에 들어가주시기 바랍니다.');
+    if (!channel || !channel.isVoiceBased()) {
+      msg.reply('음성채널에 들어가주시기 바랍니다.');
+      return;
+    }
 
     const members = Array.from(channel.members.values())
     switch (args[0]) {
@@ -32,14 +36,18 @@ export default new Command({
         break;
       case '사망':
         const user = msg.mentions.members?.first();
-        if (!user)
-          return msg.reply('유저를 맨션해주시기 바랍니다.');
-        if (dead.includes(user))
-          return msg.reply('이 유저는 이미 사망했습니다.').then(() => {
+        if (!user) {
+          msg.reply('유저를 맨션해주시기 바랍니다.');
+          return;
+        }
+        if (dead.includes(user)) {
+          msg.reply('이 유저는 이미 사망했습니다.').then(() => {
             setTimeout(() => {
               msg.delete();
             }, 1500);
           });
+          return;
+        }
         
         dead.push(user);
         if (!user.voice || user.voice.channelId == null || !user.voice.serverDeaf)

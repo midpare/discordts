@@ -9,8 +9,10 @@ export default new Command({
   execute: async ({ msg, client }) => {
     const guildId = msg.guildId ?? ''
     const betting = client.betting.get(guildId);
-    if (!betting)
-      return msg.reply('아직 베팅을 시작하지 않았습니다.');
+    if (!betting) {
+      msg.reply('아직 베팅을 시작하지 않았습니다.');
+      return;
+    }
 
     const embed = new EmbedBuilder();
     const persent = betting.persent;

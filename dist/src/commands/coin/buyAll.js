@@ -29,10 +29,14 @@ exports.default = new Commands_1.Command({
             json: true,
         };
         const coin = yield Utils_1.Utils.requestGet(apiOptions);
-        if (!coinName)
-            return msg.reply('판매할 코인을 입력해주시기바랍니다.');
-        if (!userCoin)
-            return msg.reply('이 코인을 가지고 있지 않습니다.');
+        if (!coinName) {
+            msg.reply('판매할 코인을 입력해주시기바랍니다.');
+            return;
+        }
+        if (!userCoin) {
+            msg.reply('이 코인을 가지고 있지 않습니다.');
+            return;
+        }
         const coinMoney = coin[0].tradePrice;
         const count = userCoin.count;
         const money = coinMoney * count;

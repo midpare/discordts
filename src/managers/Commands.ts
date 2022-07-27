@@ -5,7 +5,7 @@ type ExecuteType = (options: {
   msg: Message;
   args: Array<string>;
   client: Client;
-}) => any;
+}) => Promise<void>;
 
 export class Command {
   public readonly name: string;

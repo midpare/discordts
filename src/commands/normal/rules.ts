@@ -5,7 +5,7 @@ import { Rules } from '../../language/rules';
 export default new Command({
   name: '규칙',
   private: true,
-  execute: ({ msg }) => {
+  execute: async ({ msg }) => {
     const embed = new EmbedBuilder()
       .setTitle('규칙');
     const rules = new Rules();

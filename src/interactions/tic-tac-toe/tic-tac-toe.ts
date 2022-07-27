@@ -10,7 +10,7 @@ export default new Interaction({
       return;
 
     const tictactoe = client.tictactoe.get(options.etc.players);
-    const row: any = new ActionRowBuilder();
+    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder();
     const button = new ButtonBuilder()
       .setCustomId(Utils.uuid());
     const position = options.etc.position
@@ -18,8 +18,10 @@ export default new Interaction({
     if (!tictactoe)
       return
 
-    if (tictactoe.turn.id != interaction.user.id)
-      return interaction.reply({ content: '자신의 턴을 기다려주세요', ephemeral: true });
+    if (tictactoe.turn.id != interaction.user.id) {
+      interaction.reply({ content: '자신의 턴을 기다려주세요', ephemeral: true }) 
+      return;
+    }
 
     const winner = tictactoe.set(position);
     if (winner) {

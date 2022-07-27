@@ -20,12 +20,18 @@ exports.default = new Commands_1.Command({
         const guildId = (_a = msg.guildId) !== null && _a !== void 0 ? _a : '';
         const money = parseFloat(args[1]);
         const betting = client.betting.get(guildId);
-        if (!betting)
-            return msg.reply('아직 베팅을 시작하지 않았습니다.');
-        if (!money)
-            return msg.reply('정확한 돈을 입력해주시기바랍니다.');
-        if (!Number.isInteger(money) || money == 0)
-            return msg.reply('정확한 정수를 입력해주시기바랍니다.');
+        if (!betting) {
+            msg.reply('아직 베팅을 시작하지 않았습니다.');
+            return;
+        }
+        if (!money) {
+            msg.reply('정확한 돈을 입력해주시기바랍니다.');
+            return;
+        }
+        if (!Number.isInteger(money) || money == 0) {
+            msg.reply('정확한 정수를 입력해주시기바랍니다.');
+            return;
+        }
         switch (args[0]) {
             case betting.bet1.name:
                 betting.bet1.addUser(msg, msg.author, money);

@@ -10,8 +10,10 @@ export default new Command({
     const id = msg.author.id;
     const name = msg.author.username;
     const user = await client.models.gambling.findOne({ id });
-    if (user)
-      return msg.reply(client.messages.gambling.join.alreadyJoin);
+    if (user) {
+      msg.reply(client.messages.gambling.join.alreadyJoin);
+      return;
+    }
 
     const newUser = new gambling({ id, name, stock: [] });
     await newUser.save();

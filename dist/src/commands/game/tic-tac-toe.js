@@ -23,10 +23,14 @@ exports.default = new Commands_1.Command({
         var _a;
         const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
         const id = msg.author.id;
-        if (!target)
-            return msg.reply(client.messages.missingMentionUser('틱택토를 '));
-        if (!msg.member || target.id == id)
-            return msg.reply('자신을 맨션할 수 없습니다.');
+        if (!target) {
+            msg.reply(client.messages.missingMentionUser('틱택토를 '));
+            return;
+        }
+        if (!msg.member || target.id == id) {
+            msg.reply('자신을 맨션할 수 없습니다.');
+            return;
+        }
         const customIds = Utils_1.Utils.uuid(2);
         const [yes, no] = customIds;
         const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()

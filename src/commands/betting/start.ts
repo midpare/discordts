@@ -11,14 +11,20 @@ export default new Command({
   execute: async ({ msg, args, client }) => {
     const id = msg.guildId ?? ''
     const prefix = process.env.PREFIX ?? ''
-    if (client.betting.get(id))
-      return msg.reply('이미 시작한 베팅이 있습니다.');
+    if (client.betting.get(id)) {
+      msg.reply('이미 시작한 베팅이 있습니다.');
+      return;
+    }
 
-    if (!args[0])
-      return msg.reply('제목을 입력해주시기바랍니다.');
+    if (!args[0]) {
+      msg.reply('제목을 입력해주시기바랍니다.');
+      return;
+    }
 
-    if (!args[1] || !args[2])
-      return msg.reply('베팅 이름을 입력해주시기바랍니다.');
+    if (!args[1] || !args[2]) {
+      msg.reply('베팅 이름을 입력해주시기바랍니다.');
+      return;
+    }
 
     const embed = new EmbedBuilder();
     const betting = new Betting(args[0], args[1], args[2], client);

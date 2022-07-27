@@ -10,27 +10,35 @@ export default new Command({
     const target = msg.mentions.members?.first();
     const channel1 = <VoiceChannel>client.channels.cache.get('910521120770359323');
     const channel2 = <VoiceChannel>client.channels.cache.get('910521120770359324');
-    
-    if (!target)
-      return msg.reply(client.messages.admin.alarm.missingMentionUser);
-    
-    if (target.user.bot)
-      return msg.reply(client.messages.admin.alarm.bot);
-    
-    if (target.voice.channelId == null)
-      return msg.reply(client.messages.missingVoiceChannelUser);
 
-    if (!target.voice.selfDeaf)
-      return msg.reply(client.messages.admin.alarm.missingSelfDeaf);
+    if (!target) {
+      msg.reply(client.messages.admin.alarm.missingMentionUser);
+      return;
+    }
+
+    if (target.user.bot) {
+      msg.reply(client.messages.admin.alarm.bot);
+      return;
+    }
+
+    if (target.voice.channelId == null) {
+      msg.reply(client.messages.missingVoiceChannelUser);
+      return;
+    }
+
+    if (!target.voice.selfDeaf) {
+      msg.reply(client.messages.admin.alarm.missingSelfDeaf);
+      return;
+    }
 
     const userChannel = target.voice.channel;
     await target.voice.setChannel(channel1);
-    
+
     const previousInterval = setInterval(() => {
       if (target.voice.channelId == null || !target.voice.selfDeaf)
         return;
-        target.voice.setChannel(channel1);
-        target.voice.setChannel(channel2);
+      target.voice.setChannel(channel1);
+      target.voice.setChannel(channel2);
     }, 1000);
 
     setTimeout(() => {

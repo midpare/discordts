@@ -19,13 +19,19 @@ exports.default = new Commands_1.Command({
     description: '메시지를 보낸 채팅방에 <숫자>만큼의 채팅을 지웁니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c;
-        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has(discord_js_1.PermissionFlagsBits.ManageMessages)))
-            return msg.reply(client.messages.missingPermissionUser);
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.permissions.has(discord_js_1.PermissionFlagsBits.ManageMessages))) {
+            msg.reply(client.messages.missingPermissionUser);
+            return;
+        }
         const count = parseFloat(args[0]);
-        if (!Number.isInteger(count))
-            return msg.reply(client.messages.naturalNumber);
-        if (count < 0 || count > 99)
-            return msg.reply(client.messages.betweenNumber(1, 99));
+        if (!Number.isInteger(count)) {
+            msg.reply(client.messages.naturalNumber);
+            return;
+        }
+        if (count < 0 || count > 99) {
+            msg.reply(client.messages.betweenNumber(1, 99));
+            return;
+        }
         if (!msg.channel.isTextBased() || msg.channel.isVoiceBased() || msg.channel.isDMBased())
             return;
         const target = (_b = msg.mentions.members) === null || _b === void 0 ? void 0 : _b.first();
@@ -42,8 +48,10 @@ exports.default = new Commands_1.Command({
         }
         if (msgs.size == 0)
             return;
-        if (msgs.size == 1)
-            return (_c = msgs.first()) === null || _c === void 0 ? void 0 : _c.delete();
+        if (msgs.size == 1) {
+            (_c = msgs.first()) === null || _c === void 0 ? void 0 : _c.delete();
+            return;
+        }
         msg.channel.bulkDelete(msgs, true);
         const sent = yield msg.channel.send(client.messages.admin.clear.success(count));
         setTimeout(() => {

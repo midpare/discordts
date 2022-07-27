@@ -19,8 +19,10 @@ export default new Command({
       json: true,
     };
     const coin = await Utils.requestGet(apiOptions);
-    if (!coinName)
-      return msg.reply('정확한 코인을 입력해주시기바랍니다.');
+    if (!coinName) {
+      msg.reply('정확한 코인을 입력해주시기바랍니다.');
+      return;
+    }
     const coinMoney = coin[0].tradePrice;
     const count = Math.floor(user.money / coinMoney);
     const money = coinMoney * count;

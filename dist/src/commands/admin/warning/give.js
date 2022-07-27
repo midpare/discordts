@@ -19,17 +19,25 @@ exports.default = new Commands_1.Command({
     description: '유저에게 경고를 부여합니다.',
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c;
-        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.roles.cache.has('910521119713394745')) && !((_b = msg.member) === null || _b === void 0 ? void 0 : _b.roles.cache.has('910521119713394744')))
-            return msg.reply(client.messages.missingPermissionUser);
+        if (!((_a = msg.member) === null || _a === void 0 ? void 0 : _a.roles.cache.has('910521119713394745')) && !((_b = msg.member) === null || _b === void 0 ? void 0 : _b.roles.cache.has('910521119713394744'))) {
+            msg.reply(client.messages.missingPermissionUser);
+            return;
+        }
         const target = (_c = msg.mentions.members) === null || _c === void 0 ? void 0 : _c.first();
         const count = parseFloat(args[1]);
         const channel = client.channels.cache.get('910521119877005363');
-        if (!target)
-            return msg.reply(client.messages.admin.warning.give.missingMentionUser);
-        if (count <= 0 || !Number.isInteger(count))
-            return msg.reply(client.messages.naturalNumber);
-        if (count > 10)
-            return msg.reply(client.messages.admin.warning.give.overNumber);
+        if (!target) {
+            msg.reply(client.messages.admin.warning.give.missingMentionUser);
+            return;
+        }
+        if (count <= 0 || !Number.isInteger(count)) {
+            msg.reply(client.messages.naturalNumber);
+            return;
+        }
+        if (count > 10) {
+            msg.reply(client.messages.admin.warning.give.overNumber);
+            return;
+        }
         const id = target.id;
         const name = target.user.username;
         const user = yield client.models.warning.findOne({ id });

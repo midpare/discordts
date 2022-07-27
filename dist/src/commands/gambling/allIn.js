@@ -19,8 +19,10 @@ exports.default = new Commands_1.Command({
     execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = msg.author.id;
         const user = yield client.models.gambling.findOne({ id });
-        if (user.money <= 0)
-            return msg.reply(client.messages.noneMoney);
+        if (user.money <= 0) {
+            msg.reply(client.messages.noneMoney);
+            return;
+        }
         const random = Math.floor(Math.random() * 2);
         if (random == 1) {
             (yield client.models.gambling.updateOne({ id }, { $mul: { money: 2 } })).matchedCount;

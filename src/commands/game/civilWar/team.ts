@@ -18,7 +18,6 @@ export default new Command({
       return msg.reply('현재 음성채널에 두명이상 접속해있지 않습니다.');
     
     if (!civilWar.isEmpty()) {
-      console.log(civilWar);
       return msg.reply('이미 시작한 내전이 있습니다.');
     }
 

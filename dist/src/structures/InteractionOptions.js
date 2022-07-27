@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InteractionOptions = void 0;
 class InteractionOptions {
     constructor(options) {
-        this.id = options.id;
+        this.ids = options.ids;
         this.cmd = options.cmd;
         this.customIds = options.customIds;
-        this.message = options.message;
+        this.messages = options.messages;
+        this.etc = options.etc;
     }
 }
 exports.InteractionOptions = InteractionOptions;

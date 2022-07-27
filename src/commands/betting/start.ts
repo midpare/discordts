@@ -1,5 +1,5 @@
 import { Command } from '../../managers/Commands';
-import { Betting } from '../../structures/Betting'
+import { Betting } from '../../structures/games/Betting'
 import { EmbedBuilder } from 'discord.js';
 
 export default new Command({

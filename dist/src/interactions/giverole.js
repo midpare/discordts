@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Interaction_1 = require("../managers/Interaction");
 exports.default = new Interaction_1.Interaction({
     name: 'giveRole',
-    private: false,
+    deleted: false,
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         const roles = (_a = interaction.member) === null || _a === void 0 ? void 0 : _a.roles;

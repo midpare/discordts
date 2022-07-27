@@ -1,11 +1,12 @@
-import Discord, { ButtonInteraction, ClientOptions, Collection, SelectMenuInteraction, Snowflake } from 'discord.js'
-import { Betting } from './Betting';
+import Discord, { ButtonInteraction, ClientOptions, Collection, GuildMember, SelectMenuInteraction, Snowflake } from 'discord.js'
+import { Betting } from './games/Betting';
 import { Command } from '../managers/Commands';
 import { Interaction } from '../managers/Interaction';
-import { CivilWar } from './CivilWar';
+import { CivilWar } from './games/CivilWar';
 import { Messages } from '../language/message';
 import { InteractionOptions } from './InteractionOptions';
 import { Model } from './Model';
+import { TicTacToe } from './games/tic-tac-toe';
 
 export class Client extends Discord.Client {
   public readonly commands: Collection<string, Command>;
@@ -14,6 +15,7 @@ export class Client extends Discord.Client {
   public readonly coin: Collection<string, string>;
   public readonly sdCode: Collection<string, string>;
   public readonly betting: Collection<Snowflake, Betting>;
+  public readonly tictactoe: Collection<Array<Snowflake>, TicTacToe>; 
   public readonly civilWar: CivilWar;
   public readonly messages: Messages;
   public readonly models: Model;
@@ -27,6 +29,7 @@ export class Client extends Discord.Client {
     this.coin = new Collection();
     this.sdCode = new Collection();
     this.betting = new Collection();
+    this.tictactoe = new Collection
     this.civilWar = new CivilWar();
     this.messages = new Messages();
     this.models = new Model();

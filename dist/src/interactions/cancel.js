@@ -11,10 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Interaction_1 = require("../managers/Interaction");
 exports.default = new Interaction_1.Interaction({
-    name: 'bankrupcty',
+    name: 'cancel',
     deleted: true,
-    execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        (yield client.models.gambling.updateOne({ id: interaction.user.id }, { $set: { bankruptcy: new Date().getTime(), money: 0, debt: 0, principalDebt: 0, stock: [] } })).matchedCount;
-        interaction.reply(`${interaction.user.username}님이 파산했습니다!`);
+    execute: ({}) => __awaiter(void 0, void 0, void 0, function* () {
+        //no field
     })
 });

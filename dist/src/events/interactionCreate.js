@@ -23,18 +23,21 @@ exports.default = new Event_1.Event({
             event.execute({ interaction, options, client });
             return;
         }
-        if (!options || options.id != id)
-            return;
+        if (!options)
+            return interaction.reply({ content: '사용되지 않거나 종료된 상호작용입니다.', ephemeral: true });
         event = client.interactions.get(options.cmd);
-        if (!event)
-            return;
+        if (!event || !options.ids.includes(id))
+            return interaction.reply({ content: '이 상호작용을 사용할 수 없습니다.', ephemeral: true });
         try {
-            if (options.cmd != 'cancel')
-                event.execute({ interaction, options, client });
+            event.execute({ interaction, options, client });
             for (const id of options.customIds) {
                 client.interactionOptions.delete(id);
             }
-            options.message.delete();
+            if (event.deleted) {
+                for (const msg of options.messages) {
+                    msg.delete();
+                }
+            }
         }
         catch (error) {
             console.error(error);

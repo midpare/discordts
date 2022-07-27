@@ -25,7 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Client = void 0;
 const discord_js_1 = __importStar(require("discord.js"));
-const CivilWar_1 = require("./CivilWar");
+const CivilWar_1 = require("./games/CivilWar");
 const message_1 = require("../language/message");
 const Model_1 = require("./Model");
 class Client extends discord_js_1.default.Client {
@@ -37,6 +37,7 @@ class Client extends discord_js_1.default.Client {
         this.coin = new discord_js_1.Collection();
         this.sdCode = new discord_js_1.Collection();
         this.betting = new discord_js_1.Collection();
+        this.tictactoe = new discord_js_1.Collection;
         this.civilWar = new CivilWar_1.CivilWar();
         this.messages = new message_1.Messages();
         this.models = new Model_1.Model();

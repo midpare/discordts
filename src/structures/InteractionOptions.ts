@@ -1,15 +1,17 @@
-import { Message } from 'discord.js';
+import { GuildMember, Message } from 'discord.js';
 
 export class InteractionOptions {
-  public readonly id: string;
+  public readonly ids: string[];
   public readonly cmd: string
   public readonly customIds: string[];
-  public readonly message: Message;
+  public readonly messages: Message[];
+  public readonly etc?: any | null
 
   constructor(options: InteractionOptions) {
-    this.id = options.id;
+    this.ids = options.ids;
     this.cmd = options.cmd
     this.customIds = options.customIds;
-    this.message = options.message
+    this.messages = options.messages;
+    this.etc = options.etc;
   }
 }

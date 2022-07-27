@@ -4,7 +4,7 @@ exports.Interaction = void 0;
 class Interaction {
     constructor(options) {
         this.name = options.name;
-        this.private = options.private;
+        this.deleted = options.deleted;
         this.execute = options.execute;
     }
 }

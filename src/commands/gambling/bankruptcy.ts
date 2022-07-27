@@ -11,32 +11,32 @@ export default new Command({
   execute: async ({ msg, client }) => {
     const id = msg.author.id;
     const customIds = Utils.uuid(2)
-    const [bankrupctyId, cancelId] = customIds
+    const [yes, no] = customIds
 
     const row: any = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setLabel(client.messages.yes)
         .setStyle(ButtonStyle.Success)
-        .setCustomId(bankrupctyId),
+        .setCustomId(yes),
       new ButtonBuilder()
         .setLabel(client.messages.no)
         .setStyle(ButtonStyle.Danger)
-        .setCustomId(cancelId),
+        .setCustomId(no),
     )
 
 
     const message = await msg.reply({ content: '정말 파산하시겠습니까? 파산하시면 돈과 빚이 모두 0원으로 돌아가며 한시간동안 도박을 할 수 없습니다.', components: [row] })
 
-    client.interactionOptions.set(bankrupctyId, new InteractionOptions({
-      id,
+    client.interactionOptions.set(yes, new InteractionOptions({
+      ids: [id],
       cmd: 'bankrupcty',
-      message,
+      messages: [message],
       customIds,
     }));
-    client.interactionOptions.set(cancelId, new InteractionOptions({
-      id,
+    client.interactionOptions.set(no, new InteractionOptions({
+      ids: [id],
       cmd: 'cancel',
-      message,
+      messages: [message],
       customIds,
     }));
   },

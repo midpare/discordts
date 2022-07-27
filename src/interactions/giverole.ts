@@ -3,7 +3,7 @@ import { ButtonInteraction, GuildMemberRoleManager, TextChannel } from 'discord.
 
 export default new Interaction<ButtonInteraction>({
   name: 'giveRole',
-  private: false,
+  deleted: false,
   execute: async ({ interaction, client }) => {
     const roles = <GuildMemberRoleManager>interaction.member?.roles
 

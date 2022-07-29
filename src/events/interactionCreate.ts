@@ -10,8 +10,6 @@ export default new Event({
       const { commandName, options } = interaction;
 
       const event = client.slashCommand.get(commandName)!;
-      console.log(options);
-      console.log(event);
       event.execute({ interaction, options: options as CommandInteractionOptionResolver<CacheType>,  client })
       
     } else if (interaction.isButton() || interaction.isSelectMenu()) {

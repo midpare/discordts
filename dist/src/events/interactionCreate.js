@@ -17,8 +17,6 @@ exports.default = new Event_1.Event({
         if (interaction.isChatInputCommand()) {
             const { commandName, options } = interaction;
             const event = client.slashCommand.get(commandName);
-            console.log(options);
-            console.log(event);
             event.execute({ interaction, options: options, client });
         }
         else if (interaction.isButton() || interaction.isSelectMenu()) {

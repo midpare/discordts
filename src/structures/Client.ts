@@ -7,9 +7,11 @@ import { Messages } from '../language/message';
 import { InteractionOptions } from './InteractionOptions';
 import { Model } from './Model';
 import { TicTacToe } from './games/tic-tac-toe';
+import { SlashCommand } from '../managers/SlashCommand';
 
 export class Client extends Discord.Client {
   public readonly commands: Collection<string, Command>;
+  public readonly slashCommand: Collection<string, SlashCommand>;
   public readonly interactions: Collection<string, Interaction<ButtonInteraction | SelectMenuInteraction>>;
   public readonly interactionOptions: Collection<string, InteractionOptions>;
   public readonly coin: Collection<string, string>;
@@ -24,6 +26,7 @@ export class Client extends Discord.Client {
     super(options);
 
     this.commands = new Collection();
+    this.slashCommand = new Collection();
     this.interactions = new Collection();
     this.interactionOptions = new Collection();
     this.coin = new Collection();

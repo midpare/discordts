@@ -14,7 +14,7 @@ const client = new Client({ intents: 131071 });
 })();
 
 const sds = [
-  '서울특별시', '부산광역시', 
+  '서울특별시', '부산광역시',
   '대구광역시', '인천광역시',
   '광주광역시', '대전광역시',
   '울산광역시', '세종특별자치시',
@@ -38,5 +38,5 @@ for (let i = 0; i < sds.length; i++) {
   client.sdCode.set(sds[i], sdCodes[i]);
 }
 
-mongoose.connect(process.env.MONGO_DB_URI + "/discordbot");
 client.login();
+mongoose.connect(process.env.MONGO_DB_URI + "/discordbot");

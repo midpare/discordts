@@ -13,6 +13,7 @@ export default new Event({
       console.log(options);
       console.log(event);
       event.execute({ interaction, options: options as CommandInteractionOptionResolver<CacheType>,  client })
+      
     } else if (interaction.isButton() || interaction.isSelectMenu()) {
       const id = interaction.user.id;
       const options = client.interactionOptions.get(interaction.customId);

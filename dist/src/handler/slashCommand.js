@@ -37,8 +37,9 @@ function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
         const slashCommandFiles = new Array();
         Utils_1.Utils.getPath(__dirname + '/../slashCommands', slashCommandFiles);
-        //Wait for bot to login
+        //Wait for bot to login 
         setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+            console.log(client.guilds.cache);
             for (const path of slashCommandFiles) {
                 const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
                 for (const [_, guild] of client.guilds.cache) {
@@ -46,7 +47,7 @@ function default_1(client) {
                 }
                 client.slashCommand.set(file.name, file);
             }
-        }), 3000);
+        }), 2000);
     });
 }
 exports.default = default_1;

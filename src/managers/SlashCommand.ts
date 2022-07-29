@@ -17,6 +17,7 @@ type ExecuteType = (options: {
 
 export class SlashCommand implements BaseApplicationCommandData {
   public name: string;
+  public aliases?: string[];
   public description: string;
   public nameLocalizations?: LocalizationMap;
   public descriptionLocalizations?: LocalizationMap;
@@ -27,6 +28,7 @@ export class SlashCommand implements BaseApplicationCommandData {
 
   constructor(options: SlashCommand) {
     this.name = options.name;
+    this.aliases = options.aliases;
     this.description = options.description;
     this.nameLocalizations = options.nameLocalizations;
     this.descriptionLocalizations = options.descriptionLocalizations;

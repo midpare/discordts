@@ -5,8 +5,9 @@ export default async function (client: Client) {
   const slashCommandFiles = new Array();
   Utils.getPath(__dirname + '/../slashCommands', slashCommandFiles);
 
-  //Wait for bot to login
+  //Wait for bot to login 
   setTimeout(async () => {
+    console.log(client.guilds.cache);
     for (const path of slashCommandFiles) {
       const file = (await import(path)).default;
 
@@ -15,5 +16,5 @@ export default async function (client: Client) {
       }
       client.slashCommand.set(file.name, file);
     }
-  }, 3000);
+  }, 2000);
 }

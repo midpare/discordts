@@ -28,13 +28,8 @@ export class SlashCommand implements BaseApplicationCommandData {
 
   constructor(options: SlashCommand) {
     this.name = options.name;
-    this.aliases = options.aliases;
     this.description = options.description;
-    this.nameLocalizations = options.nameLocalizations;
-    this.descriptionLocalizations = options.descriptionLocalizations;
-    this.defaultMemberPermissions = options.defaultMemberPermissions;
-    this.type = options.type;
-    this.options = options.options;
     this.execute = options.execute;
+    Object.assign(this, options);
   }
 }

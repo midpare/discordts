@@ -18,11 +18,7 @@ export class Command {
 
   constructor(options: Command) {
     this.name = options.name;
-    this.aliases = options.aliases ?? null;
-    this.category = options.category;
-    this.usage = options.usage;
-    this.description = options.description;
-    this.private = options.private;
     this.execute = options.execute;
+    Object.assign(this, options);
   }
 }

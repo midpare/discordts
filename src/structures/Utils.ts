@@ -1,4 +1,4 @@
-import { GuildMember } from 'discord.js';
+import { GuildMember, Message, ReplyMessageOptions } from 'discord.js';
 import request from 'request';
 import fs from 'fs';
 
@@ -91,5 +91,13 @@ export class Utils {
         arr.push(path);
       }
     }
+  }
+
+  public static async reply(msg: Message, options: string | ReplyMessageOptions) {
+    const replied = await msg.reply(options);
+    setTimeout(() => {
+      msg.delete();
+      replied.delete();
+    }, 1500);
   }
 }

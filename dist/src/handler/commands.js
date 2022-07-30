@@ -41,7 +41,7 @@ function default_1(client) {
             const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             if (client.commands.get(file.name))
                 throw `command name duplicate! command path: ${path}, command name: ${file.name}`;
-            client.commands.set(file.name, file);
+            client.commands.set(file.name.toLowerCase(), file);
             if (file.aliases) {
                 for (const fileName of file.aliases) {
                     if (client.commands.get(fileName))

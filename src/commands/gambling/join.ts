@@ -1,4 +1,3 @@
-import { gambling } from '../../models/gambling';
 import { Command } from '../../managers/Commands';
 
 export default new Command({
@@ -15,7 +14,7 @@ export default new Command({
       return;
     }
 
-    const newUser = new gambling({ id, name, stock: [] });
+    const newUser = new client.models.gambling({ id, name, stock: [] });
     await newUser.save();
     msg.reply(client.messages.gambling.join.success);
   },

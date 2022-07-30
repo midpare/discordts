@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const gambling_1 = require("../../models/gambling");
 const Commands_1 = require("../../managers/Commands");
 exports.default = new Commands_1.Command({
     name: '가입',
@@ -24,7 +23,7 @@ exports.default = new Commands_1.Command({
             msg.reply(client.messages.gambling.join.alreadyJoin);
             return;
         }
-        const newUser = new gambling_1.gambling({ id, name, stock: [] });
+        const newUser = new client.models.gambling({ id, name, stock: [] });
         yield newUser.save();
         msg.reply(client.messages.gambling.join.success);
     }),

@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Commands_1 = require("../../managers/Commands");
+const Utils_1 = require("../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: 'clear',
     aliases: ['클리어'],
@@ -51,10 +52,6 @@ exports.default = new Commands_1.Command({
             return;
         }
         msg.channel.bulkDelete(msgs, true);
-        const sent = yield msg.channel.send(client.messages.admin.clear.success(count));
-        setTimeout(() => {
-            msg.delete();
-            sent.delete();
-        }, 1500);
+        Utils_1.Utils.reply(msg, client.messages.admin.clear.success(count));
     }),
 });

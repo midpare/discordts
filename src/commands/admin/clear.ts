@@ -1,5 +1,6 @@
-import { NewsChannel, TextChannel, ThreadChannel, PermissionFlagsBits } from 'discord.js';
+import { PermissionFlagsBits } from 'discord.js';
 import { Command } from '../../managers/Commands';
+import { Utils } from '../../structures/Utils';
 
 export default new Command({
   name: 'clear',
@@ -51,11 +52,6 @@ export default new Command({
     }
 
     msg.channel.bulkDelete(msgs, true);
-    const sent = await msg.channel.send(client.messages.admin.clear.success(count))
-
-    setTimeout(() => {
-      msg.delete();
-      sent.delete();
-    }, 1500);
+    Utils.reply(msg, client.messages.admin.clear.success(count))
   },
 });

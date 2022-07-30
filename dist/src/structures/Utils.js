@@ -89,5 +89,14 @@ class Utils {
             }
         }
     }
+    static reply(msg, options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const replied = yield msg.reply(options);
+            setTimeout(() => {
+                msg.delete();
+                replied.delete();
+            }, 1500);
+        });
+    }
 }
 exports.Utils = Utils;

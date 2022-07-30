@@ -9,12 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const SlashCommand_1 = require("../managers/SlashCommand");
+const SlashCommand_1 = require("../../managers/SlashCommand");
 exports.default = new SlashCommand_1.SlashCommand({
-    name: 'ping',
-    category: '기본',
-    description: '봇의 현재상태를 확인합니다',
-    execute: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
-        interaction.reply('pong!');
+    name: '잔액',
+    aliases: ['ㅈㅇ', '보유금액'],
+    category: '도박',
+    description: '자신의 현재 잔액을 확인합니다.',
+    execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
+        const id = interaction.user.id;
+        const user = yield client.models.gambling.findOne({ id });
+        interaction.reply(client.messages.gambling.balance(user.name, user.money));
     }),
 });

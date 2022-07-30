@@ -24,7 +24,7 @@ exports.default = new Commands_1.Command({
         }
         const { id } = target;
         const user = yield client.models.slang.findOne({ id });
-        if (!user) {
+        if (!user || user.slangs.length < 1) {
             Utils_1.Utils.reply(msg, '이 유저는 망언을 보유하고 있지 않습니다.');
             return;
         }

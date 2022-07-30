@@ -1,5 +1,5 @@
 import { Command } from '../../managers/Commands';
-import { bold, italic, strikethrough, underscore, spoiler, quote, blockQuote } from 'discord.js';
+
 export default new Command({
   name: 'ping',
   category: '기본',

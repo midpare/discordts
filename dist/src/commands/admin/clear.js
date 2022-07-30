@@ -35,16 +35,14 @@ exports.default = new Commands_1.Command({
         if (!msg.channel.isTextBased() || msg.channel.isVoiceBased() || msg.channel.isDMBased())
             return;
         const target = (_b = msg.mentions.members) === null || _b === void 0 ? void 0 : _b.first();
-        let msgs = yield msg.channel.messages.fetch({ limit: 99 });
+        let msgs = (yield msg.channel.messages.fetch({ limit: 99 })).sort((msg1, msg2) => msg2.createdTimestamp - msg1.createdTimestamp);
+        msgs.delete(msgs.keyAt(0));
         if (target) {
             msgs = msgs.filter(msg => msg.author.id == target.user.id);
         }
-        if (msgs.size > count) {
-            for (let i = 0; i < msgs.size - count; i++) {
-                const key = msgs.keyAt(i + count);
-                if (key)
-                    msgs.delete(key);
-            }
+        const length = msgs.size - count;
+        for (let i = 0; i < length; i++) {
+            msgs.delete(msgs.keyAt(count));
         }
         if (msgs.size == 0)
             return;
@@ -55,6 +53,7 @@ exports.default = new Commands_1.Command({
         msg.channel.bulkDelete(msgs, true);
         const sent = yield msg.channel.send(client.messages.admin.clear.success(count));
         setTimeout(() => {
+            msg.delete();
             sent.delete();
         }, 1500);
     }),

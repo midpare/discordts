@@ -29,19 +29,19 @@ export default new Command({
 
     const target = msg.mentions.members?.first();
 
-    let msgs = await msg.channel.messages.fetch({ limit: 99 });
+    let msgs = (await msg.channel.messages.fetch({ limit: 99 })).sort((msg1, msg2) => msg2.createdTimestamp - msg1.createdTimestamp)
+
+    msgs.delete(msgs.keyAt(0)!);
+
     if (target) {
       msgs = msgs.filter(msg => msg.author.id == target.user.id)
     }
 
-    if (msgs.size > count) {
-      for (let i = 0; i < msgs.size - count; i++) {
-        const key = msgs.keyAt(i + count);
-        if (key)
-          msgs.delete(key);
-      }
+    const length = msgs.size - count
+    for (let i = 0; i < length; i++) {
+      msgs.delete(msgs.keyAt(count)!)
     }
- 
+
     if (msgs.size == 0)
       return;
 
@@ -52,8 +52,9 @@ export default new Command({
 
     msg.channel.bulkDelete(msgs, true);
     const sent = await msg.channel.send(client.messages.admin.clear.success(count))
-    
+
     setTimeout(() => {
+      msg.delete();
       sent.delete();
     }, 1500);
   },

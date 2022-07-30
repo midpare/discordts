@@ -40,7 +40,7 @@ exports.default = new Event_1.Event({
         const gambChannel = client.channels.cache.get('1000969429158481980');
         const cmdChannel = client.channels.cache.get('1000969483462123591');
         const botTestChannel = client.channels.cache.get('910521119877005368');
-        if (msg.channel != botTestChannel) {
+        if (msg.channel != botTestChannel && !event.private) {
             switch (event.category) {
                 case '도박':
                 case '베팅':

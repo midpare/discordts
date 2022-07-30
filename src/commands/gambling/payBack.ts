@@ -26,7 +26,7 @@ export default new Command({
       return;
     }
 
-    (await client.models.gambling.updateOne({ id }, { $inc: { money: -money, debt: -money, principalDebt: -money } })).matchedCount;
+    (await client.models.gambling.updateOne({ id }, { $inc: { money: -money, debt: -money } })).matchedCount;
     msg.reply(client.messages.gambling.payBack.success(user.debt, money));
   },
 }); 

@@ -20,7 +20,7 @@ export default new Command({
       return;
     }
 
-    (await client.models.gambling.updateOne({ id }, { $inc: { principalDebt: debt, debt, money: debt } })).matchedCount;
+    (await client.models.gambling.updateOne({ id }, { $inc: { debt, money: debt } })).matchedCount;
     msg.reply(client.messages.gambling.loan.success(user.debt, debt));
   },
 });

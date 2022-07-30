@@ -32,7 +32,7 @@ exports.default = new Commands_1.Command({
             msg.reply(client.messages.gambling.payBack.overMoney(user.debt));
             return;
         }
-        (yield client.models.gambling.updateOne({ id }, { $inc: { money: -money, debt: -money, principalDebt: -money } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id }, { $inc: { money: -money, debt: -money } })).matchedCount;
         msg.reply(client.messages.gambling.payBack.success(user.debt, money));
     }),
 });

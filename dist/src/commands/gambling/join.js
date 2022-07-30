@@ -16,14 +16,13 @@ exports.default = new Commands_1.Command({
     usage: '가입',
     description: '도박 관련 명령어를 사용할수있게 가입을 합니다.',
     execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = msg.author.id;
-        const name = msg.author.username;
+        const { guildId, author: { id, username: name } } = msg;
         const user = yield client.models.gambling.findOne({ id });
         if (user) {
             msg.reply(client.messages.gambling.join.alreadyJoin);
             return;
         }
-        const newUser = new client.models.gambling({ id, name, stock: [] });
+        const newUser = new client.models.gambling({ id, name, guild: guildId, stock: [] });
         yield newUser.save();
         msg.reply(client.messages.gambling.join.success);
     }),

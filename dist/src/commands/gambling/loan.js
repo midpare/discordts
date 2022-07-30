@@ -27,7 +27,7 @@ exports.default = new Commands_1.Command({
             msg.reply(client.messages.gambling.loan.overMoney);
             return;
         }
-        (yield client.models.gambling.updateOne({ id }, { $inc: { principalDebt: debt, debt, money: debt } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id }, { $inc: { debt, money: debt } })).matchedCount;
         msg.reply(client.messages.gambling.loan.success(user.debt, debt));
     }),
 });

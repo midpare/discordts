@@ -4,6 +4,7 @@ import { Utils } from "../../../structures/Utils";
 
 export default new Command({
   name: '망언 확인',
+  aliases: ['망언 목록', '망언 리스트'],
   private: true,
   execute: async ({ msg, args, client }) => {
     const target = msg.mentions.members?.first();

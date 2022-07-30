@@ -14,6 +14,7 @@ const Commands_1 = require("../../../managers/Commands");
 const Utils_1 = require("../../../structures/Utils");
 exports.default = new Commands_1.Command({
     name: '망언 확인',
+    aliases: ['망언 목록', '망언 리스트'],
     private: true,
     execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;

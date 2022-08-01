@@ -16,9 +16,13 @@ exports.default = new Interval_1.Interval({
         const time = new Date().getTime();
         for (const user of users) {
             const guild = client.guilds.cache.get(user.guildId);
-            const member = guild.members.cache.get(user.id);
-            if (time < user.banTime) {
-                guild.members.unban(member);
+            if (guild) {
+                const member = guild.members.cache.get(user.id);
+                if (member) {
+                    if (time < user.banTime) {
+                        guild.members.unban(member);
+                    }
+                }
             }
         }
     }),

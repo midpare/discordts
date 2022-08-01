@@ -45,6 +45,19 @@ const client = new Client_1.Client({ intents: 131071 });
     for (let path of handlerFiles) {
         (yield Promise.resolve().then(() => __importStar(require(path)))).default(client);
     }
+    const guilds = Array.from(client.guilds.cache.values());
+    for (const guild of guilds) {
+        const members = Array.from(guild.members.cache.values());
+        const guildId = guild.id;
+        for (const member of members) {
+            const { id, displayName: name } = member;
+            const user = yield client.models.config.findOne({ id });
+            if (!user) {
+                const newUser = new client.models.config({ id, name, guildId });
+                newUser.save();
+            }
+        }
+    }
 }))();
 const sds = [
     '서울특별시', '부산광역시',

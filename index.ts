@@ -7,9 +7,24 @@ const client = new Client({ intents: 131071 });
 (async () => {
   const handlerFiles = new Array();
   Utils.getPath(__dirname + '/src/handler', handlerFiles)
-
+  
   for (let path of handlerFiles) {
     (await import(path)).default(client);
+  }
+
+  const guilds = Array.from(client.guilds.cache.values());
+  
+  for (const guild of guilds) {
+    const members = Array.from(guild.members.cache.values());
+    const guildId = guild.id
+    for (const member of members) {
+      const { id, displayName: name } = member
+      const user = await client.models.config.findOne({ id })
+      if (!user) {
+        const newUser = new client.models.config({ id, name, guildId })
+        newUser.save();
+      }
+    } 
   }
 })();
 

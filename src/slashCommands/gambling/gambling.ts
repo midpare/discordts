@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType } from 'discord.js';
 import { SlashCommand } from '../../managers/SlashCommand';
+import { Utils } from '../../structures/Utils';
 
 export default new SlashCommand({
   name: '도박',
@@ -11,8 +12,8 @@ export default new SlashCommand({
     {
       name: '돈',
       description: '도박할 돈을 입력합니다.',
-      required: true,
       type: ApplicationCommandOptionType.Integer,
+      required: true,
       min_value: 1,
     },
   ],
@@ -23,7 +24,7 @@ export default new SlashCommand({
     const user = await client.models.gambling.findOne({ id });
 
     if (money > user.money) {
-      interaction.reply(client.messages.overMoney(user.money));
+      Utils.reply(interaction, client.messages.overMoney(user.money));
       return;
     }
 

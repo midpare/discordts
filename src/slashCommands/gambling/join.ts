@@ -1,4 +1,5 @@
 import { SlashCommand } from '../../managers/SlashCommand';
+import { Utils } from '../../structures/Utils';
 
 export default new SlashCommand({
   name: '가입',
@@ -8,7 +9,7 @@ export default new SlashCommand({
     const { guildId, user: { id, username: name }} = interaction
     const user = await client.models.gambling.findOne({ id });
     if (user) {
-      interaction.reply(client.messages.gambling.join.alreadyJoin);
+      Utils.reply(interaction, client.messages.gambling.join.alreadyJoin);
       return;
     }
 

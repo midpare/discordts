@@ -1,4 +1,5 @@
 import { SlashCommand } from '../../managers/SlashCommand';
+import { Utils } from '../../structures/Utils';
 
 export default new SlashCommand({
   name: '올인',
@@ -9,7 +10,7 @@ export default new SlashCommand({
     const id = interaction.user.id;
     const user = await client.models.gambling.findOne({ id });
     if (user.money <= 0) {
-      interaction.reply(client.messages.noneMoney);
+      Utils.reply(interaction, client.messages.noneMoney);
       return;
     }
 

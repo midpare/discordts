@@ -1,4 +1,3 @@
-import { Command } from '../../managers/Commands';
 import { SlashCommand } from '../../managers/SlashCommand';
 
 export default new SlashCommand({

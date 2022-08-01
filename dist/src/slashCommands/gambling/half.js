@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const SlashCommand_1 = require("../../managers/SlashCommand");
+const Utils_1 = require("../../structures/Utils");
 exports.default = new SlashCommand_1.SlashCommand({
     name: '하프',
     aliases: ['ㅎㅍ'],
@@ -19,7 +20,7 @@ exports.default = new SlashCommand_1.SlashCommand({
         const id = interaction.user.id;
         const user = yield client.models.gambling.findOne({ id });
         if (user.money == 0) {
-            interaction.reply(client.messages.noneMoney);
+            Utils_1.Utils.reply(interaction, client.messages.noneMoney);
             return;
         }
         const money = Math.floor(user.money);

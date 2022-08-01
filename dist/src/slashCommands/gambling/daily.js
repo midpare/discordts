@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const SlashCommand_1 = require("../../managers/SlashCommand");
+const Utils_1 = require("../../structures/Utils");
 exports.default = new SlashCommand_1.SlashCommand({
     name: '출석체크',
     aliases: ['출첵', 'ㅊㅊ'],
@@ -21,7 +22,7 @@ exports.default = new SlashCommand_1.SlashCommand({
         const date = new Date();
         const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
         if (user.date == today) {
-            interaction.reply(client.messages.gambling.daily.today);
+            Utils_1.Utils.reply(interaction, client.messages.gambling.daily.today);
             return;
         }
         const money = Math.floor(Math.random() * 50000 + 50000);

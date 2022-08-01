@@ -8,7 +8,7 @@ const slanginfo = new Schema({
   versionKey: false
 });
 
-const slang = model('slang', slanginfo);
-export { slang };
+export const slang = model('slang', slanginfo);
+
 
 

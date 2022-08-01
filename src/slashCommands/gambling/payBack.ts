@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType } from 'discord.js';
 import { SlashCommand } from '../../managers/SlashCommand';
+import { Utils } from '../../structures/Utils';
 
 export default new SlashCommand({
   name: '빚갚기',
@@ -11,8 +12,8 @@ export default new SlashCommand({
     {
       name: '돈',
       description: '갚을 돈을 입력합니다.',
-      required: true,
       type: ApplicationCommandOptionType.Integer,
+      required: true,
       min_value: 1,
     },
   ],
@@ -23,12 +24,12 @@ export default new SlashCommand({
     const money = options.getInteger('돈', true);
 
     if (user.money < money) {
-      interaction.reply(client.messages.overMoney(user.money));
+      Utils.reply(interaction, client.messages.overMoney(user.money));
       return;
     }
 
     if (user.debt < money) {
-      interaction.reply(client.messages.gambling.payBack.overMoney(user.debt));
+      Utils.reply(interaction, client.messages.gambling.payBack.overMoney(user.debt));
       return;
     }
 

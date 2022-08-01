@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const SlashCommand_1 = require("../../managers/SlashCommand");
+const Utils_1 = require("../../structures/Utils");
 exports.default = new SlashCommand_1.SlashCommand({
     name: '도박',
     aliases: ['ㄷㅂ'],
@@ -21,8 +22,8 @@ exports.default = new SlashCommand_1.SlashCommand({
         {
             name: '돈',
             description: '도박할 돈을 입력합니다.',
-            required: true,
             type: discord_js_1.ApplicationCommandOptionType.Integer,
+            required: true,
             min_value: 1,
         },
     ],
@@ -31,7 +32,7 @@ exports.default = new SlashCommand_1.SlashCommand({
         const money = options.getInteger('돈', true);
         const user = yield client.models.gambling.findOne({ id });
         if (money > user.money) {
-            interaction.reply(client.messages.overMoney(user.money));
+            Utils_1.Utils.reply(interaction, client.messages.overMoney(user.money));
             return;
         }
         const random = Math.floor(Math.random() * 2);

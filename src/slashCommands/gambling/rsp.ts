@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType } from 'discord.js';
 import { SlashCommand } from '../../managers/SlashCommand';
+import { Utils } from '../../structures/Utils';
 
 export default new SlashCommand({
   name: '가위바위보',
@@ -10,8 +11,8 @@ export default new SlashCommand({
     {
       name: '가위바위보',
       description: '가위, 바위, 보 중 하나를 입력힙니다.',
-      required: true,
       type: ApplicationCommandOptionType.String,
+      required: true,
       choices: [
         {
           name: '가위',
@@ -30,8 +31,8 @@ export default new SlashCommand({
     {
       name: '돈',
       description: '도박할 돈을 입력합니다',
-      required: true,
       type: ApplicationCommandOptionType.Integer,
+      required: true,
       min_value: 1,
     }
   ],
@@ -47,7 +48,7 @@ export default new SlashCommand({
     
     const money = options.getInteger('돈', true);
     if (money > user.money) {
-      interaction.reply(`현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
+      Utils.reply(interaction, `현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
       return;
     }
 

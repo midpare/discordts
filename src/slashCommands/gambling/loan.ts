@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType } from 'discord.js';
 import { SlashCommand } from '../../managers/SlashCommand';
+import { Utils } from '../../structures/Utils';
 
 export default new SlashCommand({
   name: '대출',
@@ -10,8 +11,8 @@ export default new SlashCommand({
     {
       name: '돈',
       description: '대출할 돈을 입력합니다.',
-      required: true,
       type: ApplicationCommandOptionType.Integer,
+      required: true,
       min_value: 1
     },
   ],
@@ -21,7 +22,7 @@ export default new SlashCommand({
     const debt = options.getInteger('돈', true);
 
     if (user.debt + debt > 1000000) {
-      interaction.reply(client.messages.gambling.loan.overMoney);
+      Utils.reply(interaction, client.messages.gambling.loan.overMoney);
       return;
     }
 

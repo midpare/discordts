@@ -1,4 +1,5 @@
 import { SlashCommand } from '../../managers/SlashCommand';
+import { Utils } from '../../structures/Utils';
 
 export default new SlashCommand({
   name: '기초자금',
@@ -12,7 +13,7 @@ export default new SlashCommand({
       return;
 
     if (user.money != 0 || user.stock[0]) {
-      interaction.reply(client.messages.gambling.baseMoney.haveMoney);
+      Utils.reply(interaction, client.messages.gambling.baseMoney.haveMoney);
       return;
     }
 
@@ -21,7 +22,7 @@ export default new SlashCommand({
     const userCoolTime = user.baseMoneyCoolTime;
     
     if (time - userCoolTime < coolTime) {
-      interaction.reply(client.messages.coolTime(Math.ceil(coolTime - (time - userCoolTime) / 1000)));
+      Utils.reply(interaction, client.messages.coolTime(Math.round((coolTime - (time - userCoolTime)) / 1000)));
       return;
     }
 

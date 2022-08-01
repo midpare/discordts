@@ -13,7 +13,6 @@ const schoolInfo = new Schema({
   versionKey: false
 });
 
-const school = model('school', schoolInfo);
+export const school = model('school', schoolInfo);
 
-export { school };
 

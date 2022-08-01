@@ -14,5 +14,4 @@ const schoolInfo = new mongoose_1.Schema({
 }, {
     versionKey: false
 });
-const school = (0, mongoose_1.model)('school', schoolInfo);
-exports.school = school;
+exports.school = (0, mongoose_1.model)('school', schoolInfo);

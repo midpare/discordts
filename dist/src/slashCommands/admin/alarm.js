@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const SlashCommand_1 = require("../../managers/SlashCommand");
+const Utils_1 = require("../../structures/Utils");
 exports.default = new SlashCommand_1.SlashCommand({
     name: '알람',
     category: '관리자',
@@ -19,41 +20,49 @@ exports.default = new SlashCommand_1.SlashCommand({
     options: [
         {
             name: '유저',
-            description: '부를 유저를 맨션합니다.',
-            required: true,
+            description: '알람을 할 유저를 입력합니다.',
             type: discord_js_1.ApplicationCommandOptionType.User,
+            required: true,
         }
     ],
-    defaultMemberPermissions: discord_js_1.PermissionFlagsBits.MoveMembers,
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const target = options.getMember('유저');
         const channel1 = client.channels.cache.get('910521120770359323');
         const channel2 = client.channels.cache.get('910521120770359324');
-        // cons
-        // if (target.bot) {
-        //   interaction.reply(client.messages.admin.alarm.bot);
-        //   return;
-        // }
-        // if (target.voice.channelId == null) {
-        //   interaction.reply(client.messages.missingVoiceChannelUser);
-        //   return;
-        // }
-        // if (!target.voice.selfDeaf) {
-        //   interaction.reply(client.messages.admin.alarm.missingSelfDeaf);
-        //   return;
-        // }
-        // const userChannel = target.voice.channel;
-        // await target.voice.setChannel(channel1);
-        // client.alarmMembers.set(target.id, target);
-        // const previousInterval = setInterval(() => {
-        //   if (target.voice.channelId == null || !target.voice.selfDeaf)
-        //     return;
-        //   target.voice.setChannel(channel1);
-        //   target.voice.setChannel(channel2);
-        // }, 1000);
-        // setTimeout(() => {
-        //   clearInterval(previousInterval);
-        //   target.voice.setChannel(userChannel);
-        // }, 5000);
+        if (!(target instanceof discord_js_1.GuildMember)) {
+            Utils_1.Utils.reply(interaction, '정확한 유저를 입력해주시기 바랍니다.');
+            return;
+        }
+        if (client.alarmMembers.get(target.id)) {
+            Utils_1.Utils.reply(interaction, '이미 알람을 작동중인 유저입니다.');
+            return;
+        }
+        if (target.user.bot) {
+            Utils_1.Utils.reply(interaction, client.messages.admin.alarm.bot);
+            return;
+        }
+        if (target.voice.channelId == null) {
+            Utils_1.Utils.reply(interaction, client.messages.missingVoiceChannelUser);
+            return;
+        }
+        if (!target.voice.selfDeaf) {
+            Utils_1.Utils.reply(interaction, client.messages.admin.alarm.missingSelfDeaf);
+            return;
+        }
+        const userChannel = target.voice.channel;
+        yield target.voice.setChannel(channel1);
+        client.alarmMembers.set(target.id, target);
+        Utils_1.Utils.reply(interaction, '성공적으로 알람을 작동했습니다!');
+        const previousInterval = setInterval(() => {
+            if (target.voice.channelId == null || !target.voice.selfDeaf)
+                return;
+            target.voice.setChannel(channel1);
+            target.voice.setChannel(channel2);
+        }, 1000);
+        setTimeout(() => {
+            clearInterval(previousInterval);
+            target.voice.setChannel(userChannel);
+            client.alarmMembers.delete(target.id);
+        }, 5000);
     }),
 });

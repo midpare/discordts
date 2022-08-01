@@ -18,7 +18,7 @@ export class Client extends Discord.Client {
   public readonly sdCode: Collection<string, string>;
   public readonly betting: Collection<Snowflake, Betting>;
   public readonly tictactoe: Collection<Array<Snowflake>, TicTacToe>; 
-  public readonly alarmMembers: Collection<Snowflake, User>;
+  public readonly alarmMembers: Collection<Snowflake, GuildMember>;
   public readonly civilWar: CivilWar;
   public readonly messages: Messages;
   public readonly models: Model;

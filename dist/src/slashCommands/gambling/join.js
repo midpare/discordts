@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const SlashCommand_1 = require("../../managers/SlashCommand");
+const Utils_1 = require("../../structures/Utils");
 exports.default = new SlashCommand_1.SlashCommand({
     name: '가입',
     category: '도박',
@@ -18,7 +19,7 @@ exports.default = new SlashCommand_1.SlashCommand({
         const { guildId, user: { id, username: name } } = interaction;
         const user = yield client.models.gambling.findOne({ id });
         if (user) {
-            interaction.reply(client.messages.gambling.join.alreadyJoin);
+            Utils_1.Utils.reply(interaction, client.messages.gambling.join.alreadyJoin);
             return;
         }
         const newUser = new client.models.gambling({ id, name, guild: guildId, stock: [] });

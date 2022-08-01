@@ -1,4 +1,5 @@
 import { SlashCommand } from '../../managers/SlashCommand';
+import { Utils } from '../../structures/Utils';
 
 export default new SlashCommand({
   name: '출석체크',
@@ -13,7 +14,7 @@ export default new SlashCommand({
     const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
 
     if (user.date == today) {
-      interaction.reply(client.messages.gambling.daily.today);
+      Utils.reply(interaction, client.messages.gambling.daily.today);
       return;
     }
 

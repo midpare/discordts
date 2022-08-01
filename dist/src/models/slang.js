@@ -9,5 +9,4 @@ const slanginfo = new mongoose_1.Schema({
 }, {
     versionKey: false
 });
-const slang = (0, mongoose_1.model)('slang', slanginfo);
-exports.slang = slang;
+exports.slang = (0, mongoose_1.model)('slang', slanginfo);

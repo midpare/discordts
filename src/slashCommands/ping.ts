@@ -1,4 +1,4 @@
-import { SlashCommand } from "../managers/SlashCommand";
+import { SlashCommand } from '../managers/SlashCommand';
 
 export default new SlashCommand({
   name: 'ping',

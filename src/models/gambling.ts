@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const gamblingInfo = new Schema({
   id: String,
   name: String,
-  guild: String,
+  guildId: String,
   date: { type: Number, default: 0 },
   money: { type: Number, default: 0 },
   debt: { type: Number, default: 0 },

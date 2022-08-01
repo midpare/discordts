@@ -1,7 +1,7 @@
-import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
-import { Command } from "../../managers/Commands";
-import { InteractionOptions } from "../../structures/InteractionOptions";
-import { Utils } from "../../structures/Utils";
+import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
+import { Command } from '../../managers/Commands';
+import { InteractionOptions } from '../../structures/InteractionOptions';
+import { Utils } from '../../structures/Utils';
 
 export default new Command({
   name: '틱택토',

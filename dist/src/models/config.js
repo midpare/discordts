@@ -6,6 +6,7 @@ const configInfo = new mongoose_1.Schema({
     id: String,
     name: String,
     guildId: String,
+    slang: [String],
     warning: { type: Number, default: 0 },
     baseMoneyCoolTime: { type: Number, default: 0 },
     bankruptcyTime: { type: Number, default: 0 },
@@ -14,4 +15,4 @@ const configInfo = new mongoose_1.Schema({
 }, {
     versionKey: false
 });
-exports.config = (0, mongoose_1.model)('time', configInfo);
+exports.config = (0, mongoose_1.model)('config', configInfo);

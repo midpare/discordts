@@ -21,18 +21,18 @@ exports.default = new Commands_1.Command({
             Utils_1.Utils.reply(msg, client.messages.missingMentionUser('망언을 삭제'));
             return;
         }
-        const { id } = target;
+        const { id, guild: { id: guildId } } = target;
         if (!args[1]) {
             Utils_1.Utils.reply(msg, '지울 망언의 내용을 작성해주시기 바랍니다.');
             return;
         }
         const content = args.slice(1).join(' ');
-        const slang = yield client.models.slang.findOne({ id, slangs: { $all: [content] } });
+        const slang = yield client.models.config.findOne({ id, guildId, slangs: { $all: [content] } });
         if (!slang) {
             Utils_1.Utils.reply(msg, '이 유저는 이 망언을 보유하고 있지 않습니다.');
             return;
         }
-        (yield client.models.slang.updateOne({ id }, { $pull: { slangs: content } })).matchedCount;
+        (yield client.models.config.updateOne({ id, guildId }, { $pull: { slangs: content } })).matchedCount;
         Utils_1.Utils.reply(msg, `성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);
     })
 });

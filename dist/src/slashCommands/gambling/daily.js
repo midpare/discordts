@@ -17,8 +17,8 @@ exports.default = new SlashCommand_1.SlashCommand({
     category: '도박',
     description: '하루에 한번 50,000 ~ 100,000만원의 돈을 획득합니다.',
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
-        const user = yield client.models.gambling.findOne({ id });
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         const date = new Date();
         const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
         if (user.date == today) {
@@ -26,7 +26,7 @@ exports.default = new SlashCommand_1.SlashCommand({
             return;
         }
         const money = Math.floor(Math.random() * 50000 + 50000);
-        (yield client.models.gambling.updateOne({ id }, { $inc: { money }, $set: { date: today } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money }, $set: { date: today } })).matchedCount;
         interaction.reply(client.messages.gambling.daily.success(user.money, money));
     }),
 });

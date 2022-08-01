@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from 'discord.js';
+import { ApplicationCommandOptionType, GuildMember } from 'discord.js';
 import { SlashCommand } from '../../managers/SlashCommand';
 import { Utils } from '../../structures/Utils';
 
@@ -24,12 +24,17 @@ export default new SlashCommand({
     }
   ],
   execute: async ({ interaction, options, client }) => {
-    const id = interaction.user.id;
-    const user = await client.models.gambling.findOne({ id });
+    const { guildId, user: { id } } = interaction;
+    const user = await client.models.gambling.findOne({ id, guildId});
 
-    const target = options.getUser('유저', true)
-    
-    const targetUser = await client.models.gambling.findOne({ id: target.id });
+    const target = options.getMember('유저');
+
+    if (!(target instanceof GuildMember)) {
+      Utils.reply(interaction, '정확한 유저를 입력해주시기 바랍니다.');
+      return;
+    }
+      
+    const targetUser = await client.models.gambling.findOne({ id: target.id, guildId: target.guild.id });
     if (!targetUser) {
       Utils.reply(interaction, '송금할 유저가 가입을 하지 않았습니다.');
       return;
@@ -42,8 +47,8 @@ export default new SlashCommand({
       return;
     }
 
-    (await client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
-    (await client.models.gambling.updateOne({ id: target.id }, { $inc: { money: money } })).matchedCount;
+    (await client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money } })).matchedCount;
+    (await client.models.gambling.updateOne({ id: target.id, guildId: target.guild.id }, { $inc: { money: money } })).matchedCount;
     interaction.reply(`성공적으로 ${targetUser.name}님에게 ${money.toLocaleString()}원을 송금했습니다!`);
   },
 });

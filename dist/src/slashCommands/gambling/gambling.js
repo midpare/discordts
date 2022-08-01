@@ -28,20 +28,20 @@ exports.default = new SlashCommand_1.SlashCommand({
         },
     ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
+        const { guildId, user: { id } } = interaction;
         const money = options.getInteger('돈', true);
-        const user = yield client.models.gambling.findOne({ id });
+        const user = yield client.models.gambling.findOne({ id, guildId });
         if (money > user.money) {
             Utils_1.Utils.reply(interaction, client.messages.overMoney(user.money));
             return;
         }
         const random = Math.floor(Math.random() * 2);
         if (random == 1) {
-            (yield client.models.gambling.updateOne({ id }, { $inc: { money: money } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money: money } })).matchedCount;
             interaction.reply(client.messages.gambling.successGamb(user.money, money));
         }
         else if (random == 0) {
-            (yield client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money } })).matchedCount;
             interaction.reply(client.messages.gambling.failureGamb(user.money, money));
         }
     }),

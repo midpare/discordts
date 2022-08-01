@@ -5,7 +5,7 @@ const mongoose_1 = require("mongoose");
 const gamblingInfo = new mongoose_1.Schema({
     id: String,
     name: String,
-    guild: String,
+    guildId: String,
     date: { type: Number, default: 0 },
     money: { type: Number, default: 0 },
     debt: { type: Number, default: 0 },

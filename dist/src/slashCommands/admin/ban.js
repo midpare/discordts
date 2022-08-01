@@ -54,7 +54,8 @@ exports.default = new SlashCommand_1.SlashCommand({
             return;
         }
         if (time && (0, ms_1.default)(time)) {
-            client.models.config.updateOne({ id: target.id }, { $set: { banTime: (0, ms_1.default)(time) } });
+            const { id, guild: { id: guildId } } = target;
+            client.models.config.updateOne({ id, guildId }, { $set: { banTime: (0, ms_1.default)(time) } });
         }
         if (target.permissions.has(discord_js_1.PermissionFlagsBits.BanMembers)) {
             Utils_1.Utils.reply(interaction, client.messages.admin.ban.missingPermissionTarget);

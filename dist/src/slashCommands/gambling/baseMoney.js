@@ -17,11 +17,11 @@ exports.default = new SlashCommand_1.SlashCommand({
     category: '도박',
     description: '기초자금 25,000원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 30초',
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
-        const user = yield client.models.gambling.findOne({ id });
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         if (!user)
             return;
-        if (user.money != 0 || user.stock[0]) {
+        if (user.money > 0 || user.stock[0]) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.baseMoney.haveMoney);
             return;
         }
@@ -33,7 +33,7 @@ exports.default = new SlashCommand_1.SlashCommand({
             return;
         }
         const baseMoney = 25000;
-        (yield client.models.gambling.updateOne({ id }, { $set: { money: baseMoney, baseMoneyCoolTime: time } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id, guildId }, { $set: { money: baseMoney, baseMoneyCoolTime: time } })).matchedCount;
         interaction.reply(client.messages.gambling.baseMoney.success(baseMoney));
     }),
 });

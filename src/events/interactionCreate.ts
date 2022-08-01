@@ -13,7 +13,7 @@ export default new Event({
       const cmdChannel = client.channels.cache.get('1000969483462123591');
       const botTestChannel = client.channels.cache.get('910521119877005368');
       
-      const { commandName, options, user: { id } } = interaction;
+      const { commandName, options, guildId, user: { id } } = interaction;
       const event = client.slashCommand.get(commandName)!;
       if (interaction.channel != botTestChannel) {
         switch (event.category) {
@@ -27,7 +27,7 @@ export default new Event({
             if (event.name == '가입') 
               break;
                         
-            const user = await client.models.gambling.findOne({ id });
+            const user = await client.models.gambling.findOne({ id, guildId });
             if (event.name != '가입' && !user) {
               interaction.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
               return;

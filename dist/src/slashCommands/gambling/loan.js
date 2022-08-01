@@ -27,14 +27,14 @@ exports.default = new SlashCommand_1.SlashCommand({
         },
     ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
-        const user = yield client.models.gambling.findOne({ id });
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         const debt = options.getInteger('돈', true);
         if (user.debt + debt > 1000000) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.loan.overMoney);
             return;
         }
-        (yield client.models.gambling.updateOne({ id }, { $inc: { debt, money: debt } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { debt, money: debt } })).matchedCount;
         interaction.reply(client.messages.gambling.loan.success(user.debt, debt));
     }),
 });

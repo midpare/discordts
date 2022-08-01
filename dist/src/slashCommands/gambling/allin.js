@@ -17,19 +17,19 @@ exports.default = new SlashCommand_1.SlashCommand({
     category: '도박',
     description: '자신의 모든 돈을 걸고 도박을 진행합니다. (성공시: 2배, 실패시: 0배)',
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
-        const user = yield client.models.gambling.findOne({ id });
+        const { user: { id }, guildId } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         if (user.money <= 0) {
             Utils_1.Utils.reply(interaction, client.messages.noneMoney);
             return;
         }
         const random = Math.floor(Math.random() * 2);
         if (random == 1) {
-            (yield client.models.gambling.updateOne({ id }, { $mul: { money: 2 } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id, guildId }, { $mul: { money: 2 } })).matchedCount;
             interaction.reply(client.messages.gambling.successGamb(user.money, user.money));
         }
         else if (random == 0) {
-            (yield client.models.gambling.updateOne({ id }, { $set: { money: 0 } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id, guildId }, { $set: { money: 0 } })).matchedCount;
             interaction.reply(client.messages.gambling.failureGamb(user.money, user.money));
         }
     }),

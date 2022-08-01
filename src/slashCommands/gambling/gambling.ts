@@ -18,10 +18,10 @@ export default new SlashCommand({
     },
   ],
   execute: async ({ interaction, options, client }) => {
-    const id = interaction.user.id;
+    const { guildId, user: { id } } = interaction;
     const money = options.getInteger('돈', true);
 
-    const user = await client.models.gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id, guildId });
 
     if (money > user.money) {
       Utils.reply(interaction, client.messages.overMoney(user.money));
@@ -31,10 +31,10 @@ export default new SlashCommand({
     const random = Math.floor(Math.random() * 2);
 
     if (random == 1) {
-      (await client.models.gambling.updateOne({ id }, { $inc: { money: money } })).matchedCount;
+      (await client.models.gambling.updateOne({ id, guildId }, { $inc: { money: money } })).matchedCount;
       interaction.reply(client.messages.gambling.successGamb(user.money, money));
     } else if (random == 0) {
-      (await client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
+      (await client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money } })).matchedCount;
       interaction.reply(client.messages.gambling.failureGamb(user.money, money));
     }
   },

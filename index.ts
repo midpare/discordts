@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import { Client } from "./src/structures/Client";
-import { Utils } from "./src/structures/Utils";
+import mongoose from 'mongoose';
+import { Client } from './src/structures/Client';
+import { Utils } from './src/structures/Utils';
 
 const client = new Client({ intents: 131071 });
 
@@ -11,21 +11,8 @@ const client = new Client({ intents: 131071 });
   for (let path of handlerFiles) {
     (await import(path)).default(client);
   }
-
-  const guilds = Array.from(client.guilds.cache.values());
   
-  for (const guild of guilds) {
-    const members = Array.from(guild.members.cache.values());
-    const guildId = guild.id
-    for (const member of members) {
-      const { id, displayName: name } = member
-      const user = await client.models.config.findOne({ id })
-      if (!user) {
-        const newUser = new client.models.config({ id, name, guildId })
-        newUser.save();
-      }
-    } 
-  }
+  
 })();
 
 const sds = [
@@ -53,5 +40,21 @@ for (let i = 0; i < sds.length; i++) {
   client.sdCode.set(sds[i], sdCodes[i]);
 }
 
+client.on('ready', async () => {
+  const guilds = Array.from(client.guilds.cache.values());
+  for (const guild of guilds) {
+    const members = Array.from(guild.members.cache.values());
+    const guildId = guild.id;
+    for (const member of members) {
+      const { id, displayName: name } = member;
+      const user = await client.models.config.findOne({ id, guildId });
+      
+      if (!user && !member.user.bot) {
+        const newUser = new client.models.config({ id, name, guildId });
+        newUser.save();
+      }
+    }
+  }
+})
 client.login();
-mongoose.connect(process.env.MONGO_DB_URI + "/discordbot");
+mongoose.connect(process.env.MONGO_DB_URI + '/discordbot');

@@ -45,19 +45,6 @@ const client = new Client_1.Client({ intents: 131071 });
     for (let path of handlerFiles) {
         (yield Promise.resolve().then(() => __importStar(require(path)))).default(client);
     }
-    const guilds = Array.from(client.guilds.cache.values());
-    for (const guild of guilds) {
-        const members = Array.from(guild.members.cache.values());
-        const guildId = guild.id;
-        for (const member of members) {
-            const { id, displayName: name } = member;
-            const user = yield client.models.config.findOne({ id });
-            if (!user) {
-                const newUser = new client.models.config({ id, name, guildId });
-                newUser.save();
-            }
-        }
-    }
 }))();
 const sds = [
     '서울특별시', '부산광역시',
@@ -81,5 +68,20 @@ const sdCodes = [
 for (let i = 0; i < sds.length; i++) {
     client.sdCode.set(sds[i], sdCodes[i]);
 }
+client.on('ready', () => __awaiter(void 0, void 0, void 0, function* () {
+    const guilds = Array.from(client.guilds.cache.values());
+    for (const guild of guilds) {
+        const members = Array.from(guild.members.cache.values());
+        const guildId = guild.id;
+        for (const member of members) {
+            const { id, displayName: name } = member;
+            const user = yield client.models.config.findOne({ id, guildId });
+            if (!user && !member.user.bot) {
+                const newUser = new client.models.config({ id, name, guildId });
+                newUser.save();
+            }
+        }
+    }
+}));
 client.login();
-mongoose_1.default.connect(process.env.MONGO_DB_URI + "/discordbot");
+mongoose_1.default.connect(process.env.MONGO_DB_URI + '/discordbot');

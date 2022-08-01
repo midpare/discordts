@@ -42,7 +42,8 @@ export default new SlashCommand({
     }
 
     if (time && ms(time)) {
-      client.models.config.updateOne({ id: target.id }, {$set: { banTime: ms(time)}})      
+      const { id, guild: { id: guildId } } = target
+      client.models.config.updateOne({ id, guildId }, {$set: { banTime: ms(time)}})      
     }
     
     if (target.permissions.has(PermissionFlagsBits.BanMembers)) {

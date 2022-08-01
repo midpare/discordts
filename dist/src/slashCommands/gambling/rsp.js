@@ -47,8 +47,8 @@ exports.default = new SlashCommand_1.SlashCommand({
         }
     ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
-        const user = yield client.models.gambling.findOne({ id });
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         const rspArgs = ['가위', '바위', '보'];
         const random = Math.floor(Math.random() * 3);
         const human = rspArgs.indexOf(options.getString('가위바위보', true));
@@ -71,15 +71,15 @@ exports.default = new SlashCommand_1.SlashCommand({
             winner = 'bot';
         switch (winner) {
             default:
-                (yield client.models.gambling.updateOne({ id }, { $inc: { money: money * -0.4 } })).matchedCount;
+                (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money: money * -0.4 } })).matchedCount;
                 interaction.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 비겼습니다.\n${(money * 0.4).toLocaleString()}원를 잃게됩니다.\n잔액: ${user.money.toLocaleString()}원 -> ${(user.money - money * 0.4).toLocaleString()}원`);
                 break;
             case 'bot':
-                (yield client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
+                (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money } })).matchedCount;
                 interaction.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 봇이 승리했습니다.\n${money.toLocaleString()}원을 잃게 됩니다.\n잔액: ${user.money.toLocaleString()}원 -> ${(user.money - money).toLocaleString()}원`);
                 break;
             case 'human':
-                (yield client.models.gambling.updateOne({ id }, { $inc: { money: money * 1.5 } })).matchedCount;
+                (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money: money * 1.5 } })).matchedCount;
                 interaction.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 사람이 승리했습니다.\n${(money * 1.5).toLocaleString()}원을 얻게 됩니다.\n잔액: ${user.money.toLocaleString()}원 -> ${(user.money + money * 1.5).toLocaleString()}원`);
                 break;
         }

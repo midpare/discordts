@@ -32,16 +32,17 @@ export default new SlashCommand({
   ],
   defaultMemberPermissions: PermissionFlagsBits.KickMembers + PermissionFlagsBits.BanMembers,
   execute: async ({ interaction, options, client }) => {
+    const { guildId } = interaction;
     const target = options.getUser('유저', true);
     const count = options.getInteger('횟수', true);
     const channel = <TextChannel>client.channels.cache.get('910521119713394738');
 
     const { id } = target;
-    const user = await client.models.config.findOne({ id });
+    const user = await client.models.config.findOne({ id, guildId });
     const reason = options.getString('사유');
 
     channel.send(client.messages.admin.warning.give.success(target, count, user.warning + count, reason ?? ''));
-    (await client.models.config.updateOne({ id }, { $inc: { warning: count } }, { upsert: true })).matchedCount;
+    (await client.models.config.updateOne({ id, guildId }, { $inc: { warning: count } }, { upsert: true })).matchedCount;
 
     Utils.reply(interaction, '성공적으로 경고를 부여했습니다!');
   },

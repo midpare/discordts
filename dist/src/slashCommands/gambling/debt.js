@@ -15,8 +15,8 @@ exports.default = new SlashCommand_1.SlashCommand({
     category: '도박',
     description: '자신의 현재 빚을 확인합니다.',
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
-        const user = yield client.models.gambling.findOne({ id });
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         interaction.reply(client.messages.gambling.debt(user.name, user.debt));
     }),
 });

@@ -17,8 +17,8 @@ export default new SlashCommand({
     },
   ],
   execute: async ({ interaction, options, client }) => {
-    const id = interaction.user.id;
-    const user = await client.models.gambling.findOne({ id });
+    const { guildId, user: { id } } = interaction;
+    const user = await client.models.gambling.findOne({ id, guildId });
     const debt = options.getInteger('돈', true);
 
     if (user.debt + debt > 1000000) {
@@ -26,7 +26,7 @@ export default new SlashCommand({
       return;
     }
 
-    (await client.models.gambling.updateOne({ id }, { $inc: { debt, money: debt } })).matchedCount;
+    (await client.models.gambling.updateOne({ id, guildId }, { $inc: { debt, money: debt } })).matchedCount;
     interaction.reply(client.messages.gambling.loan.success(user.debt, debt));
   },
 });

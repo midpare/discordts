@@ -1,5 +1,5 @@
-import { Command } from "../../../managers/Commands";
-import { Utils } from "../../../structures/Utils";
+import { Command } from '../../../managers/Commands';
+import { Utils } from '../../../structures/Utils';
 
 export default new Command({
   name: '망언 삭제',
@@ -11,7 +11,7 @@ export default new Command({
       return;
     }
     
-    const { id } = target;
+    const { id, guild: { id: guildId } } = target;
 
     if (!args[1]) {
       Utils.reply(msg, '지울 망언의 내용을 작성해주시기 바랍니다.');
@@ -20,14 +20,14 @@ export default new Command({
 
     const content = args.slice(1).join(' ');
 
-    const slang = await client.models.slang.findOne({ id, slangs: { $all: [content] } });
+    const slang = await client.models.config.findOne({ id, guildId, slangs: { $all: [content] } });
 
     if (!slang) {
       Utils.reply(msg, '이 유저는 이 망언을 보유하고 있지 않습니다.');
       return;
     }
     
-    (await client.models.slang.updateOne({ id }, { $pull: { slangs: content }})).matchedCount;
+    (await client.models.config.updateOne({ id, guildId }, { $pull: { slangs: content }})).matchedCount;
     Utils.reply(msg, `성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);
   }  
 })

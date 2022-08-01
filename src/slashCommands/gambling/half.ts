@@ -6,7 +6,7 @@ export default new SlashCommand({
   aliases: ['ㅎㅍ'],
   category: '도박',
   description: '자신의 돈의 절반을 걸고 도박을 진행합니다. (성공시: 2배, 실패시: 0배)',
-  execute: async ({ interaction, options, client }) => {
+  execute: async ({ interaction, client }) => {
     const id = interaction.user.id;
     const user = await client.models.gambling.findOne({ id });
 

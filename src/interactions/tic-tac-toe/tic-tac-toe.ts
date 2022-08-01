@@ -1,6 +1,6 @@
-import { Interaction } from "../../managers/Interaction";
-import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, Message } from "discord.js";
-import { Utils } from "../../structures/Utils";
+import { Interaction } from '../../managers/Interaction';
+import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, Message } from 'discord.js';
+import { Utils } from '../../structures/Utils';
 
 export default new Interaction({
   name: 'tic-tac-toe',

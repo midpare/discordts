@@ -1,8 +1,8 @@
-import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, EmbedBuilder, underscore } from "discord.js";
-import { Interaction } from "../../managers/Interaction";
-import { TicTacToe } from "../../structures/games/tic-tac-toe";
-import { InteractionOptions } from "../../structures/InteractionOptions";
-import { Utils } from "../../structures/Utils";
+import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, EmbedBuilder, underscore } from 'discord.js';
+import { Interaction } from '../../managers/Interaction';
+import { TicTacToe } from '../../structures/games/tic-tac-toe';
+import { InteractionOptions } from '../../structures/InteractionOptions';
+import { Utils } from '../../structures/Utils';
 
 export default new Interaction({
   name: 'accept-tic-tac-toe',

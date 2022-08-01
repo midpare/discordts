@@ -34,10 +34,14 @@ exports.default = new SlashCommand_1.SlashCommand({
         }
     ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
-        const user = yield client.models.gambling.findOne({ id });
-        const target = options.getUser('유저', true);
-        const targetUser = yield client.models.gambling.findOne({ id: target.id });
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
+        const target = options.getMember('유저');
+        if (!(target instanceof discord_js_1.GuildMember)) {
+            Utils_1.Utils.reply(interaction, '정확한 유저를 입력해주시기 바랍니다.');
+            return;
+        }
+        const targetUser = yield client.models.gambling.findOne({ id: target.id, guildId: target.guild.id });
         if (!targetUser) {
             Utils_1.Utils.reply(interaction, '송금할 유저가 가입을 하지 않았습니다.');
             return;
@@ -47,8 +51,8 @@ exports.default = new SlashCommand_1.SlashCommand({
             Utils_1.Utils.reply(interaction, `현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
             return;
         }
-        (yield client.models.gambling.updateOne({ id }, { $inc: { money: -money } })).matchedCount;
-        (yield client.models.gambling.updateOne({ id: target.id }, { $inc: { money: money } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id: target.id, guildId: target.guild.id }, { $inc: { money: money } })).matchedCount;
         interaction.reply(`성공적으로 ${targetUser.name}님에게 ${money.toLocaleString()}원을 송금했습니다!`);
     }),
 });

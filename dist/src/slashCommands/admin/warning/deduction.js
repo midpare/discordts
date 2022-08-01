@@ -41,11 +41,12 @@ exports.default = new SlashCommand_1.SlashCommand({
     ],
     defaultMemberPermissions: discord_js_1.PermissionFlagsBits.KickMembers + discord_js_1.PermissionFlagsBits.BanMembers,
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
+        const { guildId } = interaction;
         const target = options.getUser('유저', true);
         const count = options.getInteger('횟수', true);
         const channel = client.channels.cache.get('910521119713394738');
         const id = target.id;
-        const user = yield client.models.config.findOne({ id });
+        const user = yield client.models.config.findOne({ id, guildId });
         const reason = options.getString('사유');
         if (user.warning <= 0) {
             Utils_1.Utils.reply(interaction, client.messages.admin.warning.deduction.noneWarning);
@@ -55,7 +56,7 @@ exports.default = new SlashCommand_1.SlashCommand({
             Utils_1.Utils.reply(interaction, client.messages.admin.warning.deduction.overWarning);
             return;
         }
-        (yield client.models.config.updateOne({ id }, { $inc: { warning: -count } })).matchedCount;
+        (yield client.models.config.updateOne({ id, guildId }, { $inc: { warning: -count } })).matchedCount;
         channel.send(client.messages.admin.warning.deduction.success(target, count, user.warning - count, reason !== null && reason !== void 0 ? reason : ''));
         Utils_1.Utils.reply(interaction, '성공적으로 경고를 차감했습니다!');
     }),

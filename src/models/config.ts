@@ -4,6 +4,7 @@ const configInfo = new Schema({
   id: String,
   name: String,
   guildId: String,
+  slang: [String],
   warning: { type: Number, default: 0 },
   baseMoneyCoolTime: { type: Number, default: 0 },
   bankruptcyTime: { type: Number, default: 0 },
@@ -13,7 +14,7 @@ const configInfo = new Schema({
   versionKey: false
 });
 
-export const config = model('time', configInfo);
+export const config = model('config', configInfo);
 
 
 

@@ -28,8 +28,8 @@ exports.default = new SlashCommand_1.SlashCommand({
         },
     ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
-        const user = yield client.models.gambling.findOne({ id });
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         const money = options.getInteger('돈', true);
         if (user.money < money) {
             Utils_1.Utils.reply(interaction, client.messages.overMoney(user.money));
@@ -39,7 +39,7 @@ exports.default = new SlashCommand_1.SlashCommand({
             Utils_1.Utils.reply(interaction, client.messages.gambling.payBack.overMoney(user.debt));
             return;
         }
-        (yield client.models.gambling.updateOne({ id }, { $inc: { money: -money, debt: -money } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money, debt: -money } })).matchedCount;
         interaction.reply(client.messages.gambling.payBack.success(user.debt, money));
     }),
 });

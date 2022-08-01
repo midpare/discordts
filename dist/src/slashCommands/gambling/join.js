@@ -16,13 +16,15 @@ exports.default = new SlashCommand_1.SlashCommand({
     category: '도박',
     description: '도박 관련 명령어를 사용할수있게 가입을 합니다.',
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const { guildId, user: { id, username: name } } = interaction;
+        var _a, _b;
+        const { guildId, user: { id } } = interaction;
         const user = yield client.models.gambling.findOne({ id });
         if (user) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.join.alreadyJoin);
             return;
         }
-        const newUser = new client.models.gambling({ id, name, guild: guildId, stock: [] });
+        const name = (_b = (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.members.cache.get(id)) === null || _b === void 0 ? void 0 : _b.displayName;
+        const newUser = new client.models.gambling({ id, name, guildId, stock: [] });
         yield newUser.save();
         interaction.reply(client.messages.gambling.join.success);
     }),

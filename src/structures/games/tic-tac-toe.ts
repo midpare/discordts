@@ -1,4 +1,4 @@
-import { GuildMember, Message } from "discord.js"
+import { GuildMember, Message } from 'discord.js'
 
 export class TicTacToe {
   public readonly table: Array<Array<number>>;

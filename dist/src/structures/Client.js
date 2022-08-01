@@ -38,7 +38,8 @@ class Client extends discord_js_1.default.Client {
         this.coin = new discord_js_1.Collection();
         this.sdCode = new discord_js_1.Collection();
         this.betting = new discord_js_1.Collection();
-        this.tictactoe = new discord_js_1.Collection;
+        this.tictactoe = new discord_js_1.Collection();
+        this.alarmMembers = new discord_js_1.Collection();
         this.civilWar = new CivilWar_1.CivilWar();
         this.messages = new message_1.Messages();
         this.models = new Model_1.Model();

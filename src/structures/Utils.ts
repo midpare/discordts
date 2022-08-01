@@ -1,4 +1,4 @@
-import { GuildMember, Message, ReplyMessageOptions } from 'discord.js';
+import { ChatInputCommandInteraction, GuildMember, InteractionReplyOptions, Message, ReplyMessageOptions } from 'discord.js';
 import request from 'request';
 import fs from 'fs';
 
@@ -93,11 +93,22 @@ export class Utils {
     }
   }
 
-  public static async reply(msg: Message, options: string | ReplyMessageOptions) {
-    const replied = await msg.reply(options);
-    setTimeout(() => {
-      msg.delete();
-      replied.delete();
-    }, 3000);
+  public static async reply(msg: Message, options: string): Promise<void>;
+  public static async reply(msg: ChatInputCommandInteraction, options: string): Promise<void>;
+
+  public static async reply(msg: Message | ChatInputCommandInteraction, options: string): Promise<void> {
+    if (msg instanceof Message) {
+      const replied = await msg.reply(options);
+      setTimeout(() => {
+        msg.delete();
+        replied.delete();
+      }, 3000);
+    } else {
+      msg.reply(options);
+      const replied = await msg.fetchReply();
+      setTimeout(() => {
+        replied.delete();
+      }, 3000);
+    }
   }
 }

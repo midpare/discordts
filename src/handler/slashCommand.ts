@@ -15,11 +15,9 @@ export default async function (client: Client) {
       delete command.category;
       delete command.usage;
       delete command.aliases;
-      commands.push(command);
+
+      client.application?.commands.create(command);
       client.slashCommand.set(file.name, file);
-    }
-    const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN || '');
-    
-    rest.put(Routes.applicationCommands('898169849086365716'), { body: commands });
+    }    
   })
 }

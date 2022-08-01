@@ -12,7 +12,7 @@ export default new SlashCommand({
       name: '유저',
       description: '송금할 유저를 맨션합니다.',
       required: true,
-      type: ApplicationCommandOptionType.Mentionable,
+      type: ApplicationCommandOptionType.User,
     },
     {
       name: '돈',
@@ -26,13 +26,8 @@ export default new SlashCommand({
     const id = interaction.user.id;
     const user = await client.models.gambling.findOne({ id });
 
-    const target = options.getMentionable('유저', true)
-
-    if (!(target instanceof GuildMember)) {
-      interaction.reply('정확한 유저를 맨션해주시기 바랍니다.');
-      return;
-    }
-
+    const target = options.getUser('유저', true)
+    
     const targetUser = await client.models.gambling.findOne({ id: target.id });
     if (!targetUser) {
       interaction.reply('송금할 유저가 가입을 하지 않았습니다.');

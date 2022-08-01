@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Utils = void 0;
+const discord_js_1 = require("discord.js");
 const request_1 = __importDefault(require("request"));
 const fs_1 = __importDefault(require("fs"));
 class Utils {
@@ -91,11 +92,20 @@ class Utils {
     }
     static reply(msg, options) {
         return __awaiter(this, void 0, void 0, function* () {
-            const replied = yield msg.reply(options);
-            setTimeout(() => {
-                msg.delete();
-                replied.delete();
-            }, 3000);
+            if (msg instanceof discord_js_1.Message) {
+                const replied = yield msg.reply(options);
+                setTimeout(() => {
+                    msg.delete();
+                    replied.delete();
+                }, 3000);
+            }
+            else {
+                msg.reply(options);
+                const replied = yield msg.fetchReply();
+                setTimeout(() => {
+                    replied.delete();
+                }, 3000);
+            }
         });
     }
 }

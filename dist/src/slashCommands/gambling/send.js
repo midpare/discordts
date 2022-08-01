@@ -22,7 +22,7 @@ exports.default = new SlashCommand_1.SlashCommand({
             name: '유저',
             description: '송금할 유저를 맨션합니다.',
             required: true,
-            type: discord_js_1.ApplicationCommandOptionType.Mentionable,
+            type: discord_js_1.ApplicationCommandOptionType.User,
         },
         {
             name: '돈',
@@ -35,11 +35,7 @@ exports.default = new SlashCommand_1.SlashCommand({
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const id = interaction.user.id;
         const user = yield client.models.gambling.findOne({ id });
-        const target = options.getMentionable('유저', true);
-        if (!(target instanceof discord_js_1.GuildMember)) {
-            interaction.reply('정확한 유저를 맨션해주시기 바랍니다.');
-            return;
-        }
+        const target = options.getUser('유저', true);
         const targetUser = yield client.models.gambling.findOne({ id: target.id });
         if (!targetUser) {
             interaction.reply('송금할 유저가 가입을 하지 않았습니다.');

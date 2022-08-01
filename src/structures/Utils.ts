@@ -98,6 +98,6 @@ export class Utils {
     setTimeout(() => {
       msg.delete();
       replied.delete();
-    }, 1500);
+    }, 3000);
   }
 }

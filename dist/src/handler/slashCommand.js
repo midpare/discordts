@@ -32,6 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -39,13 +40,18 @@ function default_1(client) {
         Utils_1.Utils.getPath(__dirname + '/../slashCommands', slashCommandFiles);
         //Wait for bot to login
         client.on('ready', () => __awaiter(this, void 0, void 0, function* () {
+            const commands = new Array();
             for (const path of slashCommandFiles) {
                 const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
-                for (const [_, guild] of client.guilds.cache) {
-                    guild.commands.create(file);
-                }
+                const command = Object.assign({}, file);
+                delete command.category;
+                delete command.usage;
+                delete command.aliases;
+                commands.push(command);
                 client.slashCommand.set(file.name, file);
             }
+            const rest = new discord_js_1.REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN || '');
+            rest.put(discord_js_1.Routes.applicationCommands('898169849086365716'), { body: commands });
         }));
     });
 }

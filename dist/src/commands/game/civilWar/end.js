@@ -16,7 +16,7 @@ exports.default = new Commands_1.Command({
     category: '게임',
     usage: '내전 종료',
     description: '내전을 종료합니다.',
-    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ client }) => __awaiter(void 0, void 0, void 0, function* () {
         const civilWar = client.civilWar;
         for (const user of civilWar.teams.flat()) {
             if (!user.voice || user.voice.channelId == null)

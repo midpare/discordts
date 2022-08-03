@@ -4,7 +4,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 export default new Command({
   name: 'giverole',
   private: true,
-  execute: async ({ msg, client }) => {
+  execute: async ({ msg }) => {
     if (msg.author.id != '446068726849208341')
       return;
 

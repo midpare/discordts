@@ -22,7 +22,7 @@ export default new SlashCommand({
       required: false,
     },
   ],
-  defaultMemberPermissions: PermissionFlagsBits.KickMembers,
+  default_member_permissions: PermissionFlagsBits.KickMembers,
   execute: async ({ interaction, options, client }) => {
     const channel = <TextChannel>client.channels.cache.get('910521119877005363');
 

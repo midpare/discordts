@@ -6,7 +6,7 @@ const client = new Client({ intents: 131071 });
 
 (async () => {
   const handlerFiles = new Array();
-  Utils.getPath(__dirname + '/src/handler', handlerFiles)
+  Utils.getPath(handlerFiles, __dirname + '/src/handler')
   
   for (let path of handlerFiles) {
     (await import(path)).default(client);

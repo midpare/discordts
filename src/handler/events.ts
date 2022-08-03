@@ -3,7 +3,7 @@ import { Utils } from '../structures/Utils';
 
 export default async function (client: Client) {
   const eventFiles = new Array();
-  Utils.getPath(__dirname + '/../events', eventFiles);
+  Utils.getPath(eventFiles, __dirname + '/../events');
 
   for (const path of eventFiles) {
     const file = (await import(path)).default;

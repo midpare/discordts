@@ -21,11 +21,11 @@ export default new SlashCommand({
       type: ApplicationCommandOptionType.Integer,
       required: true,
       min_value: 1,
-    }
+    } 
   ],
   execute: async ({ interaction, options, client }) => {
     const { guildId, user: { id } } = interaction;
-    const user = await client.models.gambling.findOne({ id, guildId});
+    const user = await client.models.gambling.findOne({ id, guildId });
 
     const target = options.getMember('유저');
 

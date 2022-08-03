@@ -3,7 +3,7 @@ import { Utils } from '../structures/Utils';
 
 export default async function (client: Client) {
   const interactionFiles = new Array();
-  Utils.getPath(__dirname + '/../interactions', interactionFiles);
+  Utils.getPath(interactionFiles, __dirname + '/../interactions');
 
   for (const path of interactionFiles) {
     const file = (await import(path)).default;

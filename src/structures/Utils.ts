@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, GuildMember, InteractionReplyOptions, Message, ReplyMessageOptions } from 'discord.js';
+import { ChatInputCommandInteraction, GuildMember, Message } from 'discord.js';
 import request from 'request';
 import fs from 'fs';
 
@@ -37,7 +37,7 @@ export class Utils {
 
   public static async requestGet(option: ApiType): Promise<any> {
     return new Promise((resolve, reject) => {
-      request(option, (err, res, body) => {
+      request(option, (err, _, body) => {
         if (err)
           reject(err);
         else
@@ -81,12 +81,12 @@ export class Utils {
     }
   }
   
-  public static getPath(basePath: string, arr: Array<string>) {
+  public static getPath(arr: Array<string>, basePath: string) {
     const files = fs.readdirSync(basePath, { withFileTypes: true })
     for (const file of files) {
       const path = `${basePath}/${file.name}`;
       if (file.isDirectory()) {
-        Utils.getPath(path, arr)
+        Utils.getPath(arr, path)
       } else {
         arr.push(path);
       }

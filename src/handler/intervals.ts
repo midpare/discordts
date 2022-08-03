@@ -5,7 +5,7 @@ import { Utils } from '../structures/Utils';
 
 export default async function (client: Client) {
   const intervalFiles = new Array();
-  Utils.getPath(__dirname + '/../interval', intervalFiles);
+  Utils.getPath(intervalFiles, __dirname + '/../interval');
 
   for (const path of intervalFiles) {
     const file: Interval = (await import(path)).default;
@@ -16,5 +16,5 @@ export default async function (client: Client) {
     } catch (error) {
       console.error(error);
     }
-  }
+  } 
 }

@@ -29,7 +29,7 @@ export default new SlashCommand({
       required: false,
     },
   ],
-  defaultMemberPermissions: PermissionFlagsBits.BanMembers,
+  default_member_permissions: PermissionFlagsBits.BanMembers,
   execute: async ({ interaction, options, client }) => {
     const channel = <TextChannel>client.channels.cache.get('1001317081175826482');
     const target = options.getMember('유저');

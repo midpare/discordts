@@ -1,4 +1,4 @@
-import { VoiceChannel, PermissionFlagsBits } from 'discord.js';
+import { PermissionFlagsBits } from 'discord.js';
 import { Command } from '../../managers/Commands';
 
 const dead = new Array();

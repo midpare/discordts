@@ -7,7 +7,7 @@ export default new SlashCommand({
   description: '도박 관련 명령어를 사용할수있게 가입을 합니다.',
   execute: async ({ interaction, client }) => {
     const { guildId, user: { id }} = interaction
-    const user = await client.models.gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id, guildId });
     if (user) {
       Utils.reply(interaction, client.messages.gambling.join.alreadyJoin);
       return;

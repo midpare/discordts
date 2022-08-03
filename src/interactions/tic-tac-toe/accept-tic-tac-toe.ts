@@ -1,4 +1,4 @@
-import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, EmbedBuilder, underscore } from 'discord.js';
+import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { TicTacToe } from '../../structures/games/tic-tac-toe';
 import { InteractionOptions } from '../../structures/InteractionOptions';

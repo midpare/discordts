@@ -1,5 +1,4 @@
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js';
-import { Command } from '../../managers/Commands';
 import { SlashCommand } from '../../managers/SlashCommand';
 import { Utils } from '../../structures/Utils';
 
@@ -25,7 +24,7 @@ export default new SlashCommand({
       required: false,
     },
   ],
-  defaultMemberPermissions: PermissionFlagsBits.ManageMessages,
+  default_member_permissions: PermissionFlagsBits.ManageMessages,
   execute: async ({ interaction, options, client }) => {
     const count = options.getInteger('개수', true);
     const target = options.getUser('유저');

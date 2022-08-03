@@ -1,4 +1,4 @@
-import { GuildMember, Message } from 'discord.js';
+import { Message } from 'discord.js';
 
 export class InteractionOptions {
   public readonly ids: string[];

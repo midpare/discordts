@@ -6,7 +6,7 @@ export default new Command({
   category: '게임',
   usage: '내전 종료',
   description: '내전을 종료합니다.',
-  execute: async ({ msg, client }) => {
+  execute: async ({ client }) => {
     const civilWar = client.civilWar;
     for (const user of civilWar.teams.flat()) {
       if (!user.voice || user.voice.channelId == null)

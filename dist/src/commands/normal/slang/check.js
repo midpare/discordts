@@ -16,7 +16,7 @@ exports.default = new Commands_1.Command({
     name: '망언 확인',
     aliases: ['망언 목록', '망언 리스트'],
     private: true,
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
         if (!target) {
@@ -25,7 +25,7 @@ exports.default = new Commands_1.Command({
         }
         const { id, guild: { id: guildId } } = target;
         const user = yield client.models.config.findOne({ id, guildId });
-        if (user.slangs.length < 1) {
+        if (!user || user.slangs.length < 1) {
             Utils_1.Utils.reply(msg, '이 유저는 망언을 보유하고 있지 않습니다.');
             return;
         }

@@ -41,7 +41,7 @@ const Utils_1 = require("./src/structures/Utils");
 const client = new Client_1.Client({ intents: 131071 });
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const handlerFiles = new Array();
-    Utils_1.Utils.getPath(__dirname + '/src/handler', handlerFiles);
+    Utils_1.Utils.getPath(handlerFiles, __dirname + '/src/handler');
     for (let path of handlerFiles) {
         (yield Promise.resolve().then(() => __importStar(require(path)))).default(client);
     }

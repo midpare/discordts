@@ -32,23 +32,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const SubCommands_1 = require("../managers/SubCommands");
 const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
         const slashCommandFiles = new Array();
-        Utils_1.Utils.getPath(__dirname + '/../slashCommands', slashCommandFiles);
+        Utils_1.Utils.getPath(slashCommandFiles, __dirname + '/../slashCommands');
         //Wait for bot to login
         client.on('ready', () => __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            const commands = new Array();
             for (const path of slashCommandFiles) {
                 const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
+                if (file instanceof SubCommands_1.SubCommand)
+                    continue;
+                client.slashCommands.set(file.name, file);
                 const command = Object.assign({}, file);
+                delete command.aliases;
                 delete command.category;
                 delete command.usage;
-                delete command.aliases;
-                (_a = client.application) === null || _a === void 0 ? void 0 : _a.commands.create(command);
-                client.slashCommand.set(file.name, file);
+                delete command.execute;
+                if (command.subCommands) {
+                    const directories = new Array();
+                    Utils_1.Utils.getPath(directories, path + '/..' + command.subCommands);
+                    command.options = new Array();
+                    for (const dir of directories) {
+                        const subFile = (yield Promise.resolve().then(() => __importStar(require(dir)))).default;
+                        client.subCommands.set(file.name + ' ' + subFile.name, subFile);
+                        const subCommand = Object.assign({}, subFile);
+                        delete subCommand.aliases;
+                        delete subCommand.category;
+                        delete subCommand.usage;
+                        delete subCommand.execute;
+                        command.options.push(subCommand);
+                    }
+                    delete command.subCommands;
+                }
+                for (const [_, guild] of client.guilds.cache) {
+                    guild.commands.create(command);
+                }
             }
         }));
     });

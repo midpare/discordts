@@ -40,7 +40,7 @@ const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
         const intervalFiles = new Array();
-        Utils_1.Utils.getPath(__dirname + '/../interval', intervalFiles);
+        Utils_1.Utils.getPath(intervalFiles, __dirname + '/../interval');
         for (const path of intervalFiles) {
             const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             try {

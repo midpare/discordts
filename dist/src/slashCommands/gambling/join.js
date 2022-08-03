@@ -18,7 +18,7 @@ exports.default = new SlashCommand_1.SlashCommand({
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         const { guildId, user: { id } } = interaction;
-        const user = yield client.models.gambling.findOne({ id });
+        const user = yield client.models.gambling.findOne({ id, guildId });
         if (user) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.join.alreadyJoin);
             return;

@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, GuildMember, PermissionFlagsBits, VoiceChannel } from 'discord.js';
+import { ApplicationCommandOptionType, GuildMember, VoiceChannel } from 'discord.js';
 import { SlashCommand } from '../../managers/SlashCommand';
 import { Utils } from '../../structures/Utils';
 

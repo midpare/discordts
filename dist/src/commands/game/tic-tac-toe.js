@@ -19,7 +19,7 @@ exports.default = new Commands_1.Command({
     category: '게임',
     usage: '틱택토 <유저>',
     description: '[유저]와 틱택토 게임을 합니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
         const id = msg.author.id;

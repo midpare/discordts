@@ -3,7 +3,7 @@ import { Utils } from '../structures/Utils';
 
 export default async function (client: Client) {
   const commandFiles = new Array();
-  Utils.getPath(__dirname + '/../commands', commandFiles);
+  Utils.getPath(commandFiles, __dirname + '/../commands');
   for (const path of commandFiles) {
     const file = (await import(path)).default;
     if (client.commands.get(file.name))

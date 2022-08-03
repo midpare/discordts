@@ -9,19 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../managers/Commands");
 const discord_js_1 = require("discord.js");
-exports.default = new Commands_1.Command({
-    name: 'giverole',
-    private: true,
-    execute: ({ msg }) => __awaiter(void 0, void 0, void 0, function* () {
-        if (msg.author.id != '446068726849208341')
+const SlashCommand_1 = require("../../managers/SlashCommand");
+exports.default = new SlashCommand_1.SlashCommand({
+    name: '경고',
+    category: '관리자',
+    description: 'test description',
+    subCommands: '/warning',
+    default_member_permissions: discord_js_1.PermissionFlagsBits.KickMembers + discord_js_1.PermissionFlagsBits.BanMembers,
+    execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
+        const subCommand = options.getSubcommand();
+        const event = client.subCommands.get('경고 ' + subCommand);
+        if (!event)
             return;
-        const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
-            .setCustomId('giveRole')
-            .setStyle(discord_js_1.ButtonStyle.Primary)
-            .setLabel('역할 받기'));
-        msg.channel.send({ content: '규칙을 확인하신 후, 아래 버튼을 눌러 역할을 부여받으세요', components: [row] });
-        msg.delete();
+        event.execute({ interaction, options, client });
     }),
 });

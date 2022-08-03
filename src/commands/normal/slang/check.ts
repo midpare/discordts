@@ -6,7 +6,7 @@ export default new Command({
   name: '망언 확인',
   aliases: ['망언 목록', '망언 리스트'],
   private: true,
-  execute: async ({ msg, args, client }) => {
+  execute: async ({ msg, client }) => {
     const target = msg.mentions.members?.first();
     
     if (!target) {
@@ -17,7 +17,7 @@ export default new Command({
     const { id, guild: { id: guildId } } = target;
     const user = await client.models.config.findOne({ id, guildId });
     
-    if (user.slangs.length < 1) {
+    if (!user || user.slangs.length < 1) {
       Utils.reply(msg, '이 유저는 망언을 보유하고 있지 않습니다.');
       return;
     }

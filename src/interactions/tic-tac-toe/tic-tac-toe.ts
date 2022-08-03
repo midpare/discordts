@@ -1,5 +1,5 @@
 import { Interaction } from '../../managers/Interaction';
-import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, Message } from 'discord.js';
+import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { Utils } from '../../structures/Utils';
 
 export default new Interaction({

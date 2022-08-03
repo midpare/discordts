@@ -9,7 +9,7 @@ export default new Command({
   category: '게임',
   usage: '틱택토 <유저>',
   description: '[유저]와 틱택토 게임을 합니다.',
-  execute: async ({ msg, args, client }) => {
+  execute: async ({ msg, client }) => {
     const target = msg.mentions.members?.first();
     const id = msg.author.id
     if (!target) {

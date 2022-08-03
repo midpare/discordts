@@ -36,7 +36,7 @@ const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
         const interactionFiles = new Array();
-        Utils_1.Utils.getPath(__dirname + '/../interactions', interactionFiles);
+        Utils_1.Utils.getPath(interactionFiles, __dirname + '/../interactions');
         for (const path of interactionFiles) {
             const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             try {

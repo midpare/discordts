@@ -20,16 +20,18 @@ exports.default = new Event_1.Event({
             const cmdChannel = client.channels.cache.get('1000969483462123591');
             const botTestChannel = client.channels.cache.get('910521119877005368');
             const { commandName, options, guildId, user: { id } } = interaction;
-            const event = client.slashCommand.get(commandName);
+            const event = client.slashCommands.get(commandName);
+            if (!event)
+                return;
             if (interaction.channel != botTestChannel) {
                 switch (event.category) {
                     case '도박':
                     case '베팅':
                     case '코인':
-                        // if (interaction.channel != gambChannel) {
-                        //   interaction.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
-                        //   return;
-                        // }
+                        if (interaction.channel != gambChannel) {
+                            interaction.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
+                            return;
+                        }
                         if (event.name == '가입')
                             break;
                         const user = yield client.models.gambling.findOne({ id, guildId });

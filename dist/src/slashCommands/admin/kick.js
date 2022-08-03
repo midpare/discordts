@@ -32,7 +32,7 @@ exports.default = new SlashCommand_1.SlashCommand({
             required: false,
         },
     ],
-    defaultMemberPermissions: discord_js_1.PermissionFlagsBits.KickMembers,
+    default_member_permissions: discord_js_1.PermissionFlagsBits.KickMembers,
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const channel = client.channels.cache.get('910521119877005363');

@@ -36,7 +36,7 @@ const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
         const commandFiles = new Array();
-        Utils_1.Utils.getPath(__dirname + '/../commands', commandFiles);
+        Utils_1.Utils.getPath(commandFiles, __dirname + '/../commands');
         for (const path of commandFiles) {
             const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             if (client.commands.get(file.name))

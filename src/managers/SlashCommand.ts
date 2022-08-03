@@ -1,11 +1,9 @@
 import { 
-  BaseApplicationCommandData, 
   LocalizationMap, 
   ApplicationCommandType, 
-  PermissionResolvable, 
   ChatInputCommandInteraction, 
   CommandInteractionOptionResolver, 
-  ApplicationCommandOptionData
+  ApplicationCommandOptionData,
 } from 'discord.js'
 import { Client } from '../structures/Client';
 
@@ -15,25 +13,26 @@ type ExecuteType = (options: {
   client: Client;
 }) => Promise<void>
 
-export class SlashCommand implements BaseApplicationCommandData {
-  public name: string;
-  public aliases?: string[];
-  public category: string
-  public usage?: string;
-  public description: string;
-  public nameLocalizations?: LocalizationMap;
-  public descriptionLocalizations?: LocalizationMap;
-  public defaultMemberPermissions?: PermissionResolvable | null;
-  public type?: ApplicationCommandType.ChatInput;
-  public options?: ApplicationCommandOptionData[];
-  public execute: ExecuteType;
+export class SlashCommand {
+  public readonly name: string;
+  public readonly aliases?: string[];
+  public readonly category: string
+  public readonly usage?: string;
+  public readonly description: string;
+  public readonly subCommands?: string
+  public readonly nameLocalizations?: LocalizationMap;
+  public readonly descriptionLocalizations?: LocalizationMap;
+  public readonly default_member_permissions?: bigint | string
+  public readonly type?: ApplicationCommandType.ChatInput;
+  public readonly options?: ApplicationCommandOptionData[];
+  public readonly execute: ExecuteType;
 
   constructor(options: SlashCommand) {
+    Object.assign(this, options);
     this.name = options.name;
     this.category = options.category;
     this.usage = options.usage ?? options.name;
     this.description = options.description;
     this.execute = options.execute;
-    Object.assign(this, options);
   }
 }

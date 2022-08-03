@@ -13,7 +13,6 @@ const Event_1 = require("../managers/Event");
 exports.default = new Event_1.Event({
     name: 'guildMemberAdd',
     execute: (member) => __awaiter(void 0, void 0, void 0, function* () {
-        const client = member.client;
         try {
             member.roles.add('910521119713394739');
         }

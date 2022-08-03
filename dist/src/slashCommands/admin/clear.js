@@ -34,7 +34,7 @@ exports.default = new SlashCommand_1.SlashCommand({
             required: false,
         },
     ],
-    defaultMemberPermissions: discord_js_1.PermissionFlagsBits.ManageMessages,
+    default_member_permissions: discord_js_1.PermissionFlagsBits.ManageMessages,
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const count = options.getInteger('개수', true);

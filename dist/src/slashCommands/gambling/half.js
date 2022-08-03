@@ -17,8 +17,8 @@ exports.default = new SlashCommand_1.SlashCommand({
     category: '도박',
     description: '자신의 돈의 절반을 걸고 도박을 진행합니다. (성공시: 2배, 실패시: 0배)',
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = interaction.user.id;
-        const user = yield client.models.gambling.findOne({ id });
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         if (user.money == 0) {
             Utils_1.Utils.reply(interaction, client.messages.noneMoney);
             return;

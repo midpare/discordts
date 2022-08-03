@@ -17,8 +17,8 @@ export class Command {
   public readonly execute: ExecuteType;
 
   constructor(options: Command) {
+    Object.assign(this, options);
     this.name = options.name;
     this.execute = options.execute;
-    Object.assign(this, options);
   }
 }

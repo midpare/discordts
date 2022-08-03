@@ -1,4 +1,4 @@
-import Discord, { ButtonInteraction, ClientOptions, Collection, GuildMember, SelectMenuInteraction, Snowflake, User } from 'discord.js'
+import Discord, { ButtonInteraction, ClientOptions, Collection, GuildMember, SelectMenuInteraction, Snowflake } from 'discord.js'
 import { Betting } from './games/Betting';
 import { Command } from '../managers/Commands';
 import { Interaction } from '../managers/Interaction';
@@ -8,10 +8,12 @@ import { InteractionOptions } from './InteractionOptions';
 import { Model } from './Model';
 import { TicTacToe } from './games/tic-tac-toe';
 import { SlashCommand } from '../managers/SlashCommand';
+import { SubCommand } from '../managers/SubCommands';
 
 export class Client extends Discord.Client {
   public readonly commands: Collection<string, Command>;
-  public readonly slashCommand: Collection<string, SlashCommand>;
+  public readonly slashCommands: Collection<string, SlashCommand>;
+  public readonly subCommands: Collection<string, SubCommand>;
   public readonly interactions: Collection<string, Interaction<ButtonInteraction | SelectMenuInteraction>>;
   public readonly interactionOptions: Collection<string, InteractionOptions>;
   public readonly coin: Collection<string, string>;
@@ -27,7 +29,8 @@ export class Client extends Discord.Client {
     super(options);
 
     this.commands = new Collection();
-    this.slashCommand = new Collection();
+    this.slashCommands = new Collection();
+    this.subCommands = new Collection();
     this.interactions = new Collection();
     this.interactionOptions = new Collection();
     this.coin = new Collection();

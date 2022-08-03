@@ -39,7 +39,7 @@ class Utils {
     static requestGet(option) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                (0, request_1.default)(option, (err, res, body) => {
+                (0, request_1.default)(option, (err, _, body) => {
                     if (err)
                         reject(err);
                     else
@@ -78,12 +78,12 @@ class Utils {
             return box;
         }
     }
-    static getPath(basePath, arr) {
+    static getPath(arr, basePath) {
         const files = fs_1.default.readdirSync(basePath, { withFileTypes: true });
         for (const file of files) {
             const path = `${basePath}/${file.name}`;
             if (file.isDirectory()) {
-                Utils.getPath(path, arr);
+                Utils.getPath(arr, path);
             }
             else {
                 arr.push(path);

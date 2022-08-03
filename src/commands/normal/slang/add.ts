@@ -20,9 +20,9 @@ export default new Command({
 
     const content = args.slice(1).join(' ');
 
-    const slang = await client.models.config.findOne({ id, guildId, slangs: { $all: [content] } });
+    const user = await client.models.config.findOne({ id, guildId });
 
-    if (slang) {
+    if (user.slangs.includes(content)) {
       Utils.reply(msg, '이 망언은 이미 추가되어있습니다.');
       return;
     }

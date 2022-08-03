@@ -20,12 +20,12 @@ export default new Command({
 
     const content = args.slice(1).join(' ');
 
-    const slang = await client.models.config.findOne({ id, guildId, slangs: { $all: [content] } });
+    const user = await client.models.config.findOne({ id, guildId });
 
-    if (!slang) {
+    if (!user.slangs.includes(content)) {
       Utils.reply(msg, '이 유저는 이 망언을 보유하고 있지 않습니다.');
       return;
-    }
+    } 
     
     (await client.models.config.updateOne({ id, guildId }, { $pull: { slangs: content }})).matchedCount;
     Utils.reply(msg, `성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);

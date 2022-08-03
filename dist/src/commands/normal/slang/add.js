@@ -27,8 +27,8 @@ exports.default = new Commands_1.Command({
             return;
         }
         const content = args.slice(1).join(' ');
-        const slang = yield client.models.config.findOne({ id, guildId, slangs: { $all: [content] } });
-        if (slang) {
+        const user = yield client.models.config.findOne({ id, guildId });
+        if (user.slangs.includes(content)) {
             Utils_1.Utils.reply(msg, '이 망언은 이미 추가되어있습니다.');
             return;
         }

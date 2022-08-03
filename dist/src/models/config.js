@@ -6,7 +6,7 @@ const configInfo = new mongoose_1.Schema({
     id: String,
     name: String,
     guildId: String,
-    slang: [String],
+    slangs: [String],
     warning: { type: Number, default: 0 },
     baseMoneyCoolTime: { type: Number, default: 0 },
     bankruptcyTime: { type: Number, default: 0 },

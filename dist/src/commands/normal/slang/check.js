@@ -25,7 +25,7 @@ exports.default = new Commands_1.Command({
         }
         const { id, guild: { id: guildId } } = target;
         const user = yield client.models.config.findOne({ id, guildId });
-        if (!user || user.slangs.length < 1) {
+        if (user.slangs.length < 1) {
             Utils_1.Utils.reply(msg, '이 유저는 망언을 보유하고 있지 않습니다.');
             return;
         }

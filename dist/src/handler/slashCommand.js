@@ -52,7 +52,7 @@ function default_1(client) {
                 delete command.execute;
                 if (command.subCommands) {
                     const directories = new Array();
-                    Utils_1.Utils.getPath(directories, path + '/..' + command.subCommands);
+                    Utils_1.Utils.getPath(directories, path.split('/').slice(0, -1).join('/') + command.subCommands);
                     command.options = new Array();
                     for (const dir of directories) {
                         const subFile = (yield Promise.resolve().then(() => __importStar(require(dir)))).default;

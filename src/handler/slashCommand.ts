@@ -23,7 +23,7 @@ export default async function (client: Client) {
       
       if (command.subCommands) {
         const directories = new Array();
-        Utils.getPath(directories, path + '/..' + command.subCommands);
+        Utils.getPath(directories, path.split('/').slice(0, -1).join('/') + command.subCommands);
         command.options = new Array()
         for (const dir of directories) {
           const subFile = (await import(dir)).default;

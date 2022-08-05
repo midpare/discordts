@@ -20,13 +20,13 @@ export default async function (client: Client) {
       delete command.category;
       delete command.usage;
       delete command.execute; 
-      // client.application?.commands.set([]);
-      // client.application?.commands.create(command);
+      
       if (command.default_member_permissions)
-        command.default_member_permissions = command.default_member_permissions.toString();
+      command.default_member_permissions = command.default_member_permissions.toString();
       commands.push(command);
     }
-
+    client.application?.commands.set([]);
+    
     const rest = new REST().setToken(process.env.DISCORD_TOKEN ?? '');
     rest.put(Routes.applicationCommands(client.user?.id ?? ''), { body: commands });
   });

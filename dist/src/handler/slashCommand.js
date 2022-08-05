@@ -40,7 +40,7 @@ function default_1(client) {
         Utils_1.Utils.getPath(slashCommandFiles, __dirname + '/../slashCommands');
         //Wait for bot to login
         client.on('ready', () => __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c;
+            var _a, _b, _c, _d;
             const commands = new Array();
             for (const path of slashCommandFiles) {
                 const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
@@ -50,14 +50,13 @@ function default_1(client) {
                 delete command.category;
                 delete command.usage;
                 delete command.execute;
-                // client.application?.commands.set([]);
-                // client.application?.commands.create(command);
                 if (command.default_member_permissions)
                     command.default_member_permissions = command.default_member_permissions.toString();
                 commands.push(command);
             }
-            const rest = new discord_js_1.REST().setToken((_a = process.env.DISCORD_TOKEN) !== null && _a !== void 0 ? _a : '');
-            rest.put(discord_js_1.Routes.applicationCommands((_c = (_b = client.user) === null || _b === void 0 ? void 0 : _b.id) !== null && _c !== void 0 ? _c : ''), { body: commands });
+            (_a = client.application) === null || _a === void 0 ? void 0 : _a.commands.set([]);
+            const rest = new discord_js_1.REST().setToken((_b = process.env.DISCORD_TOKEN) !== null && _b !== void 0 ? _b : '');
+            rest.put(discord_js_1.Routes.applicationCommands((_d = (_c = client.user) === null || _c === void 0 ? void 0 : _c.id) !== null && _d !== void 0 ? _d : ''), { body: commands });
         }));
     });
 }

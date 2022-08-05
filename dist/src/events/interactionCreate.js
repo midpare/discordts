@@ -28,10 +28,10 @@ exports.default = new Event_1.Event({
                     case '도박':
                     case '베팅':
                     case '코인':
-                        if (interaction.channel != gambChannel) {
-                            interaction.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
-                            return;
-                        }
+                        // if (interaction.channel != gambChannel) {
+                        //   interaction.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
+                        //   return;
+                        // }
                         if (event.name == '가입')
                             break;
                         const user = yield client.models.gambling.findOne({ id, guildId });

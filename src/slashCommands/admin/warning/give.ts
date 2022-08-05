@@ -1,12 +1,12 @@
-import { TextChannel, ApplicationCommandOptionType } from 'discord.js';
-import { SubCommand } from '../../../managers/SubCommands';
+import { TextChannel, ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js';
+import { SlashCommand } from '../../../managers/SlashCommand';
 import { Utils } from '../../../structures/Utils';
 
-export default new SubCommand({
-  name: '부여',
+export default new SlashCommand({
+  name: '경고부여',
   aliases: ['주기'],
   category: '관리자',
-  usage: '경고 부여 <유저> <횟수> [사유]',
+  usage: '경고부여 <유저> <횟수> [사유]',
   description: '유저에게 경고를 부여합니다.',
   options: [
     {
@@ -30,6 +30,7 @@ export default new SubCommand({
       required: false,
     },
   ],
+  default_member_permissions: PermissionFlagsBits.BanMembers,
   execute: async ({ interaction, options, client }) => {
     const { guildId } = interaction;
     const target = options.getUser('유저', true);

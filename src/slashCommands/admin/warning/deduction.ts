@@ -1,11 +1,11 @@
-import { TextChannel, ApplicationCommandOptionType } from 'discord.js';
-import { SubCommand } from '../../../managers/SubCommands';
+import { TextChannel, ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js';
+import { SlashCommand } from '../../../managers/SlashCommand';
 import { Utils } from '../../../structures/Utils';
 
-export default new SubCommand({
-  name: '차감',
+export default new SlashCommand({
+  name: '경고차감',
   category: '관리자',
-  usage: '경고 차감 <유저> <횟수> [사유]',
+  usage: '경고차감 <유저> <횟수> [사유]',
   description: '유저의 경고를 차감합니다.',
   options: [
     {
@@ -29,6 +29,7 @@ export default new SubCommand({
       type: ApplicationCommandOptionType.String,
     },
   ],
+  default_member_permissions: PermissionFlagsBits.BanMembers,
   execute: async ({ interaction, options, client }) => {
     const { guildId } = interaction
     const target = options.getUser('유저', true);

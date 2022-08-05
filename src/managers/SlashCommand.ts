@@ -19,7 +19,6 @@ export class SlashCommand {
   public readonly category: string
   public readonly usage?: string;
   public readonly description: string;
-  public readonly subCommands?: string
   public readonly nameLocalizations?: LocalizationMap;
   public readonly descriptionLocalizations?: LocalizationMap;
   public readonly default_member_permissions?: bigint | string

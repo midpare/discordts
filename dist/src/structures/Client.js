@@ -33,7 +33,6 @@ class Client extends discord_js_1.default.Client {
         super(options);
         this.commands = new discord_js_1.Collection();
         this.slashCommands = new discord_js_1.Collection();
-        this.subCommands = new discord_js_1.Collection();
         this.interactions = new discord_js_1.Collection();
         this.interactionOptions = new discord_js_1.Collection();
         this.coin = new discord_js_1.Collection();

@@ -10,13 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const SubCommands_1 = require("../../../managers/SubCommands");
+const SlashCommand_1 = require("../../../managers/SlashCommand");
 const Utils_1 = require("../../../structures/Utils");
-exports.default = new SubCommands_1.SubCommand({
-    name: '부여',
+exports.default = new SlashCommand_1.SlashCommand({
+    name: '경고부여',
     aliases: ['주기'],
     category: '관리자',
-    usage: '경고 부여 <유저> <횟수> [사유]',
+    usage: '경고부여 <유저> <횟수> [사유]',
     description: '유저에게 경고를 부여합니다.',
     options: [
         {
@@ -40,6 +40,7 @@ exports.default = new SubCommands_1.SubCommand({
             required: false,
         },
     ],
+    default_member_permissions: discord_js_1.PermissionFlagsBits.BanMembers,
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const { guildId } = interaction;
         const target = options.getUser('유저', true);

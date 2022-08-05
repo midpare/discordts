@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const SlashCommand_1 = require("../managers/SlashCommand");
 exports.default = new SlashCommand_1.SlashCommand({
-    name: 'pong',
+    name: 'ping',
     category: '기본',
     description: '봇의 현재상태를 확인합니다',
     execute: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {

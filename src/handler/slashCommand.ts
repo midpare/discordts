@@ -1,4 +1,4 @@
-import { SubCommand } from '../managers/SubCommands';
+import { REST, Routes } from 'discord.js';
 import { Client } from '../structures/Client';
 import { Utils } from '../structures/Utils';
 
@@ -8,43 +8,26 @@ export default async function (client: Client) {
 
   //Wait for bot to login
   client.on('ready', async () => {
+    const commands = new Array();
     for (const path of slashCommandFiles) {
       const file = (await import(path)).default;
-      if (file instanceof SubCommand)   
-        continue;
 
       client.slashCommands.set(file.name, file);
+      
       const command = Object.assign({}, file);
 
       delete command.aliases;
       delete command.category;
       delete command.usage;
-      delete command.execute;
-      
-      if (command.subCommands) {
-        const directories = new Array();
-        Utils.getPath(directories, path.split('/').slice(0, -1).join('/') + command.subCommands);
-        command.options = new Array()
-        for (const dir of directories) {
-          const subFile = (await import(dir)).default;
-          client.subCommands.set(file.name + ' ' + subFile.name, subFile);
-          const subCommand = Object.assign({}, subFile);
-        
-          
-          delete subCommand.aliases;
-          delete subCommand.category;
-          delete subCommand.usage;
-          delete subCommand.execute;
-          
-          command.options.push(subCommand);
-        }
-        delete command.subCommands;
-      }
+      delete command.execute; 
+      // client.application?.commands.set([]);
+      // client.application?.commands.create(command);
+      if (command.default_member_permissions)
+        command.default_member_permissions = command.default_member_permissions.toString();
+      commands.push(command);
+    }
 
-
-      for (const [_, guild] of client.guilds.cache) {
-        guild.commands.create(command);
-      }
-    }    
+    const rest = new REST().setToken(process.env.DISCORD_TOKEN ?? '');
+    rest.put(Routes.applicationCommands(client.user?.id ?? ''), { body: commands });
   });
 }

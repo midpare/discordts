@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const SubCommands_1 = require("../managers/SubCommands");
+const discord_js_1 = require("discord.js");
 const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -40,36 +40,24 @@ function default_1(client) {
         Utils_1.Utils.getPath(slashCommandFiles, __dirname + '/../slashCommands');
         //Wait for bot to login
         client.on('ready', () => __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c;
+            const commands = new Array();
             for (const path of slashCommandFiles) {
                 const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
-                if (file instanceof SubCommands_1.SubCommand)
-                    continue;
                 client.slashCommands.set(file.name, file);
                 const command = Object.assign({}, file);
                 delete command.aliases;
                 delete command.category;
                 delete command.usage;
                 delete command.execute;
-                if (command.subCommands) {
-                    const directories = new Array();
-                    Utils_1.Utils.getPath(directories, path.split('/').slice(0, -1).join('/') + command.subCommands);
-                    command.options = new Array();
-                    for (const dir of directories) {
-                        const subFile = (yield Promise.resolve().then(() => __importStar(require(dir)))).default;
-                        client.subCommands.set(file.name + ' ' + subFile.name, subFile);
-                        const subCommand = Object.assign({}, subFile);
-                        delete subCommand.aliases;
-                        delete subCommand.category;
-                        delete subCommand.usage;
-                        delete subCommand.execute;
-                        command.options.push(subCommand);
-                    }
-                    delete command.subCommands;
-                }
-                for (const [_, guild] of client.guilds.cache) {
-                    guild.commands.create(command);
-                }
+                // client.application?.commands.set([]);
+                // client.application?.commands.create(command);
+                if (command.default_member_permissions)
+                    command.default_member_permissions = command.default_member_permissions.toString();
+                commands.push(command);
             }
+            const rest = new discord_js_1.REST().setToken((_a = process.env.DISCORD_TOKEN) !== null && _a !== void 0 ? _a : '');
+            rest.put(discord_js_1.Routes.applicationCommands((_c = (_b = client.user) === null || _b === void 0 ? void 0 : _b.id) !== null && _c !== void 0 ? _c : ''), { body: commands });
         }));
     });
 }

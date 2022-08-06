@@ -24,9 +24,6 @@ export default async function (client: Client) {
       if (command.default_member_permissions)
         command.default_member_permissions = command.default_member_permissions.toString();
       commands.push(command);
-
-      command.path = path;
-
     }
 
     client.application?.commands.set([]);

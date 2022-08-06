@@ -53,7 +53,6 @@ function default_1(client) {
                 if (command.default_member_permissions)
                     command.default_member_permissions = command.default_member_permissions.toString();
                 commands.push(command);
-                command.path = path;
             }
             (_a = client.application) === null || _a === void 0 ? void 0 : _a.commands.set([]);
             const rest = new discord_js_1.REST().setToken((_b = process.env.DISCORD_TOKEN) !== null && _b !== void 0 ? _b : '');

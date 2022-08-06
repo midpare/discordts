@@ -9,11 +9,12 @@ export default new Interaction({
     if (!options)
       return;
 
-    const tictactoe = client.tictactoe.get(options.etc.players);
+    const tictactoe = client.tictactoe.get(options.ids);
     const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder();
     const button = new ButtonBuilder()
       .setCustomId(Utils.uuid());
-    const position = options.etc.position
+      
+    const position = options.etc.position;
 
     if (!tictactoe)
       return
@@ -25,7 +26,7 @@ export default new Interaction({
 
     const winner = tictactoe.set(position);
     if (winner) {
-      const user = bold(winner.user.username);
+      const user = bold(winner.username);
       options.etc.turn.edit(`${user}님이 승리했습니다!`);
       
       for (const id of options.etc.customIds) {
@@ -35,8 +36,8 @@ export default new Interaction({
 
     interaction.deferUpdate();
 
-    const user = bold(options.etc.players[0].user.username);
-    const target = bold(options.etc.players[1].user.username);
+    const user = bold(options.etc.players[0].username);
+    const target = bold(options.etc.players[1].username);
     if (tictactoe.flag == 1) {
       if (!winner) 
         options.etc.turn.edit(`${user}님의 턴입니다!`);

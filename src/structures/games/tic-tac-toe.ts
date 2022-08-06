@@ -1,12 +1,12 @@
-import { GuildMember } from 'discord.js'
+import { User } from 'discord.js'
 
 export class TicTacToe {
   public readonly table: Array<Array<number>>;
-  public player: Array<GuildMember>;
-  public turn: GuildMember;
+  public player: Array<User>;
+  public turn: User;
   public flag: number
 
-  constructor(player: Array<GuildMember>) {
+  constructor(player: Array<User>) {
     this.table = [
       [0, 0, 0,],
       [0, 0, 0,],
@@ -17,7 +17,7 @@ export class TicTacToe {
     this.turn = player[0]
   }
 
-  public set(position: Array<number>): GuildMember | null {
+  public set(position: Array<number>): User | null {
     const [x, y] = position;
 
     this.table[x][y] = this.flag;
@@ -27,7 +27,7 @@ export class TicTacToe {
     return this.checkWin();
   }
 
-  private checkWin(): GuildMember | null {
+  private checkWin(): User | null {
     const winPositions = [
       [[0,0], [0,1], [0,2]],
       [[1,0], [1,1], [1,2]],

@@ -22,8 +22,8 @@ exports.default = new Interaction_1.Interaction({
         const messages = new Array();
         if (!options || !options.etc)
             return;
-        const user = (0, discord_js_1.bold)(options.etc.players[0].user.username);
-        const target = (0, discord_js_1.bold)(options.etc.players[1].user.username);
+        const user = (0, discord_js_1.bold)(options.etc.players[0].username);
+        const target = (0, discord_js_1.bold)(options.etc.players[1].username);
         messages.push(yield ((_a = interaction.channel) === null || _a === void 0 ? void 0 : _a.send(`${user} VS ${target}`)));
         const turn = yield ((_b = interaction.channel) === null || _b === void 0 ? void 0 : _b.send(`${user}님의 턴입니다!`));
         messages.push(turn);
@@ -45,10 +45,11 @@ exports.default = new Interaction_1.Interaction({
             messages.push(msg);
         }
         index = 0;
+        const ids = [options.etc.players[0].id, options.etc.players[1].id];
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 client.interactionOptions.set(customIds[index], new InteractionOptions_1.InteractionOptions({
-                    ids: [options.etc.players[0].id, options.etc.players[1].id],
+                    ids,
                     cmd: 'tic-tac-toe',
                     messages,
                     customIds: [],
@@ -63,6 +64,6 @@ exports.default = new Interaction_1.Interaction({
                 index++;
             }
         }
-        client.tictactoe.set(options.etc.players, new tic_tac_toe_1.TicTacToe(options.etc.players));
+        client.tictactoe.set(ids, new tic_tac_toe_1.TicTacToe(options.etc.players));
     })
 });

@@ -18,7 +18,7 @@ exports.default = new Interaction_1.Interaction({
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         if (!options)
             return;
-        const tictactoe = client.tictactoe.get(options.etc.players);
+        const tictactoe = client.tictactoe.get(options.ids);
         const row = new discord_js_1.ActionRowBuilder();
         const button = new discord_js_1.ButtonBuilder()
             .setCustomId(Utils_1.Utils.uuid());
@@ -31,15 +31,15 @@ exports.default = new Interaction_1.Interaction({
         }
         const winner = tictactoe.set(position);
         if (winner) {
-            const user = (0, discord_js_1.bold)(winner.user.username);
+            const user = (0, discord_js_1.bold)(winner.username);
             options.etc.turn.edit(`${user}님이 승리했습니다!`);
             for (const id of options.etc.customIds) {
                 client.interactionOptions.delete(id);
             }
         }
         interaction.deferUpdate();
-        const user = (0, discord_js_1.bold)(options.etc.players[0].user.username);
-        const target = (0, discord_js_1.bold)(options.etc.players[1].user.username);
+        const user = (0, discord_js_1.bold)(options.etc.players[0].username);
+        const target = (0, discord_js_1.bold)(options.etc.players[1].username);
         if (tictactoe.flag == 1) {
             if (!winner)
                 options.etc.turn.edit(`${user}님의 턴입니다!`);

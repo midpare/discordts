@@ -1,24 +1,28 @@
-import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
-import { Command } from '../../managers/Commands';
+import { ActionRowBuilder, ApplicationCommandOptionType, bold, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
+import { SlashCommand } from '../../managers/SlashCommand';
 import { InteractionOptions } from '../../structures/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
-export default new Command({
+export default new SlashCommand({
   name: '틱택토',
   aliases: ['tictactoe'],
   category: '게임',
   usage: '틱택토 <유저>',
   description: '[유저]와 틱택토 게임을 합니다.',
-  execute: async ({ msg, client }) => {
-    const target = msg.mentions.members?.first();
-    const id = msg.author.id
-    if (!target) {
-      msg.reply(client.messages.missingMentionUser('틱택토를 '));
-      return;
-    }
+  options: [
+    {
+      name: '유저',
+      description: '틱택토를 할 유저를 입력합니다.',
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    },
+  ],
+  execute: async ({ interaction, options, client }) => {
+    const target = options.getUser('유저', true);
+    const id = interaction.user.id
     
-    if (!msg.member || target.id == id) {
-      msg.reply('자신을 맨션할 수 없습니다.');
+    if (target.id == id) {
+      Utils.reply(interaction, '자신을 맨션할 수 없습니다.');
       return;
     }
 
@@ -38,9 +42,10 @@ export default new Command({
     
     const embed = new EmbedBuilder()
       .setTitle('⚔ 틱택토')
-      .setDescription(`${bold(msg.member.user.username)}가 ${bold(target.user.username)}에게 틱택토 매치를 신청했습니다!`)
+      .setDescription(`${bold(interaction.user.username)}가 ${bold(target.username)}에게 틱택토 매치를 신청했습니다!`)
 
-    const message = await msg.channel.send({ embeds: [embed], components: [row] })
+    interaction.reply({ embeds: [embed], components: [row] })
+    const message = await interaction.fetchReply();
 
     client.interactionOptions.set(yes, new InteractionOptions({
       ids: [target.id],
@@ -48,7 +53,7 @@ export default new Command({
       messages: [message],
       customIds,
       etc: {
-        players: [msg.member, target],
+        players: [interaction.user, target],
       },
     }));
 

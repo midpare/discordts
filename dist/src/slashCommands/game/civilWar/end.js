@@ -9,29 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../../managers/Commands");
-exports.default = new Commands_1.Command({
-    name: '내전 이동',
+const SlashCommand_1 = require("../../../managers/SlashCommand");
+exports.default = new SlashCommand_1.SlashCommand({
+    name: '내전 종료',
+    aliases: ['내전 끝'],
     category: '게임',
-    usage: '내전 이동',
-    description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
-    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
+    usage: '내전 종료',
+    description: '내전을 종료합니다.',
+    execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const civilWar = client.civilWar;
-        if (civilWar.isEmpty()) {
-            msg.reply('이동할 멤버가 없습니다.');
-            return;
-        }
-        const channel1 = client.channels.cache.get('1000704196552704010');
-        const channel2 = client.channels.cache.get('1000704543652323328');
-        for (const user of civilWar.teams[0]) {
+        for (const user of civilWar.teams.flat()) {
             if (!user.voice || user.voice.channelId == null)
                 continue;
-            user.voice.setChannel(channel1);
+            user.voice.setChannel(civilWar.channel);
         }
-        for (const user of civilWar.teams[1]) {
-            if (!user.voice || user.voice.channelId == null)
-                continue;
-            user.voice.setChannel(channel2);
-        }
-    }),
+        civilWar.clear();
+        interaction.reply('성공적으로 내전을 종료했습니다!');
+    })
 });

@@ -10,25 +10,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Commands_1 = require("../../managers/Commands");
+const SlashCommand_1 = require("../../managers/SlashCommand");
 const InteractionOptions_1 = require("../../structures/InteractionOptions");
 const Utils_1 = require("../../structures/Utils");
-exports.default = new Commands_1.Command({
+exports.default = new SlashCommand_1.SlashCommand({
     name: '틱택토',
     aliases: ['tictactoe'],
     category: '게임',
     usage: '틱택토 <유저>',
     description: '[유저]와 틱택토 게임을 합니다.',
-    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a;
-        const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
-        const id = msg.author.id;
-        if (!target) {
-            msg.reply(client.messages.missingMentionUser('틱택토를 '));
-            return;
-        }
-        if (!msg.member || target.id == id) {
-            msg.reply('자신을 맨션할 수 없습니다.');
+    options: [
+        {
+            name: '유저',
+            description: '틱택토를 할 유저를 입력합니다.',
+            type: discord_js_1.ApplicationCommandOptionType.User,
+            required: true,
+        },
+    ],
+    execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
+        const target = options.getUser('유저', true);
+        const id = interaction.user.id;
+        if (target.id == id) {
+            Utils_1.Utils.reply(interaction, '자신을 맨션할 수 없습니다.');
             return;
         }
         const customIds = Utils_1.Utils.uuid(2);
@@ -42,15 +45,16 @@ exports.default = new Commands_1.Command({
             .setLabel('거절'));
         const embed = new discord_js_1.EmbedBuilder()
             .setTitle('⚔ 틱택토')
-            .setDescription(`${(0, discord_js_1.bold)(msg.member.user.username)}가 ${(0, discord_js_1.bold)(target.user.username)}에게 틱택토 매치를 신청했습니다!`);
-        const message = yield msg.channel.send({ embeds: [embed], components: [row] });
+            .setDescription(`${(0, discord_js_1.bold)(interaction.user.username)}가 ${(0, discord_js_1.bold)(target.username)}에게 틱택토 매치를 신청했습니다!`);
+        interaction.reply({ embeds: [embed], components: [row] });
+        const message = yield interaction.fetchReply();
         client.interactionOptions.set(yes, new InteractionOptions_1.InteractionOptions({
             ids: [target.id],
             cmd: 'accept-tic-tac-toe',
             messages: [message],
             customIds,
             etc: {
-                players: [msg.member, target],
+                players: [interaction.user, target],
             },
         }));
         client.interactionOptions.set(no, new InteractionOptions_1.InteractionOptions({

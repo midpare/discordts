@@ -9,19 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../managers/Commands");
 const Utils_1 = require("../../structures/Utils");
-exports.default = new Commands_1.Command({
-    name: '코인 풀매도',
-    aliases: ['코인 전부판매'],
+const discord_js_1 = require("discord.js");
+const SlashCommand_1 = require("../../managers/SlashCommand");
+exports.default = new SlashCommand_1.SlashCommand({
+    name: '코인풀매도',
     category: '코인',
-    usage: '코인 풀매도 <코인이름>',
+    usage: '코인풀매도 <코인이름>',
     description: '현재 갖고있는 코인을 전부 판매합니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = msg.author.id;
-        const user = yield client.models.gambling.findOne({ id });
+    options: [
+        {
+            name: '이름',
+            description: '판매할 코인의 이름을 입력합니다.',
+            type: discord_js_1.ApplicationCommandOptionType.String,
+            required: true,
+        },
+    ],
+    execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         const stock = user.stock;
-        const coinName = args[0];
+        const coinName = options.getString('이름', true);
         const userCoin = stock.filter((element) => element.name == coinName)[0];
         const apiOptions = {
             uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to`,
@@ -29,12 +37,12 @@ exports.default = new Commands_1.Command({
             json: true,
         };
         const coin = yield Utils_1.Utils.requestGet(apiOptions);
-        if (!coinName) {
-            msg.reply('판매할 코인을 입력해주시기바랍니다.');
+        if (!coin) {
+            Utils_1.Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
             return;
         }
         if (!userCoin) {
-            msg.reply('이 코인을 가지고 있지 않습니다.');
+            Utils_1.Utils.reply(interaction, '이 코인을 가지고 있지 않습니다.');
             return;
         }
         const coinMoney = coin[0].tradePrice;
@@ -44,7 +52,7 @@ exports.default = new Commands_1.Command({
         const profitShown = money < userCoin.money * count ? profit : '+' + profit;
         const persent = Math.round((coinMoney / userCoin.money - 1) * 100 * 100) / 100;
         const persentShown = persent < 0 ? persent : '+' + persent;
-        (yield client.models.gambling.updateOne({ id }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
-        msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n손익: ${profitShown}원(${persentShown}%)`);
+        (yield client.models.gambling.updateOne({ id, guildId }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
+        interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n손익: ${profitShown}원(${persentShown}%)`);
     }),
 });

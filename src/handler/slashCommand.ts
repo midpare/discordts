@@ -20,9 +20,9 @@ export default async function (client: Client) {
       delete command.category;
       delete command.usage;
       delete command.execute; 
-      
+
       if (command.default_member_permissions)
-      command.default_member_permissions = command.default_member_permissions.toString();
+        command.default_member_permissions = command.default_member_permissions.toString();
       commands.push(command);
     }
     client.application?.commands.set([]);

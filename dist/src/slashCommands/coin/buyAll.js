@@ -9,19 +9,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../managers/Commands");
+const SlashCommand_1 = require("../../managers/SlashCommand");
 const Utils_1 = require("../../structures/Utils");
-exports.default = new Commands_1.Command({
-    name: '코인 풀매수',
-    aliases: ['코인 전부구매'],
+const discord_js_1 = require("discord.js");
+exports.default = new SlashCommand_1.SlashCommand({
+    name: '코인풀매수',
+    aliases: ['코인전부구매'],
     category: '코인',
-    usage: '코인 풀매수 <코인이름>',
+    usage: '코인풀매수 <코인이름>',
     description: '갖고있는 모든 돈으로 코인을 구매합니다.',
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = msg.author.id;
-        const user = yield client.models.gambling.findOne({ id });
+    options: [
+        {
+            name: '이름',
+            description: '구매할 코인의 이름을 입력합니다.',
+            type: discord_js_1.ApplicationCommandOptionType.String,
+            required: true,
+        },
+    ],
+    execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
+        const { guildId, user: { id } } = interaction;
+        const user = yield client.models.gambling.findOne({ id, guildId });
         const stock = user.stock;
-        const coinName = args[0];
+        const coinName = options.getString('이름', true);
         const userCoin = stock.filter((element) => element.name == coinName)[0];
         const apiOptions = {
             uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to`,
@@ -29,8 +38,8 @@ exports.default = new Commands_1.Command({
             json: true,
         };
         const coin = yield Utils_1.Utils.requestGet(apiOptions);
-        if (!coinName) {
-            msg.reply('정확한 코인을 입력해주시기바랍니다.');
+        if (!coin) {
+            Utils_1.Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
             return;
         }
         const coinMoney = coin[0].tradePrice;
@@ -39,7 +48,7 @@ exports.default = new Commands_1.Command({
         if (userCoin) {
             const moneyAve = (userCoin.money * userCoin.count + money) / (userCoin.count + count);
             yield client.models.gambling.updateOne({ id, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-money) } });
-            msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`);
+            interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`);
         }
         else {
             const stockObject = {
@@ -48,7 +57,7 @@ exports.default = new Commands_1.Command({
                 money: coinMoney,
             };
             (yield client.models.gambling.updateOne({ id }, { $push: { stock: stockObject }, $inc: { money: Math.round(-money) } })).matchedCount;
-            msg.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${(money).toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`);
+            interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${(money).toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`);
         }
     }),
 });

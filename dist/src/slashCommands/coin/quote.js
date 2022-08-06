@@ -9,19 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../managers/Commands");
 const discord_js_1 = require("discord.js");
-exports.default = new Commands_1.Command({
-    name: '코인 현황',
-    aliases: ['코인 시세', '코인 가격'],
+const SlashCommand_1 = require("../../managers/SlashCommand");
+exports.default = new SlashCommand_1.SlashCommand({
+    name: '코인현황',
+    aliases: ['코인시세', '코인가격'],
     category: '코인',
-    usage: '코인 현황',
-    description: '현재 코인들의 현황을 업비트에서 확인합니다.',
-    execute: ({ msg }) => __awaiter(void 0, void 0, void 0, function* () {
+    usage: '코인현황',
+    description: '현재 코인들의 시세를 확인합니다.',
+    execute: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
             .setURL('https://upbit.com/exchange')
             .setStyle(discord_js_1.ButtonStyle.Link)
             .setLabel('거래소'));
-        msg.channel.send({ content: '이곳을 눌러 현황을 확인하세요', components: [row] });
+        interaction.reply({ content: '이곳을 눌러 현황을 확인하세요', components: [row] });
     }),
 });

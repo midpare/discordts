@@ -1,25 +1,25 @@
 import { EmbedBuilder } from 'discord.js';
-import { Command } from '../../managers/Commands';
+import { SlashCommand } from '../../managers/SlashCommand';
 import { Utils } from '../../structures/Utils';
 
-export default new Command({
-  name: '코인 보유',
-  aliases: ['코인 보유량'],
+export default new SlashCommand({
+  name: '코인보유',
+  aliases: ['코인보유량'],
   category: '코인',
-  usage: '코인 보유',
+  usage: '코인보유',
   description: '현재 갖고있는 코인을 확인합니다.',
-  execute: async ({ msg, client }) => {
-    const id = msg.author.id;
+  execute: async ({ interaction, client }) => {
+    const { guildId, user: { id } } = interaction;
     const embed = new EmbedBuilder();
-    const user = await client.models.gambling.findOne({ id });
+    const user = await client.models.gambling.findOne({ id, guildId });
     const stock = user.stock;
 
-    if (!stock[0]) {
-      msg.reply('보유한 코인이 없습니다.');
+    if (stock.length < 1) {
+      Utils.reply(interaction, '보유한 코인이 없습니다.');
       return;
     }
     embed
-      .setTitle(`${msg.author.username}님의 코인 보유 현황`);
+      .setTitle(`${interaction.user.username}님의 코인 보유 현황`);
 
     for (const element of stock) {
       const apiOptions = {
@@ -36,6 +36,6 @@ export default new Command({
       const profitShown = profit < 0 ? profit.toLocaleString() : '+' + profit.toLocaleString();
       embed.addFields({ name: element.name, value: `수량: ${element.count}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, inline: false});
     }
-    msg.channel.send({ embeds: [embed] });
+    interaction.reply({ embeds: [embed] });
   },
 });

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Event_1 = require("../managers/Event");
+const Utils_1 = require("../structures/Utils");
 exports.default = new Event_1.Event({
     name: 'interactionCreate',
     execute: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,21 +30,21 @@ exports.default = new Event_1.Event({
                     case '베팅':
                     case '코인':
                         if (interaction.channel != gambChannel) {
-                            interaction.reply('이 명령어는 도박방에서만 사용할 수 있습니다.');
+                            Utils_1.Utils.reply(interaction, '이 명령어는 도박방에서만 사용할 수 있습니다.');
                             return;
                         }
                         if (event.name == '가입')
                             break;
                         const user = yield client.models.gambling.findOne({ id, guildId });
                         if (event.name != '가입' && !user) {
-                            interaction.reply('가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
+                            Utils_1.Utils.reply(interaction, '가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
                             return;
                         }
                         const leftTime = 1000 * 60 * 60 - time + user.bankruptcy;
                         const leftminute = Math.floor(leftTime / (1000 * 60));
                         const leftsecond = leftTime / 1000 - leftminute * 60;
                         if (leftTime > 0) {
-                            interaction.reply(`파산한 유저는 한시간동안 도박을 할 수 없습니다.\n남은 시간: ${leftminute}분 ${Math.floor(leftsecond)}초`);
+                            Utils_1.Utils.reply(interaction, `파산한 유저는 한시간동안 도박을 할 수 없습니다.\n남은 시간: ${leftminute}분 ${Math.floor(leftsecond)}초`);
                             return;
                         }
                         break;
@@ -52,13 +53,18 @@ exports.default = new Event_1.Event({
                         break;
                     default:
                         if (interaction.channel != cmdChannel) {
-                            interaction.reply('이 명령어는 명령어사용방에서만 사용할 수 있습니다.');
+                            Utils_1.Utils.reply(interaction, '이 명령어는 명령어사용방에서만 사용할 수 있습니다.');
                             return;
                         }
                         break;
                 }
             }
-            event.execute({ interaction, options: options, client });
+            try {
+                event.execute({ interaction, options: options, client });
+            }
+            catch (error) {
+                console.error(error);
+            }
         }
         else if (interaction.isButton() || interaction.isSelectMenu()) {
             const id = interaction.user.id;

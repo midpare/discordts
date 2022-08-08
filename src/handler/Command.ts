@@ -31,7 +31,10 @@ export default async function (client: Client) {
 
     const rest = new REST().setToken(process.env.DISCORD_TOKEN ?? '');
     rest.put(Routes.applicationCommands(client.user?.id ?? ''), { body: commands })
-      .then(() => console.log('Success to put commands!'))
+      .then((commands) => {
+        if (commands instanceof Array)
+          console.log(`Success to put commands! number of commands: ${commands.length}`);
+      })
       .catch(console.error);
   });
 }

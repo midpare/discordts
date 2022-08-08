@@ -3,11 +3,11 @@ import { SlashCommand } from '../../../managers/SlashCommand';
 import { Utils } from '../../../structures/Utils';
 
 export default new SlashCommand({
-  name: '내전 시작',
-  aliases: ['내전 팀나누기', '내전 팀'],
+  name: '내전시작',
+  aliases: ['내전팀나누기', '내전팀'],
   category: '게임',
-  usage: '내전 팀 <이름> <이름> ...',
-  description: '<이름>만큼의 유저를 1팀과 2팀으로 나눕니다.',
+  usage: '내전시작',
+  description: '현재 음성채팅방에 있는 유저를 1팀과 2팀으로 나눕니다.',
   execute: async ({ interaction, client }) => {
     const user = interaction.member;
     if (!(user instanceof GuildMember) || !user.voice.channel) {

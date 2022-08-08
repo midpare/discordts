@@ -8,10 +8,9 @@ export default async function (client: Client) {
   
   //Wait for bot to login
   client.on('ready', async () => {
-    const commands = new Array();
+    let commands = new Array();
     for (const path of slashCommandFiles) {
       const file = (await import(path)).default;
-
       client.slashCommands.set(file.name, file);
       
       const command = Object.assign({}, file);
@@ -25,9 +24,6 @@ export default async function (client: Client) {
         command.default_member_permissions = command.default_member_permissions.toString();
       commands.push(command);
     }
-
-    client.application?.commands.set([]);
-    
     const rest = new REST().setToken(process.env.DISCORD_TOKEN ?? '');
     rest.put(Routes.applicationCommands(client.user?.id ?? ''), { body: commands });
   });

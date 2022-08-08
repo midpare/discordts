@@ -9,21 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const SlashCommand_1 = require("../../../managers/SlashCommand");
+const SlashCommand_1 = require("../../managers/SlashCommand");
 exports.default = new SlashCommand_1.SlashCommand({
-    name: '내전종료',
-    aliases: ['내전끝'],
-    category: '게임',
-    usage: '내전종료',
-    description: '내전을 종료합니다.',
-    execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        const civilWar = client.civilWar;
-        for (const user of civilWar.teams.flat()) {
-            if (!user.voice || user.voice.channelId == null)
-                continue;
-            user.voice.setChannel(civilWar.channel);
-        }
-        civilWar.clear();
-        interaction.reply('성공적으로 내전을 종료했습니다!');
-    })
+    name: 'ping',
+    category: '기본',
+    usage: 'ping',
+    description: '봇의 현재상태를 확인합니다',
+    execute: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
+        interaction.reply('pong!');
+    }),
 });

@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SlashCommand_1 = require("../../../managers/SlashCommand");
 const Utils_1 = require("../../../structures/Utils");
 exports.default = new SlashCommand_1.SlashCommand({
-    name: '내전 이동',
+    name: '내전이동',
     category: '게임',
-    usage: '내전 이동',
+    usage: '내전이동',
     description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const civilWar = client.civilWar;

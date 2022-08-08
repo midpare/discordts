@@ -9,12 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const SlashCommand_1 = require("../managers/SlashCommand");
+const discord_js_1 = require("discord.js");
+const rules_1 = require("../../language/rules");
+const SlashCommand_1 = require("../../managers/SlashCommand");
 exports.default = new SlashCommand_1.SlashCommand({
-    name: 'ping',
+    name: '규칙',
     category: '기본',
-    description: '봇의 현재상태를 확인합니다',
+    usage: '규칙',
+    description: '규칙을 확인합니다.',
     execute: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
-        interaction.reply('pong!');
+        const embed = new discord_js_1.EmbedBuilder()
+            .setTitle('규칙');
+        const rules = new rules_1.Rules();
+        for (const [name, value] of Object.entries(rules)) {
+            embed.addFields({ name, value: value.join('\n'), inline: false });
+        }
+        interaction.reply({ embeds: [embed] });
     }),
 });

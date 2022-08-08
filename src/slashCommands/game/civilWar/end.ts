@@ -1,10 +1,10 @@
 import { SlashCommand } from '../../../managers/SlashCommand';
 
 export default new SlashCommand({
-  name: '내전 종료',
-  aliases: ['내전 끝'],
+  name: '내전종료',
+  aliases: ['내전끝'],
   category: '게임',
-  usage: '내전 종료',
+  usage: '내전종료',
   description: '내전을 종료합니다.',
   execute: async ({ interaction, client }) => {
     const civilWar = client.civilWar;

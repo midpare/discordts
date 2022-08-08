@@ -3,9 +3,9 @@ import { SlashCommand } from '../../../managers/SlashCommand';
 import { Utils } from '../../../structures/Utils';
 
 export default new SlashCommand({
-  name: '내전 이동',
+  name: '내전이동',
   category: '게임',
-  usage: '내전 이동',
+  usage: '내전이동',
   description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
   execute: async ({ interaction, client }) => {
     const civilWar = client.civilWar;

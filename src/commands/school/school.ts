@@ -25,7 +25,7 @@ export default new Command({
   name: '학교',
   category: '학교',
   usage: '학교',
-  description: '학교 명령어',
+  description: '학교 관련 명령어를 사용합니다.',
   options: subcommands,
   execute: async ({ interaction, options, client }) => {
     const apiKey = process.env.SCHOOL_API_KEY || '';

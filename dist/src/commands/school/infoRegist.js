@@ -13,7 +13,7 @@ const Command_1 = require("../../managers/Command");
 exports.default = new Command_1.Command({
     name: '학교등록',
     category: '학교',
-    usage: '학교정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
+    usage: '학교등록',
     description: '자신의 학교정보를 등록해 학교 명령어 사용을 가능하게합니다.',
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         // if (!args[0] || !args[1] || !args[2] || !args[3]) {

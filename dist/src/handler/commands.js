@@ -31,8 +31,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
+const Command_1 = require("../managers/Command");
 const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -44,21 +56,15 @@ function default_1(client) {
             let commands = new Array();
             for (const path of CommandsFiles) {
                 const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
-                if (!file)
+                if (!(file instanceof Command_1.Command))
                     continue;
+                const { aliases, category, usage, execute } = file, command = __rest(file, ["aliases", "category", "usage", "execute"]);
                 client.commands.set(file.name, file);
-                const command = Object.assign({}, file);
-                delete command.aliases;
-                delete command.category;
-                delete command.usage;
-                delete command.execute;
-                if (command.default_member_permissions)
-                    command.default_member_permissions = command.default_member_permissions.toString();
                 commands.push(command);
             }
             const rest = new discord_js_1.REST().setToken((_a = process.env.DISCORD_TOKEN) !== null && _a !== void 0 ? _a : '');
             rest.put(discord_js_1.Routes.applicationCommands((_c = (_b = client.user) === null || _b === void 0 ? void 0 : _b.id) !== null && _c !== void 0 ? _c : ''), { body: commands })
-                .then((commands) => {
+                .then(commands => {
                 if (commands instanceof Array)
                     console.log(`Success to put commands! number of commands: ${commands.length}`);
             })

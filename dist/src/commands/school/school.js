@@ -32,7 +32,7 @@ exports.default = new Command_1.Command({
     name: '학교',
     category: '학교',
     usage: '학교',
-    description: '학교 명령어',
+    description: '학교 관련 명령어를 사용합니다.',
     options: subcommands,
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const apiKey = process.env.SCHOOL_API_KEY || '';

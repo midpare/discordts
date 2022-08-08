@@ -5,7 +5,7 @@ import { Utils } from '../../structures/Utils';
 export default new Command({
   name: '학교등록',
   category: '학교',
-  usage: '학교정보등록 <시도> <학교이름(@@중학교)><학년반(1학년 2반)>',
+  usage: '학교등록',
   description: '자신의 학교정보를 등록해 학교 명령어 사용을 가능하게합니다.',
   execute: async ({ interaction, options, client }) => {
     // if (!args[0] || !args[1] || !args[2] || !args[3]) {
@@ -82,5 +82,7 @@ export default new Command({
     //   (await client.models.school.updateOne({ id }, { $set: { cityCode, cityName, schoolCode, schoolName, grade, class: classNumber } })).matchedCount;
     //   interaction.reply('성공적으로 유저 정보를 업데이트했습니다!');
     // }
+
+    
   },
 });

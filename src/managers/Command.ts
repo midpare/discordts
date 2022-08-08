@@ -32,6 +32,7 @@ export class Command {
     this.category = options.category;
     this.usage = options.usage ?? options.name;
     this.description = options.description;
+    this.default_member_permissions = options.default_member_permissions?.toString();
     this.execute = options.execute;
   }
 }

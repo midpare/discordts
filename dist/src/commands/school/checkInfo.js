@@ -28,8 +28,7 @@ exports.default = new Command_1.Command({
         }
         embed
             .setTitle(`${username}님의 학교정보`)
-            .setDescription(`${user.cityName} ${user.schoolName} ${user.grade}학년 ${user.class}반`)
-            .setColor(0x32CD32);
+            .setDescription(`${user.cityName} ${user.schoolName} ${user.grade}학년 ${user.class}반`);
         interaction.reply({ embeds: [embed] });
     }),
 });

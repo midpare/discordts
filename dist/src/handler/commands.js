@@ -37,7 +37,7 @@ const Utils_1 = require("../structures/Utils");
 function default_1(client) {
     return __awaiter(this, void 0, void 0, function* () {
         const CommandsFiles = new Array();
-        Utils_1.Utils.getPath(CommandsFiles, __dirname + '/../slashcommands');
+        Utils_1.Utils.getPath(CommandsFiles, __dirname + '/../commands');
         //Wait for bot to login
         client.on('ready', () => __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c;

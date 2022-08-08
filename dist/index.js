@@ -43,7 +43,7 @@ const client = new Client_1.Client({ intents: 131071 });
     const handlerFiles = new Array();
     Utils_1.Utils.getPath(handlerFiles, __dirname + '/src/handler');
     for (let path of handlerFiles) {
-        (yield Promise.resolve().then(() => __importStar(require(path)))).default(client);
+        (yield Promise.resolve().then(() => __importStar(require(path)))).default(client).catch(console.error);
     }
 }))();
 const sds = [

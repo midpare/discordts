@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const schoolInfo = new Schema({
   id: String,
+  guildId: String,
   name: String,
   cityCode: String,
   cityName: String,

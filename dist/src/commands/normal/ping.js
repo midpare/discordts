@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../managers/Commands");
-exports.default = new Commands_1.Command({
+const Command_1 = require("../../managers/Command");
+exports.default = new Command_1.Command({
     name: 'ping',
     category: '기본',
     usage: 'ping',
-    description: '봇의 작동가능여부를 확인합니다.',
-    execute: ({ msg }) => __awaiter(void 0, void 0, void 0, function* () {
-        msg.reply('pong!');
+    description: '봇의 현재상태를 확인합니다',
+    execute: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
+        interaction.reply('pong!');
     }),
 });

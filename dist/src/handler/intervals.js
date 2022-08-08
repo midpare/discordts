@@ -52,6 +52,7 @@ function default_1(client) {
                 console.error(error);
             }
         }
+        console.log('Success to handle intervals!');
     });
 }
 exports.default = default_1;

@@ -10,23 +10,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Commands_1 = require("../../../managers/Commands");
+const Command_1 = require("../../../managers/Command");
 const Utils_1 = require("../../../structures/Utils");
-exports.default = new Commands_1.Command({
-    name: '망언 확인',
+exports.default = new Command_1.Command({
+    name: '망언확인',
     aliases: ['망언 목록', '망언 리스트'],
-    private: true,
-    execute: ({ msg, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a;
-        const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
-        if (!target) {
-            Utils_1.Utils.reply(msg, client.messages.missingMentionUser('망언을 확인'));
-            return;
-        }
-        const { id, guild: { id: guildId } } = target;
+    category: '기본',
+    usage: '망언확인 <유저>',
+    description: '유저의 망언을 확인합니다.',
+    options: [
+        {
+            name: '유저',
+            description: '망언을 확인할 유저를 입력합니다.',
+            type: discord_js_1.ApplicationCommandOptionType.User,
+            required: true,
+        },
+    ],
+    execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
+        const target = options.getUser('유저', true);
+        const { guildId } = interaction;
+        const { id } = target;
         const user = yield client.models.config.findOne({ id, guildId });
         if (user.slangs.length < 1) {
-            Utils_1.Utils.reply(msg, '이 유저는 망언을 보유하고 있지 않습니다.');
+            Utils_1.Utils.reply(interaction, '이 유저는 망언을 보유하고 있지 않습니다.');
             return;
         }
         for (let i = 0; i < user.slangs.length; i++) {
@@ -35,7 +41,6 @@ exports.default = new Commands_1.Command({
         const embed = new discord_js_1.EmbedBuilder()
             .setTitle(`${user.name}님의 망언`)
             .setDescription(`${user.slangs.join('\n')}`);
-        msg.channel.send({ embeds: [embed] });
-        msg.delete();
+        interaction.reply({ embeds: [embed] });
     })
 });

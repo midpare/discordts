@@ -1,11 +1,11 @@
-import { Command } from '../../managers/Commands';
+import { Command } from '../../managers/Command';
 
 export default new Command({
   name: 'ping',
   category: '기본',
   usage: 'ping',
-  description: '봇의 작동가능여부를 확인합니다.',
-  execute: async ({ msg }) => {
-    msg.reply('pong!');
+  description: '봇의 현재상태를 확인합니다',
+  execute: async ({ interaction }) => {
+    interaction.reply('pong!');
   },
 });

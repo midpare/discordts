@@ -9,30 +9,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Commands_1 = require("../../../managers/Commands");
+const discord_js_1 = require("discord.js");
+const Command_1 = require("../../../managers/Command");
 const Utils_1 = require("../../../structures/Utils");
-exports.default = new Commands_1.Command({
-    name: '망언 삭제',
-    private: true,
-    execute: ({ msg, args, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a;
-        const target = (_a = msg.mentions.members) === null || _a === void 0 ? void 0 : _a.first();
-        if (!target) {
-            Utils_1.Utils.reply(msg, client.messages.missingMentionUser('망언을 삭제'));
-            return;
-        }
-        const { id, guild: { id: guildId } } = target;
-        if (!args[1]) {
-            Utils_1.Utils.reply(msg, '지울 망언의 내용을 작성해주시기 바랍니다.');
-            return;
-        }
-        const content = args.slice(1).join(' ');
+exports.default = new Command_1.Command({
+    name: '망언삭제',
+    category: '기본',
+    usage: '망언삭제 <유저> <망언>',
+    description: '유저의 망언을 삭제합니다.',
+    options: [
+        {
+            name: '유저',
+            description: '망언을 삭제할 유저를 입력합니다.',
+            type: discord_js_1.ApplicationCommandOptionType.User,
+            required: true,
+        },
+        {
+            name: '내용',
+            description: '삭제할 망언의 내용을 입력합니다.',
+            type: discord_js_1.ApplicationCommandOptionType.String,
+            required: true
+        },
+    ],
+    execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
+        const target = options.getUser('유저', true);
+        const content = options.getString('내용');
+        const { guildId } = interaction;
+        const { id } = target;
         const user = yield client.models.config.findOne({ id, guildId });
         if (!user.slangs.includes(content)) {
-            Utils_1.Utils.reply(msg, '이 유저는 이 망언을 보유하고 있지 않습니다.');
+            Utils_1.Utils.reply(interaction, '이 유저는 이 망언을 보유하고 있지 않습니다.');
             return;
         }
         (yield client.models.config.updateOne({ id, guildId }, { $pull: { slangs: content } })).matchedCount;
-        Utils_1.Utils.reply(msg, `성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);
+        Utils_1.Utils.reply(interaction, `성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);
     })
 });

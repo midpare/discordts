@@ -10,18 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Commands_1 = require("../../managers/Commands");
 const rules_1 = require("../../language/rules");
-exports.default = new Commands_1.Command({
+const Command_1 = require("../../managers/Command");
+exports.default = new Command_1.Command({
     name: '규칙',
-    private: true,
-    execute: ({ msg }) => __awaiter(void 0, void 0, void 0, function* () {
+    category: '기본',
+    usage: '규칙',
+    description: '규칙을 확인합니다.',
+    execute: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         const embed = new discord_js_1.EmbedBuilder()
             .setTitle('규칙');
         const rules = new rules_1.Rules();
         for (const [name, value] of Object.entries(rules)) {
             embed.addFields({ name, value: value.join('\n'), inline: false });
         }
-        msg.channel.send({ embeds: [embed] });
+        interaction.reply({ embeds: [embed] });
     }),
 });

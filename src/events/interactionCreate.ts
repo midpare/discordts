@@ -14,7 +14,7 @@ export default new Event({
       const botTestChannel = client.channels.cache.get('910521119877005368');
       
       const { commandName, options, guildId, user: { id } } = interaction;
-      const event = client.slashCommands.get(commandName)!;
+      const event = client.commands.get(commandName)!;
 
       if (!event)
         return;

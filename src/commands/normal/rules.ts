@@ -1,11 +1,13 @@
 import { EmbedBuilder } from 'discord.js';
-import { Command } from '../../managers/Commands';
 import { Rules } from '../../language/rules';
+import { Command } from '../../managers/Command';
 
 export default new Command({
   name: '규칙',
-  private: true,
-  execute: async ({ msg }) => {
+  category: '기본',
+  usage: '규칙',
+  description: '규칙을 확인합니다.',
+  execute: async ({ interaction }) => {
     const embed = new EmbedBuilder()
       .setTitle('규칙');
     const rules = new Rules();
@@ -14,6 +16,6 @@ export default new Command({
       embed.addFields({ name, value: value.join('\n'), inline: false });
     }
 
-    msg.channel.send({ embeds: [embed] });
+    interaction.reply({ embeds: [embed] });
   },
 });

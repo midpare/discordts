@@ -4,6 +4,7 @@ exports.school = void 0;
 const mongoose_1 = require("mongoose");
 const schoolInfo = new mongoose_1.Schema({
     id: String,
+    guildId: String,
     name: String,
     cityCode: String,
     cityName: String,

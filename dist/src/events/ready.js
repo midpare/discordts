@@ -13,6 +13,6 @@ const Event_1 = require("../managers/Event");
 exports.default = new Event_1.Event({
     name: 'ready',
     execute: () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(`success to login!`);
+        console.log(`Success to login!`);
     }),
 });

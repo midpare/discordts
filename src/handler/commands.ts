@@ -4,7 +4,7 @@ import { Utils } from '../structures/Utils';
 
 export default async function (client: Client) {
   const CommandsFiles = new Array();
-  Utils.getPath(CommandsFiles, __dirname + '/../Commands');
+  Utils.getPath(CommandsFiles, __dirname + '/../slashcommands');
 
   //Wait for bot to login
   client.on('ready', async () => {

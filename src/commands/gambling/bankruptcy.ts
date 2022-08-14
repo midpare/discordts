@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { Utils } from '../../structures/Utils';
-import { InteractionOptions } from '../../structures/InteractionOptions';
+import { InteractionOption } from '../../structures/InteractionOptions';
 import { Command } from '../../managers/Command';
 
 export default new Command({
@@ -8,9 +8,12 @@ export default new Command({
   category: '도박',
   description: '모든 돈과 빚을 0원으로 만들고 한시간동안 도박을 하지 못합니다.',
   execute: async ({ interaction, client }) => {
-    const id = interaction.user.id;
+    const { guildId, user: { id } } = interaction;
     const customIds = Utils.uuid(2)
-    const [yes, no] = customIds
+    const [yes, no] = customIds;
+
+    if (!guildId)
+      return;
 
     const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -28,14 +31,16 @@ export default new Command({
 
     const msg = await interaction.fetchReply();
 
-    client.interactionOptions.set(yes, new InteractionOptions({
+    client.interactionOptions.set(yes, new InteractionOption({
       ids: [id],
+      guildId,
       cmd: 'bankrupcty',
       messages: [msg],
       customIds,
     }));
-    client.interactionOptions.set(no, new InteractionOptions({
+    client.interactionOptions.set(no, new InteractionOption({
       ids: [id],
+      guildId,
       cmd: 'cancel',
       messages: [msg],
       customIds,

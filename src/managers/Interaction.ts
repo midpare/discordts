@@ -1,10 +1,10 @@
 import { ButtonInteraction, SelectMenuInteraction } from 'discord.js';
 import { Client } from '../structures/Client';
-import { InteractionOptions } from '../structures/InteractionOptions';
+import { InteractionOption } from '../structures/InteractionOptions';
 
 type ExecuteType<T extends ButtonInteraction | SelectMenuInteraction> = (options: {
   interaction: T,
-  options: InteractionOptions | undefined
+  options: InteractionOption | undefined
   client: Client
 }) => Promise<void>;
 

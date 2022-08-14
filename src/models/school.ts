@@ -1,6 +1,18 @@
 import { Schema, model } from 'mongoose';
+import { Model } from '../managers/Model';
 
-const schoolInfo = new Schema({
+interface SchoolType {
+  id: string;
+  guildId: string;
+  name: string;
+  cityCode: string;
+  cityName: string;
+  schoolCode: string;
+  schoolName: string;
+  grade: string;
+  class: string;
+}
+const schoolInfo = new Schema<SchoolType>({
   id: String,
   guildId: String,
   name: String,
@@ -14,6 +26,5 @@ const schoolInfo = new Schema({
   versionKey: false
 });
 
-export const school = model('school', schoolInfo);
-
+export default new Model('school', schoolInfo);
 

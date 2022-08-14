@@ -33,9 +33,23 @@ export default new Command({
   default_member_permissions: PermissionFlagsBits.BanMembers,
   execute: async ({ interaction, options, client }) => {
     const { guildId } = interaction;
+
+    if (!guildId)
+      return;
+
+    const guild = await client.models.guild.findOne({ id: guildId });
+
+    const punishment = guild.punishment;
+
+    if (punishment == '0') {
+      Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.')
+      return;
+    }
+
+    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(punishment);
+    
     const target = options.getUser('유저', true);
     const count = options.getInteger('횟수', true);
-    const channel = <TextChannel>client.channels.cache.get('910521119713394738');
 
     const { id } = target;
     const user = await client.models.config.findOne({ id, guildId });

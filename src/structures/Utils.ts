@@ -93,22 +93,11 @@ export class Utils {
     }
   }
 
-  public static async reply(msg: Message, options: string): Promise<void>;
-  public static async reply(msg: ChatInputCommandInteraction, options: string): Promise<void>;
-
-  public static async reply(msg: Message | ChatInputCommandInteraction, options: string): Promise<void> {
-    if (msg instanceof Message) {
-      const replied = await msg.reply(options);
-      setTimeout(() => {
-        msg.delete();
-        replied.delete();
-      }, 3000);
-    } else {
-      msg.reply(options);
-      const replied = await msg.fetchReply();
-      setTimeout(() => {
-        replied.delete();
-      }, 3000);
-    }
+  public static async reply(interaction: ChatInputCommandInteraction, options: string): Promise<void> {
+    interaction.reply(options);
+    const replied = await interaction.fetchReply();
+    setTimeout(() => {
+      replied.delete();
+    }, 3000);
   }
 }

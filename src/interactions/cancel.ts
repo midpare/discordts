@@ -5,5 +5,5 @@ export default new Interaction({
   deleted: true,
   execute: async ({ }) => {
     //no field
-  }
-})
+  },
+});

@@ -15,8 +15,20 @@ export default new Command({
       return;
     }
 
-    const channel1 = <VoiceChannel>client.channels.cache.get('1000704196552704010');
-    const channel2 = <VoiceChannel>client.channels.cache.get('1000704543652323328');
+    const { guildId } = interaction;
+
+    if (!guildId)
+      return;
+
+    const guild = await client.models.guild.findOne({ id: guildId });
+
+    const civilWarChannel = guild.civilWar;
+    if (civilWarChannel.length < 2) {
+      Utils.reply(interaction, '내전채널을 등록해주시기 바랍니다.');
+    }
+
+    const channel1 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(civilWarChannel[0]);
+    const channel2 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(civilWarChannel[1]);
 
     for (const user of civilWar.teams[0]) {
       if (!user.voice || user.voice.channelId == null)

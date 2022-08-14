@@ -1,7 +1,7 @@
 import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { TicTacToe } from '../../structures/games/tic-tac-toe';
-import { InteractionOptions } from '../../structures/InteractionOptions';
+import { InteractionOption } from '../../structures/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Interaction({
@@ -9,11 +9,11 @@ export default new Interaction({
   deleted: true,
   execute: async ({ interaction, options, client }) => {
     const messages = new Array();
-    if (!options || !options.etc)
+    if (!options || !options.data)
       return;
     
-    const user = bold(options.etc.players[0].username);
-    const target = bold(options.etc.players[1].username);
+    const user = bold(options.data.players[0].username);
+    const target = bold(options.data.players[1].username);
     messages.push(await interaction.channel?.send(`${user} VS ${target}`));
 
     const turn = await interaction.channel?.send(`${user}님의 턴입니다!`);
@@ -38,16 +38,17 @@ export default new Interaction({
     }
 
     index = 0;
-    const ids = [options.etc.players[0].id, options.etc.players[1].id]
+    const ids = [options.data.players[0].id, options.data.players[1].id]
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        client.interactionOptions.set(customIds[index], new InteractionOptions({
+        client.interactionOptions.set(customIds[index], new InteractionOption({
           ids,
+          guildId: options.guildId,
           cmd: 'tic-tac-toe',
           messages,
           customIds: [],
-          etc: {
-            players: options.etc.players,
+          data: {
+            players: options.data.players,
             position: [i, j],
             buttons,
             turn,
@@ -57,6 +58,6 @@ export default new Interaction({
         index++;
       }
     }
-    client.tictactoe.set(ids, new TicTacToe(options.etc.players))
-  }
-})
+    client.tictactoe.set(ids, new TicTacToe(options.data.players));
+  },
+});

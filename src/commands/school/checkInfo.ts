@@ -3,8 +3,8 @@ import { Command } from '../../managers/Command';
 import { Utils } from '../../structures/Utils';
 
 export default new Command({
-  name: '학교정보확인',
-  aliases: ['학교 정보'],
+  name: '학교확인',
+  aliases: ['학교정보'],
   category: '학교',
   usage: '학교정보확인',
   description: '현재 자신의 학교 정보를 확인합니다.',

@@ -29,20 +29,21 @@ export default new Command({
     const count = options.getInteger('개수', true);
     const target = options.getUser('유저');
 
-    const channel = interaction.channel
+    const channel = interaction.channel;
     if (!channel || !channel.isTextBased() || channel.isVoiceBased() || channel.isDMBased())
       return;
 
 
-    let msgs = (await channel.messages.fetch({ limit: 99 })).sort((interaction1, interaction2) => interaction2.createdTimestamp - interaction1.createdTimestamp)
+    let msgs = (await channel.messages.fetch({ limit: 99 })).sort((interaction1, interaction2) => interaction2.createdTimestamp - interaction1.createdTimestamp);
 
     if (target) {
-      msgs = msgs.filter(msg => msg.author.id == target.id)
+      msgs = msgs.filter(msg => msg.author.id == target.id);
     }
 
-    const length = msgs.size - count
+    const length = msgs.size - count;
+
     for (let i = 0; i < length; i++) {
-      msgs.delete(msgs.keyAt(count)!)
+      msgs.delete(msgs.keyAt(count)!);
     }
 
     if (msgs.size == 0)

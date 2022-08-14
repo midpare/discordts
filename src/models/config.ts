@@ -1,6 +1,20 @@
-import { Schema, model } from 'mongoose';
+import { Snowflake } from 'discord.js';
+import { Schema } from 'mongoose';
+import { Model } from '../managers/Model';
 
-const configInfo = new Schema({
+interface ConfigType {
+  id: Snowflake;
+  name: string;
+  guildId: Snowflake;
+  slangs: [string];
+  warning: number;
+  baseMoneyCoolTime: number;
+  bankruptcyTime: number;
+  banTime: number;
+  MuteTime: number;
+}
+
+const configInfo = new Schema<ConfigType>({
   id: String,
   name: String,
   guildId: String,
@@ -14,7 +28,4 @@ const configInfo = new Schema({
   versionKey: false
 });
 
-export const config = model('config', configInfo);
-
-
-
+export default new Model('config', configInfo);

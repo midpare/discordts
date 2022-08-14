@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from 'discord.js';
+import { ApplicationCommandOptionType, TextChannel, EmbedBuilder } from 'discord.js';
 import { Command } from '../../../managers/Command';
 import { Utils } from '../../../structures/Utils';
 
@@ -23,10 +23,20 @@ export default new Command({
   ],
   execute: async ({ interaction, options, client }) => {
     const target = options.getUser('유저', true);
-    const content = options.getString('내용');
-    
-    const { guildId } = interaction
+    const content = options.getString('내용', true);
+
+    const { guildId } = interaction;
     const { id } = target;
+
+    if (!guildId)
+      return;
+
+    const guild = await client.models.guild.findOne({ id: guildId });
+
+    if (guild.slang == '0') {
+      Utils.reply(interaction, '망언 채널을 등록해주시기 바랍니다.');
+    }
+    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.slang);
 
     const user = await client.models.config.findOne({ id, guildId });
 
@@ -35,6 +45,32 @@ export default new Command({
       return;
     } 
     
+    const messages = await channel.messages.fetch();
+
+    for (const [_, message] of messages) {
+      if (message.embeds.length < 1)
+        continue;
+
+      const id = message.embeds[0].data.title?.split('(')[1].split(')')[0]
+
+      if (id == target.id) {    
+        const index = user.slangs.indexOf(content);
+
+        user.slangs.splice(index, 1);
+
+        for (let i = 0; i < user.slangs.length; i++) {
+          user.slangs[i] = `${i + 1}. ${user.slangs[i]}`;
+        }
+
+        const embed = new EmbedBuilder()
+          .setTitle(`${user.name}(${user.id})님의 망언`)
+          .setDescription(user.slangs.join('\n'));
+        
+        message.edit({ embeds: [embed] });
+        break;
+      }
+    }
+
     (await client.models.config.updateOne({ id, guildId }, { $pull: { slangs: content }})).matchedCount;
     Utils.reply(interaction, `성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);
   }  

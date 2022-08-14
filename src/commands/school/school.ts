@@ -3,22 +3,20 @@ import { Command } from '../../managers/Command';
 import { Utils } from '../../structures/Utils';
 
 const weekArr = ['월', '화', '수', '목', '금'];
-const subcommands = new Array();
+const choices = new Array();
 
 for (const day of weekArr) {
   const timeTable = {
     name: `${day}요일시간표`,
-    description: `${day}요일시간표를 확인합니다.`,
-    type: ApplicationCommandOptionType.Subcommand,
+    value: `${day}요일시간표`
   };
-  subcommands.push(timeTable);
+  choices.push(timeTable);
 
   const meal = {
     name: `${day}요일급식`,
-    description: `${day}요일급식을 확인합니다.`,
-    type: ApplicationCommandOptionType.Subcommand,
+    value: `${day}요일급식`,
   };
-  subcommands.push(meal);
+  choices.push(meal);
 }
 
 export default new Command({
@@ -26,21 +24,29 @@ export default new Command({
   category: '학교',
   usage: '학교',
   description: '학교 관련 명령어를 사용합니다.',
-  options: subcommands,
+  options: [
+    {
+      name: '정보',
+      description: '학교에 관한 정보를 입력합니다.',
+      type: ApplicationCommandOptionType.String,
+      required: true,
+      choices,
+    },
+  ],
   execute: async ({ interaction, options, client }) => {
     const apiKey = process.env.SCHOOL_API_KEY || '';
 
     const embed = new EmbedBuilder();
     const { guildId, user: { id } } = interaction;
-    const subcommand = options.getSubcommand(true);
+    const info = options.getString('정보', true);
 
     const dateVariable = new Date();
     const week = dateVariable.getDay();
-    const findWeek = weekArr.indexOf(subcommand.split('')[0]);
+    const findWeek = weekArr.indexOf(info.split('')[0]);
     const weekDay = findWeek > -1 ? weekArr[findWeek] + '요일' : '';
     const user = await client.models.school.findOne({ id, guildId });
 
-    if (subcommand.endsWith('시간표')) {
+    if (info.endsWith('시간표')) {
       const timeTableNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
 
       const timeTableDate = Utils.dateCal(dateVariable, timeTableNumber);
@@ -79,14 +85,14 @@ export default new Command({
       }
 
       embed
-        .setTitle(subcommand)
+        .setTitle(info)
         .setDescription(`${timeTableYear}-${timeTableMonth}-${timeTableDay}\n${user.grade}학년 ${user.class}반 ${user.schoolName}`)
         .setColor(Colors.Green);
       for (let i = 0; i < timeTable.misTimetable[1].row.length; i++) {
         embed.addFields({ name: `${i + 1}교시`, value: `${timeTable.misTimetable[1].row[i].ITRT_CNTNT}`, inline: false });
       }
       interaction.reply({ embeds: [embed] });
-    } else if (subcommand.endsWith('급식')) {
+    } else if (info.endsWith('급식')) {
       const mealNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
       const mealWeekDay = weekDay != '' ? weekArr[findWeek] : weekArr[week];
 

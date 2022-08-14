@@ -8,7 +8,11 @@ export default async function (client: Client) {
   Utils.getPath(intervalFiles, __dirname + '/../interval');
 
   for (const path of intervalFiles) {
-    const file: Interval = (await import(path)).default;
+    const file = (await import(path)).default;
+
+    if (!(file instanceof Interval))
+      continue;
+      
     try {
       if (file.immediate)
         file.execute(client);

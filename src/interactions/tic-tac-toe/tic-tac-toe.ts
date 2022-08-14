@@ -14,7 +14,7 @@ export default new Interaction({
     const button = new ButtonBuilder()
       .setCustomId(Utils.uuid());
       
-    const position = options.etc.position;
+    const position = options.data.position;
 
     if (!tictactoe)
       return
@@ -27,20 +27,20 @@ export default new Interaction({
     const winner = tictactoe.set(position);
     if (winner) {
       const user = bold(winner.username);
-      options.etc.turn.edit(`${user}님이 승리했습니다!`);
+      options.data.turn.edit(`${user}님이 승리했습니다!`);
       
-      for (const id of options.etc.customIds) {
+      for (const id of options.data.customIds) {
         client.interactionOptions.delete(id)
       }
     }
 
     interaction.deferUpdate();
 
-    const user = bold(options.etc.players[0].username);
-    const target = bold(options.etc.players[1].username);
+    const user = bold(options.data.players[0].username);
+    const target = bold(options.data.players[1].username);
     if (tictactoe.flag == 1) {
       if (!winner) 
-        options.etc.turn.edit(`${user}님의 턴입니다!`);
+        options.data.turn.edit(`${user}님의 턴입니다!`);
       
       button
         .setStyle(ButtonStyle.Danger)
@@ -48,14 +48,14 @@ export default new Interaction({
     }
     else {
       if (!winner)
-        options.etc.turn.edit(`${target}님의 턴입니다!`);
+        options.data.turn.edit(`${target}님의 턴입니다!`);
 
       button
         .setStyle(ButtonStyle.Primary)
         .setLabel('O');
     }
 
-    const buttonMsg = options.etc.buttons[position[0]];
+    const buttonMsg = options.data.buttons[position[0]];
     for (let i = 0; i < 3; i++) {
       if (i == position[1]) {
         row.addComponents(button);
@@ -64,6 +64,6 @@ export default new Interaction({
       }
     }
 
-    buttonMsg.edit({ components: [row] })
-  }
-})
+    buttonMsg.edit({ components: [row] });
+  },
+});

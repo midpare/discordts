@@ -17,8 +17,22 @@ export default new Command({
   ],
   execute: async ({ interaction, options, client }) => {
     const target = options.getMember('유저');
-    const channel1 = <VoiceChannel>client.channels.cache.get('910521120770359323');
-    const channel2 = <VoiceChannel>client.channels.cache.get('910521120770359324');
+    
+    const { guildId } = interaction;
+
+    if (!guildId)
+      return;
+
+    const guild = await client.models.guild.findOne({ id: guildId });
+
+    const alarmChannel = guild.alarm
+    if (alarmChannel.length < 2) {
+      Utils.reply(interaction, '알람채널을 등록해주시기 바랍니다.');
+    }
+
+    const channel1 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(alarmChannel[0]);
+    const channel2 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(alarmChannel[1]);
+
     if (!(target instanceof GuildMember)) {
       Utils.reply(interaction, '정확한 유저를 입력해주시기 바랍니다.');
       return;

@@ -12,6 +12,7 @@ export default async function (client: Client) {
     let commands = new Array();
     for (const path of CommandsFiles) {
       const file = (await import(path)).default;
+      
       if (!(file instanceof Command))
         continue;
 

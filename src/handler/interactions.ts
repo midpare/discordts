@@ -1,3 +1,4 @@
+import { Interaction } from '../managers/Interaction';
 import { Client } from '../structures/Client';
 import { Utils } from '../structures/Utils';
 
@@ -7,6 +8,10 @@ export default async function (client: Client) {
 
   for (const path of interactionFiles) {
     const file = (await import(path)).default;
+
+    if (!(file instanceof Interaction))
+      continue;
+      
     try {
       client.interactions.set(file.name, file);
     } catch (error) {

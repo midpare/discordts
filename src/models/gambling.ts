@@ -1,6 +1,22 @@
 import { Schema, model } from 'mongoose';
+import { Model } from '../managers/Model';
 
-const gamblingInfo = new Schema({
+interface GamblingType {
+  id: string;
+  name: string;
+  guildId: string;
+  date: number;
+  money: number;
+  debt: number;
+  bankruptcy: number;
+  stock: Array<{
+    name: string; 
+    count: number; 
+    money: number
+  }>
+}
+
+const gamblingInfo = new Schema<GamblingType>({
   id: String,
   name: String,
   guildId: String,
@@ -8,10 +24,9 @@ const gamblingInfo = new Schema({
   money: { type: Number, default: 0 },
   debt: { type: Number, default: 0 },
   bankruptcy: { type: Number, default: 0 },
-  baseMoneyCoolTime: { type: Number, default: 0 },
   stock: [{name: String, count: Number, money: Number}, {_id: false}],
 }, {
   versionKey: false
 });
 
-export const gambling = model('gambling', gamblingInfo); 
+export default new Model('gambling', gamblingInfo)

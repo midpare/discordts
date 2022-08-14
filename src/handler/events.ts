@@ -1,3 +1,4 @@
+import { Event } from '../managers/Event';
 import { Client } from '../structures/Client';
 import { Utils } from '../structures/Utils';
 
@@ -7,8 +8,14 @@ export default async function (client: Client) {
 
   for (const path of eventFiles) {
     const file = (await import(path)).default;
+
+    if (!(file instanceof Event))
+      continue;
+      
     try {
-      client.on(file.name, file.execute);
+      client.on(file.name, (...args) => {
+        file.execute(client, ...args);
+      });
     } catch (error) {
       console.error(error);
     }

@@ -1,10 +1,10 @@
 {
   "name": "discordbot",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "start": "node dist/index.js",
-    "build": "rimraf dist && npx tsc",
+    "build": "rm -r ./dist && npx tsc",
     "test": "npm run build && npx jest"
   },
   "author": "",
@@ -12,7 +12,7 @@
   "description": "",
   "dependencies": {
     "discord.js": "^14.1.1",
-    "mongoose": "^6.4.6",
+    "mongoose": "^6.5.2",
     "ms": "^2.1.3",
     "request": "^2.88.2"
   },

@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ApplicationCommandOptionType, bold, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
-import { InteractionOptions } from '../../structures/InteractionOptions';
+import { InteractionOption } from '../../structures/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Command({
@@ -19,7 +19,10 @@ export default new Command({
   ],
   execute: async ({ interaction, options, client }) => {
     const target = options.getUser('유저', true);
-    const id = interaction.user.id
+    const { guildId, user: { id } } = interaction;
+    
+    if (!guildId)
+      return;
     
     if (target.id == id) {
       Utils.reply(interaction, '자신을 맨션할 수 없습니다.');
@@ -47,18 +50,20 @@ export default new Command({
     interaction.reply({ embeds: [embed], components: [row] })
     const message = await interaction.fetchReply();
 
-    client.interactionOptions.set(yes, new InteractionOptions({
+    client.interactionOptions.set(yes, new InteractionOption({
       ids: [target.id],
+      guildId,
       cmd: 'accept-tic-tac-toe',
       messages: [message],
       customIds,
-      etc: {
+      data: {
         players: [interaction.user, target],
       },
     }));
 
-    client.interactionOptions.set(no, new InteractionOptions({
+    client.interactionOptions.set(no, new InteractionOption({
       ids: [id, target.id],
+      guildId,
       cmd: 'cancel',
       messages: [message],
       customIds,

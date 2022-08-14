@@ -36,52 +36,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const Client_1 = require("./src/structures/Client");
-const Utils_1 = require("./src/structures/Utils");
+const Client_1 = require("./structures/Client");
+const Utils_1 = require("./structures/Utils");
 const client = new Client_1.Client({ intents: 131071 });
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const handlerFiles = new Array();
-    Utils_1.Utils.getPath(handlerFiles, __dirname + '/src/handler');
+    Utils_1.Utils.getPath(handlerFiles, __dirname + '/handler');
     for (let path of handlerFiles) {
         (yield Promise.resolve().then(() => __importStar(require(path)))).default(client).catch(console.error);
     }
 }))();
-const sds = [
-    '서울특별시', '부산광역시',
-    '대구광역시', '인천광역시',
-    '광주광역시', '대전광역시',
-    '울산광역시', '세종특별자치시',
-    '경기도', '강원도',
-    '충청북도', '충청남도',
-    '전라북도', '전라남도',
-    '경상북도', '경상남도',
-    '제주특별자치도'
-];
-const sdCodes = [
-    'B10', 'C10', 'D10',
-    'E10', 'F10', 'G10',
-    'H10', 'I10', 'J10',
-    'K10', 'M10', 'N10',
-    'P10', 'Q10', 'R10',
-    'S10', 'T10'
-];
-for (let i = 0; i < sds.length; i++) {
-    client.sdCode.set(sds[i], sdCodes[i]);
-}
 client.on('ready', () => __awaiter(void 0, void 0, void 0, function* () {
-    const guilds = Array.from(client.guilds.cache.values());
-    for (const guild of guilds) {
-        const members = Array.from(guild.members.cache.values());
-        const guildId = guild.id;
-        for (const member of members) {
-            const { id, displayName: name } = member;
-            const user = yield client.models.config.findOne({ id, guildId });
-            if (!user && !member.user.bot) {
-                const newUser = new client.models.config({ id, name, guildId });
-                newUser.save();
-            }
-        }
-    }
+    // make configs
 }));
-client.login();
 mongoose_1.default.connect(process.env.MONGO_DB_URI + '/discordbot');
+client.login();

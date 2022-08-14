@@ -7,9 +7,9 @@ export default new Event({
   execute: async (client: Client, member: GuildMember) => {
     const guild = await client.models.guild.findOne({ id: member.guild.id });
     const temporary = guild.temporaryRole; 
-    if (temporary == '0')
-      return;
 
+    if (!member.guild.roles.cache.has(temporary))
+      return;
     try { 
       member.roles.add(temporary);
     } catch(error) {

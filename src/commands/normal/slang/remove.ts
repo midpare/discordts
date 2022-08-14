@@ -32,11 +32,12 @@ export default new Command({
       return;
 
     const guild = await client.models.guild.findOne({ id: guildId });
-
-    if (guild.slang == '0') {
-      Utils.reply(interaction, '망언 채널을 등록해주시기 바랍니다.');
-    }
     const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.slang);
+
+    if (!channel) {
+      Utils.reply(interaction, '망언 채널을 등록해주시기 바랍니다.');
+      return;
+    }
 
     const user = await client.models.config.findOne({ id, guildId });
 

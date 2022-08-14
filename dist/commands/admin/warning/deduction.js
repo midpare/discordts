@@ -46,12 +46,11 @@ exports.default = new Command_1.Command({
         if (!guildId)
             return;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        const punishment = guild.punishment;
-        if (punishment == '0') {
+        const channel = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.punishment);
+        if (!channel) {
             Utils_1.Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.');
             return;
         }
-        const channel = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(punishment);
         const target = options.getUser('유저', true);
         const count = options.getInteger('횟수', true);
         const id = target.id;

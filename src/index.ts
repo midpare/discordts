@@ -13,10 +13,5 @@ const client = new Client({ intents: 131071 });
   }
 })();
 
-client.on('ready', async () => {
-  // make configs
-
-});
-
 mongoose.connect(process.env.MONGO_DB_URI + '/discordbot');
 client.login();

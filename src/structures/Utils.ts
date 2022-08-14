@@ -2,13 +2,6 @@ import { ChatInputCommandInteraction, GuildMember, Message } from 'discord.js';
 import request from 'request';
 import fs from 'fs';
 
-export interface ApiType {
-  uri: string;
-  method: string;
-  json: boolean;
-  qs?: object;
-}
-
 export class Utils {
   public static dateCal(date: Date, days: number): string {
     const dateVariable = new Date(date);
@@ -35,7 +28,14 @@ export class Utils {
     return false
   }
 
-  public static async requestGet(option: ApiType): Promise<any> {
+  public static async requestGet(
+    option: {
+      uri: string;
+      method: string;
+      json: boolean;
+      qs?: object;
+    }
+  ): Promise<any> {
     return new Promise((resolve, reject) => {
       request(option, (err, _, body) => {
         if (err)
@@ -45,7 +45,7 @@ export class Utils {
       });
     });
   }
-  
+
   public static shuffle<T>(arr: Array<T>): Array<T> {
     for (let i = 0; i < arr.length; i++) {
       const ranIdx = Math.floor(Math.random() * (arr.length - i)) + i;
@@ -76,11 +76,11 @@ export class Utils {
       for (let i = 0; i < count; i++) {
         box.push(Utils.uuid());
       }
-  
+
       return box;
     }
   }
-  
+
   public static getPath(arr: Array<string>, basePath: string) {
     const files = fs.readdirSync(basePath, { withFileTypes: true })
     for (const file of files) {

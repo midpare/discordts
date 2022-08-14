@@ -46,8 +46,5 @@ const client = new Client_1.Client({ intents: 131071 });
         (yield Promise.resolve().then(() => __importStar(require(path)))).default(client).catch(console.error);
     }
 }))();
-client.on('ready', () => __awaiter(void 0, void 0, void 0, function* () {
-    // make configs
-}));
 mongoose_1.default.connect(process.env.MONGO_DB_URI + '/discordbot');
 client.login();

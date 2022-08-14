@@ -36,16 +36,13 @@ export default new Command({
     if (!guildId)
       return;
 
-    const guild = await client.models.guild.findOne({ id: guildId });
+    const guild = await client.models.guild.findOne({ id: guildId });  
+    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.punishment);
 
-    const punishment = guild.punishment;
-
-    if (punishment == '0') {
-      Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.')
+    if (!channel) {
+      Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.');
       return;
     }
-    
-    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(punishment);
 
     const target = options.getUser('유저', true);
     const count = options.getInteger('횟수', true);

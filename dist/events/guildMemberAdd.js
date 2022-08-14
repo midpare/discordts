@@ -15,7 +15,7 @@ exports.default = new Event_1.Event({
     execute: (client, member) => __awaiter(void 0, void 0, void 0, function* () {
         const guild = yield client.models.guild.findOne({ id: member.guild.id });
         const temporary = guild.temporaryRole;
-        if (temporary == '0')
+        if (!member.guild.roles.cache.has(temporary))
             return;
         try {
             member.roles.add(temporary);

@@ -1,22 +1,23 @@
 import { Interaction } from '../managers/Interaction';
-import { ButtonInteraction, GuildMemberRoleManager, TextChannel } from 'discord.js';
+import { ButtonInteraction, GuildMemberRoleManager, TextChannel, GuildMember } from 'discord.js';
 
 export default new Interaction<ButtonInteraction>({
   name: 'giveRole',
   deleted: false,
   execute: async ({ interaction, client }) => {
-    const roles = <GuildMemberRoleManager>interaction.member?.roles;
-    const { guildId } = interaction;
+    const { guildId, member } = interaction;
 
-    if (!guildId)
+    if (!member || !(member instanceof GuildMember) || !guildId)
       return;
+
+    const roles = member.roles;
 
     const guild = await client.models.guild.findOne({ id: guildId });
 
     const temporaryRole = guild.temporaryRole;
     const baseRole = guild.baseRole;
 
-    if (temporaryRole == '0' || baseRole == '0')
+    if (member.guild.roles.cache.has(temporaryRole) || member.guild.roles.cache.has(baseRole))
       return;
       
     roles.add(baseRole);
@@ -26,12 +27,10 @@ export default new Interaction<ButtonInteraction>({
       setTimeout(() => msg.delete(), 2000);
     });
 
-    const join = guild.join;
+    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.join);
 
-    if (join == '0')
-      return;
-
-    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(join);
+    if (!channel)
+      return;                         
 
     channel?.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다!`);
   },

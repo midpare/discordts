@@ -40,10 +40,11 @@ exports.default = new Command_1.Command({
         if (!guildId)
             return;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        if (guild.slang == '0') {
-            Utils_1.Utils.reply(interaction, '망언 채널을 등록해주시기 바랍니다.');
-        }
         const channel = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.slang);
+        if (!channel) {
+            Utils_1.Utils.reply(interaction, '망언 채널을 등록해주시기 바랍니다.');
+            return;
+        }
         const user = yield client.models.config.findOne({ id, guildId });
         if (!user.slangs.includes(content)) {
             Utils_1.Utils.reply(interaction, '이 유저는 이 망언을 보유하고 있지 않습니다.');

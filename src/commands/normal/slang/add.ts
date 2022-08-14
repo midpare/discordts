@@ -50,7 +50,7 @@ export default new Command({
     const messages = await channel.messages.fetch();
 
     let flag = 0;
-    
+
     for (const [_, message] of messages) {
       if (message.embeds.length < 1)
         continue;
@@ -83,5 +83,5 @@ export default new Command({
 
     (await client.models.config.updateOne({ id, guildId }, { $push: { slangs: content } })).matchedCount;
     Utils.reply(interaction, `성공적으로 망언을 추가했습니다!\n망언 내용: ${content}`);
-  }
+  },
 });

@@ -77,5 +77,5 @@ exports.default = new Command_1.Command({
         }
         (yield client.models.config.updateOne({ id, guildId }, { $push: { slangs: content } })).matchedCount;
         Utils_1.Utils.reply(interaction, `성공적으로 망언을 추가했습니다!\n망언 내용: ${content}`);
-    })
+    }),
 });

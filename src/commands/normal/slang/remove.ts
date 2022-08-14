@@ -59,7 +59,7 @@ export default new Command({
           message.delete();
           break;
         }
-        
+
         const index = user.slangs.indexOf(content);
 
         user.slangs.splice(index, 1);
@@ -79,5 +79,5 @@ export default new Command({
 
     (await client.models.config.updateOne({ id, guildId }, { $pull: { slangs: content }})).matchedCount;
     Utils.reply(interaction, `성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);
-  }  
-})
+  },  
+});

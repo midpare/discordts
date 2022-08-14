@@ -56,6 +56,10 @@ exports.default = new Command_1.Command({
                 continue;
             const id = (_b = message.embeds[0].data.title) === null || _b === void 0 ? void 0 : _b.split('(')[1].split(')')[0];
             if (id == target.id) {
+                if (user.slangs.length == 1) {
+                    message.delete();
+                    break;
+                }
                 const index = user.slangs.indexOf(content);
                 user.slangs.splice(index, 1);
                 for (let i = 0; i < user.slangs.length; i++) {

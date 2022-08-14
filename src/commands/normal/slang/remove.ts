@@ -55,6 +55,11 @@ export default new Command({
       const id = message.embeds[0].data.title?.split('(')[1].split(')')[0]
 
       if (id == target.id) {    
+        if (user.slangs.length == 1) {
+          message.delete();
+          break;
+        }
+        
         const index = user.slangs.indexOf(content);
 
         user.slangs.splice(index, 1);

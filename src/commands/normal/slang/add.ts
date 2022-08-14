@@ -50,11 +50,11 @@ export default new Command({
     const messages = await channel.messages.fetch();
 
     let flag = 0;
-
+    
     for (const [_, message] of messages) {
       if (message.embeds.length < 1)
         continue;
-      const id = message.embeds[0].data.title?.split('(')[1].split(')')[0]
+      const id = message.embeds[0].data.title?.split('(')[1]?.split(')')[0];
 
       if (id == target.id) {
         for (let i = 0; i < user.slangs.length; i++) {

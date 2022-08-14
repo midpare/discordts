@@ -32,7 +32,7 @@ exports.default = new Command_1.Command({
         },
     ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b;
+        var _a, _b, _c;
         const target = options.getUser('유저', true);
         const content = options.getString('내용', true);
         const { guildId } = interaction;
@@ -55,7 +55,7 @@ exports.default = new Command_1.Command({
         for (const [_, message] of messages) {
             if (message.embeds.length < 1)
                 continue;
-            const id = (_b = message.embeds[0].data.title) === null || _b === void 0 ? void 0 : _b.split('(')[1].split(')')[0];
+            const id = (_c = (_b = message.embeds[0].data.title) === null || _b === void 0 ? void 0 : _b.split('(')[1]) === null || _c === void 0 ? void 0 : _c.split(')')[0];
             if (id == target.id) {
                 for (let i = 0; i < user.slangs.length; i++) {
                     user.slangs[i] = `${i + 1}. ${user.slangs[i]}`;

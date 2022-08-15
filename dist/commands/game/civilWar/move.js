@@ -19,20 +19,24 @@ exports.default = new Command_1.Command({
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         const civilWar = client.civilWar;
+        const { guildId } = interaction;
         if (civilWar.isEmpty()) {
             Utils_1.Utils.reply(interaction, '이동할 유저가 없습니다.');
             return;
         }
-        const { guildId } = interaction;
         if (!guildId)
             return;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        const civilWarChannel = guild.civilWar;
-        if (civilWarChannel.length < 2) {
+        if (guild.civilWar.length < 2) {
             Utils_1.Utils.reply(interaction, '내전채널을 등록해주시기 바랍니다.');
+            return;
         }
-        const channel1 = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(civilWarChannel[0]);
-        const channel2 = (_b = client.guilds.cache.get(guildId)) === null || _b === void 0 ? void 0 : _b.channels.cache.get(civilWarChannel[1]);
+        const channel1 = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.civilWar[0]);
+        const channel2 = (_b = client.guilds.cache.get(guildId)) === null || _b === void 0 ? void 0 : _b.channels.cache.get(guild.civilWar[1]);
+        if (!channel1 || !channel2) {
+            Utils_1.Utils.reply(interaction, '내전채널을 등록해주시기 바랍니다.');
+            return;
+        }
         for (const user of civilWar.teams[0]) {
             if (!user.voice || user.voice.channelId == null)
                 continue;

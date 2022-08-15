@@ -9,26 +9,31 @@ export default new Command({
   description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
   execute: async ({ interaction, client }) => {
     const civilWar = client.civilWar;
+    const { guildId } = interaction;
 
     if (civilWar.isEmpty()) {
       Utils.reply(interaction, '이동할 유저가 없습니다.');
       return;
     }
 
-    const { guildId } = interaction;
 
     if (!guildId)
       return;
 
     const guild = await client.models.guild.findOne({ id: guildId });
 
-    const civilWarChannel = guild.civilWar;
-    if (civilWarChannel.length < 2) {
+    if (guild.civilWar.length < 2) {
       Utils.reply(interaction, '내전채널을 등록해주시기 바랍니다.');
+      return;
     }
 
-    const channel1 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(civilWarChannel[0]);
-    const channel2 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(civilWarChannel[1]);
+    const channel1 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.civilWar[0]);
+    const channel2 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.civilWar[1]);
+
+    if (!channel1 || !channel2) {
+      Utils.reply(interaction, '내전채널을 등록해주시기 바랍니다.');
+      return;
+    }
 
     for (const user of civilWar.teams[0]) {
       if (!user.voice || user.voice.channelId == null)

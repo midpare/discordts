@@ -17,7 +17,7 @@ exports.default = new Command_1.Command({
     usage: '내전이동',
     description: '팀을 나눈 유저들을 내전방으로 이동시킵니다.',
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b;
+        var _a, _b, _c, _d;
         const civilWar = client.civilWar;
         const { guildId } = interaction;
         if (civilWar.isEmpty()) {
@@ -27,12 +27,8 @@ exports.default = new Command_1.Command({
         if (!guildId)
             return;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        if (guild.civilWar.length < 2) {
-            Utils_1.Utils.reply(interaction, '내전채널을 등록해주시기 바랍니다.');
-            return;
-        }
-        const channel1 = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.civilWar[0]);
-        const channel2 = (_b = client.guilds.cache.get(guildId)) === null || _b === void 0 ? void 0 : _b.channels.cache.get(guild.civilWar[1]);
+        const channel1 = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get((_b = guild.civilWar[0]) !== null && _b !== void 0 ? _b : '0');
+        const channel2 = (_c = client.guilds.cache.get(guildId)) === null || _c === void 0 ? void 0 : _c.channels.cache.get((_d = guild.civilWar[1]) !== null && _d !== void 0 ? _d : '0');
         if (!channel1 || !channel2) {
             Utils_1.Utils.reply(interaction, '내전채널을 등록해주시기 바랍니다.');
             return;

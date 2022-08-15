@@ -26,18 +26,14 @@ exports.default = new Command_1.Command({
         }
     ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b;
+        var _a, _b, _c, _d;
         const target = options.getMember('유저');
         const { guildId } = interaction;
         if (!guildId)
             return;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        if (guild.alarmChannel.length < 2) {
-            Utils_1.Utils.reply(interaction, '알람채널을 등록해주시기 바랍니다.');
-            return;
-        }
-        const channel1 = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.alarmChannel[0]);
-        const channel2 = (_b = client.guilds.cache.get(guildId)) === null || _b === void 0 ? void 0 : _b.channels.cache.get(guild.alarmChannel[1]);
+        const channel1 = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get((_b = guild.alarm[0]) !== null && _b !== void 0 ? _b : '0');
+        const channel2 = (_c = client.guilds.cache.get(guildId)) === null || _c === void 0 ? void 0 : _c.channels.cache.get((_d = guild.alarm[1]) !== null && _d !== void 0 ? _d : '0');
         if (!channel1 || !channel2) {
             Utils_1.Utils.reply(interaction, '알람채널을 등록해주시기 바랍니다.');
             return;

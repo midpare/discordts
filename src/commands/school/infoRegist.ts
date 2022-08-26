@@ -66,7 +66,7 @@ export default new Command({
         json: false,
       };
       
-      const info = JSON.parse(await Utils.requestGet(apiOptions));
+      const info = JSON.parse(await Utils.request(apiOptions));
 
       if (!info.RESULT) {
         const option = {

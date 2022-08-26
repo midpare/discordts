@@ -35,7 +35,7 @@ class Utils {
         }
         return false;
     }
-    static requestGet(option) {
+    static request(option) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
                 (0, request_1.default)(option, (err, _, body) => {

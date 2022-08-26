@@ -18,7 +18,7 @@ exports.default = new Interval_1.Interval({
             method: 'GET',
             json: true,
         };
-        const allCoin = yield Utils_1.Utils.requestGet(options);
+        const allCoin = yield Utils_1.Utils.request(options);
         for (const coin of allCoin) {
             if (coin.market.startsWith('KRW')) {
                 const coinName = coin.korean_name;

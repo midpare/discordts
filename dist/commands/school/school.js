@@ -47,12 +47,12 @@ exports.default = new Command_1.Command({
         const info = options.getString('정보', true);
         const dateVariable = new Date();
         const week = dateVariable.getDay();
-        const findWeek = weekArr.indexOf(info.split('')[0]);
-        const weekDay = findWeek > -1 ? weekArr[findWeek] + '요일' : '';
+        const findWeek = weekArr.indexOf(info[0]) + 1;
+        const weekDay = info.slice(0, 3);
+        const dayNext = findWeek >= week ? findWeek - week : 7 - (week - findWeek);
         const user = yield client.models.school.findOne({ id, guildId });
         if (info.endsWith('시간표')) {
-            const timeTableNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
-            const timeTableDate = Utils_1.Utils.dateCal(dateVariable, timeTableNumber);
+            const timeTableDate = Utils_1.Utils.dateCal(dateVariable, dayNext);
             if (!user) {
                 Utils_1.Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.');
                 return;
@@ -70,11 +70,10 @@ exports.default = new Command_1.Command({
                 method: 'GET',
                 json: false,
             };
-            const timeTableDateSplit = timeTableDate.split('');
-            const timeTableYear = timeTableDateSplit[0] + timeTableDateSplit[1] + timeTableDateSplit[2] + timeTableDateSplit[3];
-            const timeTableMonth = timeTableDateSplit[4] + timeTableDateSplit[5];
-            const timeTableDay = timeTableDateSplit[6] + timeTableDateSplit[7];
-            const timeTable = JSON.parse(yield Utils_1.Utils.requestGet(timeTableOptions));
+            const timeTableYear = timeTableDate[0] + timeTableDate[1] + timeTableDate[2] + timeTableDate[3];
+            const timeTableMonth = timeTableDate[4] + timeTableDate[5];
+            const timeTableDay = timeTableDate[6] + timeTableDate[7];
+            const timeTable = JSON.parse(yield Utils_1.Utils.request(timeTableOptions));
             if (timeTable.misTimetable == undefined || timeTable.misTimetable[1].row[0].ITRT_CNTNT === '토요휴업일') {
                 embed
                     .setTitle('시간표')
@@ -93,9 +92,7 @@ exports.default = new Command_1.Command({
             interaction.reply({ embeds: [embed] });
         }
         else if (info.endsWith('급식')) {
-            const mealNumber = weekDay != '' ? findWeek >= week ? findWeek - week : 7 - (week - findWeek) : 0;
-            const mealWeekDay = weekDay != '' ? weekArr[findWeek] : weekArr[week];
-            const mealDate = Utils_1.Utils.dateCal(dateVariable, mealNumber);
+            const mealDate = Utils_1.Utils.dateCal(dateVariable, dayNext);
             if (!user) {
                 interaction.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.');
                 return;
@@ -111,7 +108,7 @@ exports.default = new Command_1.Command({
                 method: 'GET',
                 json: false,
             };
-            const meal = JSON.parse(yield Utils_1.Utils.requestGet(mealOptions));
+            const meal = JSON.parse(yield Utils_1.Utils.request(mealOptions));
             if (meal.RESULT != undefined) {
                 embed
                     .setTitle('급식')
@@ -120,12 +117,11 @@ exports.default = new Command_1.Command({
                 interaction.reply({ embeds: [embed] });
                 return;
             }
-            const mealDateSplit = mealDate.split('');
-            const mealYear = mealDateSplit[0] + mealDateSplit[1] + mealDateSplit[2] + mealDateSplit[3];
-            const mealMonth = mealDateSplit[4] + mealDateSplit[5];
-            const mealDay = mealDateSplit[6] + mealDateSplit[7];
+            const mealYear = mealDate[0] + mealDate[1] + mealDate[2] + mealDate[3];
+            const mealMonth = mealDate[4] + mealDate[5];
+            const mealDay = mealDate[6] + mealDate[7];
             embed
-                .setTitle(`${mealWeekDay}요일 급식`)
+                .setTitle(`${weekDay} 급식`)
                 .setDescription(`${mealYear}-${mealMonth}-${mealDay}(${user.schoolName})`)
                 .addFields({ name: '급식정보', value: meal.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/<br\/>/gi, '\n').replace(/[0-9.]/gi, ''), inline: false })
                 .setColor(discord_js_1.Colors.Aqua);

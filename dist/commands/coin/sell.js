@@ -44,7 +44,7 @@ exports.default = new Command_1.Command({
             method: 'GET',
             json: true,
         };
-        const coin = yield Utils_1.Utils.requestGet(apiOptions);
+        const coin = yield Utils_1.Utils.request(apiOptions);
         if (!coin) {
             Utils_1.Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
             return;

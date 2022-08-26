@@ -8,7 +8,7 @@ export default new Interval({
       method: 'GET',
       json: true,
     };
-    const allCoin = await Utils.requestGet(options);
+    const allCoin = await Utils.request(options);
 
     for (const coin of allCoin) {
       if (coin.market.startsWith('KRW')) {

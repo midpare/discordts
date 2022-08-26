@@ -28,7 +28,7 @@ export class Utils {
     return false
   }
 
-  public static async requestGet(
+  public static async request(
     option: {
       uri: string;
       method: string;

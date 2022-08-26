@@ -28,7 +28,7 @@ export default new Command({
         json: true,
       };
 
-      const coin = await Utils.requestGet(apiOptions);
+      const coin = await Utils.request(apiOptions);
       const persent = Math.round((coin[0].tradePrice / element.money - 1) * 100 * 100) / 100;
       const persentShown = persent < 0 ? persent : '+' + persent;
 

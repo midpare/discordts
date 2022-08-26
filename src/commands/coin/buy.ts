@@ -36,7 +36,7 @@ export default new Command({
       json: true,
     };
 
-    const coin = await Utils.requestGet(apiOptions);
+    const coin = await Utils.request(apiOptions);
     if (!coin) {
       Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
       return;

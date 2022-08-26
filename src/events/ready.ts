@@ -15,7 +15,7 @@ export default new Event({
       
       const members = Array.from(guild.members.cache.values());
       for (const member of members) {
-        const { id, displayName: name } = member;
+        const { id, user: { username: name } } = member;
         const user = await client.models.config.findOne({ id, guildId });
   
         if (!user && !member.user.bot) {
@@ -24,7 +24,6 @@ export default new Event({
         }
       }
     }
-    
     console.log(`Success to login!`);
   },
 });

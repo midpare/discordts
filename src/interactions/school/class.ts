@@ -27,7 +27,7 @@ export default new Interaction<SelectMenuInteraction>({
       json: false,
     };
 
-    const info = JSON.parse(await Utils.requestGet(apiOptions));
+    const info = JSON.parse(await Utils.request(apiOptions));
 
     const customIds = Utils.uuid(3);
     const [menuId, cancel, back] = customIds;

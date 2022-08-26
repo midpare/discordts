@@ -34,7 +34,7 @@ exports.default = new Interaction_1.Interaction({
             method: 'GET',
             json: false,
         };
-        const info = JSON.parse(yield Utils_1.Utils.requestGet(apiOptions));
+        const info = JSON.parse(yield Utils_1.Utils.request(apiOptions));
         const customIds = Utils_1.Utils.uuid(3);
         const [menuId, cancel, back] = customIds;
         const menuOptions = new Array();

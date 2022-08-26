@@ -67,7 +67,7 @@ exports.default = new Command_1.Command({
                 method: 'GET',
                 json: false,
             };
-            const info = JSON.parse(yield Utils_1.Utils.requestGet(apiOptions));
+            const info = JSON.parse(yield Utils_1.Utils.request(apiOptions));
             if (!info.RESULT) {
                 const option = {
                     label: name,

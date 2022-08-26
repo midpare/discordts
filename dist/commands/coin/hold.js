@@ -35,7 +35,7 @@ exports.default = new Command_1.Command({
                 method: 'GET',
                 json: true,
             };
-            const coin = yield Utils_1.Utils.requestGet(apiOptions);
+            const coin = yield Utils_1.Utils.request(apiOptions);
             const persent = Math.round((coin[0].tradePrice / element.money - 1) * 100 * 100) / 100;
             const persentShown = persent < 0 ? persent : '+' + persent;
             const profit = Math.round((coin[0].tradePrice - element.money) * element.count);

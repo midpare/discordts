@@ -22,7 +22,7 @@ export default async function (client: Client) {
       commands.push(command);
     }
 
-    const rest = new REST().setToken(process.env.DISCORD_TOKEN ?? '');
+    const rest = new REST().setToken(client.token ?? '');
     rest.put(Routes.applicationCommands(client.user?.id ?? ''), { body: commands })
       .then(commands => {
         if (commands instanceof Array)

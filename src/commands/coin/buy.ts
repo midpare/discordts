@@ -30,21 +30,23 @@ export default new Command({
     const coinName = options.getString('이름', true);
 
     const userCoin = stock.filter((element: { name: string }) => element.name == coinName)[0];
+    const coinId = client.coin.get(coinName)
+    if (!coinId) {
+      Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
+      return;
+    }
+    
     const apiOptions = {
-      uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to`,
+      uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${coinId}&count=1&to`,
       method: 'GET',
       json: true,
     };
 
     const coin = await Utils.request(apiOptions);
-    if (!coin) {
-      Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
-      return;
-    }
     
     const count = options.getInteger('수량', true)
 
-    const coinMoney = coin[0].tradePrice;
+    const coinMoney = coin[0].tradePrice; 
     const wholeMoney = coinMoney * count;
     if (user.money < wholeMoney) {
       Utils.reply(interaction, `현재 잔액보다 사려는 수량이 많습니다. \n현재 잔액: ${user.money.toLocaleString()}원\n사려는 금액: ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)`);

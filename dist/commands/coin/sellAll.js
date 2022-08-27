@@ -31,8 +31,13 @@ exports.default = new Command_1.Command({
         const stock = user.stock;
         const coinName = options.getString('이름', true);
         const userCoin = stock.filter((element) => element.name == coinName)[0];
+        const coinId = client.coin.get(coinName);
+        if (!coinId) {
+            Utils_1.Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
+            return;
+        }
         const apiOptions = {
-            uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(coinName)}&count=1&to`,
+            uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${coinId}&count=1&to`,
             method: 'GET',
             json: true,
         };

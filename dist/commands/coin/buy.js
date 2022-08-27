@@ -59,7 +59,7 @@ exports.default = new Command_1.Command({
         }
         if (userCoin) {
             const moneyAve = (userCoin.money * userCoin.count + wholeMoney) / (userCoin.count + count);
-            client.models.gambling.updateOne({ id, guildId, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } });
+            (yield client.models.gambling.updateOne({ id, guildId, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } })).matchedCount;
             interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`);
         }
         else {

@@ -69,7 +69,12 @@ export default new Command({
     const persent = Math.round((coinMoney / userCoin.money - 1) * 100 * 100) / 100;
     const persentShown = persent < 0 ? persent : '+' + persent;
 
-    client.models.gambling.updateOne({ id, guildId, stock: userCoin }, { $inc: { 'stock.$.count': -count, money: Math.round(money) } });
+    if (userCoin.count == count) {
+      (await client.models.gambling.updateOne({ id, guildId }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
+    } else {
+      (await client.models.gambling.updateOne({ id, guildId, stock: userCoin }, { $inc: { 'stock.$.count': -count, money: Math.round(money) } })).matchedCount
+    }
+
     interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n현재 코인개수: ${userCoin.count}개 -> ${userCoin.count - count}개\n손익: ${profitShown}원(${persentShown}%)`);
   },
 });

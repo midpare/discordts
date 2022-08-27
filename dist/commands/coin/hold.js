@@ -40,7 +40,7 @@ exports.default = new Command_1.Command({
             const persentShown = persent < 0 ? persent : '+' + persent;
             const profit = Math.round((coin[0].tradePrice - element.money) * element.count);
             const profitShown = profit < 0 ? profit.toLocaleString() : '+' + profit.toLocaleString();
-            embed.addFields({ name: element.name, value: `수량: ${element.count}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, inline: false });
+            embed.addFields({ name: element.name, value: `수량: ${element.count.toLocaleString()}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, inline: false });
         }
         interaction.reply({ embeds: [embed] });
     }),

@@ -102,8 +102,10 @@ export default new Command({
         .setLabel('취소')
     )
 
-    interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] })
+    console.log(1);
+    // interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] })
 
+    interaction.reply('test')
     const message = await interaction.fetchReply();
 
     client.interactionOptions.set(menuId, new InteractionOption({

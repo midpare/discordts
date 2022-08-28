@@ -11,12 +11,8 @@ export default async function (client: Client) {
 
     if (!(file instanceof Interaction))
       continue;
-      
-    try {
-      client.interactions.set(file.name, file);
-    } catch (error) {
-      console.error(error);
-    }
+
+    client.interactions.set(file.name, file);
   }
   console.log('Successfully handled the interactions!')
 }

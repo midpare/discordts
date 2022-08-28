@@ -69,11 +69,7 @@ export default new Event({
           break;
       }
 
-      try {
-        event.execute({ interaction, options: options as CommandInteractionOptionResolver<CacheType>, client });
-      } catch (error) {
-        console.error(error);
-      }
+      event.execute({ interaction, options: options as CommandInteractionOptionResolver<CacheType>, client });
 
     } else if (interaction.isButton() || interaction.isSelectMenu()) {
       const options = client.interactionOptions.get(interaction.customId);
@@ -94,19 +90,16 @@ export default new Event({
         interaction.reply({ content: '이 상호작용을 사용할 수 없습니다.', ephemeral: true });
         return;
       }
-      try {
-        event.execute({ interaction, options, client });
-        for (const id of options.customIds) {
-          client.interactionOptions.delete(id);
-        }
 
-        if (event.deleted) {
-          for (const msg of options.messages) {
-            msg.delete();
-          }
+      event.execute({ interaction, options, client });
+      for (const id of options.customIds) {
+        client.interactionOptions.delete(id);
+      }
+
+      if (event.deleted) {
+        for (const msg of options.messages) {
+          msg.delete();
         }
-      } catch (error) {
-        console.error(error);
       }
     }
   },

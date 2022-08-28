@@ -12,14 +12,10 @@ export default async function (client: Client) {
 
     if (!(file instanceof Interval))
       continue;
-      
-    try {
-      if (file.immediate)
-        file.execute(client);
-      setInterval(file.execute, ms(file.interval), client);
-    } catch (error) {
-      console.error(error);
-    }
-  } 
+
+    if (file.immediate)
+      file.execute(client);
+    setInterval(file.execute, ms(file.interval), client);
+  }
   console.log('Successfully handled the intervals!');
 }

@@ -43,7 +43,7 @@ const client = new Client_1.Client({ intents: 131071 });
     const handlerFiles = new Array();
     Utils_1.Utils.getPath(handlerFiles, __dirname + '/handler');
     for (let path of handlerFiles) {
-        (yield Promise.resolve().then(() => __importStar(require(path)))).default(client).catch(console.error);
+        (yield Promise.resolve().then(() => __importStar(require(path)))).default(client);
     }
 }))();
 mongoose_1.default.connect(process.env.MONGO_DB_URI + '/discordbot');

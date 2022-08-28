@@ -67,8 +67,7 @@ function default_1(client) {
                 .then(commands => {
                 if (commands instanceof Array)
                     console.log(`Successfully set up ${commands.length} commands!`);
-            })
-                .catch(console.error);
+            });
         }));
     });
 }

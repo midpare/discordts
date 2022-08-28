@@ -17,11 +17,6 @@ exports.default = new Event_1.Event({
         const temporary = guild.temporaryRole;
         if (!member.guild.roles.cache.has(temporary))
             return;
-        try {
-            member.roles.add(temporary);
-        }
-        catch (error) {
-            console.error(error);
-        }
+        member.roles.add(temporary);
     }),
 });

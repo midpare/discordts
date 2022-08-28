@@ -10,10 +10,7 @@ export default new Event({
 
     if (!member.guild.roles.cache.has(temporary))
       return;
-    try { 
-      member.roles.add(temporary);
-    } catch(error) {
-      console.error(error);
-    }
+
+    member.roles.add(temporary);
   },
 });

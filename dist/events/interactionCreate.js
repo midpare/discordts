@@ -64,12 +64,7 @@ exports.default = new Event_1.Event({
                     }
                     break;
             }
-            try {
-                event.execute({ interaction, options: options, client });
-            }
-            catch (error) {
-                console.error(error);
-            }
+            event.execute({ interaction, options: options, client });
         }
         else if (interaction.isButton() || interaction.isSelectMenu()) {
             const options = client.interactionOptions.get(interaction.customId);
@@ -87,19 +82,14 @@ exports.default = new Event_1.Event({
                 interaction.reply({ content: '이 상호작용을 사용할 수 없습니다.', ephemeral: true });
                 return;
             }
-            try {
-                event.execute({ interaction, options, client });
-                for (const id of options.customIds) {
-                    client.interactionOptions.delete(id);
-                }
-                if (event.deleted) {
-                    for (const msg of options.messages) {
-                        msg.delete();
-                    }
-                }
+            event.execute({ interaction, options, client });
+            for (const id of options.customIds) {
+                client.interactionOptions.delete(id);
             }
-            catch (error) {
-                console.error(error);
+            if (event.deleted) {
+                for (const msg of options.messages) {
+                    msg.delete();
+                }
             }
         }
     }),

@@ -28,6 +28,5 @@ export default async function (client: Client) {
         if (commands instanceof Array)
           console.log(`Successfully set up ${commands.length} commands!`);
       })
-      .catch(console.error);
   });
 }

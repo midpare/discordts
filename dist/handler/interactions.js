@@ -42,12 +42,7 @@ function default_1(client) {
             const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             if (!(file instanceof Interaction_1.Interaction))
                 continue;
-            try {
-                client.interactions.set(file.name, file);
-            }
-            catch (error) {
-                console.error(error);
-            }
+            client.interactions.set(file.name, file);
         }
         console.log('Successfully handled the interactions!');
     });

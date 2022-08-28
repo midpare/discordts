@@ -11,14 +11,11 @@ export default async function (client: Client) {
 
     if (!(file instanceof Event))
       continue;
-      
-    try {
-      client.on(file.name, (...args) => {
-        file.execute(client, ...args);
-      });
-    } catch (error) {
-      console.error(error);
-    }
+
+    client.on(file.name, (...args) => {
+      file.execute(client, ...args);
+    });
+
   }
   console.log('Successfully handled events!');
 }

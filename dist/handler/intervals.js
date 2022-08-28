@@ -46,14 +46,9 @@ function default_1(client) {
             const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             if (!(file instanceof Interval_1.Interval))
                 continue;
-            try {
-                if (file.immediate)
-                    file.execute(client);
-                setInterval(file.execute, (0, ms_1.default)(file.interval), client);
-            }
-            catch (error) {
-                console.error(error);
-            }
+            if (file.immediate)
+                file.execute(client);
+            setInterval(file.execute, (0, ms_1.default)(file.interval), client);
         }
         console.log('Successfully handled the intervals!');
     });

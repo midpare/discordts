@@ -11,7 +11,7 @@ export default async function (client: Client) {
 
     if (!(file instanceof Model))
       continue;
-    
+
     Object.defineProperty(client.models, file.name, { value: file.model });
   }
   console.log('Successfully handled the models!');

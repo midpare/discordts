@@ -9,7 +9,7 @@ const client = new Client({ intents: 131071 });
   Utils.getPath(handlerFiles, __dirname + '/handler')
 
   for (let path of handlerFiles) {
-    (await import(path)).default(client).catch(console.error);
+    (await import(path)).default(client)
   }
 })();
 

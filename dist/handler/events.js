@@ -42,16 +42,11 @@ function default_1(client) {
             const file = (yield Promise.resolve().then(() => __importStar(require(path)))).default;
             if (!(file instanceof Event_1.Event))
                 continue;
-            try {
-                client.on(file.name, (...args) => {
-                    file.execute(client, ...args);
-                });
-            }
-            catch (error) {
-                console.error(error);
-            }
+            client.on(file.name, (...args) => {
+                file.execute(client, ...args);
+            });
         }
-        console.log('Successfully handle events!');
+        console.log('Successfully handled events!');
     });
 }
 exports.default = default_1;

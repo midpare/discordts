@@ -38,87 +38,74 @@ export default new Command({
     },
   ],
   execute: async ({ interaction, options, client }) => {
-    // const apiKey = process.env.SCHOOL_API_KEY || '';
-    // const schoolName = options.getString('학교', true);
+    const apiKey = process.env.SCHOOL_API_KEY || '';
+    const schoolName = options.getString('학교', true);
 
-    // const { guildId, user: { id } } = interaction;
+    const { guildId, user: { id } } = interaction;
 
-    // if (!guildId)
-    //   return;
+    if (!guildId)
+      return;
 
-    // const customIds = Utils.uuid(2);
-    // const [menuId, cancel] = customIds
+    const customIds = Utils.uuid(2);
+    const [menuId, cancel] = customIds
 
-    // const menuOptions = new Array();
+    const menuOptions = new Array();
 
-    // for (let i = 0; i < codes.length; i++) {
-    //   const name = cities[i];
-    //   const code = codes[i];
+    for (let i = 0; i < codes.length; i++) {
+      const name = cities[i];
+      const code = codes[i];
 
-    //   const apiOptions = {
-    //     uri: ' https://open.neis.go.kr/hub/schoolInfo?Type=json&Size=999',
-    //     qs: {
-    //       KEY: apiKey,
-    //       ATPT_OFCDC_SC_CODE: code,
-    //       SCHUL_NM: schoolName,
-    //     },
-    //     method: 'GET',
-    //     json: false,
-    //   };
+      const apiOptions = {
+        uri: ' https://open.neis.go.kr/hub/schoolInfo?Type=json&Size=999',
+        qs: {
+          KEY: apiKey,
+          ATPT_OFCDC_SC_CODE: code,
+          SCHUL_NM: schoolName,
+        },
+        method: 'GET',
+        json: false,
+      };
       
-    //   const info = JSON.parse(await Utils.request(apiOptions));
+      const info = JSON.parse(await Utils.request(apiOptions));
 
-    //   if (!info.RESULT) {
-    //     const option = {
-    //       label: name,
-    //       description: `${name}를 선택합니다.`,
-    //       value: JSON.stringify({
-    //         cityName: name,
-    //         cityCode: code,
-    //         schoolCode: info.schoolInfo[1].row[0].SD_SCHUL_CODE,
-    //       }),
-    //     };
+      if (!info.RESULT) {
+        const option = {
+          label: name,
+          description: `${name}를 선택합니다.`,
+          value: JSON.stringify({
+            cityName: name,
+            cityCode: code,
+            schoolCode: info.schoolInfo[1].row[0].SD_SCHUL_CODE,
+          }),
+        };
 
-    //     menuOptions.push(option);
-    //   }
-    // }
+        menuOptions.push(option);
+      }
+    }
 
-    // if (menuOptions.length < 1) {
-    //   Utils.reply(interaction, '정확한 학교명을 입력해주시기 바랍니다.');
-    //   return;
-    // }
+    if (menuOptions.length < 1) {
+      Utils.reply(interaction, '정확한 학교명을 입력해주시기 바랍니다.');
+      return;
+    }
 
-    const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
-      new SelectMenuBuilder()
-        .setCustomId('testId')
-        .setPlaceholder('이곳을 눌러 선택해주세요')
-        .setOptions([
-          {
-            label: "1",
-            description:"test description1",
-            value: "1"
-          },
-          {
-            label: "2",
-            description:"test description2",
-            value: "2"
-          },
-          {
-            label: "3",
-            description:"test description3",
-            value: "3"
-          }
-        ])
-    )
+    setTimeout(async () => {
+      const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
+        new SelectMenuBuilder()
+          .setCustomId('testId')
+          .setPlaceholder('이곳을 눌러 선택해주세요')
+          .setOptions(menuOptions)
+      )
+  
+      const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId('test')
+          .setStyle(ButtonStyle.Secondary)
+          .setLabel('취소')
+      )
+  
+      await interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [button, selectMenu] })
+    }, 5000);
 
-    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-        .setCustomId('test')
-        .setStyle(ButtonStyle.Secondary)
-        .setLabel('취소')
-    )
-
-    await interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [button, selectMenu] })
 
     // const message = await interaction.fetchReply();
 

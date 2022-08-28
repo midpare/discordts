@@ -66,7 +66,7 @@ function default_1(client) {
             rest.put(discord_js_1.Routes.applicationCommands((_c = (_b = client.user) === null || _b === void 0 ? void 0 : _b.id) !== null && _c !== void 0 ? _c : ''), { body: commands })
                 .then(commands => {
                 if (commands instanceof Array)
-                    console.log(`Success to put commands! number of commands: ${commands.length}`);
+                    console.log(`Successfully set up ${commands.length} commands!`);
             })
                 .catch(console.error);
         }));

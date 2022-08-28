@@ -49,7 +49,7 @@ function default_1(client) {
                 console.error(error);
             }
         }
-        console.log('Success to handle interactions!');
+        console.log('Successfully handled the interactions!');
     });
 }
 exports.default = default_1;

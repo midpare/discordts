@@ -31,7 +31,7 @@ exports.default = new Command_1.Command({
             .setCustomId('getRole')
             .setStyle(discord_js_1.ButtonStyle.Primary)
             .setLabel('역할 받기'));
-        (_c = interaction.channel) === null || _c === void 0 ? void 0 : _c.send({ components: [row] });
+        (_c = interaction.channel) === null || _c === void 0 ? void 0 : _c.send({ content: '이 버튼을 눌러 역할을 받으세요.', components: [row] });
         Utils_1.Utils.reply(interaction, '성공적으로 역할 받기 버튼을 생성했습니다!');
     }),
 });

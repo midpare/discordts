@@ -51,7 +51,7 @@ function default_1(client) {
                 console.error(error);
             }
         }
-        console.log('Success to handle events!');
+        console.log('Successfully handle events!');
     });
 }
 exports.default = default_1;

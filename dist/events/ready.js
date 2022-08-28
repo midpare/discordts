@@ -31,6 +31,6 @@ exports.default = new Event_1.Event({
                 }
             }
         }
-        console.log(`Success to login!`);
+        console.log(`Successfully logged in to ${client.guilds.cache.size} servers!`);
     }),
 });

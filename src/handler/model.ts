@@ -14,5 +14,5 @@ export default async function (client: Client) {
     
     Object.defineProperty(client.models, file.name, { value: file.model });
   }
-  console.log('Success to handle models!');
+  console.log('Successfully handled the models!');
 }

@@ -21,5 +21,5 @@ export default async function (client: Client) {
       console.error(error);
     }
   } 
-  console.log('Success to handle intervals!');
+  console.log('Successfully handled the intervals!');
 }

@@ -44,7 +44,7 @@ function default_1(client) {
                 continue;
             Object.defineProperty(client.models, file.name, { value: file.model });
         }
-        console.log('Success to handle models!');
+        console.log('Successfully handled the models!');
     });
 }
 exports.default = default_1;

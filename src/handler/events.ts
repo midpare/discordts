@@ -20,5 +20,5 @@ export default async function (client: Client) {
       console.error(error);
     }
   }
-  console.log('Successfully handle events!');
+  console.log('Successfully handled events!');
 }

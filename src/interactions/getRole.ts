@@ -1,8 +1,9 @@
 import { Interaction } from '../managers/Interaction';
-import { ButtonInteraction, GuildMemberRoleManager, TextChannel, GuildMember } from 'discord.js';
+import { ButtonInteraction, TextChannel, GuildMember } from 'discord.js';
+import { Utils } from '../structures/Utils';
 
 export default new Interaction<ButtonInteraction>({
-  name: 'giveRole',
+  name: 'getRole',
   deleted: false,
   execute: async ({ interaction, client }) => {
     const { guildId, member } = interaction;
@@ -14,23 +15,23 @@ export default new Interaction<ButtonInteraction>({
 
     const guild = await client.models.guild.findOne({ id: guildId });
 
-    const temporaryRole = guild.temporaryRole;
-    const baseRole = guild.baseRole;
+    const { temporaryRole, baseRole } = guild;
 
-    if (member.guild.roles.cache.has(temporaryRole) || member.guild.roles.cache.has(baseRole))
+    if (!interaction.guild?.roles.cache.has(temporaryRole) || !interaction.guild?.roles.cache.has(baseRole)) {
+      Utils.reply(interaction, '임시역할과 기본역할을 등록해주시기 바랍니다.');
       return;
-      
+    }
+
+
     roles.add(baseRole);
     roles.remove(temporaryRole);
 
-    interaction.channel?.send('성공적으로 역할을 지급받았습니다!').then((msg) => {
-      setTimeout(() => msg.delete(), 2000);
-    });
+    Utils.reply(interaction, '성공적으로 역할을 지급받았습니다!');
 
     const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.join);
 
     if (!channel)
-      return;                         
+      return;
 
     channel?.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다!`);
   },

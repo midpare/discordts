@@ -10,13 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const Utils_1 = require("../../structures/Utils");
-const Command_1 = require("../../managers/Command");
+const Utils_1 = require("../../../structures/Utils");
+const Command_1 = require("../../../managers/Command");
 exports.default = new Command_1.Command({
     name: '채널등록',
-    category: '방장',
+    category: '관리자',
     usage: '채널등록 <채널유형> <채널>, [채널]',
-    description: '내전, 도박등에 사용되는 채널을 등록합니다.',
+    description: '서버에서 사용되는 여러 채널을 등록합니다.',
     options: [
         {
             name: '채널유형',

@@ -1,4 +1,4 @@
-import { User, Message, Snowflake, Interaction, ChatInputCommandInteraction } from 'discord.js';
+import { Message, Snowflake, ChatInputCommandInteraction } from 'discord.js';
 import { Client } from '../Client';
 import { Utils } from '../Utils';
 

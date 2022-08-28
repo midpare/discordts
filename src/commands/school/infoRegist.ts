@@ -88,12 +88,28 @@ export default new Command({
     //   return;
     // }
 
-    // const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
-    //   new SelectMenuBuilder()
-    //     .setCustomId(menuId)
-    //     .setPlaceholder('이곳을 눌러 선택해주세요')
-    //     .setOptions(menuOptions)
-    // )
+    const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
+      new SelectMenuBuilder()
+        .setCustomId('testId')
+        .setPlaceholder('이곳을 눌러 선택해주세요')
+        .setOptions([
+          {
+            label: "1",
+            description:"test description1",
+            value: "1"
+          },
+          {
+            label: "2",
+            description:"test description2",
+            value: "2"
+          },
+          {
+            label: "3",
+            description:"test description3",
+            value: "3"
+          }
+        ])
+    )
 
     const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -102,7 +118,7 @@ export default new Command({
         .setLabel('취소')
     )
 
-    await interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [button] })
+    await interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [button, selectMenu] })
 
     // const message = await interaction.fetchReply();
 

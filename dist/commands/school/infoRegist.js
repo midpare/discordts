@@ -83,17 +83,31 @@ exports.default = new Command_1.Command({
         //   Utils.reply(interaction, '정확한 학교명을 입력해주시기 바랍니다.');
         //   return;
         // }
-        // const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
-        //   new SelectMenuBuilder()
-        //     .setCustomId(menuId)
-        //     .setPlaceholder('이곳을 눌러 선택해주세요')
-        //     .setOptions(menuOptions)
-        // )
+        const selectMenu = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.SelectMenuBuilder()
+            .setCustomId('testId')
+            .setPlaceholder('이곳을 눌러 선택해주세요')
+            .setOptions([
+            {
+                label: "1",
+                description: "test description1",
+                value: "1"
+            },
+            {
+                label: "2",
+                description: "test description2",
+                value: "2"
+            },
+            {
+                label: "3",
+                description: "test description3",
+                value: "3"
+            }
+        ]));
         const button = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
             .setCustomId('test')
             .setStyle(discord_js_1.ButtonStyle.Secondary)
             .setLabel('취소'));
-        yield interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [button] });
+        yield interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [button, selectMenu] });
         // const message = await interaction.fetchReply();
         // client.interactionOptions.set(menuId, new InteractionOption({
         //   ids: [id],

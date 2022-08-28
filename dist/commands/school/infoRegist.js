@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Command_1 = require("../../managers/Command");
-const InteractionOptions_1 = require("../../structures/InteractionOptions");
 const Utils_1 = require("../../structures/Utils");
 const cities = [
     '서울특별시', '부산광역시',
@@ -94,23 +93,23 @@ exports.default = new Command_1.Command({
             .setStyle(discord_js_1.ButtonStyle.Secondary)
             .setLabel('취소'));
         yield interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] });
-        const message = yield interaction.fetchReply();
-        client.interactionOptions.set(menuId, new InteractionOptions_1.InteractionOption({
-            ids: [id],
-            guildId,
-            cmd: 'grade',
-            messages: [message],
-            customIds,
-            data: {
-                schoolName,
-            },
-        }));
-        client.interactionOptions.set(cancel, new InteractionOptions_1.InteractionOption({
-            ids: [id],
-            guildId,
-            cmd: 'cancel',
-            messages: [message],
-            customIds,
-        }));
+        // const message = await interaction.fetchReply();
+        // client.interactionOptions.set(menuId, new InteractionOption({
+        //   ids: [id],
+        //   guildId,
+        //   cmd: 'grade',
+        //   messages: [message],
+        //   customIds,
+        //   data: {
+        //     schoolName,
+        //   },
+        // }));
+        // client.interactionOptions.set(cancel, new InteractionOption({
+        //   ids: [id],
+        //   guildId,
+        //   cmd: 'cancel',
+        //   messages: [message],
+        //   customIds,
+        // }));
     }),
 });

@@ -104,25 +104,25 @@ export default new Command({
 
     await interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] })
 
-    const message = await interaction.fetchReply();
+    // const message = await interaction.fetchReply();
 
-    client.interactionOptions.set(menuId, new InteractionOption({
-      ids: [id],
-      guildId,
-      cmd: 'grade',
-      messages: [message],
-      customIds,
-      data: {
-        schoolName,
-      },
-    }));
+    // client.interactionOptions.set(menuId, new InteractionOption({
+    //   ids: [id],
+    //   guildId,
+    //   cmd: 'grade',
+    //   messages: [message],
+    //   customIds,
+    //   data: {
+    //     schoolName,
+    //   },
+    // }));
 
-    client.interactionOptions.set(cancel, new InteractionOption({
-      ids: [id],
-      guildId,
-      cmd: 'cancel',
-      messages: [message],
-      customIds,
-    }));
+    // client.interactionOptions.set(cancel, new InteractionOption({
+    //   ids: [id],
+    //   guildId,
+    //   cmd: 'cancel',
+    //   messages: [message],
+    //   customIds,
+    // }));
   },
 });

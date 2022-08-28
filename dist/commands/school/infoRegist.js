@@ -93,9 +93,7 @@ exports.default = new Command_1.Command({
             .setCustomId(cancel)
             .setStyle(discord_js_1.ButtonStyle.Secondary)
             .setLabel('취소'));
-        console.log(1);
-        // interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] })
-        interaction.reply('test');
+        yield interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] });
         const message = yield interaction.fetchReply();
         client.interactionOptions.set(menuId, new InteractionOptions_1.InteractionOption({
             ids: [id],

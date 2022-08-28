@@ -27,7 +27,7 @@ export default new Command({
         .setLabel('역할 받기'),
     );
 
-    interaction.channel?.send({ components: [row] });
+    interaction.channel?.send({ content: '이 버튼을 눌러 역할을 받으세요.', components: [row] });
     Utils.reply(interaction, '성공적으로 역할 받기 버튼을 생성했습니다!');
   },
 }); 

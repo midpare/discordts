@@ -13,7 +13,7 @@ export default new Command({
     const date = new Date();
     const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
 
-    if (user.date == today) {
+    if (user.dailyDate == today) {
       Utils.reply(interaction, client.messages.gambling.daily.today);
       return;
     }

@@ -12,23 +12,23 @@ export default new Command({
     if (!user)
       return;
 
-    if (user.money > 0 || user.stock[0]) {
+    if (user.money > 0 || user.coin[0]) {
       Utils.reply(interaction, client.messages.gambling.baseMoney.haveMoney);
       return;
     }
 
     const time = new Date().getTime();
     const coolTime = 30 * 1000;
-    const userCoolTime = user.baseMoneyCoolTime;
+    const userTime = user.baseMoneyTime;
     
-    if (time - userCoolTime < coolTime) {
-      Utils.reply(interaction, client.messages.coolTime(Math.round((coolTime - (time - userCoolTime)) / 1000)));
+    if (time - userTime < coolTime) {
+      Utils.reply(interaction, client.messages.coolTime(Math.round((coolTime - (time - userTime)) / 1000)));
       return;
     }
 
     const baseMoney = 25000;
 
-    (await client.models.gambling.updateOne({ id, guildId }, { $set: { money: baseMoney, baseMoneyCoolTime: time } })).matchedCount;
+    (await client.models.gambling.updateOne({ id, guildId }, { $set: { money: baseMoney, baseMoneyTime: time } })).matchedCount;
     interaction.reply(client.messages.gambling.baseMoney.success(baseMoney));
   },
 });

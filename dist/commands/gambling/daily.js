@@ -21,7 +21,7 @@ exports.default = new Command_1.Command({
         const user = yield client.models.gambling.findOne({ id, guildId });
         const date = new Date();
         const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
-        if (user.date == today) {
+        if (user.dailyDate == today) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.daily.today);
             return;
         }

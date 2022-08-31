@@ -8,8 +8,6 @@ const configInfo = new mongoose_1.Schema({
     guildId: String,
     slangs: [String],
     warning: { type: Number, default: 0 },
-    baseMoneyCoolTime: { type: Number, default: 0 },
-    bankruptcyTime: { type: Number, default: 0 },
     banTime: { type: Number, default: 0 },
     MuteTime: { type: Number, default: 0 },
 }, {

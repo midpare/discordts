@@ -45,7 +45,7 @@ export default new Event({
             return;
           }
 
-          const leftTime = 1000 * 60 * 60 - time + user.bankruptcy;
+          const leftTime = 1000 * 60 * 60 - time + user.bankruptcyTime;
           const leftminute = Math.floor(leftTime / (1000 * 60));
           const leftsecond = leftTime / 1000 - leftminute * 60;
 

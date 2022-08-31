@@ -36,9 +36,8 @@ exports.default = new Command_1.Command({
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const { guildId, user: { id } } = interaction;
         const user = yield client.models.gambling.findOne({ id, guildId });
-        const stock = user.stock;
         const coinName = options.getString('이름', true);
-        const userCoin = stock.filter((element) => element.name == coinName)[0];
+        const userCoin = user.coin.filter((element) => element.name == coinName)[0];
         const coinId = client.coin.get(coinName);
         if (!coinId) {
             Utils_1.Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
@@ -70,10 +69,10 @@ exports.default = new Command_1.Command({
         const persent = Math.round((coinMoney / userCoin.money - 1) * 100 * 100) / 100;
         const persentShown = persent < 0 ? persent : '+' + persent;
         if (userCoin.count == count) {
-            (yield client.models.gambling.updateOne({ id, guildId }, { $pull: { stock: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id, guildId }, { $pull: { coin: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
         }
         else {
-            (yield client.models.gambling.updateOne({ id, guildId, stock: userCoin }, { $inc: { 'stock.$.count': -count, money: Math.round(money) } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id, guildId, coin: userCoin }, { $inc: { 'coin.$.count': -count, money: Math.round(money) } })).matchedCount;
         }
         interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n현재 코인개수: ${userCoin.count}개 -> ${userCoin.count - count}개\n손익: ${profitShown}원(${persentShown}%)`);
     }),

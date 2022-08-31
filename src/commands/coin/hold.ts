@@ -12,16 +12,16 @@ export default new Command({
     const { guildId, user: { id } } = interaction;
     const embed = new EmbedBuilder();
     const user = await client.models.gambling.findOne({ id, guildId });
-    const stock = user.stock;
-
-    if (stock.length < 1) {
+    
+    if (user.coin.length < 1) {
       Utils.reply(interaction, '보유한 코인이 없습니다.');
       return;
     }
+    interaction.deferReply()
     embed
-      .setTitle(`${interaction.user.username}님의 코인 보유 현황`);
-
-    for (const element of stock) {
+    .setTitle(`${interaction.user.username}님의 코인 보유 현황`);
+    
+    for (const element of user.coin) {
       const apiOptions = {
         uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${client.coin.get(element.name)}&count=1&to`,
         method: 'GET',
@@ -36,6 +36,6 @@ export default new Command({
       const profitShown = profit < 0 ? profit.toLocaleString() : '+' + profit.toLocaleString();
       embed.addFields({ name: element.name, value: `수량: ${element.count.toLocaleString()}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, inline: false});
     }
-    interaction.reply({ embeds: [embed] });
+    interaction.editReply({ embeds: [embed] });
   },
 });

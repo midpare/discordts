@@ -14,7 +14,7 @@ exports.default = new Interaction_1.Interaction({
     name: 'bankrupcty',
     deleted: true,
     execute: ({ interaction, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        (yield client.models.gambling.updateOne({ id: interaction.user.id }, { $set: { bankruptcy: new Date().getTime(), money: 0, debt: 0, principalDebt: 0, stock: [] } })).matchedCount;
+        (yield client.models.gambling.updateOne({ id: interaction.user.id }, { $set: { bankruptcyTime: new Date().getTime(), money: 0, debt: 0, coin: [] } })).matchedCount;
         interaction.reply(`${interaction.user.username}님이 파산했습니다!`);
     }),
 });

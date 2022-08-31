@@ -12,9 +12,9 @@ export default new Command({
       Utils.reply(interaction, client.messages.gambling.join.alreadyJoin);
       return;
     }
-    const name = interaction.guild?.members.cache.get(id)?.displayName;
+    const name = interaction.user.username;
 
-    const newUser = new client.models.gambling({ id, name, guildId, stock: [] });
+    const newUser = new client.models.gambling({ id, name, guildId, coin: [] });
     await newUser.save();
     interaction.reply(client.messages.gambling.join.success);
   },

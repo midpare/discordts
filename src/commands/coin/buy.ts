@@ -26,10 +26,9 @@ export default new Command({
   execute: async ({ interaction, options, client }) => {
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });
-    const stock = user.stock;
     const coinName = options.getString('이름', true);
 
-    const userCoin = stock.filter((element: { name: string }) => element.name == coinName)[0];
+    const userCoin = user.coin.filter((element: { name: string }) => element.name == coinName)[0];
     const coinId = client.coin.get(coinName)
     if (!coinId) {
       Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
@@ -55,15 +54,15 @@ export default new Command({
 
     if (userCoin) {
       const moneyAve = (userCoin.money * userCoin.count + wholeMoney) / (userCoin.count + count);
-      (await client.models.gambling.updateOne({ id, guildId, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-wholeMoney) } })).matchedCount;
+      (await client.models.gambling.updateOne({ id, guildId, coin: userCoin }, { $set: { 'coin.$.money': moneyAve }, $inc: { 'coin.$.count': count, money: Math.round(-wholeMoney) } })).matchedCount;
       interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`);
     } else {
-      const stockObject = {
+      const coinObject = {
         name: coinName,
         count: count,
         money: coinMoney,
       };
-      (await client.models.gambling.updateOne({ id, guildId }, { $push: { stock: stockObject }, $inc: { money: Math.round(-wholeMoney) } })).matchedCount;
+      (await client.models.gambling.updateOne({ id, guildId }, { $push: { coin: coinObject }, $inc: { money: Math.round(-wholeMoney) } })).matchedCount;
       interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${wholeMoney.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`);
     }
   },

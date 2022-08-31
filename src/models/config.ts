@@ -8,8 +8,6 @@ interface ConfigType {
   guildId: Snowflake;
   slangs: [string];
   warning: number;
-  baseMoneyCoolTime: number;
-  bankruptcyTime: number;
   banTime: number;
   MuteTime: number;
 }
@@ -20,8 +18,6 @@ const configInfo = new Schema<ConfigType>({
   guildId: String,
   slangs: [String],
   warning: { type: Number, default: 0 },
-  baseMoneyCoolTime: { type: Number, default: 0 },
-  bankruptcyTime: { type: Number, default: 0 },
   banTime: { type: Number, default: 0 },
   MuteTime: { type: Number, default: 0 },
 }, {

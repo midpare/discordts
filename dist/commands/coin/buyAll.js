@@ -29,9 +29,8 @@ exports.default = new Command_1.Command({
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         const { guildId, user: { id } } = interaction;
         const user = yield client.models.gambling.findOne({ id, guildId });
-        const stock = user.stock;
         const coinName = options.getString('이름', true);
-        const userCoin = stock.filter((element) => element.name == coinName)[0];
+        const userCoin = user.coin.filter((element) => element.name == coinName)[0];
         const coinId = client.coin.get(coinName);
         if (!coinId) {
             Utils_1.Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
@@ -48,16 +47,16 @@ exports.default = new Command_1.Command({
         const money = coinMoney * count;
         if (userCoin) {
             const moneyAve = (userCoin.money * userCoin.count + money) / (userCoin.count + count);
-            (yield client.models.gambling.updateOne({ id, guildId, stock: userCoin }, { $set: { 'stock.$.money': moneyAve }, $inc: { 'stock.$.count': count, money: Math.round(-money) } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id, guildId, coin: userCoin }, { $set: { 'coin.$.money': moneyAve }, $inc: { 'coin.$.count': count, money: Math.round(-money) } })).matchedCount;
             interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 추가로 구매했습니다!\n현재 평단가: ${userCoin.money.toLocaleString()}원 -> ${(Math.floor(moneyAve * 100) / 100).toLocaleString()}원\n현재 구매량: ${userCoin.count}개 -> ${(userCoin.count + count).toLocaleString()}개`);
         }
         else {
-            const stockObject = {
+            const coinObject = {
                 name: coinName,
                 count: count,
                 money: coinMoney,
             };
-            (yield client.models.gambling.updateOne({ id, guildId }, { $push: { stock: stockObject }, $inc: { money: Math.round(-money) } })).matchedCount;
+            (yield client.models.gambling.updateOne({ id, guildId }, { $push: { coin: coinObject }, $inc: { money: Math.round(-money) } })).matchedCount;
             interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${(money).toLocaleString()}원(개당 ${coinMoney.toLocaleString()}원)에 구매했습니다!`);
         }
     }),

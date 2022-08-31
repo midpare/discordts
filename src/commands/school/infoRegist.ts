@@ -38,6 +38,7 @@ export default new Command({
     },
   ],
   execute: async ({ interaction, options, client }) => {
+    interaction.deferReply()
     const apiKey = process.env.SCHOOL_API_KEY || '';
     const schoolName = options.getString('학교', true);
 
@@ -47,7 +48,7 @@ export default new Command({
       return;
 
     const customIds = Utils.uuid(2);
-    const [menuId, cancel] = customIds
+    const [menuId, cancel] = customIds;
 
     const menuOptions = new Array();
 
@@ -88,44 +89,41 @@ export default new Command({
       return;
     }
 
-    setTimeout(async () => {
-      const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
-        new SelectMenuBuilder()
-          .setCustomId('testId')
-          .setPlaceholder('이곳을 눌러 선택해주세요')
-          .setOptions(menuOptions)
-      )
-  
-      const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setCustomId('test')
-          .setStyle(ButtonStyle.Secondary)
-          .setLabel('취소')
-      )
-  
-      await interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [button, selectMenu] })
-    }, 5000);
+    const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
+      new SelectMenuBuilder()
+        .setCustomId(menuId)
+        .setPlaceholder('이곳을 눌러 선택해주세요')
+        .setOptions(menuOptions)
+    )
 
+    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId(cancel)
+        .setStyle(ButtonStyle.Secondary)
+        .setLabel('취소')
+    );
 
-    // const message = await interaction.fetchReply();
+    interaction.editReply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] });
 
-    // client.interactionOptions.set(menuId, new InteractionOption({
-    //   ids: [id],
-    //   guildId,
-    //   cmd: 'grade',
-    //   messages: [message],
-    //   customIds,
-    //   data: {
-    //     schoolName,
-    //   },
-    // }));
+    const message = await interaction.fetchReply();
 
-    // client.interactionOptions.set(cancel, new InteractionOption({
-    //   ids: [id],
-    //   guildId,
-    //   cmd: 'cancel',
-    //   messages: [message],
-    //   customIds,
-    // }));
+    client.interactionOptions.set(menuId, new InteractionOption({
+      ids: [id],
+      guildId,
+      cmd: 'grade',
+      messages: [message],
+      customIds,
+      data: {
+        schoolName,
+      },
+    }));
+
+    client.interactionOptions.set(cancel, new InteractionOption({
+      ids: [id],
+      guildId,
+      cmd: 'cancel',
+      messages: [message],
+      customIds,
+    }));
   },
 });

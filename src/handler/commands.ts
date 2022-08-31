@@ -27,6 +27,6 @@ export default async function (client: Client) {
       .then(commands => {
         if (commands instanceof Array)
           console.log(`Successfully set up ${commands.length} commands!`);
-      })
+      });
   });
 }

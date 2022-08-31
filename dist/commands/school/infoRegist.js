@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Command_1 = require("../../managers/Command");
+const InteractionOptions_1 = require("../../structures/InteractionOptions");
 const Utils_1 = require("../../structures/Utils");
 const cities = [
     '서울특별시', '부산광역시',
@@ -45,6 +46,7 @@ exports.default = new Command_1.Command({
         },
     ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
+        interaction.deferReply();
         const apiKey = process.env.SCHOOL_API_KEY || '';
         const schoolName = options.getString('학교', true);
         const { guildId, user: { id } } = interaction;
@@ -84,34 +86,32 @@ exports.default = new Command_1.Command({
             Utils_1.Utils.reply(interaction, '정확한 학교명을 입력해주시기 바랍니다.');
             return;
         }
-        setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
-            const selectMenu = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.SelectMenuBuilder()
-                .setCustomId('testId')
-                .setPlaceholder('이곳을 눌러 선택해주세요')
-                .setOptions(menuOptions));
-            const button = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
-                .setCustomId('test')
-                .setStyle(discord_js_1.ButtonStyle.Secondary)
-                .setLabel('취소'));
-            yield interaction.reply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [button, selectMenu] });
-        }), 5000);
-        // const message = await interaction.fetchReply();
-        // client.interactionOptions.set(menuId, new InteractionOption({
-        //   ids: [id],
-        //   guildId,
-        //   cmd: 'grade',
-        //   messages: [message],
-        //   customIds,
-        //   data: {
-        //     schoolName,
-        //   },
-        // }));
-        // client.interactionOptions.set(cancel, new InteractionOption({
-        //   ids: [id],
-        //   guildId,
-        //   cmd: 'cancel',
-        //   messages: [message],
-        //   customIds,
-        // }));
+        const selectMenu = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.SelectMenuBuilder()
+            .setCustomId(menuId)
+            .setPlaceholder('이곳을 눌러 선택해주세요')
+            .setOptions(menuOptions));
+        const button = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
+            .setCustomId(cancel)
+            .setStyle(discord_js_1.ButtonStyle.Secondary)
+            .setLabel('취소'));
+        interaction.editReply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] });
+        const message = yield interaction.fetchReply();
+        client.interactionOptions.set(menuId, new InteractionOptions_1.InteractionOption({
+            ids: [id],
+            guildId,
+            cmd: 'grade',
+            messages: [message],
+            customIds,
+            data: {
+                schoolName,
+            },
+        }));
+        client.interactionOptions.set(cancel, new InteractionOptions_1.InteractionOption({
+            ids: [id],
+            guildId,
+            cmd: 'cancel',
+            messages: [message],
+            customIds,
+        }));
     }),
 });

@@ -41,7 +41,7 @@ exports.default = new Event_1.Event({
                         break;
                     const user = yield client.models.gambling.findOne({ id, guildId });
                     if (event.name != '가입' && !user) {
-                        Utils_1.Utils.reply(interaction, '가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
+                        Utils_1.Utils.reply(interaction, '가입되지 않은 유저입니다 /가입 을 통해 가입해주시기 바랍니다.');
                         return;
                     }
                     const leftTime = 1000 * 60 * 60 - time + user.bankruptcyTime;

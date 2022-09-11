@@ -41,7 +41,7 @@ export default new Event({
 
           const user = await client.models.gambling.findOne({ id, guildId });
           if (event.name != '가입' && !user) {
-            Utils.reply(interaction, '가입되지 않은 유저입니다 !가입 을 통해 가입해주시기 바랍니다.');
+            Utils.reply(interaction, '가입되지 않은 유저입니다 /가입 을 통해 가입해주시기 바랍니다.');
             return;
           }
 

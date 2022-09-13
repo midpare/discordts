@@ -26,10 +26,10 @@ exports.default = new Event_1.Event({
         if (oldState.channelId == newState.channelId)
             return;
         if (!oldState.channelId && newState.channelId) {
-            logChannel.send(`${(_a = newState.member) === null || _a === void 0 ? void 0 : _a.displayName}님이 ${(_b = newState.channel) === null || _b === void 0 ? void 0 : _b.name}채널에 입장했습니다.`);
+            logChannel.send(`${(_a = newState.member) === null || _a === void 0 ? void 0 : _a.displayName}님이 "${(_b = newState.channel) === null || _b === void 0 ? void 0 : _b.name}"채널에 입장했습니다.`);
         }
         else if (oldState.channelId && !newState.channelId) {
-            logChannel.send(`${(_c = newState.member) === null || _c === void 0 ? void 0 : _c.displayName}님이 ${(_d = oldState.channel) === null || _d === void 0 ? void 0 : _d.name}채널에서 퇴장했습니다.`);
+            logChannel.send(`${(_c = newState.member) === null || _c === void 0 ? void 0 : _c.displayName}님이 "${(_d = oldState.channel) === null || _d === void 0 ? void 0 : _d.name}"채널에서 퇴장했습니다.`);
         }
     })
 });

@@ -20,9 +20,9 @@ export default new Event({
       return;
 
     if (!oldState.channelId && newState.channelId) {
-      logChannel.send(`${newState.member?.displayName}님이 ${newState.channel?.name}채널에 입장했습니다.`);  
+      logChannel.send(`${newState.member?.displayName}님이 "${newState.channel?.name}"채널에 입장했습니다.`);  
     } else if(oldState.channelId && !newState.channelId) {
-      logChannel.send(`${newState.member?.displayName}님이 ${oldState.channel?.name}채널에서 퇴장했습니다.`);
+      logChannel.send(`${newState.member?.displayName}님이 "${oldState.channel?.name}"채널에서 퇴장했습니다.`);
     }
   }
 });

@@ -102,7 +102,6 @@ export default new Event({
         }
         return `${e.name}: ${e.value}`
       } 
-      console.log(options.data);
       logChannel.send(`${member.displayName}님이 ${commandName}(${options.data.map(getOptions)})를 사용했습니다.`)
     } else if (interaction.isButton() || interaction.isSelectMenu()) {
       const options = client.interactionOptions.get(interaction.customId);

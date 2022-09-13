@@ -26,6 +26,6 @@ exports.default = new Event_1.Event({
         const msgChannel = msg.channel;
         if (!logChannel)
             return;
-        logChannel.send(`-${msgChannel.name}-\n${(_b = msg.member) === null || _b === void 0 ? void 0 : _b.displayName}: ${msg.content}`);
+        logChannel.send(`-${msgChannel.name}-\n${(_b = msg.member) === null || _b === void 0 ? void 0 : _b.displayName}: "${msg.content}"`);
     }),
 });

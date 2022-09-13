@@ -17,6 +17,6 @@ export default new Event({
     const msgChannel = <TextChannel>msg.channel; 
     if (!logChannel)
       return;
-    logChannel.send(`-${msgChannel.name}-\n${msg.member?.displayName}: ${msg.content}`) 
+    logChannel.send(`-${msgChannel.name}-\n${msg.member?.displayName}: "${msg.content}"`) 
   },
 })

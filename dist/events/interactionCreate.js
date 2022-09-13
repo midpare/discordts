@@ -96,7 +96,7 @@ exports.default = new Event_1.Event({
                 }
                 return `${e.name}: ${e.value}`;
             };
-            logChannel.send(`${member.displayName}님이 ${commandName}(${options.data.map(getOptions)})를 사용했습니다.`);
+            logChannel.send(`${member.displayName}님이 "${commandName}"${options.data[0] ? `(${options.data.map(getOptions)})` : ''}명령어를 사용했습니다.`);
         }
         else if (interaction.isButton() || interaction.isSelectMenu()) {
             const options = client.interactionOptions.get(interaction.customId);

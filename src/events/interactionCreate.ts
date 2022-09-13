@@ -100,7 +100,7 @@ export default new Event({
           case ApplicationCommandOptionType.Role:
             return `${e.name}: ${e.role?.name}`
         }
-        return `${e.name}: ${e.value}, `
+        return `${e.name}: ${e.value}`
       } 
       console.log(options.data);
       logChannel.send(`${member.displayName}님이 ${commandName}(${options.data.map(getOptions)})를 사용했습니다.`)

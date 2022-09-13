@@ -33,6 +33,6 @@ export default new Interaction<ButtonInteraction>({
     if (!channel)
       return;
 
-    channel?.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다!`);
+    channel?.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다.`);
   },
 });

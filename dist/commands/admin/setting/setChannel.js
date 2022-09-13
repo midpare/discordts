@@ -53,7 +53,7 @@ exports.default = new Command_1.Command({
                     value: 'log join',
                 },
                 {
-                    name: '탈퇴로그',
+                    name: '퇴장로그',
                     value: 'log exit',
                 },
                 {

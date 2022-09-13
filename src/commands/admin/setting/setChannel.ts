@@ -43,7 +43,7 @@ export default new Command({
           value: 'log join',
         },
         {
-          name: '탈퇴로그',
+          name: '퇴장로그',
           value: 'log exit',
         },
         {

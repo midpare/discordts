@@ -33,6 +33,6 @@ exports.default = new Interaction_1.Interaction({
         const channel = (_c = client.guilds.cache.get(guildId)) === null || _c === void 0 ? void 0 : _c.channels.cache.get(guild.join);
         if (!channel)
             return;
-        channel === null || channel === void 0 ? void 0 : channel.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다!`);
+        channel === null || channel === void 0 ? void 0 : channel.send(`${interaction.user.username}#${interaction.user.discriminator}님이 서버에 입장하였습니다.`);
     }),
 });

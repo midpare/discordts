@@ -94,7 +94,7 @@ exports.default = new Event_1.Event({
                     case discord_js_1.ApplicationCommandOptionType.Role:
                         return `${e.name}: ${(_c = e.role) === null || _c === void 0 ? void 0 : _c.name}`;
                 }
-                return `${e.name}: ${e.value}, `;
+                return `${e.name}: ${e.value}`;
             };
             console.log(options.data);
             logChannel.send(`${member.displayName}님이 ${commandName}(${options.data.map(getOptions)})를 사용했습니다.`);

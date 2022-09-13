@@ -31,7 +31,7 @@ export default new Command({
 
     const channel = interaction.channel;
     if (!channel || !channel.isTextBased() || channel.isVoiceBased() || channel.isDMBased())
-      return;
+      return 0;
 
 
     let msgs = (await channel.messages.fetch({ limit: 99 })).sort((interaction1, interaction2) => interaction2.createdTimestamp - interaction1.createdTimestamp);
@@ -47,14 +47,15 @@ export default new Command({
     }
 
     if (msgs.size == 0)
-      return;
+      return 0;
 
     if (msgs.size == 1) {
       msgs.first()?.delete();
-      return;
+      return 0;
     }
 
     channel.bulkDelete(msgs, true);
-    Utils.reply(interaction, client.messages.admin.clear.success(count))
+    Utils.reply(interaction, client.messages.admin.clear.success(count));
+    return 1;
   },
 });

@@ -40,12 +40,12 @@ exports.default = new Command_1.Command({
         },
     ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b;
+        var _a;
         const starter = interaction.user.id;
         const guildId = (_a = interaction.guildId) !== null && _a !== void 0 ? _a : '';
         if (client.betting.get(guildId)) {
             Utils_1.Utils.reply(interaction, '이미 시작한 베팅이 있습니다.');
-            return;
+            return 0;
         }
         const title = options.getString('제목', true);
         const team1 = options.getString('팀1', true);
@@ -56,7 +56,8 @@ exports.default = new Command_1.Command({
             .setTitle(betting.title)
             .setDescription(`${betting.bet1.name}와 ${betting.bet2.name}중 베팅해주시기바랍니다.`)
             .addFields({ name: `${betting.bet1.name}`, value: `/베팅 ${betting.bet1.name} 로 베팅해주시기바랍니다.`, inline: true }, { name: `${betting.bet2.name}`, value: `/베팅 ${betting.bet2.name} 로 베팅해주시기바랍니다.`, inline: true });
-        (_b = interaction.channel) === null || _b === void 0 ? void 0 : _b.send({ embeds: [embed] });
+        interaction.reply({ embeds: [embed] });
         client.betting.set(guildId, betting);
+        return 1;
     }),
 });

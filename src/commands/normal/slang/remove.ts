@@ -29,21 +29,21 @@ export default new Command({
     const { id } = target;
 
     if (!guildId)
-      return;
+      return 0;
 
     const guild = await client.models.guild.findOne({ id: guildId });
-    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.slang);
+    const channel = <TextChannel>interaction.guild?.channels.cache.get(guild.slang);
 
     if (!channel) {
       Utils.reply(interaction, '망언 채널을 등록해주시기 바랍니다.');
-      return;
+      return 0;
     }
 
     const user = await client.models.config.findOne({ id, guildId });
 
     if (!user.slangs.includes(content)) {
       Utils.reply(interaction, '이 유저는 이 망언을 보유하고 있지 않습니다.');
-      return;
+      return 0;
     } 
     
     const messages = await channel.messages.fetch();
@@ -79,5 +79,6 @@ export default new Command({
 
     (await client.models.config.updateOne({ id, guildId }, { $pull: { slangs: content }})).matchedCount;
     Utils.reply(interaction, `성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);
+    return 1;
   },  
 });

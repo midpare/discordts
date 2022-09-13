@@ -7,6 +7,7 @@ interface ConfigType {
   name: string;
   guildId: Snowflake;
   slangs: [string];
+  activity: boolean
   warning: number;
   banTime: number;
   MuteTime: number;
@@ -17,6 +18,7 @@ const configInfo = new Schema<ConfigType>({
   name: String,
   guildId: String,
   slangs: [String],
+  activity: { type: Boolean, default: false },
   warning: { type: Number, default: 0 },
   banTime: { type: Number, default: 0 },
   MuteTime: { type: Number, default: 0 },

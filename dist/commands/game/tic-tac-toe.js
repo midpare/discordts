@@ -31,10 +31,10 @@ exports.default = new Command_1.Command({
         const target = options.getUser('유저', true);
         const { guildId, user: { id } } = interaction;
         if (!guildId)
-            return;
+            return 0;
         if (target.id == id) {
             Utils_1.Utils.reply(interaction, '자신을 맨션할 수 없습니다.');
-            return;
+            return 0;
         }
         const customIds = Utils_1.Utils.uuid(2);
         const [yes, no] = customIds;
@@ -67,5 +67,6 @@ exports.default = new Command_1.Command({
             messages: [message],
             customIds,
         }));
+        return 1;
     })
 });

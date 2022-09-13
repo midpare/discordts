@@ -48,5 +48,6 @@ exports.default = new Command_1.Command({
         const role = options.getRole('역할', true);
         (yield client.models.guild.updateOne({ id }, { $set: { [type]: role } })).matchedCount;
         Utils_1.Utils.reply(interaction, '성공적으로 역할을 등록했습니다!');
+        return 1;
     }),
 });

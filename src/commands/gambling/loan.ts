@@ -23,10 +23,11 @@ export default new Command({
 
     if (user.debt + debt > 1000000) {
       Utils.reply(interaction, client.messages.gambling.loan.overMoney);
-      return;
+      return 0;
     }
 
     (await client.models.gambling.updateOne({ id, guildId }, { $inc: { debt, money: debt } })).matchedCount;
     interaction.reply(client.messages.gambling.loan.success(user.debt, debt));
+    return 1;
   },
 });

@@ -38,17 +38,17 @@ exports.default = new Command_1.Command({
         const { guildId } = interaction;
         const { id } = target;
         if (!guildId)
-            return;
+            return 0;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        const channel = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.slang);
+        const channel = (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.slang);
         if (!channel) {
             Utils_1.Utils.reply(interaction, '망언 채널을 등록해주시기 바랍니다.');
-            return;
+            return 0;
         }
         const user = yield client.models.config.findOne({ id, guildId });
         if (user.slangs.includes(content)) {
             Utils_1.Utils.reply(interaction, '이 망언은 이미 추가되어있습니다.');
-            return;
+            return 0;
         }
         const messages = yield channel.messages.fetch();
         let flag = 0;
@@ -77,5 +77,6 @@ exports.default = new Command_1.Command({
         }
         (yield client.models.config.updateOne({ id, guildId }, { $push: { slangs: content } })).matchedCount;
         Utils_1.Utils.reply(interaction, `성공적으로 망언을 추가했습니다!\n망언 내용: ${content}`);
+        return 1;
     }),
 });

@@ -44,12 +44,12 @@ exports.default = new Command_1.Command({
         var _a;
         const { guildId } = interaction;
         if (!guildId)
-            return;
+            return 0;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        const channel = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.punishment);
+        const channel = (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.punishment);
         if (!channel) {
             Utils_1.Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.');
-            return;
+            return 0;
         }
         const target = options.getUser('유저', true);
         const count = options.getInteger('횟수', true);
@@ -58,14 +58,15 @@ exports.default = new Command_1.Command({
         const reason = options.getString('사유');
         if (user.warning <= 0) {
             Utils_1.Utils.reply(interaction, client.messages.admin.warning.deduction.noneWarning);
-            return;
+            return 0;
         }
         if (user.warning - count < 0) {
             Utils_1.Utils.reply(interaction, client.messages.admin.warning.deduction.overWarning);
-            return;
+            return 0;
         }
         (yield client.models.config.updateOne({ id, guildId }, { $inc: { warning: -count } })).matchedCount;
         channel.send(client.messages.admin.warning.deduction.success(target, count, user.warning - count, reason !== null && reason !== void 0 ? reason : ''));
         Utils_1.Utils.reply(interaction, '성공적으로 경고를 차감했습니다!');
+        return 1;
     }),
 });

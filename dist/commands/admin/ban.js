@@ -47,23 +47,23 @@ exports.default = new Command_1.Command({
         var _a, _b, _c;
         const { guildId } = interaction;
         if (!guildId)
-            return;
+            return 0;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        const channel = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.punishment);
+        const channel = (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.punishment);
         if (!channel) {
             Utils_1.Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.');
-            return;
+            return 0;
         }
         const target = options.getMember('유저');
         const time = options.getString('시간');
         const reason = (_b = options.getString('사유')) !== null && _b !== void 0 ? _b : '없음';
         if (!(target instanceof discord_js_1.GuildMember)) {
             Utils_1.Utils.reply(interaction, '정확한 유저를 입력해주시기 바랍니다.');
-            return;
+            return 0;
         }
         if (target.permissions.has(discord_js_1.PermissionFlagsBits.BanMembers)) {
             Utils_1.Utils.reply(interaction, '이 유저는 차단할 수 없습니다.');
-            return;
+            return 0;
         }
         if (time && (0, ms_1.default)(time)) {
             const { id, guild: { id: guildId } } = target;
@@ -71,10 +71,11 @@ exports.default = new Command_1.Command({
         }
         if (target.permissions.has(discord_js_1.PermissionFlagsBits.BanMembers)) {
             Utils_1.Utils.reply(interaction, client.messages.admin.ban.missingPermissionTarget);
-            return;
+            return 0;
         }
         (_c = interaction.guild) === null || _c === void 0 ? void 0 : _c.members.ban(target, { reason });
         channel.send(client.messages.admin.ban.success(target.user, reason));
         Utils_1.Utils.reply(interaction, `성공적으로 ${target.user.username}님을 차단했습니다! `);
+        return 1;
     }),
 });

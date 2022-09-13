@@ -25,11 +25,11 @@ exports.default = new Command_1.Command({
             choices: [
                 {
                     name: '서버',
-                    value: 'server',
+                    value: '서버',
                 },
                 {
                     name: '전체',
-                    value: 'all',
+                    value: '전체',
                 },
             ],
         },
@@ -40,18 +40,19 @@ exports.default = new Command_1.Command({
         const embed = new discord_js_1.EmbedBuilder()
             .setTitle('랭킹')
             .setDescription('유저의 돈 순위를 확인합니다.');
-        if (range == 'server') {
+        if (range == '서버') {
             const users = yield client.models.gambling.find({ money: { $gt: 0 }, guildId }).sort({ money: -1 });
             for (const user of users) {
                 embed.addFields({ name: user.name, value: `${user.money.toLocaleString()}원`, inline: false });
             }
         }
-        else if (range == 'all') {
+        else if (range == '전체') {
             const users = yield client.models.gambling.find({ money: { $gt: 0 } }).sort({ money: -1 });
             for (const user of users) {
                 embed.addFields({ name: user.name, value: `${user.money.toLocaleString()}원`, inline: false });
             }
         }
         interaction.reply({ embeds: [embed] });
+        return 1;
     }),
 });

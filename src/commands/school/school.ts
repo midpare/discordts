@@ -51,8 +51,8 @@ export default new Command({
       const timeTableDate = Utils.dateCal(dateVariable, dayNext);
 
       if (!user) {
-        Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.');
-        return;
+        Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.', true);
+        return 0;
       }
 
       const timeTableOptions = {
@@ -79,24 +79,23 @@ export default new Command({
           .setTitle('시간표')
           .setDescription('오늘은 시간표가 없습니다.')
           .setColor(Colors.Red);
-        interaction.reply({ embeds: [embed] });
-        return;
+        interaction.editReply({ embeds: [embed] });
+      } else {
+        embed
+          .setTitle(info)
+          .setDescription(`${timeTableYear}-${timeTableMonth}-${timeTableDay}\n${user.grade}학년 ${user.class}반 ${user.schoolName}`)
+          .setColor(Colors.Green);
+        for (let i = 0; i < timeTable.misTimetable[1].row.length; i++) {
+          embed.addFields({ name: `${i + 1}교시`, value: `${timeTable.misTimetable[1].row[i].ITRT_CNTNT}`, inline: false });
+        }
+        interaction.editReply({ embeds: [embed] });
       }
-
-      embed
-        .setTitle(info)
-        .setDescription(`${timeTableYear}-${timeTableMonth}-${timeTableDay}\n${user.grade}학년 ${user.class}반 ${user.schoolName}`)
-        .setColor(Colors.Green);
-      for (let i = 0; i < timeTable.misTimetable[1].row.length; i++) {
-        embed.addFields({ name: `${i + 1}교시`, value: `${timeTable.misTimetable[1].row[i].ITRT_CNTNT}`, inline: false });
-      }
-      interaction.reply({ embeds: [embed] });
     } else if (info.endsWith('급식')) {
       const mealDate = Utils.dateCal(dateVariable, dayNext);
 
       if (!user) {
-        interaction.reply('정보등록이 되지 않은 유저입니다.\n!학교 정보등록 <시도(서울특별시)> <학교이름(@@중학교)><학년반(1학년 2반)>\n으로 정보등록을 해주시기 바랍니다.');
-        return;
+        Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.', true);
+        return 0;
       }
 
       const mealOptions = {
@@ -118,20 +117,20 @@ export default new Command({
           .setTitle('급식')
           .setDescription('오늘은 급식이 없습니다.')
           .setColor(Colors.Red);
-        interaction.reply({ embeds: [embed] });
-        return;
+        interaction.editReply({ embeds: [embed] });
+      } else {
+        const mealYear = mealDate[0] + mealDate[1] + mealDate[2] + mealDate[3];
+        const mealMonth = mealDate[4] + mealDate[5];
+        const mealDay = mealDate[6] + mealDate[7];
+  
+        embed
+          .setTitle(`${weekDay} 급식`)
+          .setDescription(`${mealYear}-${mealMonth}-${mealDay}(${user.schoolName})`)
+          .addFields({ name: '급식정보', value: meal.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/<br\/>/gi, '\n').replace(/[0-9.]/gi, ''), inline: false })
+          .setColor(Colors.Aqua);
+        interaction.editReply({ embeds: [embed] });
       }
-
-      const mealYear = mealDate[0] + mealDate[1] + mealDate[2] + mealDate[3];
-      const mealMonth = mealDate[4] + mealDate[5];
-      const mealDay = mealDate[6] + mealDate[7];
-
-      embed
-        .setTitle(`${weekDay} 급식`)
-        .setDescription(`${mealYear}-${mealMonth}-${mealDay}(${user.schoolName})`)
-        .addFields({ name: '급식정보', value: meal.mealServiceDietInfo[1].row[0].DDISH_NM.replace(/<br\/>/gi, '\n').replace(/[0-9.]/gi, ''), inline: false })
-        .setColor(Colors.Aqua);
-      interaction.reply({ embeds: [embed] });
     }
+    return 1;
   },
 });

@@ -25,15 +25,16 @@ export default new Command({
 
     if (user.money < money) {
       Utils.reply(interaction, client.messages.overMoney(user.money));
-      return;
+      return 0;
     }
 
     if (user.debt < money) {
       Utils.reply(interaction, client.messages.gambling.payBack.overMoney(user.debt));
-      return;
+      return 0;
     }
 
     (await client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money, debt: -money } })).matchedCount;
     interaction.reply(client.messages.gambling.payBack.success(user.debt, money));
+    return 1;
   },
 }); 

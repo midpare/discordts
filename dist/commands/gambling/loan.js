@@ -32,9 +32,10 @@ exports.default = new Command_1.Command({
         const debt = options.getInteger('돈', true);
         if (user.debt + debt > 1000000) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.loan.overMoney);
-            return;
+            return 0;
         }
         (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { debt, money: debt } })).matchedCount;
         interaction.reply(client.messages.gambling.loan.success(user.debt, debt));
+        return 1;
     }),
 });

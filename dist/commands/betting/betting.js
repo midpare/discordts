@@ -37,11 +37,11 @@ exports.default = new Command_1.Command({
         const name = options.getString('이름', true);
         const money = options.getInteger('돈', true);
         if (!guildId)
-            return;
+            return 0;
         const betting = client.betting.get(guildId);
         if (!betting) {
             Utils_1.Utils.reply(interaction, '아직 베팅을 시작하지 않았습니다.');
-            return;
+            return 0;
         }
         switch (name) {
             case betting.bet1.name:
@@ -52,7 +52,8 @@ exports.default = new Command_1.Command({
                 break;
             default:
                 Utils_1.Utils.reply(interaction, `${betting.bet1.name}과 ${betting.bet2.name}중 승리팀을 선택해주시기 바랍니다.`);
-                return;
+                return 0;
         }
+        return 1;
     }),
 });

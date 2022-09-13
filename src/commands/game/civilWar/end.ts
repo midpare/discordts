@@ -16,5 +16,6 @@ export default new Command({
 
     civilWar.clear();
     interaction.reply('성공적으로 내전을 종료했습니다!');
+    return 1;
   }
 })

@@ -1,3 +1,4 @@
+import { GuildMember } from 'discord.js';
 import { Command } from '../../managers/Command';
 import { Utils } from '../../structures/Utils';
 
@@ -10,12 +11,13 @@ export default new Command({
     const user = await client.models.gambling.findOne({ id, guildId });
     if (user) {
       Utils.reply(interaction, client.messages.gambling.join.alreadyJoin);
-      return;
+      return 0;
     }
-    const name = interaction.user.username;
+    const name = (<GuildMember>interaction.member).displayName;
 
     const newUser = new client.models.gambling({ id, name, guildId, coin: [] });
     await newUser.save();
     interaction.reply(client.messages.gambling.join.success);
+    return 1;
   },
 }); 

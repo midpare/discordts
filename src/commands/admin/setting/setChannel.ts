@@ -31,16 +31,32 @@ export default new Command({
           value: 'slang',
         },
         {
-          name: '가입',
-          value: 'join',
-        },
-        {
           name: '알람',
           value: 'alarm',
         },
         {
           name: '내전',
           value: 'civilWar',
+        },
+        {
+          name: '입장로그',
+          value: 'log join',
+        },
+        {
+          name: '탈퇴로그',
+          value: 'log exit',
+        },
+        {
+          name: '채팅로그',
+          value: 'log message',
+        },
+        {
+          name: '명령어로그',
+          value: 'log command',
+        },
+        {
+          name: '음성로그',
+          value: 'log voice',
         },
       ],
     },
@@ -69,20 +85,25 @@ export default new Command({
         const channel2 = options.getChannel('채널2');
         if (!(channel1 instanceof BaseGuildVoiceChannel) || !(channel2 instanceof BaseGuildVoiceChannel)) {
           Utils.reply(interaction, '정확한 음성채널 두개를 입력해주시기 바랍니다.');
-          return;
+          return 0
         }
-      
+
         (await client.models.guild.updateOne({ id }, { $set: { [type]: [channel1.id, channel2.id] } })).matchedCount;
         break;
       default:
         if (!(channel1 instanceof BaseGuildTextChannel)) {
           Utils.reply(interaction, '정확한 채팅채널을 입력해주시기 바랍니다');
-          return;
+          return 0
         }
-        (await client.models.guild.updateOne({ id }, { $set: { [type]: channel1.id } })).matchedCount;
-      break;
+        if (type.split(' ')[0] == 'log') {
+          await client.models.guild.updateOne({ id }, { $set: { [`log.${type.split(' ')[1]}`]: channel1.id } }, { upsert: true })
+        } else {
+          (await client.models.guild.updateOne({ id }, { $set: { [type]: channel1.id } })).matchedCount;
+        }
+        break;
     }
-  
+
     Utils.reply(interaction, '성공적으로 채널을 등록했습니다!');
+    return 1;
   },
 });

@@ -51,7 +51,7 @@ exports.default = new Command_1.Command({
         const schoolName = options.getString('학교', true);
         const { guildId, user: { id } } = interaction;
         if (!guildId)
-            return;
+            return 0;
         const customIds = Utils_1.Utils.uuid(2);
         const [menuId, cancel] = customIds;
         const menuOptions = new Array();
@@ -83,8 +83,8 @@ exports.default = new Command_1.Command({
             }
         }
         if (menuOptions.length < 1) {
-            Utils_1.Utils.reply(interaction, '정확한 학교명을 입력해주시기 바랍니다.');
-            return;
+            Utils_1.Utils.reply(interaction, '정확한 학교명을 입력해주시기 바랍니다.', true);
+            return 0;
         }
         const selectMenu = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.SelectMenuBuilder()
             .setCustomId(menuId)
@@ -113,5 +113,6 @@ exports.default = new Command_1.Command({
             messages: [message],
             customIds,
         }));
+        return 1;
     }),
 });

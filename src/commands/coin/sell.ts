@@ -32,7 +32,7 @@ export default new Command({
     const coinId = client.coin.get(coinName)
     if (!coinId) {
       Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
-      return;
+      return 0;
     }
 
     const apiOptions = {
@@ -44,19 +44,19 @@ export default new Command({
 
     if (!coin) {
       Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
-      return;
+      return 0;
     }
 
     if (!userCoin) {
       Utils.reply(interaction, '이 코인을 가지고 있지 않습니다.');
-      return;
+      return 0;
     }
 
     const count = options.getInteger('수량', true);
 
     if (userCoin.count < count) {
       Utils.reply(interaction, `파려는 코인의 개수가 현재 코인개수보다 많습니다.\n현재 개수: ${userCoin.count}개`);
-      return;
+      return 0;
     }
 
     const coinMoney = coin[0].tradePrice;
@@ -75,5 +75,6 @@ export default new Command({
     }
 
     interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n현재 코인개수: ${userCoin.count}개 -> ${userCoin.count - count}개\n손익: ${profitShown}원(${persentShown}%)`);
+    return 1;
   },
 });

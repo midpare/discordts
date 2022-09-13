@@ -24,11 +24,12 @@ exports.default = new Command_1.Command({
         const embed = new discord_js_1.EmbedBuilder();
         if (!user) {
             Utils_1.Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.');
-            return;
+            return 0;
         }
         embed
             .setTitle(`${username}님의 학교정보`)
             .setDescription(`${user.cityName} ${user.schoolName} ${user.grade}학년 ${user.class}반`);
         interaction.reply({ embeds: [embed] });
+        return 1;
     }),
 });

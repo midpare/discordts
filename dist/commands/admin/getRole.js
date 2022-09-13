@@ -25,7 +25,7 @@ exports.default = new Command_1.Command({
         const { temporaryRole, baseRole } = guild;
         if (!((_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.roles.cache.has(temporaryRole)) || !((_b = interaction.guild) === null || _b === void 0 ? void 0 : _b.roles.cache.has(baseRole))) {
             Utils_1.Utils.reply(interaction, '임시역할과 기본역할을 등록해주시기 바랍니다.');
-            return;
+            return 0;
         }
         const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
             .setCustomId('getRole')
@@ -33,5 +33,6 @@ exports.default = new Command_1.Command({
             .setLabel('역할 받기'));
         (_c = interaction.channel) === null || _c === void 0 ? void 0 : _c.send({ content: '이 버튼을 눌러 역할을 받으세요.', components: [row] });
         Utils_1.Utils.reply(interaction, '성공적으로 역할 받기 버튼을 생성했습니다!');
+        return 1;
     }),
 });

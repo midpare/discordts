@@ -41,7 +41,7 @@ exports.default = new Command_1.Command({
         const target = options.getUser('유저');
         const channel = interaction.channel;
         if (!channel || !channel.isTextBased() || channel.isVoiceBased() || channel.isDMBased())
-            return;
+            return 0;
         let msgs = (yield channel.messages.fetch({ limit: 99 })).sort((interaction1, interaction2) => interaction2.createdTimestamp - interaction1.createdTimestamp);
         if (target) {
             msgs = msgs.filter(msg => msg.author.id == target.id);
@@ -51,12 +51,13 @@ exports.default = new Command_1.Command({
             msgs.delete(msgs.keyAt(count));
         }
         if (msgs.size == 0)
-            return;
+            return 0;
         if (msgs.size == 1) {
             (_a = msgs.first()) === null || _a === void 0 ? void 0 : _a.delete();
-            return;
+            return 0;
         }
         channel.bulkDelete(msgs, true);
         Utils_1.Utils.reply(interaction, client.messages.admin.clear.success(count));
+        return 1;
     }),
 });

@@ -31,24 +31,26 @@ export default new Command({
 
     if (!(target instanceof GuildMember)) {
       Utils.reply(interaction, '정확한 유저를 입력해주시기 바랍니다.');
-      return;
+      return 0;
     }
       
     const targetUser = await client.models.gambling.findOne({ id: target.id, guildId: target.guild.id });
     if (!targetUser) {
       Utils.reply(interaction, '송금할 유저가 가입을 하지 않았습니다.');
-      return;
+      return 0;
     }
 
     const money = options.getInteger('돈', true);
 
     if (user.money < money) {
       Utils.reply(interaction, `현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
-      return;
+      return 0;
     }
 
     (await client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money } })).matchedCount;
     (await client.models.gambling.updateOne({ id: target.id, guildId: target.guild.id }, { $inc: { money: money } })).matchedCount;
     interaction.reply(`성공적으로 ${targetUser.name}님에게 ${money.toLocaleString()}원을 송금했습니다!`);
+    
+    return 1;
   },
 });

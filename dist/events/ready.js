@@ -25,9 +25,13 @@ exports.default = new Event_1.Event({
             for (const member of members) {
                 const { id, user: { username: name } } = member;
                 const user = yield client.models.config.findOne({ id, guildId });
-                if (!user && !member.user.bot) {
+                if (member.user.bot)
+                    continue;
+                if (!user) {
                     const newUser = new client.models.config({ id, name, guildId });
                     newUser.save();
+                }
+                else if (user.name != member.displayName) {
                 }
             }
         }

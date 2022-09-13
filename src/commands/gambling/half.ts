@@ -12,7 +12,7 @@ export default new Command({
 
     if (user.money == 0) {
       Utils.reply(interaction, client.messages.noneMoney);
-      return;
+      return 0;
     }
 
     const money = Math.floor(user.money);
@@ -25,5 +25,6 @@ export default new Command({
       (await client.models.gambling.updateOne({ id }, { $set: { money: Math.floor(money * 0.5) } })).matchedCount;
       interaction.reply(client.messages.gambling.failureGamb(user.money, Math.round(user.money * 0.5)));
     }
+    return 1;
   },
 });

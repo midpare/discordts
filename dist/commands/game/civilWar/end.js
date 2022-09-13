@@ -25,5 +25,6 @@ exports.default = new Command_1.Command({
         }
         civilWar.clear();
         interaction.reply('성공적으로 내전을 종료했습니다!');
+        return 1;
     })
 });

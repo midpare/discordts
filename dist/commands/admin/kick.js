@@ -37,25 +37,26 @@ exports.default = new Command_1.Command({
         var _a, _b;
         const { guildId } = interaction;
         if (!guildId)
-            return;
+            return 0;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        const channel = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.punishment);
+        const channel = (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.channels.cache.get(guild.punishment);
         if (!channel) {
             Utils_1.Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.');
-            return;
+            return 0;
         }
         const target = options.getMember('유저');
         const reason = (_b = options.getString('사유')) !== null && _b !== void 0 ? _b : '';
         if (!(target instanceof discord_js_1.GuildMember)) {
             Utils_1.Utils.reply(interaction, client.messages.admin.kick.missingMentionUser);
-            return;
+            return 0;
         }
         if (target.permissions.has(discord_js_1.PermissionFlagsBits.KickMembers)) {
             interaction.reply(client.messages.admin.kick.missingPermissionTarget);
-            return;
+            return 0;
         }
         target.kick(reason);
         channel.send(client.messages.admin.kick.success(target.user, reason));
         Utils_1.Utils.reply(interaction, `성공적으로 ${target.displayName}님을 강퇴했습니다!`);
+        return 1;
     }),
 });

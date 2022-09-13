@@ -22,17 +22,17 @@ exports.default = new Command_1.Command({
         const user = interaction.member;
         if (!(user instanceof discord_js_1.GuildMember) || !user.voice.channel) {
             Utils_1.Utils.reply(interaction, '음성채널에 접속해주시기 바랍니다.');
-            return;
+            return 0;
         }
         const members = Utils_1.Utils.shuffle(Array.from(user.voice.channel.members.values() || []));
         const civilWar = client.civilWar;
         if (members.length < 2) {
             Utils_1.Utils.reply(interaction, '현재 음성채널에 두명이상 접속해있지 않습니다.');
-            return;
+            return 0;
         }
         if (!civilWar.isEmpty()) {
             Utils_1.Utils.reply(interaction, '이미 시작한 내전이 있습니다.');
-            return;
+            return 0;
         }
         civilWar.setTeam(members);
         civilWar.setChannel(user.voice.channel);
@@ -40,5 +40,6 @@ exports.default = new Command_1.Command({
             .setTitle('팀')
             .addFields({ name: '1팀', value: `${civilWar.teams[0].join(', ')}`, inline: false }, { name: '2팀', value: `${civilWar.teams[1].join(', ')}`, inline: false });
         interaction.reply({ embeds: [embed] });
+        return 1;
     }),
 });

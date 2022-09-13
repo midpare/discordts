@@ -34,14 +34,14 @@ export default new Command({
     const { guildId } = interaction;
 
     if (!guildId)
-      return;
+      return 0;
 
     const guild = await client.models.guild.findOne({ id: guildId });
-    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.punishment);
+    const channel = <TextChannel>interaction.guild?.channels.cache.get(guild.punishment);
 
     if (!channel) {
       Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.');
-      return;
+      return 0;
     }
 
     const target = options.getMember('유저');
@@ -50,12 +50,12 @@ export default new Command({
 
     if (!(target instanceof GuildMember)) {
       Utils.reply(interaction, '정확한 유저를 입력해주시기 바랍니다.');
-      return;
+      return 0;
     }
 
     if (target.permissions.has(PermissionFlagsBits.BanMembers)) {
       Utils.reply(interaction, '이 유저는 차단할 수 없습니다.')
-      return;
+      return 0;
     }
 
     if (time && ms(time)) {
@@ -65,12 +65,13 @@ export default new Command({
     
     if (target.permissions.has(PermissionFlagsBits.BanMembers)) {
       Utils.reply(interaction,client.messages.admin.ban.missingPermissionTarget);
-      return;
+      return 0;
     }
     
     interaction.guild?.members.ban(target, { reason })
     channel.send(client.messages.admin.ban.success(target.user, reason));
     Utils.reply(interaction, `성공적으로 ${target.user.username}님을 차단했습니다! `);
+    return 1;
   },
 });
 

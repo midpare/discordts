@@ -22,7 +22,7 @@ exports.default = new Command_1.Command({
         const customIds = Utils_1.Utils.uuid(2);
         const [yes, no] = customIds;
         if (!guildId)
-            return;
+            return 0;
         const row = new discord_js_1.ActionRowBuilder().addComponents(new discord_js_1.ButtonBuilder()
             .setLabel(client.messages.yes)
             .setStyle(discord_js_1.ButtonStyle.Success)
@@ -46,5 +46,6 @@ exports.default = new Command_1.Command({
             messages: [msg],
             customIds,
         }));
+        return 1;
     }),
 });

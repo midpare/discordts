@@ -13,7 +13,7 @@ export default new Command({
     const [yes, no] = customIds;
 
     if (!guildId)
-      return;
+      return 0;
 
     const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -45,5 +45,6 @@ export default new Command({
       messages: [msg],
       customIds,
     }));
+    return 1;
   },
 });

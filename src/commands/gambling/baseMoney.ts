@@ -10,11 +10,11 @@ export default new Command({
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });
     if (!user)
-      return;
+      return 0;
 
     if (user.money > 0 || user.coin[0]) {
       Utils.reply(interaction, client.messages.gambling.baseMoney.haveMoney);
-      return;
+      return 0;
     }
 
     const time = new Date().getTime();
@@ -23,12 +23,13 @@ export default new Command({
     
     if (time - userTime < coolTime) {
       Utils.reply(interaction, client.messages.coolTime(Math.round((coolTime - (time - userTime)) / 1000)));
-      return;
+      return 0;
     }
 
     const baseMoney = 25000;
 
     (await client.models.gambling.updateOne({ id, guildId }, { $set: { money: baseMoney, baseMoneyTime: time } })).matchedCount;
     interaction.reply(client.messages.gambling.baseMoney.success(baseMoney));
+    return 1;
   },
 });

@@ -11,7 +11,7 @@ export default new Command({
     const user = await client.models.gambling.findOne({ id, guildId });
     if (user.money <= 0) {
       Utils.reply(interaction, client.messages.noneMoney);
-      return;
+      return 0;
     }
 
     const random = Math.floor(Math.random() * 2);
@@ -23,5 +23,6 @@ export default new Command({
       (await client.models.gambling.updateOne({ id, guildId }, { $set: { money: 0 } })).matchedCount;
       interaction.reply(client.messages.gambling.failureGamb(user.money, user.money));
     }
+    return 1;
   },
 });

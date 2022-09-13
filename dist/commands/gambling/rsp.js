@@ -56,7 +56,7 @@ exports.default = new Command_1.Command({
         const money = options.getInteger('돈', true);
         if (money > user.money) {
             Utils_1.Utils.reply(interaction, `현재 잔액보다 높은 돈은 입력하실 수 없습니다. \n현재 잔액: ${user.money.toLocaleString()}원`);
-            return;
+            return 0;
         }
         let winner;
         if (human === bot)
@@ -83,5 +83,6 @@ exports.default = new Command_1.Command({
                 interaction.reply(`사람: ${rspArgs[human]}, 봇: ${rspArgs[bot]}로 사람이 승리했습니다.\n${(money * 1.5).toLocaleString()}원을 얻게 됩니다.\n잔액: ${user.money.toLocaleString()}원 -> ${(user.money + money * 1.5).toLocaleString()}원`);
                 break;
         }
+        return 1;
     }),
 });

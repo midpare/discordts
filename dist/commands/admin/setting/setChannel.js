@@ -41,16 +41,32 @@ exports.default = new Command_1.Command({
                     value: 'slang',
                 },
                 {
-                    name: '가입',
-                    value: 'join',
-                },
-                {
                     name: '알람',
                     value: 'alarm',
                 },
                 {
                     name: '내전',
                     value: 'civilWar',
+                },
+                {
+                    name: '입장로그',
+                    value: 'log join',
+                },
+                {
+                    name: '탈퇴로그',
+                    value: 'log exit',
+                },
+                {
+                    name: '채팅로그',
+                    value: 'log message',
+                },
+                {
+                    name: '명령어로그',
+                    value: 'log command',
+                },
+                {
+                    name: '음성로그',
+                    value: 'log voice',
                 },
             ],
         },
@@ -78,18 +94,24 @@ exports.default = new Command_1.Command({
                 const channel2 = options.getChannel('채널2');
                 if (!(channel1 instanceof discord_js_1.BaseGuildVoiceChannel) || !(channel2 instanceof discord_js_1.BaseGuildVoiceChannel)) {
                     Utils_1.Utils.reply(interaction, '정확한 음성채널 두개를 입력해주시기 바랍니다.');
-                    return;
+                    return 0;
                 }
                 (yield client.models.guild.updateOne({ id }, { $set: { [type]: [channel1.id, channel2.id] } })).matchedCount;
                 break;
             default:
                 if (!(channel1 instanceof discord_js_1.BaseGuildTextChannel)) {
                     Utils_1.Utils.reply(interaction, '정확한 채팅채널을 입력해주시기 바랍니다');
-                    return;
+                    return 0;
                 }
-                (yield client.models.guild.updateOne({ id }, { $set: { [type]: channel1.id } })).matchedCount;
+                if (type.split(' ')[0] == 'log') {
+                    yield client.models.guild.updateOne({ id }, { $set: { [`log.${type.split(' ')[1]}`]: channel1.id } }, { upsert: true });
+                }
+                else {
+                    (yield client.models.guild.updateOne({ id }, { $set: { [type]: channel1.id } })).matchedCount;
+                }
                 break;
         }
         Utils_1.Utils.reply(interaction, '성공적으로 채널을 등록했습니다!');
+        return 1;
     }),
 });

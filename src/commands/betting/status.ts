@@ -12,7 +12,7 @@ export default new Command({
     const betting = client.betting.get(guildId);
     if (!betting) {
       Utils.reply(interaction, '아직 베팅을 시작하지 않았습니다.');
-      return;
+      return 0;
     }
 
     const embed = new EmbedBuilder();
@@ -27,5 +27,6 @@ export default new Command({
       );
 
     interaction.reply({ embeds: [embed] });
+    return 1;
   },
 });

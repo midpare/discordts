@@ -34,14 +34,14 @@ export default new Command({
     const { guildId } = interaction;
 
     if (!guildId)
-      return;
+      return 0;
 
     const guild = await client.models.guild.findOne({ id: guildId });  
-    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.punishment);
+    const channel = <TextChannel>interaction.guild?.channels.cache.get(guild.punishment);
 
     if (!channel) {
       Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.');
-      return;
+      return 0;
     }
 
     const target = options.getUser('유저', true);
@@ -52,17 +52,18 @@ export default new Command({
     const reason = options.getString('사유');
     if (user.warning <= 0) {
       Utils.reply(interaction, client.messages.admin.warning.deduction.noneWarning);
-      return;
+      return 0;
     }
 
     if (user.warning - count < 0) {
       Utils.reply(interaction, client.messages.admin.warning.deduction.overWarning);
-      return;
+      return 0;
     }
 
     (await client.models.config.updateOne({ id, guildId }, { $inc: { warning: -count } })).matchedCount;
     channel.send(client.messages.admin.warning.deduction.success(target, count, user.warning - count, reason ?? ''));
 
     Utils.reply(interaction, '성공적으로 경고를 차감했습니다!');
+    return 1;
   },
 });

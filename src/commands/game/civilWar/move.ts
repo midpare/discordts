@@ -13,20 +13,20 @@ export default new Command({
 
     if (civilWar.isEmpty()) {
       Utils.reply(interaction, '이동할 유저가 없습니다.');
-      return;
+      return 0;
     }
 
     if (!guildId)
-      return;
+      return 0;
 
     const guild = await client.models.guild.findOne({ id: guildId });
 
-    const channel1 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.civilWar[0] ?? '0');
-    const channel2 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.civilWar[1] ?? '0');
+    const channel1 = <VoiceChannel>interaction.guild?.channels.cache.get(guild.civilWar[0] ?? '0');
+    const channel2 = <VoiceChannel>interaction.guild?.channels.cache.get(guild.civilWar[1] ?? '0');
 
     if (!channel1 || !channel2) {
       Utils.reply(interaction, '내전채널을 등록해주시기 바랍니다.');
-      return;
+      return 0;
     }
 
     for (const user of civilWar.teams[0]) {
@@ -41,5 +41,6 @@ export default new Command({
       user.voice.setChannel(channel2);
     }
     interaction.reply('성공적으로 유저들을 이동했습니다!');
+    return 1;
   },
 });

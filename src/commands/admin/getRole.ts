@@ -16,7 +16,7 @@ export default new Command({
 
     if (!interaction.guild?.roles.cache.has(temporaryRole) || !interaction.guild?.roles.cache.has(baseRole)) {
       Utils.reply(interaction, '임시역할과 기본역할을 등록해주시기 바랍니다.')
-      return;
+      return 0;
     }
 
     
@@ -29,5 +29,6 @@ export default new Command({
 
     interaction.channel?.send({ content: '이 버튼을 눌러 역할을 받으세요.', components: [row] });
     Utils.reply(interaction, '성공적으로 역할 받기 버튼을 생성했습니다!');
+    return 1;
   },
 }); 

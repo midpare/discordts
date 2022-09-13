@@ -31,11 +31,11 @@ exports.default = new Command_1.Command({
         const betting = client.betting.get(guildId);
         if (!betting) {
             Utils_1.Utils.reply(interaction, '아직 베팅을 시작하지 않았습니다.');
-            return;
+            return 0;
         }
         if (betting.starter != interaction.user.id) {
             Utils_1.Utils.reply(interaction, '베팅을 종료할 권한이 없습니다.');
-            return;
+            return 0;
         }
         const bet1 = betting.bet1;
         const bet2 = betting.bet2;
@@ -52,9 +52,10 @@ exports.default = new Command_1.Command({
                 break;
             default:
                 Utils_1.Utils.reply(interaction, `${bet1.name}과 ${bet2.name}중 승리팀을 선택해주시기 바랍니다.`);
-                return;
+                return 0;
         }
         interaction.reply(`${winner}팀이 승리했습니다!\n배율: ${times}`);
         client.betting.delete(guildId);
+        return 1;
     }),
 });

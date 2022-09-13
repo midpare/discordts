@@ -60,5 +60,6 @@ exports.default = new Command_1.Command({
             }
             interaction.reply({ embeds: [embed] });
         }
+        return 1;
     }),
 });

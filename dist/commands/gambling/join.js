@@ -20,11 +20,12 @@ exports.default = new Command_1.Command({
         const user = yield client.models.gambling.findOne({ id, guildId });
         if (user) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.join.alreadyJoin);
-            return;
+            return 0;
         }
-        const name = interaction.user.username;
+        const name = interaction.member.displayName;
         const newUser = new client.models.gambling({ id, name, guildId, coin: [] });
         yield newUser.save();
         interaction.reply(client.messages.gambling.join.success);
+        return 1;
     }),
 });

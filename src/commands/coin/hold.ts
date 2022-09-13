@@ -1,4 +1,4 @@
-import { EmbedBuilder } from 'discord.js';
+import { EmbedBuilder, GuildMember } from 'discord.js';
 import { Command } from '../../managers/Command';
 import { Utils } from '../../structures/Utils';
 
@@ -15,11 +15,11 @@ export default new Command({
     
     if (user.coin.length < 1) {
       Utils.reply(interaction, '보유한 코인이 없습니다.');
-      return;
+      return 0;
     }
     interaction.deferReply()
     embed
-    .setTitle(`${interaction.user.username}님의 코인 보유 현황`);
+    .setTitle(`${(<GuildMember>interaction.member).displayName}님의 코인 보유 현황`);
     
     for (const element of user.coin) {
       const apiOptions = {
@@ -37,5 +37,6 @@ export default new Command({
       embed.addFields({ name: element.name, value: `수량: ${element.count.toLocaleString()}개, 평단가: ${Math.floor(element.money).toLocaleString()}원\n손익: ${profitShown}원(${persentShown}%)`, inline: false});
     }
     interaction.editReply({ embeds: [embed] });
+    return 1;
   },
 });

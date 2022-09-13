@@ -45,7 +45,7 @@ export default new Command({
     const { guildId, user: { id } } = interaction;
 
     if (!guildId)
-      return;
+      return 0;
 
     const customIds = Utils.uuid(2);
     const [menuId, cancel] = customIds;
@@ -85,8 +85,8 @@ export default new Command({
     }
 
     if (menuOptions.length < 1) {
-      Utils.reply(interaction, '정확한 학교명을 입력해주시기 바랍니다.');
-      return;
+      Utils.reply(interaction, '정확한 학교명을 입력해주시기 바랍니다.', true);
+      return 0;
     }
 
     const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
@@ -125,5 +125,6 @@ export default new Command({
       messages: [message],
       customIds,
     }));
+    return 1;
   },
 });

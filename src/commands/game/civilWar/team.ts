@@ -12,19 +12,19 @@ export default new Command({
     const user = interaction.member;
     if (!(user instanceof GuildMember) || !user.voice.channel) {
       Utils.reply(interaction, '음성채널에 접속해주시기 바랍니다.');
-      return;
+      return 0;
     }
 
     const members = Utils.shuffle(Array.from(user.voice.channel.members.values() || []));
     const civilWar = client.civilWar;
     if (members.length < 2) {
       Utils.reply(interaction, '현재 음성채널에 두명이상 접속해있지 않습니다.');
-      return;
+      return 0;
     }
     
     if (!civilWar.isEmpty()) {
       Utils.reply(interaction, '이미 시작한 내전이 있습니다.');
-      return;
+      return 0;
     }
 
 
@@ -39,5 +39,6 @@ export default new Command({
       );
 
     interaction.reply({ embeds: [embed] });
+    return 1;
   },
 });

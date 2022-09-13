@@ -17,5 +17,6 @@ export default new Command({
     }
 
     interaction.reply({ embeds: [embed] });
+    return 1;
   },
 });

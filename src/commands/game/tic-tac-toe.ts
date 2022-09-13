@@ -22,11 +22,11 @@ export default new Command({
     const { guildId, user: { id } } = interaction;
     
     if (!guildId)
-      return;
+      return 0;
     
     if (target.id == id) {
       Utils.reply(interaction, '자신을 맨션할 수 없습니다.');
-      return;
+      return 0;
     }
 
     const customIds = Utils.uuid(2);
@@ -68,5 +68,6 @@ export default new Command({
       messages: [message],
       customIds,
     }));
+    return 1;
   }
 })

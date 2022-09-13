@@ -93,7 +93,10 @@ export class Utils {
     }
   }
 
-  public static async reply(interaction: ChatInputCommandInteraction | ButtonInteraction, options: string): Promise<void> {
+  public static async reply(interaction: ChatInputCommandInteraction | ButtonInteraction, options: string, defer?: boolean): Promise<void> {
+    if (defer) {
+      interaction.editReply(options)
+    }
     interaction.reply(options);
     const replied = await interaction.fetchReply();
     setTimeout(() => {

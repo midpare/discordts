@@ -25,5 +25,6 @@ exports.default = new Command_1.Command({
     // ],
     execute: ({ interaction, options, client }) => __awaiter(void 0, void 0, void 0, function* () {
         Utils_1.Utils.reply(interaction, '현재 개발중에 있습니다.');
+        return 1;
     }),
 });

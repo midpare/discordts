@@ -7,6 +7,7 @@ const configInfo = new mongoose_1.Schema({
     name: String,
     guildId: String,
     slangs: [String],
+    activity: { type: Boolean, default: false },
     warning: { type: Number, default: 0 },
     banTime: { type: Number, default: 0 },
     MuteTime: { type: Number, default: 0 },

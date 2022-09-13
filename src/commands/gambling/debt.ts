@@ -8,5 +8,6 @@ export default new Command({
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });
     interaction.reply(client.messages.gambling.debt(user.name, user.debt));
+    return 1;
   },
 });

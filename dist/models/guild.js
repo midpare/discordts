@@ -8,9 +8,15 @@ const guildInfo = new mongoose_1.Schema({
     gambling: { type: String, default: '0' },
     command: { type: String, default: '0' },
     slang: { type: String, default: '0' },
-    join: { type: String, default: '0' },
     alarm: [{ type: String, default: '0' }],
     civilWar: [{ type: String, default: '0' }],
+    log: {
+        join: { type: String, default: '0' },
+        exit: { type: String, default: '0' },
+        command: { type: String, default: '0' },
+        message: { type: String, default: '0' },
+        voice: { type: String, default: '0' },
+    },
     temporaryRole: { type: String, default: '0' },
     baseRole: { type: String, default: '0' },
 }, {

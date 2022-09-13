@@ -40,5 +40,6 @@ export default new Command({
     (await client.models.guild.updateOne({ id }, { $set: { [type]: role } })).matchedCount
   
     Utils.reply(interaction, '성공적으로 역할을 등록했습니다!');
+    return 1;
   },
 });

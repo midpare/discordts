@@ -20,20 +20,21 @@ exports.default = new Command_1.Command({
         const { guildId, user: { id } } = interaction;
         const user = yield client.models.gambling.findOne({ id, guildId });
         if (!user)
-            return;
+            return 0;
         if (user.money > 0 || user.coin[0]) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.baseMoney.haveMoney);
-            return;
+            return 0;
         }
         const time = new Date().getTime();
         const coolTime = 30 * 1000;
         const userTime = user.baseMoneyTime;
         if (time - userTime < coolTime) {
             Utils_1.Utils.reply(interaction, client.messages.coolTime(Math.round((coolTime - (time - userTime)) / 1000)));
-            return;
+            return 0;
         }
         const baseMoney = 25000;
         (yield client.models.gambling.updateOne({ id, guildId }, { $set: { money: baseMoney, baseMoneyTime: time } })).matchedCount;
         interaction.reply(client.messages.gambling.baseMoney.success(baseMoney));
+        return 1;
     }),
 });

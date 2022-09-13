@@ -35,7 +35,7 @@ export default new Command({
 
     if (client.betting.get(guildId)) {
       Utils.reply(interaction, '이미 시작한 베팅이 있습니다.');
-      return;
+      return 0;
     }
 
     const title = options.getString('제목', true);
@@ -53,7 +53,8 @@ export default new Command({
         { name: `${betting.bet1.name}`, value: `/베팅 ${betting.bet1.name} 로 베팅해주시기바랍니다.`, inline: true },
         { name: `${betting.bet2.name}`, value: `/베팅 ${betting.bet2.name} 로 베팅해주시기바랍니다.`, inline: true },
       );
-    interaction.channel?.send({ embeds: [embed] });
+    interaction.reply({ embeds: [embed] });
     client.betting.set(guildId, betting);
+    return 1;
   },
 })

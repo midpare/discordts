@@ -27,14 +27,14 @@ export default new Command({
     const { guildId } = interaction;
 
     if (!guildId)
-      return;
+      return 0;
 
     const guild = await client.models.guild.findOne({ id: guildId });
-    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.punishment);
+    const channel = <TextChannel>interaction.guild?.channels.cache.get(guild.punishment);
 
     if (!channel) {
       Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.');
-      return;
+      return 0;
     }
     
     const target = options.getMember('유저')
@@ -42,17 +42,18 @@ export default new Command({
 
     if (!(target instanceof GuildMember)) {
       Utils.reply(interaction, client.messages.admin.kick.missingMentionUser);
-      return;
+      return 0;
     } 
     
     if (target.permissions.has(PermissionFlagsBits.KickMembers)) {
       interaction.reply(client.messages.admin.kick.missingPermissionTarget);
-      return;
+      return 0;
     }
 
     target.kick(reason);
     channel.send(client.messages.admin.kick.success(target.user, reason));
     Utils.reply(interaction, `성공적으로 ${target.displayName}님을 강퇴했습니다!`);
+    return 1;
   },
 });
 

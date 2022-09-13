@@ -33,7 +33,7 @@ exports.default = new Command_1.Command({
         const user = yield client.models.gambling.findOne({ id, guildId });
         if (money > user.money) {
             Utils_1.Utils.reply(interaction, client.messages.overMoney(user.money));
-            return;
+            return 0;
         }
         const random = Math.floor(Math.random() * 2);
         if (random == 1) {
@@ -44,5 +44,6 @@ exports.default = new Command_1.Command({
             (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money } })).matchedCount;
             interaction.reply(client.messages.gambling.failureGamb(user.money, money));
         }
+        return 1;
     }),
 });

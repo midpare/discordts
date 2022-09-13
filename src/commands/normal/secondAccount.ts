@@ -16,5 +16,6 @@ export default new Command({
   // ],
   execute: async ({ interaction, options, client }) => {
     Utils.reply(interaction, '현재 개발중에 있습니다.');
+    return 1;
   },
 });

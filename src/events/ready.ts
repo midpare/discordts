@@ -17,11 +17,17 @@ export default new Event({
       for (const member of members) {
         const { id, user: { username: name } } = member;
         const user = await client.models.config.findOne({ id, guildId });
-  
-        if (!user && !member.user.bot) {
+        
+        if (member.user.bot)
+          continue;
+
+        if (!user) {
           const newUser = new client.models.config({ id, name, guildId });
           newUser.save();
+        } else if (user.name != member.displayName) {
+        
         }
+
       }
     }
     console.log(`Successfully logged in to ${client.guilds.cache.size} servers!`);

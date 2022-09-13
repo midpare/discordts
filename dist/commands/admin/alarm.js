@@ -30,33 +30,33 @@ exports.default = new Command_1.Command({
         const target = options.getMember('유저');
         const { guildId } = interaction;
         if (!guildId)
-            return;
+            return 0;
         const guild = yield client.models.guild.findOne({ id: guildId });
-        const channel1 = (_a = client.guilds.cache.get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get((_b = guild.alarm[0]) !== null && _b !== void 0 ? _b : '0');
-        const channel2 = (_c = client.guilds.cache.get(guildId)) === null || _c === void 0 ? void 0 : _c.channels.cache.get((_d = guild.alarm[1]) !== null && _d !== void 0 ? _d : '0');
+        const channel1 = (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.channels.cache.get((_b = guild.alarm[0]) !== null && _b !== void 0 ? _b : '0');
+        const channel2 = (_c = interaction.guild) === null || _c === void 0 ? void 0 : _c.channels.cache.get((_d = guild.alarm[1]) !== null && _d !== void 0 ? _d : '0');
         if (!channel1 || !channel2) {
             Utils_1.Utils.reply(interaction, '알람채널을 등록해주시기 바랍니다.');
-            return;
+            return 0;
         }
         if (!(target instanceof discord_js_1.GuildMember)) {
             Utils_1.Utils.reply(interaction, '정확한 유저를 입력해주시기 바랍니다.');
-            return;
+            return 0;
         }
         if (client.alarmMembers.get(target.id)) {
             Utils_1.Utils.reply(interaction, '이미 알람을 작동중인 유저입니다.');
-            return;
+            return 0;
         }
         if (target.user.bot) {
             Utils_1.Utils.reply(interaction, client.messages.admin.alarm.bot);
-            return;
+            return 0;
         }
         if (target.voice.channelId == null) {
             Utils_1.Utils.reply(interaction, client.messages.missingVoiceChannelUser);
-            return;
+            return 0;
         }
         if (!target.voice.selfDeaf) {
             Utils_1.Utils.reply(interaction, client.messages.admin.alarm.missingSelfDeaf);
-            return;
+            return 0;
         }
         const userChannel = target.voice.channel;
         yield target.voice.setChannel(channel1);
@@ -73,5 +73,6 @@ exports.default = new Command_1.Command({
             target.voice.setChannel(userChannel);
             client.alarmMembers.delete(target.id);
         }, 5000);
+        return 1;
     }),
 });

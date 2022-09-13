@@ -89,8 +89,11 @@ class Utils {
             }
         }
     }
-    static reply(interaction, options) {
+    static reply(interaction, options, defer) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (defer) {
+                interaction.editReply(options);
+            }
             interaction.reply(options);
             const replied = yield interaction.fetchReply();
             setTimeout(() => {

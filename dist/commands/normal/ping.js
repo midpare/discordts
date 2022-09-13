@@ -17,5 +17,6 @@ exports.default = new Command_1.Command({
     description: '봇의 현재상태를 확인합니다',
     execute: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         interaction.reply('pong!');
+        return 1;
     }),
 });

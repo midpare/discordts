@@ -20,5 +20,6 @@ exports.default = new Command_1.Command({
         const channel = interaction.channel;
         const code = yield ((_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.invites.create(channel, { maxAge: 1 * 60 * 60, maxUses: 1 }));
         interaction.reply(`성공적으로 초대링크를 생성했습니다!\n${code}`);
+        return 1;
     }),
 });

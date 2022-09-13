@@ -15,11 +15,11 @@ export default new Command({
       choices: [
         {
           name: '서버',
-          value: 'server',
+          value: '서버',
         },
         {
           name: '전체',
-          value: 'all',
+          value: '전체',
         },
       ],
     },
@@ -31,13 +31,13 @@ export default new Command({
     const embed = new EmbedBuilder()
     .setTitle('랭킹')
     .setDescription('유저의 돈 순위를 확인합니다.');
-    if (range == 'server') {
+    if (range == '서버') {
       const users = await client.models.gambling.find({ money: { $gt: 0 }, guildId }).sort({ money: -1 });
 
       for (const user of users) {
         embed.addFields({ name: user.name, value: `${user.money.toLocaleString()}원`, inline: false });
       }
-    } else if (range == 'all') {
+    } else if (range == '전체') {
       const users = await client.models.gambling.find({ money: { $gt: 0 } }).sort({ money: -1 });
 
       for (const user of users) {
@@ -45,5 +45,6 @@ export default new Command({
       }
     }
     interaction.reply({ embeds: [embed] });
+    return 1;
   },
 });

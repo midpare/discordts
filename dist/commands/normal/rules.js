@@ -25,5 +25,6 @@ exports.default = new Command_1.Command({
             embed.addFields({ name, value: value.join('\n'), inline: false });
         }
         interaction.reply({ embeds: [embed] });
+        return 1;
     }),
 });

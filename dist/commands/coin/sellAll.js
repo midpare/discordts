@@ -33,7 +33,7 @@ exports.default = new Command_1.Command({
         const coinId = client.coin.get(coinName);
         if (!coinId) {
             Utils_1.Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
-            return;
+            return 0;
         }
         const apiOptions = {
             uri: `https://crix-api-endpoint.upbit.com/v1/crix/candles/days/?code=CRIX.UPBIT.${coinId}&count=1&to`,
@@ -43,11 +43,11 @@ exports.default = new Command_1.Command({
         const coin = yield Utils_1.Utils.request(apiOptions);
         if (!coin) {
             Utils_1.Utils.reply(interaction, '정확한 코인을 입력해주시기바랍니다.');
-            return;
+            return 0;
         }
         if (!userCoin) {
             Utils_1.Utils.reply(interaction, '이 코인을 가지고 있지 않습니다.');
-            return;
+            return 0;
         }
         const coinMoney = coin[0].tradePrice;
         const count = userCoin.count;
@@ -58,5 +58,6 @@ exports.default = new Command_1.Command({
         const persentShown = persent < 0 ? persent : '+' + persent;
         (yield client.models.gambling.updateOne({ id, guildId }, { $pull: { coin: userCoin }, $inc: { money: Math.round(money) } })).matchedCount;
         interaction.reply(`성공적으로 ${coinName} ${count.toLocaleString()}개를 ${money.toLocaleString()}원(개당 ${coinMoney}원)에 판매했습니다!\n손익: ${profitShown}원(${persentShown}%)`);
+        return 1;
     }),
 });

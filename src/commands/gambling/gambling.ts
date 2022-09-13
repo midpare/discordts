@@ -25,7 +25,7 @@ export default new Command({
 
     if (money > user.money) {
       Utils.reply(interaction, client.messages.overMoney(user.money));
-      return;
+      return 0;
     }
 
     const random = Math.floor(Math.random() * 2);
@@ -37,5 +37,6 @@ export default new Command({
       (await client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money } })).matchedCount;
       interaction.reply(client.messages.gambling.failureGamb(user.money, money));
     }
+    return 1;
   },
 });

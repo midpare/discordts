@@ -33,13 +33,14 @@ exports.default = new Command_1.Command({
         const money = options.getInteger('돈', true);
         if (user.money < money) {
             Utils_1.Utils.reply(interaction, client.messages.overMoney(user.money));
-            return;
+            return 0;
         }
         if (user.debt < money) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.payBack.overMoney(user.debt));
-            return;
+            return 0;
         }
         (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money: -money, debt: -money } })).matchedCount;
         interaction.reply(client.messages.gambling.payBack.success(user.debt, money));
+        return 1;
     }),
 });

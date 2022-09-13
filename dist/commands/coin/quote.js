@@ -23,5 +23,6 @@ exports.default = new Command_1.Command({
             .setStyle(discord_js_1.ButtonStyle.Link)
             .setLabel('거래소'));
         interaction.reply({ content: '이곳을 눌러 현황을 확인하세요', components: [row] });
+        return 1;
     }),
 });

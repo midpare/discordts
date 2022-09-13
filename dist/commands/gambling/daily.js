@@ -23,10 +23,11 @@ exports.default = new Command_1.Command({
         const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
         if (user.dailyDate == today) {
             Utils_1.Utils.reply(interaction, client.messages.gambling.daily.today);
-            return;
+            return 0;
         }
         const money = Math.floor(Math.random() * 50000 + 50000);
         (yield client.models.gambling.updateOne({ id, guildId }, { $inc: { money }, $set: { date: today } })).matchedCount;
         interaction.reply(client.messages.gambling.daily.success(user.money, money));
+        return 1;
     }),
 });

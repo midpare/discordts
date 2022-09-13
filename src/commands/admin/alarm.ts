@@ -21,41 +21,41 @@ export default new Command({
     const { guildId } = interaction;
 
     if (!guildId)
-      return;
+      return 0;
 
     const guild = await client.models.guild.findOne({ id: guildId });
 
-    const channel1 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.alarm[0] ?? '0');
-    const channel2 = <VoiceChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.alarm[1] ?? '0');
+    const channel1 = <VoiceChannel>interaction.guild?.channels.cache.get(guild.alarm[0] ?? '0');
+    const channel2 = <VoiceChannel>interaction.guild?.channels.cache.get(guild.alarm[1] ?? '0');
 
     if (!channel1 || !channel2) {
       Utils.reply(interaction, '알람채널을 등록해주시기 바랍니다.');
-      return;
+      return 0;
     }
     
     if (!(target instanceof GuildMember)) {
       Utils.reply(interaction, '정확한 유저를 입력해주시기 바랍니다.');
-      return;
+      return 0;
     }
 
     if (client.alarmMembers.get(target.id)) {
       Utils.reply(interaction, '이미 알람을 작동중인 유저입니다.');
-      return;
+      return 0;
     }
 
     if (target.user.bot) {
       Utils.reply(interaction, client.messages.admin.alarm.bot);
-      return;
+      return 0;
     }
 
     if (target.voice.channelId == null) {
       Utils.reply(interaction, client.messages.missingVoiceChannelUser);
-      return;
+      return 0;
     }
 
     if (!target.voice.selfDeaf) {
       Utils.reply(interaction, client.messages.admin.alarm.missingSelfDeaf);
-      return;
+      return 0;
     }
 
 
@@ -64,18 +64,19 @@ export default new Command({
     client.alarmMembers.set(target.id, target);
     
     Utils.reply(interaction, '성공적으로 알람을 작동했습니다!');
-
+    
     const previousInterval = setInterval(() => {
       if (target.voice.channelId == null || !target.voice.selfDeaf)
         return;
       target.voice.setChannel(channel1);
       target.voice.setChannel(channel2);
     }, 1000);
-
+    
     setTimeout(() => {
       clearInterval(previousInterval);
       target.voice.setChannel(userChannel);
       client.alarmMembers.delete(target.id);
     }, 5000);
+    return 1;
   },
 });

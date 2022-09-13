@@ -15,12 +15,13 @@ export default new Command({
     const embed = new EmbedBuilder();
     if (!user) {
       Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.');
-      return;
+      return 0;
     }
 
     embed
       .setTitle(`${username}님의 학교정보`)
       .setDescription(`${user.cityName} ${user.schoolName} ${user.grade}학년 ${user.class}반`);
     interaction.reply({ embeds: [embed] });
+    return 1;
   },
 });

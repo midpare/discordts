@@ -11,7 +11,7 @@ type ExecuteType = (options: {
   interaction: ChatInputCommandInteraction;
   options: CommandInteractionOptionResolver;
   client: Client;
-}) => Promise<void>;
+}) => Promise<number>;
 
 export class Command {
   public readonly name: string;

@@ -13,10 +13,7 @@ export default new Event({
       (await client.models.config.updateOne({ id, guildId }, { $set: { activity: true } })).matchedCount;
     }
 
-    if (!logChannel)
-      return;
-
-    if (oldState.channelId == newState.channelId)
+    if (!logChannel || oldState.channelId == newState.channelId || oldState.member?.user.bot)
       return;
 
     if (!oldState.channelId && newState.channelId) {

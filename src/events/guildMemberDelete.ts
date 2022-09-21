@@ -1,8 +1,8 @@
-import { TextChannel } from "discord.js";
-import { Event } from "../managers/Event";
+import { TextChannel } from 'discord.js';
+import { Event } from '../managers/Event';
 
 export default new Event({
-  name: "guildMemberRemove",
+  name: 'guildMemberRemove',
   execute: async (client, member) => {
     const { id, guild: { id: guildId } } = member
     client.models.config.deleteOne({ id, guildId });

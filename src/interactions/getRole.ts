@@ -28,7 +28,7 @@ export default new Interaction<ButtonInteraction>({
 
     Utils.reply(interaction, '성공적으로 역할을 지급받았습니다!');
 
-    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.join);
+    const channel = <TextChannel>client.guilds.cache.get(guildId)?.channels.cache.get(guild.log.join);
 
     if (!channel)
       return;

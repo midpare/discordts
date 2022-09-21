@@ -1,5 +1,5 @@
-import { TextChannel } from "discord.js";
-import { Event } from "../managers/Event";
+import { TextChannel } from 'discord.js';
+import { Event } from '../managers/Event';
 
 export default new Event({
   name: 'voiceStateUpdate',

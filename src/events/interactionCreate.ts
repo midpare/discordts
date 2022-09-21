@@ -8,9 +8,6 @@ export default new Event({
   execute: async (client: Client, interaction: BaseInteraction) => {
     const { guildId, user: { id } } = interaction;
 
-      
-
-
     if (interaction.isChatInputCommand()) {
       if (!guildId) {
         Utils.reply(interaction, '이 명령어는 서버에서만 사용할 수 있습니다.')

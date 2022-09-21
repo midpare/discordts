@@ -30,6 +30,6 @@ export default new Event({
 
       }
     }
-    console.log(`Successfully logged in to ${client.guilds.cache.size} servers!`);
+    const users = await client.models.config.find({ activity: true })
   },
 });

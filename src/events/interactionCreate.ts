@@ -7,16 +7,22 @@ export default new Event({
   name: 'interactionCreate',
   execute: async (client: Client, interaction: BaseInteraction) => {
     const { guildId, user: { id } } = interaction;
-    if (!guildId)
-      return;
-      
-    const user = await client.models.config.findOne({ id, guildId });
 
-    if (user && !user.activity) {
-      (await client.models.config.updateOne({ id, guildId }, { $set: { activity: true } })).matchedCount;
-    }
+      
+
 
     if (interaction.isChatInputCommand()) {
+      if (!guildId) {
+        Utils.reply(interaction, '이 명령어는 서버에서만 사용할 수 있습니다.')
+        return;
+      }
+
+      const user = await client.models.config.findOne({ id, guildId });
+
+      if (user && !user.activity) {
+        (await client.models.config.updateOne({ id, guildId }, { $set: { activity: true } })).matchedCount;
+      }
+      
       const time = new Date().getTime();
 
       const { commandName, options } = interaction;

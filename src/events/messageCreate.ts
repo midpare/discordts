@@ -15,8 +15,12 @@ export default new Event({
     const guild = await client.models.guild.findOne({ id: guildId });
     const logChannel = <TextChannel>msg.guild?.channels.cache.get(guild.log.message);
     const msgChannel = <TextChannel>msg.channel; 
-    if (!logChannel)
+
+    const image = msg.attachments.filter((e) => e.contentType?.startsWith('image') ?? false)
+    if (!logChannel || image.first())
       return;
+
     logChannel.send(`-${msgChannel.name}-\n${msg.member?.displayName}: "${msg.content}"`) 
+    console.log(msg)
   },
 })

@@ -5,6 +5,7 @@ import { Model } from '../managers/Model';
 interface ConfigType {
   id: Snowflake;
   name: string;
+  secondAccountId: Snowflake;
   guildId: Snowflake;
   slangs: [string];
   activity: boolean
@@ -18,6 +19,7 @@ const configInfo = new Schema<ConfigType>({
   name: String,
   guildId: String,
   slangs: [String],
+  secondAccountId: { type: String, default: '' },
   activity: { type: Boolean, default: false },
   warning: { type: Number, default: 0 },
   banTime: { type: Number, default: 0 },

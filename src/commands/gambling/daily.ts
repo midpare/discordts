@@ -19,7 +19,7 @@ export default new Command({
     }
 
     const money = Math.floor(Math.random() * 50000 + 50000);
-    (await client.models.gambling.updateOne({ id, guildId }, { $inc: { money }, $set: { date: today } })).matchedCount;
+    (await client.models.gambling.updateOne({ id, guildId }, { $inc: { money }, $set: { dailyDate: today } })).matchedCount;
     interaction.reply(client.messages.gambling.daily.success(user.money, money));
     return 1;
   },

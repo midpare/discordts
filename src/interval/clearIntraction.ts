@@ -1,4 +1,4 @@
-import { ClientPresence, Message } from "discord.js";
+import { Message } from "discord.js";
 import { Interval } from "../managers/Interval";
 
 export default new Interval({

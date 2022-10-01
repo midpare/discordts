@@ -6,6 +6,7 @@ export class InteractionOption {
   public cmd: string
   public customIds: string[];
   public messages: Message[];
+  public timeout: boolean
   public data?: any;
 
   constructor(option: InteractionOption) {
@@ -14,6 +15,7 @@ export class InteractionOption {
     this.cmd = option.cmd;
     this.customIds = option.customIds;
     this.messages = option.messages;
+    this.timeout = option.timeout;
     this.data = option.data;
   }
 
@@ -28,10 +30,10 @@ export class InteractionOption {
           options.data[j] = target.data[j];
         }
       } else if (data) {
-        options[i] = data;
+        options[i] = target[i] as never
       }
     }
-    
+
     const newOptions = new InteractionOption(options);
     return newOptions;
   }

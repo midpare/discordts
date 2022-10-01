@@ -13,14 +13,16 @@ export default new Interaction({
     const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder();
     const button = new ButtonBuilder()
       .setCustomId(Utils.uuid());
-      
+
     const position = options.data.position;
+    const user = bold(options.data.players[0].username);
+    const target = bold(options.data.players[1].username);
 
     if (!tictactoe)
       return
 
     if (tictactoe.turn.id != interaction.user.id) {
-      interaction.reply({ content: '자신의 턴을 기다려주세요', ephemeral: true }) 
+      interaction.reply({ content: '자신의 턴을 기다려주세요', ephemeral: true })
       return;
     }
 
@@ -28,28 +30,40 @@ export default new Interaction({
     if (winner) {
       const user = bold(winner.username);
       options.data.turn.edit(`${user}님이 승리했습니다!`);
-      
+
       for (const id of options.data.customIds) {
         client.interactionOptions.delete(id)
       }
     }
 
+    let flag = 0
+
+    for (const line of tictactoe.table) {
+      for (const e of line) {
+        if (e == 0) {
+          flag = 1;
+          break;
+        }
+      }
+    }
+
+    if (flag == 0) {
+      options.data.turn.edit(`무승부입니다!`);
+    }
+
     interaction.deferUpdate();
 
-    const user = bold(options.data.players[0].username);
-    const target = bold(options.data.players[1].username);
     if (tictactoe.flag == 1) {
-      if (!winner) 
+      if (!winner && flag == 1)
         options.data.turn.edit(`${user}님의 턴입니다!`);
-      
+
       button
         .setStyle(ButtonStyle.Danger)
         .setLabel('X');
     }
     else {
-      if (!winner)
+      if (!winner && flag == 1)
         options.data.turn.edit(`${target}님의 턴입니다!`);
-
       button
         .setStyle(ButtonStyle.Primary)
         .setLabel('O');

@@ -8,9 +8,9 @@ export class TicTacToe {
 
   constructor(player: Array<User>) {
     this.table = [
-      [0, 0, 0,],
-      [0, 0, 0,],
-      [0, 0, 0,],
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
     ];
     this.player = player
     this.flag = 1;

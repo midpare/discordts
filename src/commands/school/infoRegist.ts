@@ -113,6 +113,7 @@ export default new Command({
       cmd: 'grade',
       messages: [message],
       customIds,
+      timeout: true,
       data: {
         schoolName,
       },
@@ -123,6 +124,7 @@ export default new Command({
       guildId,
       cmd: 'cancel',
       messages: [message],
+      timeout: true,
       customIds,
     }));
     return 1;

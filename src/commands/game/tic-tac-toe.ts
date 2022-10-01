@@ -60,6 +60,7 @@ export default new Command({
       cmd: 'accept-tic-tac-toe',
       messages: [message],
       customIds,
+      timeout: true,
       data: {
         players: [interaction.user, target],
       },
@@ -70,6 +71,7 @@ export default new Command({
       guildId,
       cmd: 'cancel',
       messages: [message],
+      timeout: true,
       customIds,
     }));
     return 1;

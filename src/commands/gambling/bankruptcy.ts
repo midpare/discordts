@@ -36,6 +36,7 @@ export default new Command({
       guildId,
       cmd: 'bankrupcty',
       messages: [msg],
+      timeout: true,
       customIds,
     }));
     client.interactionOptions.set(no, new InteractionOption({
@@ -43,6 +44,7 @@ export default new Command({
       guildId,
       cmd: 'cancel',
       messages: [msg],
+      timeout: true,
       customIds,
     }));
     return 1;

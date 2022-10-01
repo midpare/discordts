@@ -38,6 +38,15 @@ export default new Command({
 
     const embed = new EmbedBuilder();
     const { guildId, user: { id } } = interaction;
+
+    const user = await client.models.school.findOne({ id, guildId });
+
+    if (!user) {
+      Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.', true);
+      return 0;
+    }
+    interaction.deferReply()
+
     const info = options.getString('정보', true);
 
     const dateVariable = new Date();
@@ -45,15 +54,9 @@ export default new Command({
     const findWeek = weekArr.indexOf(info[0]) + 1;
     const weekDay = info.slice(0, 3);
     const dayNext = findWeek >= week ? findWeek - week : 7 - (week - findWeek); 
-    const user = await client.models.school.findOne({ id, guildId });
 
     if (info.endsWith('시간표')) {
       const timeTableDate = Utils.dateCal(dateVariable, dayNext);
-
-      if (!user) {
-        Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.', true);
-        return 0;
-      }
 
       const timeTableOptions = {
         uri: 'https://open.neis.go.kr/hub/misTimetable?Type=json&pSize=999',
@@ -92,11 +95,6 @@ export default new Command({
       }
     } else if (info.endsWith('급식')) {
       const mealDate = Utils.dateCal(dateVariable, dayNext);
-
-      if (!user) {
-        Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.', true);
-        return 0;
-      }
 
       const mealOptions = {
         uri: 'https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&pSize=999',

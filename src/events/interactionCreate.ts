@@ -115,7 +115,7 @@ export default new Event({
       }
 
       event = client.interactions.get(options.cmd);
-      if (!event || (!options.ids.includes(id) && options.guildId != guildId)) {
+      if (!event || !options.ids.includes(id)) {
         interaction.reply({ content: '이 상호작용을 사용할 수 없습니다.', ephemeral: true });
         return;
       }

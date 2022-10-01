@@ -14,5 +14,5 @@ export default async function (client: Client) {
 
     client.interactions.set(file.name, file);
   }
-  console.log('Successfully handled the interactions!')
+  console.log('Successfully handled the interactions!');
 }

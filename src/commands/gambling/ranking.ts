@@ -7,22 +7,22 @@ export default new Command({
   category: '도박',
   description: '이 서버의 도박 순위를 확인합니다.',
   options: [
-    {
-      name: '범위',
-      description: '어디까지의 랭킹을 확인할지 선택합니다.',
-      type: ApplicationCommandOptionType.String,
-      required: true,
-      choices: [
-        {
-          name: '서버',
-          value: '서버',
-        },
-        {
-          name: '전체',
-          value: '전체',
-        },
-      ],
-    },
+      {
+        name: '범위',
+        description: '어디까지의 랭킹을 확인할지 선택합니다.',
+        type: ApplicationCommandOptionType.String,
+        required: true,
+        choices: [
+          {
+            name: '서버',
+            value: '서버',
+          },
+          {
+            name: '전체',
+            value: '전체',
+          },
+        ],
+      },
   ],
   execute: async ({ interaction, options, client }) => {
     const { guildId } = interaction

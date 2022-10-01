@@ -6,11 +6,7 @@ export default new Event({
   execute: async (client, msg) => {
     if (!msg.guildId || msg.author.bot) 
       return;
-    const { guildId, author: { id } } = msg
-    const user = await client.models.config.findOne({ id, guildId });
-    if (user && !user.activity) {
-      (await client.models.config.updateOne({ id, guildId }, { $set: { activity: true } })).matchedCount; 
-    }
+    const { guildId } = msg
 
     const guild = await client.models.guild.findOne({ id: guildId });
     const logChannel = <TextChannel>msg.guild?.channels.cache.get(guild.log.message);
@@ -21,6 +17,5 @@ export default new Event({
       return;
 
     logChannel.send(`-${msgChannel.name}-\n${msg.member?.displayName}: "${msg.content}"`) 
-    console.log(msg)
   },
 })

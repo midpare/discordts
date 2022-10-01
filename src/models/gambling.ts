@@ -5,9 +5,9 @@ interface GamblingType {
   id: string;
   name: string;
   guildId: string;
+  dailyDate: string;
   money: number;
   debt: number;
-  dailyDate: number;
   bankruptcyTime: number;
   baseMoneyTime: number;
   coin: Array<{
@@ -21,7 +21,7 @@ const gamblingInfo = new Schema<GamblingType>({
   id: String,
   name: String,
   guildId: String,
-  dailyDate: { type: Number, default: 0 },
+  dailyDate: { type: String, default: '0' },
   money: { type: Number, default: 0 },
   debt: { type: Number, default: 0 },
   bankruptcyTime: { type: Number, default: 0 },

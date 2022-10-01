@@ -11,7 +11,7 @@ export default new Command({
     const user = await client.models.gambling.findOne({ id, guildId });
 
     const date = new Date();
-    const today = '' + date.getFullYear() + date.getMonth() + date.getDate();
+    const today = parseInt('' + date.getFullYear() + date.getMonth() + date.getDate());
 
     if (user.dailyDate == today) {
       Utils.reply(interaction, client.messages.gambling.daily.today);

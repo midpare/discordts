@@ -4,14 +4,8 @@ import { Event } from '../managers/Event';
 export default new Event({
   name: 'voiceStateUpdate',
   execute: async (client, oldState, newState) => {
-    const { id, guild: { id: guildId }} = newState;
-    const user = await client.models.config.findOne({ id, guildId });
     const guild = await client.models.guild.findOne({ id: newState.guild.id });
     const logChannel = <TextChannel>newState.guild.channels.cache.get(guild.log.voice);
-    
-    if (user && !user.activity) {
-      (await client.models.config.updateOne({ id, guildId }, { $set: { activity: true } })).matchedCount;
-    }
 
     if (!logChannel || oldState.channelId == newState.channelId || oldState.member?.user.bot)
       return;

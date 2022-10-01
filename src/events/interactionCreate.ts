@@ -13,12 +13,6 @@ export default new Event({
         Utils.reply(interaction, '이 명령어는 서버에서만 사용할 수 있습니다.')
         return;
       }
-
-      const user = await client.models.config.findOne({ id, guildId });
-
-      if (user && !user.activity) {
-        (await client.models.config.updateOne({ id, guildId }, { $set: { activity: true } })).matchedCount;
-      }
       
       const time = new Date().getTime();
 

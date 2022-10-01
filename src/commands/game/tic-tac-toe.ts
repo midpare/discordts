@@ -19,6 +19,10 @@ export default new Command({
   ],
   execute: async ({ interaction, options, client }) => {
     const target = options.getUser('유저', true);
+    if (target.bot) {
+      Utils.reply(interaction, '봇을 맨션할 수 없습니다.')
+      return 0
+    }
     const { guildId, user: { id } } = interaction;
     
     if (!guildId)

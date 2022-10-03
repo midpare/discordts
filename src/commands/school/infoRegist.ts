@@ -104,16 +104,20 @@ export default new Command({
     );
 
     interaction.editReply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] });
+    
+    const msg = await interaction.fetchReply();
 
-    const message = await interaction.fetchReply();
+    setTimeout(() => {
+      if (!msg.delete)
+        msg.delete()
+    }, 2 * 60 * 1000);
 
     client.interactionOptions.set(menuId, new InteractionOption({
       ids: [id],
       guildId,
       cmd: 'grade',
-      messages: [message],
+      messages: [msg],
       customIds,
-      timeout: true,
       data: {
         schoolName,
       },
@@ -123,8 +127,7 @@ export default new Command({
       ids: [id],
       guildId,
       cmd: 'cancel',
-      messages: [message],
-      timeout: true,
+      messages: [msg],
       customIds,
     }));
     return 1;

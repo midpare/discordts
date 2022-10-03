@@ -47,7 +47,6 @@ export default new Interaction({
           cmd: 'tic-tac-toe',
           messages,
           customIds: [],
-          timeout: false,
           data: {
             players: options.data.players,
             position: [i, j],

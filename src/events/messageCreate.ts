@@ -18,4 +18,4 @@ export default new Event({
 
     logChannel.send(`-${msgChannel.name}-\n${msg.member?.displayName}: "${msg.content}"`) 
   },
-})
+});

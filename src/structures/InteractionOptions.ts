@@ -6,7 +6,6 @@ export class InteractionOption {
   public cmd: string
   public customIds: string[];
   public messages: Message[];
-  public timeout: boolean
   public data?: any;
 
   constructor(option: InteractionOption) {
@@ -15,7 +14,6 @@ export class InteractionOption {
     this.cmd = option.cmd;
     this.customIds = option.customIds;
     this.messages = option.messages;
-    this.timeout = option.timeout;
     this.data = option.data;
   }
 
@@ -23,15 +21,13 @@ export class InteractionOption {
     let i: keyof InteractionOption;
 
     for (i in target) {
-      let data = target[i];
       if (i == 'data') {
         let j: keyof InteractionOption['data'];
         for (j in target.data) {
           options.data[j] = target.data[j];
         }
-      } else if (data) {
-        options[i] = target[i] as never
       }
+      options[i] = target[i]
     }
 
     const newOptions = new InteractionOption(options);

@@ -31,13 +31,13 @@ export default new Command({
   ],
   default_member_permissions: PermissionFlagsBits.BanMembers,
   execute: async ({ interaction, options, client }) => {
-    const { guildId } = interaction;
+    const { guild, guildId } = interaction;
 
     if (!guildId)
       return 0;
 
-    const guild = await client.models.guild.findOne({ id: guildId });
-    const channel = <TextChannel>interaction.guild?.channels.cache.get(guild.punishment);
+    const guildData = await client.models.guild.findOne({ id: guildId });
+    const channel = <TextChannel>interaction.guild?.channels.cache.get(guildData.punishment);
 
     if (!channel) {
       Utils.reply(interaction, '처벌내역방을 등록해주시기 바랍니다.');
@@ -46,6 +46,7 @@ export default new Command({
 
     const target = options.getMember('유저');
     const time = options.getString('시간');
+    let timeStr = null
     const reason = options.getString('사유') ?? '없음';
 
     if (!(target instanceof GuildMember)) {
@@ -58,18 +59,20 @@ export default new Command({
       return 0;
     }
 
-    if (time && ms(time)) {
-      const { id, guild: { id: guildId } } = target
-      client.models.config.updateOne({ id, guildId }, {$set: { banTime: ms(time)}})      
-    }
-    
     if (target.permissions.has(PermissionFlagsBits.BanMembers)) {
       Utils.reply(interaction,client.messages.admin.ban.missingPermissionTarget);
       return 0;
     }
     
-    interaction.guild?.members.ban(target, { reason })
-    channel.send(client.messages.admin.ban.success(target.user, reason));
+    if (time && ms(time)) {
+      timeStr = Utils.getTime(ms(time))
+      setTimeout(() => {
+        guild?.members.unban(target)
+      }, ms(time));
+    }
+    
+    interaction.guild?.members.ban(target, { reason });
+    channel.send(client.messages.admin.ban.success(target.user, reason, time ?? '없음'));
     Utils.reply(interaction, `성공적으로 ${target.user.username}님을 차단했습니다! `);
     return 1;
   },

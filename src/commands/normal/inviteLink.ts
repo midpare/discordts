@@ -9,7 +9,7 @@ export default new Command({
   execute: async ({ interaction, client }) => {
     const channel = <TextChannel>interaction.channel;
     const code = await interaction.guild?.invites.create(channel, { maxAge: 1 * 60 * 60, maxUses: 1 });
-    interaction.reply(`성공적으로 초대링크를 생성했습니다!\n${code}`);
+    interaction.reply({ content: `성공적으로 초대링크를 생성했습니다!\n${code}`, ephemeral: true });
     return 1;
   },
 });

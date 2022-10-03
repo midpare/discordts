@@ -103,4 +103,22 @@ export class Utils {
       replied.delete();
     }, 3000);
   }
+
+  public static getTime(time: number): string {
+    const day = time % (24 * 60 * 60 * 1000);
+    const hour = time % (60 * 60 * 1000);
+    const minute = time % (60 * 1000);
+    const second = time % 1000;
+    
+    let result = `${second}초`;
+
+    if (minute > 0) 
+      `${minute}분 ` + result;
+    else if (hour > 0)
+      `${hour}시간 ${minute}분 ` + result;
+    else if (day > 0)
+      `${day}일 ${hour}시간 ${minute}분 ` + result;
+    
+    return result
+  }
 }

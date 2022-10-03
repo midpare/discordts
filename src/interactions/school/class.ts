@@ -5,7 +5,7 @@ import { Utils } from '../../structures/Utils';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'class',
-  deleted: true,
+  deleted: false,
   execute: async ({ interaction, options, client }) => {
     if (!options || !options.data)
       return;
@@ -60,11 +60,9 @@ export default new Interaction<SelectMenuInteraction>({
         .setLabel('뒤로가기'),
     );
 
-    interaction.reply({ content: '자신의 반을 선택해주시기 바랍니다.', components: [selectMenu, button] });
-
-    const message = await interaction.fetchReply();
-
-    options.messages = [message];
+    options.messages[0].edit({ content: '자신의 반을 선택해주시기 바랍니다.', components: [selectMenu, button] });
+    interaction.deferUpdate();
+    
     options.customIds = customIds;
 
     client.interactionOptions.set(menuId, InteractionOption.getNext(options, {

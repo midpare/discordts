@@ -52,15 +52,18 @@ export default new Command({
       .setDescription(`${bold(interaction.user.username)}가 ${bold(target.username)}에게 틱택토 매치를 신청했습니다!`)
 
     interaction.reply({ embeds: [embed], components: [row] })
-    const message = await interaction.fetchReply();
+    const msg = await interaction.fetchReply();
+    setTimeout(() => {
+      if (msg.deletable)
+        msg.delete();
+    }, 60 * 1000);
 
     client.interactionOptions.set(yes, new InteractionOption({
       ids: [target.id],
       guildId,
       cmd: 'accept-tic-tac-toe',
-      messages: [message],
+      messages: [msg],
       customIds,
-      timeout: true,
       data: {
         players: [interaction.user, target],
       },
@@ -70,8 +73,7 @@ export default new Command({
       ids: [id, target.id],
       guildId,
       cmd: 'cancel',
-      messages: [message],
-      timeout: true,
+      messages: [msg],
       customIds,
     }));
     return 1;

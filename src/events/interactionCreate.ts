@@ -103,12 +103,12 @@ export default new Event({
     } else if (interaction.isButton() || interaction.isSelectMenu()) {
       const options = client.interactionOptions.get(interaction.customId);
       let event = client.interactions.get(interaction.customId);
-
+      
       if (!options && event) {
         event.execute({ interaction, options, client });
         return;
       }
-
+      
       if (!options) {
         interaction.reply({ content: '사용되지 않거나 종료된 상호작용입니다.', ephemeral: true });
         return;
@@ -120,16 +120,16 @@ export default new Event({
         return;
       }
 
-      event.execute({ interaction, options, client });
       for (const id of options.customIds) {
         client.interactionOptions.delete(id);
       }
-
+      
       if (event.deleted) {
         for (const msg of options.messages) {
           msg.delete();
         }
       }
+      event.execute({ interaction, options, client });
     }
   },
 });

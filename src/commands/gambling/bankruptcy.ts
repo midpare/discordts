@@ -28,6 +28,10 @@ export default new Command({
 
 
     interaction.reply({ content: '정말 파산하시겠습니까? 파산하시면 돈과 빚이 모두 0원으로 돌아가며 한시간동안 도박을 할 수 없습니다.', components: [row] })
+    setTimeout(() => {
+      if (!msg.deletable) 
+        msg.delete();
+    }, 60 * 1000);
 
     const msg = await interaction.fetchReply();
 
@@ -36,7 +40,6 @@ export default new Command({
       guildId,
       cmd: 'bankrupcty',
       messages: [msg],
-      timeout: true,
       customIds,
     }));
     client.interactionOptions.set(no, new InteractionOption({
@@ -44,7 +47,6 @@ export default new Command({
       guildId,
       cmd: 'cancel',
       messages: [msg],
-      timeout: true,
       customIds,
     }));
     return 1;

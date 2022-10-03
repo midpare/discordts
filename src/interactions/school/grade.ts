@@ -1,15 +1,16 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder, SelectMenuInteraction } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonComponent, ButtonStyle, SelectMenuBuilder, SelectMenuComponent, SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { InteractionOption } from '../../structures/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'grade',
-  deleted: true,
+  deleted: false,
   execute: async ({ interaction, options, client }) => {
     if (!options)
       return;
-    const customIds = Utils.uuid(3);
+    
+    const customIds = Utils.uuid(3)
     const [menuId, cancel, back] = customIds;
 
     const menuOptions = new Array();
@@ -38,14 +39,12 @@ export default new Interaction<SelectMenuInteraction>({
         .setCustomId(back)
         .setStyle(ButtonStyle.Secondary)
         .setLabel('뒤로가기')
-    )
+    );
 
-    interaction.reply({ content: '자신의 학년을 선택해주시기 바랍니다.', components: [ selectMenu, button ] });
+    options.messages[0].edit({ content: '자신의 학년을 선택해주시기 바랍니다.', components: [ selectMenu, button ] });
+    interaction.deferUpdate();
     
-    const message = await interaction.fetchReply();
-    
-    options.messages = [message];
-    options.customIds = customIds;
+    options.customIds = customIds
 
     client.interactionOptions.set(menuId, InteractionOption.getNext(options, {
       cmd: 'class',

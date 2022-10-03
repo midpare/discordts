@@ -23,7 +23,7 @@ export class Messages {
 
   public readonly overMoney = (money: number) => `현재 잔액보다 높은 돈은 입력하실 수 없습니다.\n현재 잔액: ${money.toLocaleString()}원`;
 
-  public readonly punishment = (user: User, punishment: string, reason: string) => '```' + `처벌 대상: ${user.username}#${user.discriminator}\n가한 처벌: ${punishment}\n처벌 사유: ${reason}`;
+  public readonly punishment = (user: User, punishment: string, reason: string, time?: string) => '```' + `처벌 대상: ${user.username}#${user.discriminator}\n가한 처벌: ${punishment}\n` + (time ? `\n처벌 기간: ${time}` : '') +  `\n처벌 사유: ${reason}`;
 
   public readonly coolTime = (second: number) => `명령어의 쿨타임이 ${second}초 남았습니다.`;
 
@@ -43,7 +43,7 @@ export class Messages {
 
       missingPermissionTarget: this.missingPermissionTarget('차단'),
 
-      success: (user: User, reason: string) => this.punishment(user, '차단', reason) + '```',
+      success: (user: User, time: string, reason: string) => this.punishment(user, '차단', reason, time) + '```',
     },
 
     kick: {

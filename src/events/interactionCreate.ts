@@ -10,7 +10,7 @@ export default new Event({
 
     if (interaction.isChatInputCommand()) {
       if (!guildId) {
-        Utils.reply(interaction, '이 명령어는 서버에서만 사용할 수 있습니다.')
+        interaction.reply('이 명령어는 서버에서만 사용할 수 있습니다.')
         return;
       }
       
@@ -99,22 +99,15 @@ export default new Event({
         }
         return `${e.name}: ${e.value}`
       } 
-      logChannel.send(`${member.displayName}님이 "${commandName}"${options.data[0] ? `(${options.data.map(getOptions)})` : ''}명령어를 사용했습니다.`)
+      logChannel.send(`<t:${interaction.createdTimestamp.toString().substring(0, 10)}>\n${member.displayName}님이 "${commandName}"${options.data[0] ? `(${options.data.map(getOptions)})` : ''}명령어를 사용했습니다.`)
     } else if (interaction.isButton() || interaction.isSelectMenu()) {
-      const options = client.interactionOptions.get(interaction.customId);
-      let event = client.interactions.get(interaction.customId);
-      
-      if (!options && event) {
-        event.execute({ interaction, options, client });
-        return;
-      }
-      
+      const options = client.interactionOptions.get(interaction.customId);      
       if (!options) {
         interaction.reply({ content: '사용되지 않거나 종료된 상호작용입니다.', ephemeral: true });
         return;
       }
 
-      event = client.interactions.get(options.cmd);
+      const event = client.interactions.get(options.cmd);
       if (!event || !options.ids.includes(id)) {
         interaction.reply({ content: '이 상호작용을 사용할 수 없습니다.', ephemeral: true });
         return;

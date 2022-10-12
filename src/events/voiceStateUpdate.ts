@@ -10,10 +10,11 @@ export default new Event({
     if (!logChannel || oldState.channelId == newState.channelId || oldState.member?.user.bot)
       return;
 
+    const date = new Date().getTime()
     if (!oldState.channelId && newState.channelId) {
-      logChannel.send(`${newState.member?.displayName}님이 "${newState.channel?.name}"채널에 입장했습니다.`);  
+      logChannel.send(`<t:${date.toString().substring(0, 10)}>\n${newState.member?.displayName}님이 "${newState.channel?.name}"채널에 입장했습니다.`);  
     } else if(oldState.channelId && !newState.channelId) {
-      logChannel.send(`${oldState.member?.displayName}님이 "${oldState.channel?.name}"채널에서 퇴장했습니다.`);
+      logChannel.send(`<t:${date.toString().substring(0, 10)}>\n${oldState.member?.displayName}님이 "${oldState.channel?.name}"채널에서 퇴장했습니다.`);
     }
   }
 });

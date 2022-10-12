@@ -15,10 +15,6 @@ export default new Command({
       required: true,
       choices: [
         {
-          name: '임시역할',
-          value: 'temporaryRole',
-        },
-        {
           name: '기본역할',
           value: 'baseRole',
         },

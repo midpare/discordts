@@ -16,6 +16,7 @@ export default new Event({
     if (!logChannel || image.first())
       return;
 
-    logChannel.send(`-${msgChannel.name}-\n${msg.member?.displayName}: "${msg.content}"`) 
+    console.log(msg.createdTimestamp)
+    logChannel.send(`<t:${msg.createdTimestamp.toString().substring(0, 10)}>\n-${msgChannel.name}-\n${msg.member?.displayName}: "${msg.content}"`) 
   },
 });

@@ -17,7 +17,6 @@ interface GuildType {
     message: Snowflake
     voice: Snowflake
   }
-  temporaryRole: Snowflake; 
   baseRole: Snowflake;
 }
 
@@ -36,7 +35,6 @@ const guildInfo = new Schema<GuildType>({
     message: {type: String, default: '0'},
     voice: {type: String, default: '0'},
   },
-  temporaryRole: {type: String, default: '0'},
   baseRole: {type: String, default: '0'},
 }, {
   versionKey: false

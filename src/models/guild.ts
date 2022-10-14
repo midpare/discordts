@@ -12,7 +12,6 @@ interface GuildType {
   civilWar: [Snowflake];
   log: {
     join: Snowflake
-    exit: Snowflake
     command: Snowflake,
     message: Snowflake
     voice: Snowflake
@@ -30,7 +29,6 @@ const guildInfo = new Schema<GuildType>({
   civilWar: [{type: String, default: '0'}],
   log: {
     join: {type: String, default: '0'},
-    exit: {type: String, default: '0'},
     command: {type: String, default: '0'},
     message: {type: String, default: '0'},
     voice: {type: String, default: '0'},

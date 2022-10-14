@@ -8,7 +8,7 @@ export default new Event({
     (await client.models.config.deleteOne({ id, guildId })).deletedCount;
 
     const guild = await client.models.guild.findOne({ id: guildId });
-    const logChannel = <TextChannel>member.guild.channels.cache.get(guild.log.exit);
+    const logChannel = <TextChannel>member.guild.channels.cache.get(guild.log.join);
     if (!logChannel)
       return;
 

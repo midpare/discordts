@@ -43,10 +43,6 @@ export default new Command({
           value: 'log join',
         },
         {
-          name: '퇴장로그',
-          value: 'log exit',
-        },
-        {
           name: '채팅로그',
           value: 'log message',
         },

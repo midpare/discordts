@@ -12,11 +12,11 @@ export default new Event({
     const logChannel = <TextChannel>msg.guild?.channels.cache.get(guild.log.message);
     const msgChannel = <TextChannel>msg.channel; 
 
-    const image = msg.attachments.filter((e) => e.contentType?.startsWith('image') ?? false)
-    if (!logChannel || image.first())
-      return;
-
-    console.log(msg.createdTimestamp)
-    logChannel.send(`<t:${msg.createdTimestamp.toString().substring(0, 10)}>\n-${msgChannel.name}-\n${msg.member?.displayName}: "${msg.content}"`) 
+    if (logChannel) {
+      if (msg.content.includes('http')) {
+        msg.content = msg.content.replace('http', '<http') + '>'
+      }
+      logChannel.send(`<t:${msg.createdTimestamp.toString().substring(0, 10)}>\n-${msgChannel.name}-\n${msg.member?.displayName}: "${msg.content}"`) 
+    }
   },
 });

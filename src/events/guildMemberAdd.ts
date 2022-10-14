@@ -14,6 +14,7 @@ export default new Event({
     if (!channel)
       return;
 
-    channel?.send(`${member.displayName}#${member.user.discriminator}님이 서버에 입장하였습니다.`);
+    const date = new Date().getTime()
+    channel?.send(`<t:${date.toString().substring(0, 10)}>\n${member.displayName}#${member.user.discriminator}님이 서버에 입장하였습니다.`);
   },
 });

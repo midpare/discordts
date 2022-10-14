@@ -11,7 +11,8 @@ export default new Event({
     const logChannel = <TextChannel>member.guild.channels.cache.get(guild.log.exit);
     if (!logChannel)
       return;
-    
-    logChannel.send(`${member.displayName}님이 퇴장했습니다.`);
+
+    const date = new Date().getTime()
+    logChannel.send(`<t:${date.toString().substring(0, 10)}>\n${member.displayName}님이 퇴장했습니다.`);
   }
 })

@@ -65,28 +65,6 @@ export default new Command({
         categories
       },
     }));
-    // if (!commands) {
-    //   embed
-    //     .setTitle('명령어')
-    //     .setDescription('명령어 카테고리를 확인합니다.');
-    //   for (const category of directories) {
-    //     embed
-    //       .addFields({ name: `/help ${category}`, value: `${category} 관련 명령어를 확인합니다.`, inline: false });
-    //   }
-    //   interaction.reply({ embeds: [embed] });
-    // } else {
-    //   embed
-    //     .setTitle(`${category} 명령어`)
-    //     .setDescription(`${category} 관련 명령어를 확인합니다.\n<>는 필수, []는 선택사항 입니다.`);
-    //   for (const element of commands) {
-    //     const command = client.commands.get(element);
-    //     if (command) {
-    //       embed
-    //         .addFields({ name: '/' + command.usage, value: command.description, inline: false });
-    //     }
-    //   }
-    //   interaction.reply({ embeds: [embed] });
-    // }
     return 1;
   },
 });

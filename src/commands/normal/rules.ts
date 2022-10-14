@@ -16,7 +16,8 @@ export default new Command({
       embed.addFields({ name, value: value.join('\n'), inline: false });
     }
 
-    interaction.reply({ embeds: [embed] });
+    interaction.reply('아래에서 규칙을 확인하세요.')
+    interaction.channel?.send({ embeds: [embed] });
     return 1;
   },
 });

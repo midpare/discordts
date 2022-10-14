@@ -12,9 +12,4 @@ export class Rules {
   public readonly 음성 = [
     '고의로 다른 사람들이 불쾌해할 수도 있는 소리 금지\n예) 바람 소리, 신음 소리 등'
   ];
-
-  public readonly 관리자 = [
-    '처벌 시 처벌 내용 반드시 작성',
-    '권력 남용시 처벌' 
-  ]
 }

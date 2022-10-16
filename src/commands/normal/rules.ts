@@ -1,6 +1,7 @@
 import { EmbedBuilder } from 'discord.js';
 import { Rules } from '../../language/rules';
 import { Command } from '../../managers/Command';
+import { Utils } from '../../structures/Utils';
 
 export default new Command({
   name: '규칙',
@@ -16,7 +17,7 @@ export default new Command({
       embed.addFields({ name, value: value.join('\n'), inline: false });
     }
 
-    interaction.reply('아래에서 규칙을 확인하세요.')
+    Utils.reply(interaction, '아래에서 규칙을 확인하세요.');
     interaction.channel?.send({ embeds: [embed] });
     return 1;
   },

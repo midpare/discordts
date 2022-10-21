@@ -80,7 +80,7 @@ export default new Command({
       if (timeTable.misTimetable == undefined || timeTable.misTimetable[1].row[0].ITRT_CNTNT === '토요휴업일') {
         embed
           .setTitle('시간표')
-          .setDescription('오늘은 시간표가 없습니다.')
+          .setDescription('이날은 시간표가 없습니다.')
           .setColor(Colors.Red);
         interaction.editReply({ embeds: [embed] });
       } else {
@@ -113,7 +113,7 @@ export default new Command({
       if (meal.RESULT != undefined) {
         embed
           .setTitle('급식')
-          .setDescription('오늘은 급식이 없습니다.')
+          .setDescription('이날은 급식이 없습니다.')
           .setColor(Colors.Red);
         interaction.editReply({ embeds: [embed] });
       } else {

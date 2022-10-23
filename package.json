@@ -17,7 +17,7 @@
     "request": "^2.88.2"
   },
   "engines": {
-    "node": "18.x"
+    "node": "19.x"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",

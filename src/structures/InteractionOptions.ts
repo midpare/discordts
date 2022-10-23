@@ -16,21 +16,4 @@ export class InteractionOption {
     this.messages = option.messages;
     this.data = option.data;
   }
-
-  public static getNext(options: InteractionOption, target: Partial<InteractionOption>): InteractionOption {
-    let i: keyof InteractionOption;
-
-    for (i in target) {
-      if (i == 'data') {
-        let j: keyof InteractionOption['data'];
-        for (j in target.data) {
-          options.data[j] = target.data[j];
-        }
-      }
-      options[i] = target[i]
-    }
-
-    const newOptions = new InteractionOption(options);
-    return newOptions;
-  }
 }

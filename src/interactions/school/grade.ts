@@ -45,18 +45,12 @@ export default new Interaction<SelectMenuInteraction>({
     interaction.deferUpdate();
     
     options.customIds = customIds
+    
+    options.data = JSON.parse(interaction.values[0])
+    client.interactionOptions.set(menuId, Object.assign({}, options, { cmd: 'class' }));
 
-    client.interactionOptions.set(menuId, InteractionOption.getNext(options, {
-      cmd: 'class',
-      data: JSON.parse(interaction.values[0])
-    }));
+    client.interactionOptions.set(cancel, Object.assign({}, options, { cmd: 'cancel' }));
 
-    client.interactionOptions.set(cancel, InteractionOption.getNext(options, {
-      cmd: 'cancel',
-    }));
-
-    client.interactionOptions.set(back, InteractionOption.getNext(options, {
-      cmd: 'back',
-    }));
+    client.interactionOptions.set(back, Object.assign({}, options, { cmd: 'back' }));
   },
 });

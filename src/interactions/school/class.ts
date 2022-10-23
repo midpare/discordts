@@ -62,22 +62,14 @@ export default new Interaction<SelectMenuInteraction>({
 
     options.messages[0].edit({ content: '자신의 반을 선택해주시기 바랍니다.', components: [selectMenu, button] });
     interaction.deferUpdate();
-    
+
     options.customIds = customIds;
+    
+    Object.assign(options.data, { grade });
+    client.interactionOptions.set(menuId, Object.assign({}, options, { cmd: 'upload' }));
 
-    client.interactionOptions.set(menuId, InteractionOption.getNext(options, {
-      cmd: 'upload',
-      data: {
-        grade,
-      },
-    }));
+    client.interactionOptions.set(cancel, Object.assign({}, options, { cmd: 'cancel' }));
 
-    client.interactionOptions.set(cancel, InteractionOption.getNext(options, {
-      cmd: 'cancel',
-    }));
-
-    client.interactionOptions.set(back, InteractionOption.getNext(options, {
-      cmd: 'back',
-    }));
+    client.interactionOptions.set(back, Object.assign({}, options, { cmd: 'back' }));
   },
 });

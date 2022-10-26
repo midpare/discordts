@@ -6,8 +6,9 @@ export default new Event({
   name: 'guildMemberAdd',
   execute: async (client: Client, member: GuildMember) => {
     const guild = await client.models.guild.findOne({ id: member.guild.id });
-
-    member.roles.add(guild.baseRole);
+    
+    if (guild.baseRole)
+      member.roles.add(guild.baseRole);
 
     const channel = <TextChannel>client.guilds.cache.get(member.guild.id)?.channels.cache.get(guild.log.join);
 

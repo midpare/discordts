@@ -14,7 +14,11 @@ interface GamblingType {
     name: string; 
     count: number; 
     money: number
-  }>
+  }>;
+  items: Array<{
+    name: string
+    rank: number
+  }>;
 }
 
 const gamblingInfo = new Schema<GamblingType>({
@@ -27,8 +31,9 @@ const gamblingInfo = new Schema<GamblingType>({
   bankruptcyTime: { type: Number, default: 0 },
   baseMoneyTime: { type: Number, default: 0 },
   coin: [{name: String, count: Number, money: Number}, {_id: false}],
+  items: [{name: String, rank: Number}],
 }, {
-  versionKey: false
+  versionKey: false,
 });
 
-export default new Model('gambling', gamblingInfo)
+export default new Model('gambling', gamblingInfo);

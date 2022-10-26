@@ -31,6 +31,7 @@ export default new Event({
         case '도박':
         case '베팅':
         case '코인':
+        case '강화':
           if (event.name == '가입')
             break;
 
@@ -40,7 +41,7 @@ export default new Event({
             return;
           }
 
-          const leftTime = 1000 * 60 * 60 - time + gambUser.bankruptcyTime;
+          const leftTime = 1000 * 60 * 10 - time + gambUser.bankruptcyTime;
           const leftminute = Math.floor(leftTime / (1000 * 60));
           const leftsecond = leftTime / 1000 - leftminute * 60;
 

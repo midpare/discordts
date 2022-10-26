@@ -4,16 +4,15 @@ import { InteractionOption } from "../../structures/InteractionOptions";
 import { Utils } from "../../structures/Utils";
 
 const table = [
-  { success: 990, fail: 0, breaking: 10, money: 80000, sell: 20000 },
-  { success: 900, fail: 100, breaking: 0, money: 120000, sell: 80000 },
-  { success: 850, fail: 150, breaking: 0, money: 270000, sell: 250000 },
-  { success: 800, fail: 200, breaking: 0, money: 520000, sell: 500000 },
-  { success: 550, fail: 400, breaking: 50, money: 660000, sell: 1700000 },
-  { success: 450, fail: 450, breaking: 100, money: 970000, sell: 2500000 },
-  { success: 300, fail: 600, breaking: 100, money: 1200000, sell: 4400000 },
-  { success: 200, fail: 650, breaking: 150, money: 1600000, sell: 7000000 },
-  { success: 100, fail: 500, breaking: 400, money: 1900000, sell: 10000000 },
-  { success: 50, fail: 400, breaking: 550, money: 260000, sell: 17000000 },
+    { success: 990, fail: 0, breaking: 10, money: 80000 },
+    { success: 900, fail: 100, breaking: 0, money: 120000 },
+    { success: 850, fail: 150, breaking: 0, money: 270000 },
+    { success: 800, fail: 200, breaking: 0, money: 520000 },
+    { success: 550, fail: 400, breaking: 50, money: 660000 },
+    { success: 450, fail: 450, breaking: 100, money: 970000 },
+    { success: 300, fail: 600, breaking: 100, money: 1200000 },
+    { success: 200, fail: 650, breaking: 150, money: 1600000 },
+    { success: 100, fail: 500, breaking: 400, money: 1900000 },
 ];
 
 interface Table {
@@ -21,7 +20,6 @@ interface Table {
   fail: number
   breaking: number
   money: number
-  sell: number
 }
 
 export class Enforce {

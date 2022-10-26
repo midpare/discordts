@@ -3,7 +3,6 @@ import { Command } from '../../managers/Command';
 import { Utils } from '../../structures/Utils';
 
 const sell = [
-  20000,
   80000,
   250000,
   500000,
@@ -35,6 +34,11 @@ export default new Command({
 
     const user = await client.models.gambling.findOne({ id, guildId })
     const item = user.items.filter((e: { name: string }) => e.name == name)[0]
+
+    if (item.rank <= 1) {
+      Utils.reply(interaction, '1강 장비는 판매할 수 없습니다.');
+      return 0;
+    }
 
     const money = sell[item.rank - 1];
 

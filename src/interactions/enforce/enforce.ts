@@ -1,0 +1,48 @@
+import { Interaction } from '../../managers/Interaction';
+import { Utils } from '../../structures/Utils';
+
+export default new Interaction({
+  name: 'enforce',
+  deleted: false,
+  execute: async ({ interaction, options, client }) => {
+    if (!options)
+      return;
+
+    const { guildId, user: { id } } = interaction;
+    const user = await client.models.gambling.findOne({ id, guildId });
+
+    const { enforce } = options.data;
+    const item = user.items.filter((e: { name: string }) => e.name == enforce.itemName)[0]
+    const { success, fail, money } = enforce.enforceTable[enforce.rank - 1];
+
+    if (user.money < money) {
+      interaction.reply({ content: `강화비용이 현재 보유 중인 돈보다 많습니다.\n강화비용: ${money}원, 현재 돈:${user.money}`, ephemeral: true });
+      return;
+    }
+
+    const rand = Math.floor(Math.random() * 1000);
+
+    if (rand < success) {
+      enforce.rank++;
+
+      enforce.send({ content: `강화에 성공하셨습니다!\n${enforce.rank - 1}강 -> ${enforce.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
+      (await client.models.gambling.updateOne({ id, guildId, items: item }, { $inc: { 'items.$.rank': 1, money: -money } })).matchedCount;
+    } else if (rand < success + fail && rand >= success) {
+      enforce.rank--;
+
+      enforce.send({ content: `강화에 실패하셨습니다!\n${enforce.rank + 1}강 -> ${enforce.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
+      (await client.models.gambling.updateOne({ id, guildId, items: item }, { $inc: { 'items.$.rank': -1, money: -money } })).matchedCount;
+    } else {
+      if (enforce.protection) {
+        enforce.protection = false
+        enforce.send({ content: '장비가 파괴될 뻔 했지만 파괴방지권의 효력으로 파괴되지 않았습니다!', components: [enforce.button], embeds: [enforce.embed] });
+        (await client.models.gambling.updateOne({ id, guildId, items: item }, { $inc: { money: -money } })).matchedCount;
+      } else {
+        enforce.message.edit({ content: `안타깝네요! 장비가 파괴되었습니다.` });
+        enforce.message.delete();
+        (await client.models.gambling.updateOne({ id, guildId }, { $pull: { items: item } })).matchedCount;
+      }
+    }
+    interaction.deferUpdate();
+  },
+});

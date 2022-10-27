@@ -36,17 +36,17 @@ export default new Command({
     const user = await client.models.gambling.findOne({ id, guildId })
     const item = user.items.filter((e: { name: string }) => e.name == name)[0]
 
+    if (!item) {
+      Utils.reply(interaction, '이 이름의 장비를 보유하고 있지 않습니다.');
+      return 0;
+    }
+
     if (item.rank <= 1) {
       Utils.reply(interaction, '1강 장비는 판매할 수 없습니다.');
       return 0;
     }
 
     const money = sell[item.rank - 2];
-
-    if (!item) {
-      Utils.reply(interaction, '이 이름의 장비를 보유하고 있지 않습니다.');
-      return 0;
-    }
 
     const customIds = Utils.uuid(2)
     const [yes, no] = customIds;

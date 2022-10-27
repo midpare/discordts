@@ -12,6 +12,11 @@ export default new Interaction<SelectMenuInteraction>({
     const user = await client.models.gambling.findOne({ id, guildId });
     const item = user.items.filter((e: { name: string }) => e.name == interaction.values[0])[0]
 
+    if (item.rank > 9) {
+      interaction.reply('이 장비는 이미 10강까지 강화를 완료했습니다.');
+      return; 
+    }
+
     const enforce = new Enforce(client, options, item.name, item.rank, options.messages[0], user.money)
 
     enforce.send({ content: null, embeds: [enforce.embed], components: [enforce.button] });

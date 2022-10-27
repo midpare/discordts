@@ -14,10 +14,11 @@ export default new Interaction({
     const item = user.items.filter((e: { name: string }) => e.name == enforce.itemName)[0]
     const { success, fail, money } = enforce.enforceTable[enforce.rank - 1];
 
-    enforce.balance -= money
-    enforce.totalMoney += money
+    enforce.balance -= money;
+    enforce.totalMoney += money;
+
     if (user.money < money) {
-      interaction.reply({ content: `강화비용이 현재 보유 중인 돈보다 많습니다.\n강화비용: ${money}원, 현재 돈:${user.money}`, ephemeral: true });
+      enforce.send({ content: `강화비용이 현재 보유 중인 돈보다 많습니다.\n강화비용: ${money.toLocaleString()}원, 현재 돈:${user.money.toLocaleString()}원`, ephemeral: true });
       return;
     }
 
@@ -25,8 +26,13 @@ export default new Interaction({
 
     if (rand < success) {
       enforce.rank++;
+      
+      if (enforce.rank > 9) {
+        options.messages[0].delete();
+        interaction.channel?.send(`축하합니다! "${enforce.itemName}"을(를) 10강까지 강화했습니다!`);
+      } else
+        enforce.send({ content: `강화에 성공하셨습니다!\n${enforce.rank - 1}강 -> ${enforce.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
 
-      enforce.send({ content: `강화에 성공하셨습니다!\n${enforce.rank - 1}강 -> ${enforce.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
       (await client.models.gambling.updateOne({ id, guildId, items: item }, { $inc: { 'items.$.rank': 1, money: -money } })).matchedCount;
     } else if (rand < success + fail && rand >= success) {
       let minus = -1

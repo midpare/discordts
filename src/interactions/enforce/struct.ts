@@ -49,10 +49,10 @@ export class Enforce {
   }
 
   get embed(): EmbedBuilder {
-    const { success, fail, breaking } = this.enforceTable[this.rank - 1];
+    const { success, fail, breaking, money } = this.enforceTable[this.rank - 1];
 
     return new EmbedBuilder()
-      .setTitle(`${this.itemName} 강화메뉴`)
+      .setTitle(`${this.itemName} 강화메뉴(강화비용: ${money.toLocaleString()}원)`)
       .setDescription(`성공확률: ${success}%, 실패확률: ${fail}%, 파괴확률: ${breaking}%\n잔액: ${this.balance.toLocaleString()}원, 사용한 돈: ${this.totalMoney.toLocaleString()}원`)
       .setFields([
         { name: '강화횟수', value: `${this.rank}강`, inline: true },

@@ -4,7 +4,7 @@ import { Interaction } from '../../managers/Interaction';
 export default new Interaction<ButtonInteraction>({
   name: 'protection',
   deleted: false,
-  execute: async ({ interaction, options, client }) => {
+  execute: async ({ interaction, options }) => {
     if (!options) 
       return; 
 

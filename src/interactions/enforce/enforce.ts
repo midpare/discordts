@@ -18,7 +18,7 @@ export default new Interaction({
     enforce.totalMoney += money;
 
     if (user.money < money) {
-      enforce.send({ content: `강화비용이 현재 보유 중인 돈보다 많습니다.\n강화비용: ${money.toLocaleString()}원, 현재 돈:${user.money.toLocaleString()}원`, ephemeral: true });
+      enforce.send({ content: `강화비용이 현재 보유 중인 돈보다 많습니다.\n강화비용: ${money.toLocaleString()}원, 현재 돈:${user.money.toLocaleString()}원`, embeds: [enforce.embed], components: [enforce.button] });
       return;
     }
 

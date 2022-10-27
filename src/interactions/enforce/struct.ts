@@ -4,15 +4,15 @@ import { InteractionOption } from "../../structures/InteractionOptions";
 import { Utils } from "../../structures/Utils";
 
 const table = [
-  { success: 95, fail: 4, breaking: 1, money: 10000 },
-  { success: 90, fail: 8, breaking: 2, money: 20000 },
-  { success: 85, fail: 10, breaking: 5, money: 50000 },
-  { success: 80, fail: 13, breaking: 7, money: 80000 },
-  { success: 70, fail: 20, breaking: 10, money: 100000 },
-  { success: 60, fail: 28, breaking: 12, money: 150000 },
-  { success: 50, fail: 35, breaking: 15, money: 200000 },
-  { success: 40, fail: 43, breaking: 17, money: 300000 },
-  { success: 30, fail: 50, breaking: 20, money: 500000 },
+  { success: 95, fail: 4, breaking: 1, money: 10000, sell: 10000 },
+  { success: 90, fail: 8, breaking: 2, money: 20000, sell: 30000 },
+  { success: 85, fail: 10, breaking: 5, money: 50000, sell: 80000 },
+  { success: 80, fail: 13, breaking: 7, money: 80000, sell: 200000 },
+  { success: 70, fail: 20, breaking: 10, money: 100000, sell: 450000 },
+  { success: 60, fail: 28, breaking: 12, money: 150000, sell: 850000 },
+  { success: 50, fail: 35, breaking: 15, money: 200000, sell: 2000000 },
+  { success: 40, fail: 43, breaking: 17, money: 300000, sell: 4000000 },
+  { success: 30, fail: 50, breaking: 20, money: 500000, sell: 10000000 },
 ];
 
 interface Table {
@@ -52,7 +52,7 @@ export class Enforce {
     const { success, fail, breaking, money } = this.enforceTable[this.rank - 1];
 
     return new EmbedBuilder()
-      .setTitle(`${this.itemName} 강화메뉴(강화비용: ${money.toLocaleString()}원)`)
+      .setTitle(`"${this.itemName}" 강화메뉴(강화비용: ${money.toLocaleString()}원)`)
       .setDescription(`성공확률: ${success}%, 실패확률: ${fail}%, 파괴확률: ${breaking}%\n잔액: ${this.balance.toLocaleString()}원, 사용한 돈: ${this.totalMoney.toLocaleString()}원`)
       .setFields([
         { name: '강화횟수', value: `${this.rank}강`, inline: true },
@@ -103,4 +103,4 @@ export class Enforce {
   async send(options: MessageEditOptions) {
     this.message = await this.message.edit(options);
   }
-}
+} 

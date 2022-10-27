@@ -74,7 +74,7 @@ export class Enforce {
     this.client.interactionOptions.set(enforceId, new InteractionOption(Object.assign({}, { cmd: 'enforce' }, defaultOption)))
     this.client.interactionOptions.set(protectionId, new InteractionOption(Object.assign({}, { cmd: 'protection' }, defaultOption)));
     this.client.interactionOptions.set(increaseChanceId, new InteractionOption(Object.assign({}, { cmd: 'increaseChance' }, defaultOption)));
-    this.client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, { cmd: 'cancel' }, defaultOption)));
+    this.client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, { cmd: 'enforce_end' }, defaultOption)));
 
     return <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()
@@ -92,7 +92,7 @@ export class Enforce {
       new ButtonBuilder()
         .setCustomId(cancelId)
         .setStyle(ButtonStyle.Secondary)
-        .setLabel('취소')
+        .setLabel('종료')
     );
   }
 

@@ -1,5 +1,6 @@
-import { ApplicationCommandOptionType } from 'discord.js';
+import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { Command } from '../../managers/Command';
+import { InteractionOption } from '../../structures/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 const sell = [
@@ -47,7 +48,36 @@ export default new Command({
       return 0;
     }
 
-    (await client.models.gambling.updateOne({ id, guildId }, { $pull: { items: item }, $inc: { money } })).matchedCount;
+    const customIds = Utils.uuid(2)
+    const [yes, no] = customIds;
+
+    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+      new ButtonBuilder()
+        .setCustomId(yes)
+        .setStyle(ButtonStyle.Success)
+        .setLabel('예'),
+      new ButtonBuilder()
+        .setCustomId(no)
+        .setStyle(ButtonStyle.Secondary)
+        .setLabel('아니오')
+    )
+
+    interaction.reply({ content: `정말 "${name}"의 장비를 ${money}가격에 판매하시겠습니까?`, components: [row] });
+
+    const defaultOption = {
+      ids: [id],
+      guildId: guildId!,
+      messages: [await interaction.fetchReply()],
+      customIds,
+      data: {
+        item,
+        money,
+      }
+    };
+
+    client.interactionOptions.set(yes, new InteractionOption(Object.assign({}, { cmd: 'enforce_sell' }, defaultOption)));
+    client.interactionOptions.set(no, new InteractionOption(Object.assign({}, { cmd: 'cancel' }, defaultOption)));
+
     interaction.reply(`성공적으로 "${name}" 장비를 ${money}가격에 판매했습니다!`);
 
     return 1;

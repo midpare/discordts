@@ -3,7 +3,7 @@ import { User } from 'discord.js';
 export class Messages {
   public readonly yes = '예';
 
-  public readonly no = '아니요';
+  public readonly no = '아니오';
 
   public readonly none = '없음';
 

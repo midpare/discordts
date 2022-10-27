@@ -4,15 +4,15 @@ import { InteractionOption } from "../../structures/InteractionOptions";
 import { Utils } from "../../structures/Utils";
 
 const table = [
-    { success: 990, fail: 0, breaking: 10, money: 80000 },
-    { success: 900, fail: 100, breaking: 0, money: 120000 },
-    { success: 850, fail: 150, breaking: 0, money: 270000 },
-    { success: 800, fail: 200, breaking: 0, money: 520000 },
-    { success: 550, fail: 400, breaking: 50, money: 660000 },
-    { success: 450, fail: 450, breaking: 100, money: 970000 },
-    { success: 300, fail: 600, breaking: 100, money: 1200000 },
-    { success: 200, fail: 650, breaking: 150, money: 1600000 },
-    { success: 100, fail: 500, breaking: 400, money: 1900000 },
+  { success: 95, fail: 4, breaking: 1, money: 10000 },
+  { success: 90, fail: 8, breaking: 2, money: 20000 },
+  { success: 85, fail: 10, breaking: 5, money: 50000 },
+  { success: 80, fail: 13, breaking: 7, money: 80000 },
+  { success: 70, fail: 20, breaking: 10, money: 100000 },
+  { success: 60, fail: 28, breaking: 12, money: 150000 },
+  { success: 50, fail: 35, breaking: 15, money: 200000 },
+  { success: 40, fail: 43, breaking: 17, money: 300000 },
+  { success: 30, fail: 50, breaking: 20, money: 500000 },
 ];
 
 interface Table {
@@ -49,7 +49,7 @@ export class Enforce {
 
     return new EmbedBuilder()
       .setTitle(`${this.itemName} 강화메뉴`)
-      .setDescription(`성공확률: ${success / 10}%, 실패확률: ${fail / 10}%, 파괴확률: ${breaking / 10}%`)
+      .setDescription(`성공확률: ${success}%, 실패확률: ${fail}%, 파괴확률: ${breaking}%`)
       .setFields([
         { name: '강화횟수', value: `${this.rank}강`, inline: true },
         { name: '파괴방지권', value: this.protection ? '사용 중' : '미 사용', inline: true },
@@ -58,8 +58,8 @@ export class Enforce {
   }
 
   get button(): ActionRowBuilder<ButtonBuilder> {
-    const customIds = Utils.uuid(3);
-    const [enforceId, protectionId, increaseChanceId] = customIds;
+    const customIds = Utils.uuid(4);
+    const [enforceId, protectionId, increaseChanceId, cancelId] = customIds;
 
     const defaultOption = {
       ids: [this.id],
@@ -74,6 +74,7 @@ export class Enforce {
     this.client.interactionOptions.set(enforceId, new InteractionOption(Object.assign({}, { cmd: 'enforce' }, defaultOption)))
     this.client.interactionOptions.set(protectionId, new InteractionOption(Object.assign({}, { cmd: 'protection' }, defaultOption)));
     this.client.interactionOptions.set(increaseChanceId, new InteractionOption(Object.assign({}, { cmd: 'increaseChance' }, defaultOption)));
+    this.client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, { cmd: 'cancel' }, defaultOption)));
 
     return <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()
@@ -88,6 +89,10 @@ export class Enforce {
         .setCustomId(increaseChanceId)
         .setStyle(ButtonStyle.Primary)
         .setLabel(this.increaseChance ? '확률증가권 해제' : '확률증가권 사용'),
+      new ButtonBuilder()
+        .setCustomId(cancelId)
+        .setStyle(ButtonStyle.Secondary)
+        .setLabel('취소')
     );
   }
 

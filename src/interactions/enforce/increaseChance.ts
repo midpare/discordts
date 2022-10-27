@@ -11,7 +11,7 @@ export default new Interaction({
 
     enforce.increaseChance = !enforce.increaseChance
 
-    enforce.send({ embeds: [enforce.embed], components: [enforce.button] });
+    enforce.send({ content: '확률 증가권을 사용했습니다!', embeds: [enforce.embed], components: [enforce.button] });
     interaction.deferUpdate();
   },
 });

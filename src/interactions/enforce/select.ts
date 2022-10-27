@@ -3,7 +3,7 @@ import { Interaction } from '../../managers/Interaction';
 import { Enforce } from './struct';
 
 export default new Interaction<SelectMenuInteraction>({
-  name: 'select',
+  name: 'select_enforce',
   deleted: false,
   execute: async ({ interaction, options, client }) => {
     if (!options)

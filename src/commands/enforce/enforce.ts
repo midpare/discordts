@@ -24,7 +24,8 @@ export default new Command({
       }; 
     });
 
-    const selectMenuId = Utils.uuid()
+    const customIds = Utils.uuid(2)
+    const [ selectMenuId, cancelId ] = customIds
 
     const selectMenuRow = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().setComponents(
       new SelectMenuBuilder()
@@ -33,17 +34,25 @@ export default new Command({
         .setOptions(SelectMenuOptions)
     );
 
-    interaction.reply({ content: '강화할 장비를 선택해주세요.', components: [selectMenuRow] });
+    const buttonRow = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+      new ButtonBuilder()
+        .setCustomId(cancelId)
+        .setStyle(ButtonStyle.Secondary)
+        .setLabel('취소'),
+    )
+
+    interaction.reply({ content: '강화할 장비를 선택해주세요.', components: [selectMenuRow, buttonRow] });
     
     const message = await interaction.fetchReply();
 
-    client.interactionOptions.set(selectMenuId, new InteractionOption({
+    const defaultOption = {
       ids: [id],
       guildId: guildId!,
-      cmd: 'select',
       messages: [message], 
       customIds: [selectMenuId],
-    }));
+    }
+    client.interactionOptions.set(selectMenuId, new InteractionOption(Object.assign({}, { cmd: 'select_enforce' }, defaultOption)));
+    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, { cmd: 'cancel'}, defaultOption)));
 
     return 1;
   },

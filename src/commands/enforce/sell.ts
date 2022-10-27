@@ -3,15 +3,15 @@ import { Command } from '../../managers/Command';
 import { Utils } from '../../structures/Utils';
 
 const sell = [
+  10000,
+  30000,
   80000,
-  250000,
-  500000,
-  1700000,
-  2500000,
-  4400000,
-  7000000,
+  200000,
+  450000,
+  850000,
+  2000000,
+  4000000,
   10000000,
-  17000000,
 ];
 
 export default new Command({
@@ -48,7 +48,7 @@ export default new Command({
     }
 
     (await client.models.gambling.updateOne({ id, guildId }, { $pull: { items: item }, $inc: { money } })).matchedCount;
-    interaction.reply(`성공적으로 "${name}" 장비를 판매했습니다!`);
+    interaction.reply(`성공적으로 "${name}" 장비를 ${money}가격에 판매했습니다!`);
 
     return 1;
   },

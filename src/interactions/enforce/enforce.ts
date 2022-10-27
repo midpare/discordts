@@ -14,6 +14,8 @@ export default new Interaction({
     const item = user.items.filter((e: { name: string }) => e.name == enforce.itemName)[0]
     const { success, fail, money } = enforce.enforceTable[enforce.rank - 1];
 
+    enforce.balance -= money
+    enforce.totalMoney += money
     if (user.money < money) {
       interaction.reply({ content: `강화비용이 현재 보유 중인 돈보다 많습니다.\n강화비용: ${money}원, 현재 돈:${user.money}`, ephemeral: true });
       return;

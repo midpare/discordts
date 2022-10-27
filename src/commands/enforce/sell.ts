@@ -41,7 +41,7 @@ export default new Command({
       return 0;
     }
 
-    const money = sell[item.rank - 1];
+    const money = sell[item.rank - 2];
 
     if (!item) {
       Utils.reply(interaction, '이 이름의 장비를 보유하고 있지 않습니다.');
@@ -58,11 +58,11 @@ export default new Command({
         .setLabel('예'),
       new ButtonBuilder()
         .setCustomId(no)
-        .setStyle(ButtonStyle.Secondary)
+        .setStyle(ButtonStyle.Danger)
         .setLabel('아니오')
     )
 
-    interaction.reply({ content: `정말 "${name}"의 장비를 ${money}가격에 판매하시겠습니까?`, components: [row] });
+    interaction.reply({ content: `정말 "${name}"을(를) ${money.toLocaleString()}원에 판매하시겠습니까?`, components: [row] });
 
     const defaultOption = {
       ids: [id],
@@ -77,9 +77,6 @@ export default new Command({
 
     client.interactionOptions.set(yes, new InteractionOption(Object.assign({}, { cmd: 'enforce_sell' }, defaultOption)));
     client.interactionOptions.set(no, new InteractionOption(Object.assign({}, { cmd: 'cancel' }, defaultOption)));
-
-    interaction.reply(`성공적으로 "${name}" 장비를 ${money}가격에 판매했습니다!`);
-
     return 1;
   },
 });

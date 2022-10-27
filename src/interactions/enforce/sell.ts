@@ -3,7 +3,7 @@ import { Interaction } from '../../managers/Interaction';
 
 export default new Interaction({
   name: 'enforce_sell',
-  deleted:  true,
+  deleted:  false,
   execute: async ({ interaction, options, client }) => {
     const { guildId, user: { id } } = interaction;
     const { item, money } = options?.data;

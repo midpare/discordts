@@ -27,13 +27,15 @@ export class Enforce {
   public readonly id: Snowflake;
   public readonly guildId: Snowflake;
   public readonly itemName: string;
+  public readonly enforceTable: Array<Table> = table;
   public rank: number;
   public protection: boolean;
   public increaseChance: boolean;
-  public message: Message
-  public enforceTable: Array<Table> = table
+  public message: Message;
+  public balance: number;
+  public totalMoney: number;
 
-  constructor(client: Client, data: InteractionOption, itemName: string, rank: number, message: Message) {
+  constructor(client: Client, data: InteractionOption, itemName: string, rank: number, message: Message, balance: number) {
     this.client = client
     this.id = data.ids[0];
     this.guildId = data.guildId;
@@ -41,7 +43,9 @@ export class Enforce {
     this.rank = rank;
     this.protection = false;
     this.increaseChance = false;
-    this.message = message
+    this.message = message;
+    this.balance = balance;
+    this.totalMoney = 0;
   }
 
   get embed(): EmbedBuilder {
@@ -49,7 +53,7 @@ export class Enforce {
 
     return new EmbedBuilder()
       .setTitle(`${this.itemName} 강화메뉴`)
-      .setDescription(`성공확률: ${success}%, 실패확률: ${fail}%, 파괴확률: ${breaking}%`)
+      .setDescription(`성공확률: ${success}%, 실패확률: ${fail}%, 파괴확률: ${breaking}%\n잔액: ${this.balance.toLocaleString()}원, 사용한 돈: ${this.totalMoney.toLocaleString()}원`)
       .setFields([
         { name: '강화횟수', value: `${this.rank}강`, inline: true },
         { name: '파괴방지권', value: this.protection ? '사용 중' : '미 사용', inline: true },

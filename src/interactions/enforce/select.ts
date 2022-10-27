@@ -12,7 +12,7 @@ export default new Interaction<SelectMenuInteraction>({
     const user = await client.models.gambling.findOne({ id, guildId });
     const item = user.items.filter((e: { name: string }) => e.name == interaction.values[0])[0]
 
-    const enforce = new Enforce(client, options, item.name, item.rank, options.messages[0])
+    const enforce = new Enforce(client, options, item.name, item.rank, options.messages[0], user.money)
 
     enforce.send({ content: null, embeds: [enforce.embed], components: [enforce.button] });
 

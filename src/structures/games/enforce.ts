@@ -78,10 +78,10 @@ export class Enforce {
       }
     }
 
-    this.client.interactionOptions.set(enforceId, new InteractionOption(Object.assign({}, { cmd: 'enforce' }, defaultOption)))
-    this.client.interactionOptions.set(protectionId, new InteractionOption(Object.assign({}, { cmd: 'protection' }, defaultOption)));
-    this.client.interactionOptions.set(increaseChanceId, new InteractionOption(Object.assign({}, { cmd: 'increaseChance' }, defaultOption)));
-    this.client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, { cmd: 'enforce_end' }, defaultOption)));
+    this.client.interactionOptions.set(enforceId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'enforce' })))
+    this.client.interactionOptions.set(protectionId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'protection' })));
+    this.client.interactionOptions.set(increaseChanceId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'increaseChance' })));
+    this.client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'enforce_end' })));
 
     return <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()

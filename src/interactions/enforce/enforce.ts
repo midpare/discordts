@@ -14,7 +14,7 @@ export default new Interaction({
     const item = user.items.filter((e: { name: string }) => e.name == enforce.itemName)[0];
 
     if (!item) {
-      enforce.send({ content: '이미 판매한 장비입니다.' });
+      enforce.send({ content: `이미 판매한 장비입니다.` });
       return;
     }
 
@@ -34,7 +34,7 @@ export default new Interaction({
       
       if (enforce.rank > 9) {
         options.messages[0].delete();
-        interaction.channel?.send(`축하합니다! "${enforce.itemName}"을(를) 10강까지 강화했습니다!`);
+        interaction.channel?.send(`<@${id}>축하합니다! "${enforce.itemName}"을(를) 10강까지 강화했습니다!`);
       } else
         enforce.send({ content: `강화에 성공하셨습니다!\n${enforce.rank - 1}강 -> ${enforce.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
 

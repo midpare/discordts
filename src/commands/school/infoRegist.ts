@@ -85,7 +85,7 @@ export default new Command({
     }
 
     if (menuOptions.length < 1) {
-      Utils.reply(interaction, '정확한 학교명을 입력해주시기 바랍니다.', true);
+      interaction.editReply('정확한 학교명을 입력해주시기 바랍니다.');
       return 0;
     }
 

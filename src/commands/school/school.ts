@@ -42,7 +42,7 @@ export default new Command({
     const user = await client.models.school.findOne({ id, guildId });
 
     if (!user) {
-      Utils.reply(interaction, '학교등록이 되지 않은 유저입니다.', true);
+      interaction.editReply('학교등록이 되지 않은 유저입니다.');
       return 0;
     }
     interaction.deferReply()

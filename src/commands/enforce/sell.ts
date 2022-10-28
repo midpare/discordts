@@ -13,14 +13,10 @@ export default new Command({
     const { guildId, user: { id } } = interaction;
 
     const user = await client.models.gambling.findOne({ id, guildId })
-
-    if (!user.items[0]) {
-      Utils.reply(interaction, '보유한 장비가 없습니다.');
-      return 0;
-    }
+    
     const customIds = Utils.uuid(2);
     const [menuId, cancelId] = customIds;
-
+    
     const selectMenuOptions: Array<any> = user.items.map((item: { name: string, rank: number }) => {
       if (item.rank > 1) {
         const { sell } = enforceTable[item.rank - 2]
@@ -31,7 +27,12 @@ export default new Command({
         };
       }
     }).filter((e: Object) => e != undefined);
-
+    
+    
+    if (!selectMenuOptions[0]) {
+      Utils.reply(interaction, '판매 가능한 장비가 없습니다.');
+      return 0;
+    }
 
     const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().setComponents(
       new SelectMenuBuilder()

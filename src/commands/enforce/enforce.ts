@@ -16,22 +16,24 @@ export default new Command({
       Utils.reply(interaction, '보유하고 있는 장비가 없습니다.');
       return 0;
     }
-    const SelectMenuOptions = user.items.map((e: { name: string, rank: number }) => {
-      return {
-        label: e.name,
-        value: e.name,
-        description: `현재 강화 횟수는 ${e.rank}강 입니다.`,
-      }; 
-    });
+    const selectMenuOptions = user.items.map((e: { name: string, rank: number }) => {
+      if (e.rank < 10) {
+        return {
+          label: e.name,
+          value: e.name,
+          description: `현재 강화 횟수는 ${e.rank}강 입니다.`,
+        }; 
+      }
+    }).filter((e: Object) => e != undefined);
 
     const customIds = Utils.uuid(2)
-    const [ selectMenuId, cancelId ] = customIds
+    const [ selectMenuId, cancelId ] = customIds;
 
     const selectMenuRow = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().setComponents(
       new SelectMenuBuilder()
         .setCustomId(selectMenuId)
         .setPlaceholder('여기서 강화장비를 선택하세요')
-        .setOptions(SelectMenuOptions)
+        .setOptions(selectMenuOptions)
     );
 
     const buttonRow = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
@@ -44,6 +46,11 @@ export default new Command({
     interaction.reply({ content: '강화할 장비를 선택해주세요.', components: [selectMenuRow, buttonRow] });
     
     const message = await interaction.fetchReply();
+    
+    setTimeout(() => {
+      if (!message.deletable)
+        message.delete();
+    }, 10 * 60 * 1000);
 
     const defaultOption = {
       ids: [id],

@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import { Model } from '../managers/Model';
 
-interface GamblingType {
+export interface GamblingType {
   id: string;
   name: string;
   guildId: string;

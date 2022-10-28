@@ -1,9 +1,10 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Message, MessageEditOptions, Snowflake } from "discord.js";
-import { Client } from "../../structures/Client";
-import { InteractionOption } from "../../structures/InteractionOptions";
-import { Utils } from "../../structures/Utils";
+import { GamblingType } from "../../models/gambling";
+import { Client } from "../Client";
+import { InteractionOption } from "../InteractionOptions";
+import { Utils } from "../Utils";
 
-const table = [
+export const enforceTable = [
   { success: 95, fail: 4, breaking: 1, money: 10000, sell: 10000 },
   { success: 90, fail: 8, breaking: 2, money: 20000, sell: 30000 },
   { success: 85, fail: 10, breaking: 5, money: 50000, sell: 80000 },
@@ -20,6 +21,7 @@ interface Table {
   fail: number
   breaking: number
   money: number
+  sell: number
 }
 
 export class Enforce {
@@ -27,33 +29,34 @@ export class Enforce {
   public readonly id: Snowflake;
   public readonly guildId: Snowflake;
   public readonly itemName: string;
-  public readonly enforceTable: Array<Table> = table;
+  public readonly enforceTable: Array<Table> = enforceTable;
   public rank: number;
   public protection: boolean;
   public increaseChance: boolean;
   public message: Message;
-  public balance: number;
-  public totalMoney: number;
+  public money: number;
 
-  constructor(client: Client, data: InteractionOption, itemName: string, rank: number, message: Message, balance: number) {
+  constructor(client: Client, data: InteractionOption, itemName: string, user: GamblingType) {
+    const item = user.items.filter(e => e.name == itemName)[0];
+
     this.client = client
     this.id = data.ids[0];
     this.guildId = data.guildId;
-    this.itemName = itemName;
-    this.rank = rank;
+    this.itemName = item.name;
+    this.rank = item.rank;
     this.protection = false;
     this.increaseChance = false;
-    this.message = message;
-    this.balance = balance;
-    this.totalMoney = 0;
+    this.money = user.money;
+    this.message = data.messages[0];
   }
 
   get embed(): EmbedBuilder {
     const { success, fail, breaking, money } = this.enforceTable[this.rank - 1];
 
+    const sell = this.rank < 2 ? '없음' : this.enforceTable[this.rank - 2].sell.toLocaleString() + '원'
     return new EmbedBuilder()
       .setTitle(`"${this.itemName}" 강화메뉴(강화비용: ${money.toLocaleString()}원)`)
-      .setDescription(`성공확률: ${success}%, 실패확률: ${fail}%, 파괴확률: ${breaking}%\n잔액: ${this.balance.toLocaleString()}원, 사용한 돈: ${this.totalMoney.toLocaleString()}원`)
+      .setDescription(`성공확률: ${success}%, 실패확률: ${fail}%, 파괴확률: ${breaking}%\n잔액: ${this.money.toLocaleString()}원, 판매비용: ${sell}`)
       .setFields([
         { name: '강화횟수', value: `${this.rank}강`, inline: true },
         { name: '파괴방지권', value: this.protection ? '사용 중' : '미 사용', inline: true },

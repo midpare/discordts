@@ -11,11 +11,16 @@ export default new Interaction({
     const user = await client.models.gambling.findOne({ id, guildId });
 
     const { enforce } = options.data;
-    const item = user.items.filter((e: { name: string }) => e.name == enforce.itemName)[0]
+    const item = user.items.filter((e: { name: string }) => e.name == enforce.itemName)[0];
+
+    if (!item) {
+      enforce.send({ content: '이미 판매한 장비입니다.' });
+      return;
+    }
+
     const { success, fail, money } = enforce.enforceTable[enforce.rank - 1];
 
-    enforce.balance -= money;
-    enforce.totalMoney += money;
+    enforce.money = user.money - money;
 
     if (user.money < money) {
       enforce.send({ content: `강화비용이 현재 보유 중인 돈보다 많습니다.\n강화비용: ${money.toLocaleString()}원, 현재 돈:${user.money.toLocaleString()}원`, embeds: [enforce.embed], components: [enforce.button] });

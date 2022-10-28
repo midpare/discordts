@@ -22,7 +22,7 @@ export default new Command({
     const name = options.getString('이름')
     const user = await client.models.gambling.findOne({ id, guildId });
 
-    if (user.items.includes(name)) {
+    if (user.items.map((e: { name: string }) => e.name).includes(name)) {
       Utils.reply(interaction, '이미 그 이름의 장비를 보유 중입니다.');
       return 0;
     }

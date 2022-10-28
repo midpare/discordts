@@ -1,6 +1,6 @@
 import { SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { Enforce } from './struct';
+import { Enforce } from '../../structures/games/enforce';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'select_enforce',
@@ -17,7 +17,7 @@ export default new Interaction<SelectMenuInteraction>({
       return; 
     }
 
-    const enforce = new Enforce(client, options, item.name, item.rank, options.messages[0], user.money)
+    const enforce = new Enforce(client, options, interaction.values[0], user);
 
     enforce.send({ content: null, embeds: [enforce.embed], components: [enforce.button] });
 

@@ -20,7 +20,7 @@ export default new Command({
       return {
         name: e.name,
         value: `강화 횟수: ${e.rank}강`,
-        inline: false
+        inline: false,
       }
     });
 

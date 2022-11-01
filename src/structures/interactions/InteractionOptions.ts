@@ -5,7 +5,7 @@ export class InteractionOption {
   public guildId: Snowflake
   public cmd: string
   public customIds: string[];
-  public messages: Message[];
+  public messages: Array<Message>;
   public data?: any;
 
   constructor(option: InteractionOption) {

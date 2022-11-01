@@ -19,10 +19,10 @@ export default new Interaction<SelectMenuInteraction>({
     if (!user) {
       const newSchoolInfo = new school({ id, guildId, name, cityCode, cityName, schoolCode, schoolName, grade, class: _class });
       newSchoolInfo.save();
-      msg.edit({ content: '성공적으로 유저 정보를 등록했습니다!', components: [] });
+      msg?.edit({ content: '성공적으로 유저 정보를 등록했습니다!', components: [] });
     } else {
       (await client.models.school.updateOne({ id, guildId }, { $set: { cityCode, cityName, schoolCode, schoolName, grade, class: _class } })).matchedCount;
-      msg.edit({ content: '성공적으로 유저 정보를 업데이트했습니다!', components: [] });
+      msg?.edit({ content: '성공적으로 유저 정보를 업데이트했습니다!', components: [] });
     }
 
     interaction.deferUpdate()

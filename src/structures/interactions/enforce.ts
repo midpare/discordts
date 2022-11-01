@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Message, MessageEditOptions, Snowflake } from "discord.js";
 import { GamblingType } from "../../models/gambling";
 import { Client } from "../Client";
-import { InteractionOption } from "../InteractionOptions";
+import { InteractionOption } from "./InteractionOptions";
 import { Utils } from "../Utils";
 
 export const enforceTable = [
@@ -33,17 +33,17 @@ export class Enforce {
   public rank: number;
   public protection: boolean;
   public increaseChance: boolean;
-  public message: Message;
+  public message: Message
   public money: number;
 
   constructor(client: Client, data: InteractionOption, itemName: string, user: GamblingType) {
-    const item = user.items.filter(e => e.name == itemName)[0];
+    const equipment = user.equipments.filter(e => e.name == itemName)[0];
 
     this.client = client
     this.id = data.ids[0];
     this.guildId = data.guildId;
-    this.itemName = item.name;
-    this.rank = item.rank;
+    this.itemName = equipment.name;
+    this.rank = equipment.rank;
     this.protection = false;
     this.increaseChance = false;
     this.money = user.money;
@@ -104,6 +104,6 @@ export class Enforce {
   }
 
   async send(options: MessageEditOptions) {
-    this.message = await this.message.edit(options);
+    this.message = await this.message?.edit(options);
   }
-} 
+}

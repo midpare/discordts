@@ -1,7 +1,7 @@
 import { ActionRow, ActionRowBuilder, ButtonBuilder, ButtonStyle, GuildMember, SelectMenuBuilder, SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { enforceTable } from '../../structures/games/enforce';
-import { InteractionOption } from '../../structures/InteractionOptions';
+import { enforceTable } from '../../structures/interactions/enforce';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Interaction<SelectMenuInteraction>({
@@ -11,8 +11,8 @@ export default new Interaction<SelectMenuInteraction>({
     if (!options)
       return; 
 
-    const item = options?.data.items.filter((e: { name: string }) => e.name == interaction.values[0])[0];
-    const { sell: money } = enforceTable[item.rank - 2];
+    const equipment = options?.data.equipments.filter((e: { name: string }) => e.name == interaction.values[0])[0];
+    const { sell: money } = enforceTable[equipment.rank - 2];
 
     const customIds = Utils.uuid(2);
     const [yes, no] = customIds
@@ -27,21 +27,13 @@ export default new Interaction<SelectMenuInteraction>({
         .setLabel('아니오'),
     )
     
-    options.messages[0] = await options.messages[0].edit({ content: `정말 "${item.name}"을(를) ${money.toLocaleString()}원에 판매하시겠습니까?`, components: [button] })
+    options.messages[0] = await options.messages[0].edit({ content: `정말 "${equipment.name}"을(를) ${money.toLocaleString()}원에 판매하시겠습니까?`, components: [button] })
     options.data = {
-      item,
+      equipment,
     }
     client.interactionOptions.set(yes, new InteractionOption(Object.assign({}, options, { cmd: 'enforce_sell_yes' })));
     client.interactionOptions.set(no, new InteractionOption(Object.assign({}, options, { cmd: 'cancel' })));
 
     interaction.deferUpdate();
-
-    // (await client.models.gambling.updateOne({ id, guildId }, { $pull: { items: item }, $inc: { money } })).matchedCount;
-
-    // if (interaction.member instanceof GuildMember)
-    //   interaction.channel?.send(`${interaction.member.displayName}님이 "${item.name}"을(를) ${money.toLocaleString()}원에 판매했습니다!`);
-    
-    // options?.messages[0].delete();
-    // interaction.deferUpdate();
   },
 });

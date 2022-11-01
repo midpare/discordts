@@ -1,6 +1,6 @@
 import { SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { Enforce } from '../../structures/games/enforce';
+import { Enforce } from '../../structures/interactions/enforce';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'select_enforce',
@@ -10,9 +10,9 @@ export default new Interaction<SelectMenuInteraction>({
       return;
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });
-    const item = user.items.filter((e: { name: string }) => e.name == interaction.values[0])[0]
+    const equipment = user.equipments.filter((e: { name: string }) => e.name == interaction.values[0])[0]
 
-    if (item.rank > 9) {
+    if (equipment.rank > 9) {
       interaction.reply('이 장비는 이미 10강까지 강화를 완료했습니다.');
       return; 
     }

@@ -15,10 +15,14 @@ export interface GamblingType {
     count: number; 
     money: number
   }>;
-  items: Array<{
+  equipments: Array<{
     name: string
     rank: number
   }>;
+  items: Array<{
+    name: string;
+    count: number
+  }>
 }
 
 const gamblingInfo = new Schema<GamblingType>({
@@ -31,7 +35,8 @@ const gamblingInfo = new Schema<GamblingType>({
   bankruptcyTime: { type: Number, default: 0 },
   baseMoneyTime: { type: Number, default: 0 },
   coin: [{name: String, count: Number, money: Number}, {_id: false}],
-  items: [{name: String, rank: Number}],
+  equipments: [{name: String, rank: Number}],
+  items: [{ name: String, count: Number}]
 }, {
   versionKey: false,
 });

@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonComponent, ButtonStyle, SelectMenuBuilder, SelectMenuComponent, SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { InteractionOption } from '../../structures/InteractionOptions';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Interaction<SelectMenuInteraction>({

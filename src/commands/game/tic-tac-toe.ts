@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ApplicationCommandOptionType, bold, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
-import { InteractionOption } from '../../structures/InteractionOptions';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Command({

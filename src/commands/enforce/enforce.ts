@@ -1,22 +1,22 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
-import { InteractionOption } from '../../structures/InteractionOptions';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Command({
-  name: '강화',
+  name: '장비강화',
   category: '강화',
-  usage: '강화',
+  usage: '장비강화',
   description: '자신의 장비를 강화합니다.',
   execute: async ({ interaction, client }) => {
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });
     
-    if (!user.items[0]) {
+    if (!user.equipments[0]) {
       Utils.reply(interaction, '보유하고 있는 장비가 없습니다.');
       return 0;
     }
-    const selectMenuOptions = user.items.map((e: { name: string, rank: number }) => {
+    const selectMenuOptions = user.equipments.map((e: { name: string, rank: number }) => {
       if (e.rank < 10) {
         return {
           label: e.name,

@@ -1,7 +1,7 @@
 import { ActionRowBuilder, bold, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { TicTacToe } from '../../structures/games/tic-tac-toe';
-import { InteractionOption } from '../../structures/InteractionOptions';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Interaction({

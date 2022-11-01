@@ -1,13 +1,13 @@
 import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
-import { InteractionOption } from '../../structures/InteractionOptions';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
-import { enforceTable } from '../../structures/games/enforce';
+import { enforceTable } from '../../structures/interactions/enforce';
 
 export default new Command({
-  name: '판매',
+  name: '장비판매',
   category: '강화',
-  usage: '판매 <이름>',
+  usage: '장비판매 <이름>',
   description: '현재 제작한 장비를 판매합니다.',
   execute: async ({ interaction, client }) => {
     const { guildId, user: { id } } = interaction;
@@ -17,12 +17,12 @@ export default new Command({
     const customIds = Utils.uuid(2);
     const [menuId, cancelId] = customIds;
     
-    const selectMenuOptions: Array<any> = user.items.map((item: { name: string, rank: number }) => {
-      if (item.rank > 1) {
-        const { sell } = enforceTable[item.rank - 2]
+    const selectMenuOptions: Array<any> = user.equipments.map((equipment: { name: string, rank: number }) => {
+      if (equipment.rank > 1) {
+        const { sell } = enforceTable[equipment.rank - 2]
         return {
-          label: item.name,
-          value: item.name,
+          label: equipment.name,
+          value: equipment.name,
           description: `이 장비의 판매비용은 ${sell.toLocaleString()}원입니다.`,
         };
       }
@@ -63,7 +63,7 @@ export default new Command({
       messages: [message],
       customIds,
       data: {
-        items: user.items
+        equipments: user.equipments
       }
     }
 

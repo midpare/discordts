@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
-import { InteractionOption } from '../../structures/InteractionOptions';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 const cities = [

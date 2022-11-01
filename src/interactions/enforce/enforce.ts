@@ -11,9 +11,9 @@ export default new Interaction({
     const user = await client.models.gambling.findOne({ id, guildId });
 
     const { enforce } = options.data;
-    const item = user.items.filter((e: { name: string }) => e.name == enforce.itemName)[0];
+    const equipment = user.equipments.filter((e: { name: string }) => e.name == enforce.itemName)[0];
 
-    if (!item) {
+    if (!equipment) {
       enforce.send({ content: `이미 판매한 장비입니다.` });
       return;
     }
@@ -38,24 +38,24 @@ export default new Interaction({
       } else
         enforce.send({ content: `강화에 성공하셨습니다!\n${enforce.rank - 1}강 -> ${enforce.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
 
-      (await client.models.gambling.updateOne({ id, guildId, items: item }, { $inc: { 'items.$.rank': 1, money: -money } })).matchedCount;
+      (await client.models.gambling.updateOne({ id, guildId, equipments: equipment }, { $inc: { 'equipments.$.rank': 1, money: -money } })).matchedCount;
     } else if (rand < success + fail && rand >= success) {
       let minus = -1
-      if (item.rank < 2) 
+      if (equipment.rank < 2) 
         minus = 0
 
       enforce.rank += minus;
       enforce.send({ content: `강화에 실패하셨습니다!\n${enforce.rank - minus}강 -> ${enforce.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
-      (await client.models.gambling.updateOne({ id, guildId, items: item }, { $inc: { 'items.$.rank': minus, money: -money } })).matchedCount;
+      (await client.models.gambling.updateOne({ id, guildId, equipments: equipment }, { $inc: { 'equipments.$.rank': minus, money: -money } })).matchedCount;
     } else {
       if (enforce.protection) {
         enforce.protection = false
         enforce.send({ content: '장비가 파괴될 뻔 했지만 파괴방지권의 효력으로 파괴되지 않았습니다!', components: [enforce.button], embeds: [enforce.embed] });
-        (await client.models.gambling.updateOne({ id, guildId, items: item }, { $inc: { money: -money } })).matchedCount;
+        (await client.models.gambling.updateOne({ id, guildId, equipments: equipment }, { $inc: { money: -money } })).matchedCount;
       } else {
         enforce.message.delete();
-        interaction.channel?.send({ content: `<@${id}>안타깝네요! "${item.name}"장비가 파괴되었습니다.` });
-        (await client.models.gambling.updateOne({ id, guildId }, { $pull: { items: item } })).matchedCount;
+        interaction.channel?.send({ content: `<@${id}>안타깝네요! "${equipment.name}"장비가 파괴되었습니다.` });
+        (await client.models.gambling.updateOne({ id, guildId }, { $pull: { equipments: equipment } })).matchedCount;
       }
     }
     interaction.deferUpdate();

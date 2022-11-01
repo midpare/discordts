@@ -101,7 +101,7 @@ export default new Event({
         return `${e.name}: ${e.value}`
       } 
       logChannel.send(`<t:${interaction.createdTimestamp.toString().substring(0, 10)}>\n${member.displayName}님이 "${commandName}"${options.data[0] ? `(${options.data.map(getOptions)})` : ''}명령어를 사용했습니다.`)
-    } else if (interaction.isButton() || interaction.isSelectMenu()) {
+    } else if (interaction.isButton() || interaction.isSelectMenu() || interaction.isModalSubmit()) {
       const options = client.interactionOptions.get(interaction.customId);      
       if (!options) {
         interaction.reply({ content: '사용되지 않거나 종료된 상호작용입니다.', ephemeral: true });
@@ -120,9 +120,11 @@ export default new Event({
       
       if (event.deleted) {
         for (const msg of options.messages) {
-          msg.delete();
+          if (msg)
+            msg.delete();
         }
       }
+      
       event.execute({ interaction, options, client });
     }
   },

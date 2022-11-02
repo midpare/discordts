@@ -1,15 +1,10 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder, SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'class',
-  deleted: false,
   execute: async ({ interaction, options, client }) => {
-    if (!options || !options.data)
-      return;
-
     const apiKey = process.env.SCHOOL_API_KEY || '';
     const { cityCode, schoolCode } = options.data;
     const grade = interaction.values[0];

@@ -2,8 +2,7 @@ import { Interaction } from '../managers/Interaction';
 
 export default new Interaction({
   name: 'cancel',
-  deleted: true,
-  execute: async ({ }) => {
-    //no field
+  execute: async ({ options }) => {
+    options.messages[0].delete();
   },
 });

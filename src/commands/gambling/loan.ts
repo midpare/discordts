@@ -22,7 +22,7 @@ export default new Command({
     const debt = options.getInteger('돈', true);
 
     if (user.debt + debt > 1000000) {
-      Utils.reply(interaction, client.messages.gambling.loan.overMoney);
+      Utils.reply(interaction, client.messages.gambling.loan.overMoney(user.debt));
       return 0;
     }
 

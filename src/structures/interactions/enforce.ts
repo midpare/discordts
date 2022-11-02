@@ -103,7 +103,7 @@ export class Enforce {
     );
   }
 
-  async send(options: MessageEditOptions) {
+  public async send(options: MessageEditOptions) {
     this.message = await this.message?.edit(options);
   }
 }

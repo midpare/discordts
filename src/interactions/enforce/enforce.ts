@@ -2,11 +2,7 @@ import { Interaction } from '../../managers/Interaction';
 
 export default new Interaction({
   name: 'enforce',
-  deleted: false,
   execute: async ({ interaction, options, client }) => {
-    if (!options)
-      return;
-
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });
 

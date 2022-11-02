@@ -6,12 +6,8 @@ import { Utils } from '../../structures/Utils';
 
 export default new Interaction({
   name: 'accept-tic-tac-toe',
-  deleted: true,
   execute: async ({ interaction, options, client }) => {
     const messages = new Array();
-    if (!options || !options.data)
-      return;
-    
     const user = bold(options.data.players[0].username);
     const target = bold(options.data.players[1].username);
     messages.push(await interaction.channel?.send(`${user} VS ${target}`));

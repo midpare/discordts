@@ -5,11 +5,7 @@ import { Utils } from '../../structures/Utils';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'grade',
-  deleted: false,
   execute: async ({ interaction, options, client }) => {
-    if (!options)
-      return;
-    
     const customIds = Utils.uuid(3)
     const [menuId, cancel, back] = customIds;
 

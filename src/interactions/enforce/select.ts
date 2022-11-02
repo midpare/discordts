@@ -4,10 +4,7 @@ import { Enforce } from '../../structures/interactions/enforce';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'select_enforce',
-  deleted: false,
   execute: async ({ interaction, options, client }) => {
-    if (!options)
-      return;
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });
     const equipment = user.equipments.filter((e: { name: string }) => e.name == interaction.values[0])[0]

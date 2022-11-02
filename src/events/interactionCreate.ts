@@ -114,15 +114,9 @@ export default new Event({
         return;
       }
 
+
       for (const id of options.customIds) {
         client.interactionOptions.delete(id);
-      }
-      
-      if (event.deleted) {
-        for (const msg of options.messages) {
-          if (msg)
-            msg.delete();
-        }
       }
       
       event.execute({ interaction, options, client });

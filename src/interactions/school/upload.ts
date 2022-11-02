@@ -3,11 +3,7 @@ import { Interaction } from '../../managers/Interaction';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'upload',
-  deleted: false,
   execute: async ({ interaction, options, client }) => {
-    if (!options || !options.data)
-      return;
-
     const { guildId, user: { id, username: name } } = interaction;
     const school = client.models.school;
     const { cityCode, cityName, schoolCode, schoolName, grade } = options.data;

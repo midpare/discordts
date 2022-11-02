@@ -4,11 +4,7 @@ import { Utils } from '../../structures/Utils';
 
 export default new Interaction({
   name: 'tic-tac-toe',
-  deleted: false,
   execute: async ({ interaction, options, client }) => {
-    if (!options)
-      return;
-
     const tictactoe = client.tictactoe.get(options.ids);
     const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder();
     const button = new ButtonBuilder()
@@ -65,8 +61,6 @@ export default new Interaction({
         options.data.turn.edit(`${user}님의 턴입니다!`);
       else
         options.data.turn.edit(`${target}님의 턴입니다!`);
-
-
     }
 
     const buttonMsg = options.data.buttons[position[0]];

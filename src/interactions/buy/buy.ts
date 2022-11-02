@@ -6,16 +6,12 @@ import { Utils } from '../../structures/Utils';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'buy',
-  deleted: false,
   execute: async ({ interaction, options, client }) => {
-    if (!options)
-      return;
+    const [id, label, priceStr] = interaction.values[0].split(' ');
+    const price = parseFloat(priceStr)
+    const count = options.data?.buy.count ?? 1;
 
-    const [id, label, moneyStr] = interaction.values[0].split(' ');
-    const money = parseFloat(moneyStr)
-    const count = options?.data?.buy.count ?? 1;
-
-    const buy = new Buy({ id, label, price: money });
+    const buy = new Buy(client, { id, label, price }, options);
 
     const customIds = Utils.uuid(4);
     const [yes, countId, backId, cancelId] = customIds;
@@ -44,14 +40,13 @@ export default new Interaction<SelectMenuInteraction>({
         buy,
       },
     });
-    
+
     client.interactionOptions.set(yes, new InteractionOption(Object.assign(options, { cmd: 'buy-yes' })));
     client.interactionOptions.set(countId, new InteractionOption(Object.assign(options, { cmd: 'buy-count' })));
     client.interactionOptions.set(backId, new InteractionOption(Object.assign(options, { cmd: 'buy-back' })));
     client.interactionOptions.set(cancelId, new InteractionOption(Object.assign(options, { cmd: 'cancel' })));
-
     
-    options.messages[0].edit({ content: `"${label}" ${count}개를 ${(money * count).toLocaleString()}원(개당 ${money.toLocaleString()}원)에 구매하시겠습니까?.`, components: [row] });
+    options.data.buy.send({ content: `"${label}" ${count}개를 ${(price * count).toLocaleString()}원(개당 ${price.toLocaleString()}원)에 구매하시겠습니까?.`, components: [row] });
     interaction.deferUpdate();
   },
 });

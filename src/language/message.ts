@@ -107,7 +107,7 @@ export class Messages {
     },
 
     loan: {
-      overMoney: '100만원을 초과하는 빚은 빌릴 수 없습니다.',
+      overMoney: (debt: number) => `100만원을 초과하는 빚은 빌릴 수 없습니다.\n현재 빚: ${debt.toLocaleString()}원`,
 
       success: (now: number, debt: number) => `성공적으로 ${debt.toLocaleString()}원을 대출했습니다!\n현재 대출금액: ${now.toLocaleString()}원 -> ${(now + debt).toLocaleString()}원`
     },

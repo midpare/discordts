@@ -2,8 +2,8 @@ import { Message, Snowflake } from 'discord.js';
 
 export class InteractionOption {
   public ids: Snowflake[];
-  public guildId: Snowflake
-  public cmd: string
+  public guildId: Snowflake;
+  public cmd: string;
   public customIds: string[];
   public messages: Array<Message>;
   public data?: any;

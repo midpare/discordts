@@ -1,4 +1,4 @@
-import { ActionRow, ActionRowBuilder, ApplicationCommandOptionType, Colors, EmbedBuilder, SelectMenuBuilder } from 'discord.js';
+import { ActionRow, ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, Colors, EmbedBuilder, SelectMenuBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
@@ -12,7 +12,7 @@ export default new Command({
   execute: async ({ interaction, client }) => {
     const { guildId, user: { id } } = interaction;
 
-    if (!guildId) 
+    if (!guildId)
       return 0;
 
     const directories = [...new Set(client.commands.map(command => command.category).filter(category => category != undefined))];
@@ -40,31 +40,43 @@ export default new Command({
       categories.set(category, commands)
     }
 
-    const customId = Utils.uuid()
-    const row = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
+    const customIds = Utils.uuid(2);
+    const [menuId, cancelId] = customIds;
+    const menu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().setComponents(
       new SelectMenuBuilder()
-        .setCustomId(customId)
+        .setCustomId(menuId)
         .setPlaceholder('이곳에서 카테고리를 선택하세요')
         .setOptions(menuOptions)
-    )
+    );
+
+    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+      new ButtonBuilder()
+        .setCustomId(cancelId)
+        .setStyle(ButtonStyle.Secondary)
+        .setLabel('종료'),
+    );
 
     const embed = new EmbedBuilder()
       .setDescription('카테고리를 선택해주세요')
       .setColor(Colors.Red);
 
-    interaction.reply({ embeds: [embed], components: [row] });
+    interaction.reply({ embeds: [embed], components: [menu, button] });
 
-    const msg = await interaction.fetchReply()
-    client.interactionOptions.set(customId, new InteractionOption({
+    const msg = await interaction.fetchReply();
+
+    const defaultOption = {
       ids: [id],
       guildId,
-      cmd: 'help',
       messages: [msg],
-      customIds: [customId],
+      customIds,
       data: {
         categories
       },
-    }));
+    }
+
+
+    client.interactionOptions.set(menuId, Object.assign({}, defaultOption, { cmd: 'help' }));
+    client.interactionOptions.set(cancelId, Object.assign({}, defaultOption, { cmd: 'cancel' }));
     return 1;
   },
 });

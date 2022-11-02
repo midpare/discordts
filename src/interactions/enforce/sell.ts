@@ -1,4 +1,4 @@
-import { ActionRow, ActionRowBuilder, ButtonBuilder, ButtonStyle, GuildMember, SelectMenuBuilder, SelectMenuInteraction } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { enforceTable } from '../../structures/interactions/enforce';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
@@ -6,12 +6,8 @@ import { Utils } from '../../structures/Utils';
 
 export default new Interaction<SelectMenuInteraction>({
   name: 'enforce_sell',
-  deleted:  false,
   execute: async ({ interaction, options, client }) => {
-    if (!options)
-      return; 
-
-    const equipment = options?.data.equipments.filter((e: { name: string }) => e.name == interaction.values[0])[0];
+    const equipment = options.data.equipments.filter((e: { name: string }) => e.name == interaction.values[0])[0];
     const { sell: money } = enforceTable[equipment.rank - 2];
 
     const customIds = Utils.uuid(2);

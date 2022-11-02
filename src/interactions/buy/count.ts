@@ -13,16 +13,12 @@ const plus = [
 
 export default new Interaction({
   name: 'buy-count',
-  deleted: false,
   execute: async ({ interaction, options, client }) => {
-    if (!options)
-      return;
-    
     const buy = options.data.buy
     const { item, count } = buy;
-    const rows = buy.countButtons
+    const rows = buy.countButtons;
 
-    options.messages[0].edit({ content: `현재 ${item.label}의 수량은 ${count.toLocaleString()}개 입니다.\n총 가격: ${(item.price * count).toLocaleString()}원, 개당 가격: ${item.price.toLocaleString()}원`, components: rows });
+    buy.send({ content: `현재 ${item.label}의 수량은 ${count.toLocaleString()}개 입니다.\n총 가격: ${(item.price * count).toLocaleString()}원, 개당 가격: ${item.price.toLocaleString()}원`, components: rows });
 
     interaction.deferUpdate();
   },

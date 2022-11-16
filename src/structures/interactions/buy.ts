@@ -21,10 +21,10 @@ interface Item {
 export class Buy {
   public item: Item;
   public count: number;
-  private options: InteractionOption;
+  private options: InteractionOption<Buy | null>;
   private client: Client;
 
-  constructor(client: Client, item: Item, options: InteractionOption) {
+  constructor(client: Client, item: Item, options: InteractionOption<Buy | null>) {
     this.item = item; 
     this.count = 1;
     this.options = options;
@@ -52,7 +52,8 @@ export class Buy {
             .setStyle(i == 0 ? ButtonStyle.Success : ButtonStyle.Danger)
             .setLabel(`+${plus[j]}`),
         );
-        this.client.interactionOptions.set(customId, Object.assign(this.options, { cmd: 'update-count'}));
+        
+        this.client.interactionOptions.set(customId, Object.assign({}, this.options, { customIds, cmd: 'update-count', data: this }));
       }
 
       rows.push(row);

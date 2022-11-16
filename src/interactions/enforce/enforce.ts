@@ -1,20 +1,22 @@
+import { ButtonInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
+import { Enforce } from '../../structures/interactions/enforce';
 
-export default new Interaction({
+export default new Interaction<ButtonInteraction, Enforce>({
   name: 'enforce',
   execute: async ({ interaction, options, client }) => {
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });
 
-    const { enforce } = options.data;
-    const equipment = user.equipments.filter((e: { name: string }) => e.name == enforce.itemName)[0];
+    const enforce = options.data;
+    const equipment = user.equipments.filter((e: { name: string }) => e.name == enforce.equipment.name)[0];
 
     if (!equipment) {
       enforce.send({ content: `이미 판매한 장비입니다.` });
       return;
     }
 
-    const { success, fail, money } = enforce.enforceTable[enforce.rank - 1];
+    const { success, fail, money } = enforce.enforceTable[enforce.equipment.rank - 1];
 
     enforce.money = user.money - money;
 
@@ -26,13 +28,13 @@ export default new Interaction({
     const rand = Math.floor(Math.random() * 100);
 
     if (rand < success) {
-      enforce.rank++;
+      enforce.equipment.rank++;
       
-      if (enforce.rank > 9) {
+      if (enforce.equipment.rank > 9) {
         options.messages[0].delete();
-        interaction.channel?.send(`<@${id}>축하합니다! "${enforce.itemName}"을(를) 10강까지 강화했습니다!`);
+        interaction.channel?.send(`<@${id}>축하합니다! "${enforce.equipment.name}"을(를) 10강까지 강화했습니다!`);
       } else
-        enforce.send({ content: `강화에 성공하셨습니다!\n${enforce.rank - 1}강 -> ${enforce.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
+        enforce.send({ content: `강화에 성공하셨습니다!\n${enforce.equipment.rank - 1}강 -> ${enforce.equipment.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
 
       (await client.models.gambling.updateOne({ id, guildId, equipments: equipment }, { $inc: { 'equipments.$.rank': 1, money: -money } })).matchedCount;
     } else if (rand < success + fail && rand >= success) {
@@ -40,8 +42,8 @@ export default new Interaction({
       if (equipment.rank < 2) 
         minus = 0
 
-      enforce.rank += minus;
-      enforce.send({ content: `강화에 실패하셨습니다!\n${enforce.rank - minus}강 -> ${enforce.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
+      enforce.equipment.rank += minus;
+      enforce.send({ content: `강화에 실패하셨습니다!\n${enforce.equipment.rank - minus}강 -> ${enforce.equipment.rank}강`, components: [enforce.button], embeds: [enforce.embed] });
       (await client.models.gambling.updateOne({ id, guildId, equipments: equipment }, { $inc: { 'equipments.$.rank': minus, money: -money } })).matchedCount;
     } else {
       if (enforce.protection) {

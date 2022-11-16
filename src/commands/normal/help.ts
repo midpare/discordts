@@ -28,7 +28,7 @@ export default new Command({
       }
       menuOptions.push(option)
 
-      const commands = new Set(client.commands
+      const commands = [...new Set(client.commands
         .filter(commands => commands.category == category)
         .map(command => {
           return {
@@ -36,7 +36,7 @@ export default new Command({
             description: command.description
           }
         })
-      );
+      )];
       categories.set(category, commands)
     }
 
@@ -69,14 +69,11 @@ export default new Command({
       guildId,
       messages: [msg],
       customIds,
-      data: {
-        categories
-      },
+      data: categories,
     }
 
-
-    client.interactionOptions.set(menuId, Object.assign({}, defaultOption, { cmd: 'help' }));
-    client.interactionOptions.set(cancelId, Object.assign({}, defaultOption, { cmd: 'cancel' }));
+    client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'help' })));
+    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' })));
     return 1;
   },
 });

@@ -1,9 +1,9 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonComponent, ButtonStyle, SelectMenuBuilder, SelectMenuComponent, SelectMenuInteraction } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder, SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
+import { School } from '../../structures/interactions/school';
 import { Utils } from '../../structures/Utils';
 
-export default new Interaction<SelectMenuInteraction>({
+export default new Interaction<SelectMenuInteraction, School>({
   name: 'grade',
   execute: async ({ interaction, options, client }) => {
     const customIds = Utils.uuid(3)
@@ -40,13 +40,11 @@ export default new Interaction<SelectMenuInteraction>({
     options.messages[0].edit({ content: '자신의 학년을 선택해주시기 바랍니다.', components: [ selectMenu, button ] });
     interaction.deferUpdate();
     
-    options.customIds = customIds
-    
-    options.data = JSON.parse(interaction.values[0])
+    options.customIds = customIds;
+    options.data = new School(Object.assign({}, options.data, JSON.parse(interaction.values[0])));
+
     client.interactionOptions.set(menuId, Object.assign({}, options, { cmd: 'class' }));
-
     client.interactionOptions.set(cancel, Object.assign({}, options, { cmd: 'cancel' }));
-
     client.interactionOptions.set(back, Object.assign({}, options, { cmd: 'back' }));
   },
 });

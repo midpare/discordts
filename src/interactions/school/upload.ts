@@ -1,7 +1,8 @@
 import { SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
+import { School } from '../../structures/interactions/school';
 
-export default new Interaction<SelectMenuInteraction>({
+export default new Interaction<SelectMenuInteraction, School>({
   name: 'upload',
   execute: async ({ interaction, options, client }) => {
     const { guildId, user: { id, username: name } } = interaction;

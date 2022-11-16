@@ -24,10 +24,10 @@ export default new Command({
       return 0
     }
     const { guildId, user: { id } } = interaction;
-    
+
     if (!guildId)
       return 0;
-    
+
     if (target.id == id) {
       Utils.reply(interaction, '자신을 맨션할 수 없습니다.');
       return 0;
@@ -45,8 +45,8 @@ export default new Command({
         .setStyle(ButtonStyle.Danger)
         .setLabel('거절'),
     )
-    
-    
+
+
     const embed = new EmbedBuilder()
       .setTitle('⚔ 틱택토')
       .setDescription(`${bold(interaction.user.username)}가 ${bold(target.username)}에게 틱택토 매치를 신청했습니다!`)
@@ -58,24 +58,19 @@ export default new Command({
         msg.delete();
     }, 60 * 1000);
 
-    client.interactionOptions.set(yes, new InteractionOption({
+    const defaultOption = {
       ids: [target.id],
       guildId,
-      cmd: 'accept-tic-tac-toe',
       messages: [msg],
       customIds,
       data: {
         players: [interaction.user, target],
       },
-    }));
+    }
 
-    client.interactionOptions.set(no, new InteractionOption({
-      ids: [id, target.id],
-      guildId,
-      cmd: 'cancel',
-      messages: [msg],
-      customIds,
-    }));
+    client.interactionOptions.set(yes, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'accept-tic-tac-toe' })));
+    client.interactionOptions.set(no, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' })));
+    
     return 1;
   }
 })

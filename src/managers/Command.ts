@@ -17,7 +17,7 @@ export class Command {
   public readonly name: string;
   public readonly aliases?: string[];
   public readonly category: string
-  public readonly usage?: string;
+  public readonly usage: string;
   public readonly description: string;
   public readonly nameLocalizations?: LocalizationMap;
   public readonly descriptionLocalizations?: LocalizationMap;
@@ -30,7 +30,7 @@ export class Command {
     Object.assign(this, options);
     this.name = options.name;
     this.category = options.category;
-    this.usage = options.usage ?? options.name;
+    this.usage = options.usage;
     this.description = options.description;
     this.default_member_permissions = options.default_member_permissions?.toString();
     this.execute = options.execute;

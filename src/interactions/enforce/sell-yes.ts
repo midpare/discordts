@@ -1,13 +1,13 @@
-import { GuildMember } from 'discord.js';
+import { ButtonInteraction, GuildMember } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { enforceTable } from '../../structures/interactions/enforce';
+import { enforceTable, Equipment } from '../../structures/interactions/enforce';
 
-export default new Interaction({
+export default new Interaction<ButtonInteraction, Equipment>({
   name: 'enforce_sell_yes',
   execute: async ({ interaction, options, client }) => {
     const { guildId, user: { id } } = interaction;
     
-    const { equipment } = options.data;
+    const equipment = options.data;
     const { sell: money } = enforceTable[equipment.rank - 2];
     
     (await client.models.gambling.updateOne({ id, guildId }, { $pull: { equipments: equipment }, $inc: { money } })).matchedCount;

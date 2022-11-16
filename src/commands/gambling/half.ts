@@ -5,6 +5,7 @@ export default new Command({
   name: '하프',
   aliases: ['ㅎㅍ'],
   category: '도박',
+  usage: '하프',
   description: '자신의 돈의 절반을 걸고 도박을 진행합니다. (성공시: 2배, 실패시: 0배)',
   execute: async ({ interaction, client }) => {
     const { guildId, user: { id } } = interaction;

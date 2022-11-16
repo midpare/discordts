@@ -12,6 +12,7 @@ interface SchoolType {
   grade: string;
   class: string;
 }
+ 
 const schoolInfo = new Schema<SchoolType>({
   id: String,
   guildId: String,

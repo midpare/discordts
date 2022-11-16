@@ -5,6 +5,7 @@ export default new Command({
   name: '기초자금',
   aliases: ['초기자금', '돈', 'ㄷ', '기본자금'],
   category: '도박',
+  usage: '기초자금',
   description: '기초자금 25,000원을 획득합니다. 돈이 0원일때만 명령어 사용이 가능합니다. 쿨타임: 30초',
   execute: async ({ interaction, client }) => {
     const { guildId, user: { id } } = interaction;

@@ -112,24 +112,16 @@ export default new Command({
         msg.delete()
     }, 2 * 60 * 1000);
 
-    client.interactionOptions.set(menuId, new InteractionOption({
+    const defaultOption = {
       ids: [id],
       guildId,
-      cmd: 'grade',
       messages: [msg],
       customIds,
-      data: {
-        schoolName,
-      },
-    }));
+      data: schoolName
+    }
 
-    client.interactionOptions.set(cancel, new InteractionOption({
-      ids: [id],
-      guildId,
-      cmd: 'cancel',
-      messages: [msg],
-      customIds,
-    }));
+    client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'grade' })));
+    client.interactionOptions.set(cancel, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' })));
     return 1;
   },
 });

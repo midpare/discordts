@@ -6,6 +6,7 @@ import { Command } from '../../managers/Command';
 export default new Command({
   name: '파산',
   category: '도박',
+  usage: '파산',
   description: '모든 돈과 빚을 0원으로 만들고 한시간동안 도박을 하지 못합니다.',
   execute: async ({ interaction, client }) => {
     const { guildId, user: { id } } = interaction;
@@ -35,20 +36,17 @@ export default new Command({
 
     const msg = await interaction.fetchReply();
 
-    client.interactionOptions.set(yes, new InteractionOption({
+    const defaultOption = {
       ids: [id],
       guildId,
-      cmd: 'bankrupcty',
       messages: [msg],
       customIds,
-    }));
-    client.interactionOptions.set(no, new InteractionOption({
-      ids: [id],
-      guildId,
-      cmd: 'cancel',
-      messages: [msg],
-      customIds,
-    }));
+      data: null
+    }
+
+    client.interactionOptions.set(yes, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'bankrupcty'})));
+    client.interactionOptions.set(no, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' })));
+    
     return 1;
   },
 });

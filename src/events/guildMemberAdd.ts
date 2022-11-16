@@ -5,7 +5,11 @@ import { Client } from '../structures/Client';
 export default new Event({
   name: 'guildMemberAdd',
   execute: async (client: Client, member: GuildMember) => {
-    const guild = await client.models.guild.findOne({ id: member.guild.id });
+    const { id, displayName: name, guild: { id: guildId } } = member;
+    const guild = await client.models.guild.findOne({ id: guildId });
+
+    const newUser = new client.models.config({ id, name, guildId });
+    newUser.save();
     
     if (guild.baseRole)
       member.roles.add(guild.baseRole);

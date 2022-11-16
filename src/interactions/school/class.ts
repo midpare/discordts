@@ -1,8 +1,9 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder, SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
+import { School } from '../../structures/interactions/school';
 import { Utils } from '../../structures/Utils';
 
-export default new Interaction<SelectMenuInteraction>({
+export default new Interaction<SelectMenuInteraction, School>({
   name: 'class',
   execute: async ({ interaction, options, client }) => {
     const apiKey = process.env.SCHOOL_API_KEY || '';

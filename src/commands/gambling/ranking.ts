@@ -5,6 +5,7 @@ export default new Command({
   name: '랭킹',
   aliases: ['순위'],
   category: '도박',
+  usage: '랭킹',
   description: '이 서버의 도박 순위를 확인합니다.',
   options: [
       {

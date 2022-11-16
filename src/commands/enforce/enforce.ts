@@ -57,6 +57,7 @@ export default new Command({
       guildId: guildId!,
       messages: [message], 
       customIds: [selectMenuId],
+      data: null
     }
     client.interactionOptions.set(selectMenuId, new InteractionOption(Object.assign({}, { cmd: 'select_enforce' }, defaultOption)));
     client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, { cmd: 'cancel'}, defaultOption)));

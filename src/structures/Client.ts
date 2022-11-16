@@ -4,22 +4,22 @@ import { Interaction } from '../managers/Interaction';
 import { CivilWar } from './games/CivilWar';
 import { Messages } from '../language/message';
 import { InteractionOption } from './interactions/InteractionOptions';
-import { TicTacToe } from './games/tic-tac-toe';
+import { TicTacToe } from './interactions/tic-tac-toe';
 import { Command } from '../managers/Command';
 import mongoose from 'mongoose';
 
 export class Client extends Discord.Client {
   public readonly commands: Collection<string, Command>;
-  public readonly interactions: Collection<string, Interaction<ButtonInteraction | SelectMenuInteraction | ModalSubmitInteraction>>;
-  public readonly interactionOptions: Collection<string, InteractionOption>;
+  public readonly interactions: Collection<string, Interaction<ButtonInteraction | ModalSubmitInteraction | SelectMenuInteraction, unknown>>;
+  public readonly interactionOptions: Collection<string, InteractionOption<any>>;
   public readonly coin: Collection<string, string>;
   public readonly betting: Collection<Snowflake, Betting>;
-  public readonly tictactoe: Collection<Array<Snowflake>, TicTacToe>; 
+  public readonly tictactoe: Collection<Array<Snowflake>, TicTacToe>;
   public readonly alarmMembers: Collection<Snowflake, GuildMember>;
   public readonly slangs: Collection<Snowflake, Message>;
   public readonly civilWar: CivilWar;
   public readonly messages: Messages;
-  public readonly models: Record<string, mongoose.Model<any, {}, {}, {}, any>>
+  public readonly models: Record<string, mongoose.Model<any, {}, {}, {}, any>>;
 
   constructor(options: ClientOptions) {
     super(options);

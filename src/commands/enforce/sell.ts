@@ -17,7 +17,7 @@ export default new Command({
     const customIds = Utils.uuid(2);
     const [menuId, cancelId] = customIds;
     
-    const selectMenuOptions: Array<any> = user.equipments.map((equipment: { name: string, rank: number }) => {
+    const selectMenuOptions = user.equipments.map((equipment: { name: string, rank: number }) => {
       if (equipment.rank > 1) {
         const { sell } = enforceTable[equipment.rank - 2]
         return {
@@ -62,13 +62,11 @@ export default new Command({
       guildId: guildId!,
       messages: [message],
       customIds,
-      data: {
-        equipments: user.equipments
-      }
+      data: user.equipments,
     }
 
-    client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, { cmd: 'enforce_sell' }, defaultOption)));
-    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, { cmd: 'cancel' }, defaultOption)));
+    client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'enforce_sell' })));
+    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' })));
 
     return 1;
   },

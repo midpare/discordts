@@ -1,17 +1,17 @@
-import { ButtonInteraction, ModalSubmitInteraction, SelectMenuInteraction } from 'discord.js';
+import { ButtonInteraction, MessageComponentInteraction, ModalSubmitInteraction, SelectMenuInteraction } from 'discord.js';
 import { Client } from '../structures/Client';
 import { InteractionOption } from '../structures/interactions/InteractionOptions';
 
-type ExecuteType<T extends ButtonInteraction | SelectMenuInteraction | ModalSubmitInteraction> = (options: {
+type ExecuteType<T extends ButtonInteraction | ModalSubmitInteraction | SelectMenuInteraction, O> = (options: {
   interaction: T,
-  options: InteractionOption;
+  options: InteractionOption<O>;
   client: Client
 }) => Promise<void>;
 
-export class Interaction<T extends ButtonInteraction | SelectMenuInteraction | ModalSubmitInteraction> {
+export class Interaction<T extends ButtonInteraction | ModalSubmitInteraction | SelectMenuInteraction, O> {
   public readonly name: string;
-  public readonly execute: ExecuteType<T>;
-  constructor(options: Interaction<T>) {
+  public readonly execute: ExecuteType<T, O>;
+  constructor(options: Interaction<T, O>) {
     this.name = options.name;
     this.execute = options.execute;
   }

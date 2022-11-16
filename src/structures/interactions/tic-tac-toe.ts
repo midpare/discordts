@@ -14,7 +14,7 @@ export class TicTacToe {
     ];
     this.player = player
     this.flag = 1;
-    this.turn = player[0]
+    this.turn = player[0];
   }
 
   public set(position: Array<number>): User | null {

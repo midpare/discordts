@@ -1,9 +1,11 @@
+import { ButtonInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
+import { Enforce } from '../../structures/interactions/enforce';
 
-export default new Interaction({
+export default new Interaction<ButtonInteraction, Enforce>({
   name: 'increaseChance',
   execute: async ({ interaction, options, client }) => {
-    const { enforce } = options.data;
+    const enforce = options.data;
 
     enforce.increaseChance = !enforce.increaseChance
 

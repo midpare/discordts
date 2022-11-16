@@ -62,11 +62,12 @@ export default new Command({
       guildId: interaction.guildId!,
       messages: [message],
       customIds,
+      data: null,
     }
 
-    client.interactionOptions.set(menuId, new InteractionOption(Object.assign(defaultOption, { cmd: 'buy' })));
-    client.interactionOptions.set(countId, new InteractionOption(Object.assign(defaultOption, { cmd: 'buy-count' })));
-    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign(defaultOption, { cmd: 'cancel' } )));
+    client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'buy' })));
+    client.interactionOptions.set(countId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'buy-count' })));
+    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' } )));
 
     return 1;
   },

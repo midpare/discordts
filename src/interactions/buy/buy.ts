@@ -4,14 +4,16 @@ import { Buy } from '../../structures/interactions/buy';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
-export default new Interaction<SelectMenuInteraction>({
+export default new Interaction<SelectMenuInteraction, Buy | null>({
   name: 'buy',
   execute: async ({ interaction, options, client }) => {
     const [id, label, priceStr] = interaction.values[0].split(' ');
     const price = parseFloat(priceStr)
-    const count = options.data?.buy.count ?? 1;
-
-    const buy = new Buy(client, { id, label, price }, options);
+    const count = options.data?.count ?? 1;
+    if (options.data == null) {
+      const buy = new Buy(client, { id, label, price }, options);      
+      options.data = buy;
+    }
 
     const customIds = Utils.uuid(4);
     const [yes, countId, backId, cancelId] = customIds;
@@ -34,19 +36,13 @@ export default new Interaction<SelectMenuInteraction>({
         .setStyle(ButtonStyle.Secondary)
         .setLabel('취소'),
     );
-
-    Object.defineProperty(options, 'data', {
-      value: {
-        buy,
-      },
-    });
-
+    
     client.interactionOptions.set(yes, new InteractionOption(Object.assign(options, { cmd: 'buy-yes' })));
     client.interactionOptions.set(countId, new InteractionOption(Object.assign(options, { cmd: 'buy-count' })));
     client.interactionOptions.set(backId, new InteractionOption(Object.assign(options, { cmd: 'buy-back' })));
     client.interactionOptions.set(cancelId, new InteractionOption(Object.assign(options, { cmd: 'cancel' })));
     
-    options.data.buy.send({ content: `"${label}" ${count}개를 ${(price * count).toLocaleString()}원(개당 ${price.toLocaleString()}원)에 구매하시겠습니까?.`, components: [row] });
+    options.data.send({ content: `"${label}" ${count}개를 ${(price * count).toLocaleString()}원(개당 ${price.toLocaleString()}원)에 구매하시겠습니까?.`, components: [row] });
     interaction.deferUpdate();
   },
 });

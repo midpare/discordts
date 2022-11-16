@@ -5,6 +5,7 @@ export default new Command({
   name: '출석체크',
   aliases: ['출첵', 'ㅊㅊ'],
   category: '도박',
+  usage: '출석체크',
   description: '하루에 한번 50,000 ~ 100,000만원의 돈을 획득합니다.',
   execute: async ({ interaction, client }) => {
     const { guildId, user: { id } } = interaction;

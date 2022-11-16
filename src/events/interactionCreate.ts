@@ -1,5 +1,5 @@
 import { Client } from '../structures/Client';
-import { BaseInteraction, CommandInteractionOptionResolver, CacheType, TextChannel, GuildMember, CommandInteractionOption, User, ApplicationCommandOptionType } from 'discord.js';
+import { BaseInteraction, CommandInteractionOptionResolver, CacheType, TextChannel, GuildMember, CommandInteractionOption, User, ApplicationCommandOptionType, ModalSubmitInteraction } from 'discord.js';
 import { Event } from '../managers/Event';
 import { Utils } from '../structures/Utils';
 
@@ -80,7 +80,7 @@ export default new Event({
       if (!logChannel)
         return;
 
-      const member = <GuildMember>interaction.member
+      const member = <GuildMember>interaction.member;
       const getOptions = (e: CommandInteractionOption) => {
         switch(e.name) {
           case '돈':
@@ -100,6 +100,7 @@ export default new Event({
         }
         return `${e.name}: ${e.value}`
       } 
+      
       logChannel.send(`<t:${interaction.createdTimestamp.toString().substring(0, 10)}>\n${member.displayName}님이 "${commandName}"${options.data[0] ? `(${options.data.map(getOptions)})` : ''}명령어를 사용했습니다.`)
     } else if (interaction.isButton() || interaction.isSelectMenu() || interaction.isModalSubmit()) {
       const options = client.interactionOptions.get(interaction.customId);      

@@ -13,6 +13,7 @@ export default new Event({
       return;
 
     const date = new Date().getTime()
-    logChannel.send(`<t:${date.toString().substring(0, 10)}>\n${member.displayName}님이 퇴장했습니다.`);
+    logChannel.send(`<t:${date.toString().substring(0, 10)}>\n${member.displayName}#${member.user.discriminator}님이 퇴장했습니다.`);
   }
-})
+});
+

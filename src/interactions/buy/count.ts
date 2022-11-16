@@ -1,20 +1,11 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
-import messageCreate from '../../events/messageCreate';
+import { ButtonInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { Utils } from '../../structures/Utils';
+import { Buy } from '../../structures/interactions/buy';
 
-const plus = [
-  1,
-  3,
-  5,
-  10,
-  30,
-];
-
-export default new Interaction({
+export default new Interaction<ButtonInteraction, Buy>({
   name: 'buy-count',
   execute: async ({ interaction, options, client }) => {
-    const buy = options.data.buy
+    const buy = options.data;
     const { item, count } = buy;
     const rows = buy.countButtons;
 

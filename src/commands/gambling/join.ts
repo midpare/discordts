@@ -5,6 +5,7 @@ import { Utils } from '../../structures/Utils';
 export default new Command({
   name: '가입',
   category: '도박',
+  usage: '가입',
   description: '도박 관련 명령어를 사용할수있게 가입을 합니다.',
   execute: async ({ interaction, client }) => {
     const { guildId, user: { id }} = interaction

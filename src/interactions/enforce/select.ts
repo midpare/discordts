@@ -2,7 +2,7 @@ import { SelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { Enforce } from '../../structures/interactions/enforce';
 
-export default new Interaction<SelectMenuInteraction>({
+export default new Interaction<SelectMenuInteraction, null>({
   name: 'select_enforce',
   execute: async ({ interaction, options, client }) => {
     const { guildId, user: { id } } = interaction;

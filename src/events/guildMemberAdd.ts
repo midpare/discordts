@@ -11,7 +11,7 @@ export default new Event({
     const newUser = new client.models.config({ id, name, guildId });
     newUser.save();
     
-    if (guild.baseRole != '0')
+    if (guild.baseRole && guild.baseRole != '0')
       member.roles.add(guild.baseRole);
 
     const channel = <TextChannel>client.guilds.cache.get(member.guild.id)?.channels.cache.get(guild.log.join);

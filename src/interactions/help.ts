@@ -4,7 +4,6 @@ import { Interaction } from '../managers/Interaction';
 export default new Interaction<SelectMenuInteraction, Map<string, { name: string, description: string }[]>>({
   name: 'help',
   execute: async ({ interaction, options, client }) => {
-    console.log(1)
     const category = interaction.values[0];
     const commands = options.data.get(category)!;
     

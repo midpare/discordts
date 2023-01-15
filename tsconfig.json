@@ -11,6 +11,7 @@
     "strict": true,                                     
     "noImplicitAny": true,              
     "noFallthroughCasesInSwitch": true,
+    "extendedDiagnostics": true,
     // "noUnusedParameters": true,
     // "noUnusedLocals": true,
   },

@@ -1,7 +1,7 @@
-import { EmbedBuilder, SelectMenuInteraction } from 'discord.js';
+import { EmbedBuilder, StringSelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../managers/Interaction';
 
-export default new Interaction<SelectMenuInteraction, Map<string, { name: string, description: string }[]>>({
+export default new Interaction<StringSelectMenuInteraction, Map<string, { name: string, description: string }[]>>({
   name: 'help',
   execute: async ({ interaction, options, client }) => {
     const category = interaction.values[0];

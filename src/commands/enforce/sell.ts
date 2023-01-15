@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
@@ -34,8 +34,8 @@ export default new Command({
       return 0;
     }
 
-    const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().setComponents(
-      new SelectMenuBuilder()
+    const selectMenu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+      new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳에서 판매할 아이템을 선택해주세요.')
         .setOptions(selectMenuOptions)

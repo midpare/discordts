@@ -1,9 +1,9 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder, SelectMenuInteraction } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, StringSelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { School } from '../../structures/interactions/school';
 import { Utils } from '../../structures/Utils';
 
-export default new Interaction<SelectMenuInteraction, School>({
+export default new Interaction<StringSelectMenuInteraction, School>({
   name: 'grade',
   execute: async ({ interaction, options, client }) => {
     const customIds = Utils.uuid(3)
@@ -19,8 +19,8 @@ export default new Interaction<SelectMenuInteraction, School>({
       menuOptions.push(option);
     }
     
-    const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
-      new SelectMenuBuilder()
+    const selectMenu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().addComponents(
+      new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳을 눌러 선택해주세요')
         .setOptions(menuOptions)

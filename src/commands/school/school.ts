@@ -45,7 +45,7 @@ export default new Command({
       interaction.editReply('학교등록이 되지 않은 유저입니다.');
       return 0;
     }
-    interaction.deferReply()
+    await interaction.deferReply()
 
     const info = options.getString('정보', true);
 

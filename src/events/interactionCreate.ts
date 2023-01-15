@@ -102,7 +102,7 @@ export default new Event({
       } 
       
       logChannel.send(`<t:${interaction.createdTimestamp.toString().substring(0, 10)}>\n${member.displayName}님이 "${commandName}"${options.data[0] ? `(${options.data.map(getOptions)})` : ''}명령어를 사용했습니다.`)
-    } else if (interaction.isButton() || interaction.isSelectMenu() || interaction.isModalSubmit()) {
+    } else if (interaction.isButton() || interaction.isStringSelectMenu() || interaction.isModalSubmit()) {
       const options = client.interactionOptions.get(interaction.customId);      
       if (!options) {
         interaction.reply({ content: '사용되지 않거나 종료된 상호작용입니다.', ephemeral: true });

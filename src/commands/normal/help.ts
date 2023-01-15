@@ -1,4 +1,4 @@
-import { ActionRow, ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, Colors, EmbedBuilder, SelectMenuBuilder } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Colors, EmbedBuilder, StringSelectMenuBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
@@ -42,8 +42,8 @@ export default new Command({
 
     const customIds = Utils.uuid(2);
     const [menuId, cancelId] = customIds;
-    const menu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().setComponents(
-      new SelectMenuBuilder()
+    const menu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+      new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳에서 카테고리를 선택하세요')
         .setOptions(menuOptions)

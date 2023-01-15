@@ -1,4 +1,4 @@
-import Discord, { ButtonInteraction, ClientOptions, Collection, GuildMember, Message, ModalSubmitInteraction, SelectMenuInteraction, Snowflake } from 'discord.js'
+import Discord, { ButtonInteraction, ClientOptions, Collection, GuildMember, Message, ModalSubmitInteraction, StringSelectMenuInteraction, Snowflake } from 'discord.js'
 import { Betting } from './games/Betting';
 import { Interaction } from '../managers/Interaction';
 import { CivilWar } from './games/CivilWar';
@@ -10,7 +10,7 @@ import mongoose from 'mongoose';
 
 export class Client extends Discord.Client {
   public readonly commands: Collection<string, Command>;
-  public readonly interactions: Collection<string, Interaction<ButtonInteraction | ModalSubmitInteraction | SelectMenuInteraction, unknown>>;
+  public readonly interactions: Collection<string, Interaction<ButtonInteraction | ModalSubmitInteraction | StringSelectMenuInteraction, unknown>>;
   public readonly interactionOptions: Collection<string, InteractionOption<any>>;
   public readonly coin: Collection<string, string>;
   public readonly betting: Collection<Snowflake, Betting>;

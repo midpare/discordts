@@ -1,10 +1,10 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuInteraction, setPosition } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuInteraction, setPosition } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { Buy } from '../../structures/interactions/buy';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
-export default new Interaction<SelectMenuInteraction, Buy | null>({
+export default new Interaction<StringSelectMenuInteraction, Buy | null>({
   name: 'buy',
   execute: async ({ interaction, options, client }) => {
     const [id, label, priceStr] = interaction.values[0].split(' ');

@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, GuildMember } from 'discord.js';
+import { ButtonInteraction, ChatInputCommandInteraction, GuildMember, StringSelectMenuInteraction } from 'discord.js';
 import request from 'request';
 import fs from 'fs';
 
@@ -93,7 +93,7 @@ export class Utils {
     }
   }
 
-  public static async reply(interaction: ChatInputCommandInteraction | ButtonInteraction, options: string): Promise<void> {
+  public static async reply(interaction: ChatInputCommandInteraction | ButtonInteraction | StringSelectMenuInteraction, options: string): Promise<void> {
     interaction.reply(options);
     const replied = await interaction.fetchReply();
     setTimeout(() => {

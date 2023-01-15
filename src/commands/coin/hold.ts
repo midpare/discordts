@@ -17,7 +17,7 @@ export default new Command({
       Utils.reply(interaction, '보유한 코인이 없습니다.');
       return 0;
     }
-    interaction.deferReply()
+    await interaction.deferReply()
     embed
     .setTitle(`${(<GuildMember>interaction.member).displayName}님의 코인 보유 현황`);
     

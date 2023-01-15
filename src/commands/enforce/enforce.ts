@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
@@ -25,12 +25,11 @@ export default new Command({
         }; 
       }
     }).filter((e: Object) => e != undefined);
-
     const customIds = Utils.uuid(2)
     const [ selectMenuId, cancelId ] = customIds;
 
-    const selectMenuRow = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().setComponents(
-      new SelectMenuBuilder()
+    const selectMenuRow = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+      new StringSelectMenuBuilder()
         .setCustomId(selectMenuId)
         .setPlaceholder('여기서 강화장비를 선택하세요')
         .setOptions(selectMenuOptions)
@@ -41,7 +40,7 @@ export default new Command({
         .setCustomId(cancelId)
         .setStyle(ButtonStyle.Secondary)
         .setLabel('취소'),
-    )
+    );
 
     interaction.reply({ content: '강화할 장비를 선택해주세요.', components: [selectMenuRow, buttonRow] });
     

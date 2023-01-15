@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from 'discord.js';
+import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
@@ -38,7 +38,7 @@ export default new Command({
     },
   ],
   execute: async ({ interaction, options, client }) => {
-    interaction.deferReply()
+    await interaction.deferReply()
     const apiKey = process.env.SCHOOL_API_KEY || '';
     const schoolName = options.getString('학교', true);
 
@@ -89,8 +89,8 @@ export default new Command({
       return 0;
     }
 
-    const selectMenu = <ActionRowBuilder<SelectMenuBuilder>>new ActionRowBuilder().addComponents(
-      new SelectMenuBuilder()
+    const selectMenu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().addComponents(
+      new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳을 눌러 선택해주세요')
         .setOptions(menuOptions)

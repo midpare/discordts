@@ -9,7 +9,7 @@ export default new Command({
   execute: async ({ interaction, client }) => {
     const civilWar = client.civilWar;
     for (const user of civilWar.teams.flat()) {
-      if (!user.voice || user.voice.channelId == null)
+      if (!user.voice || !user.voice.channelId)
         continue;
       user.voice.setChannel(civilWar.channel);
     }

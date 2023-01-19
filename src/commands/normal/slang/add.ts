@@ -25,12 +25,17 @@ export default new Command({
     const target = options.getUser('유저', true)
     const content = options.getString('내용', true);
 
-    const { guildId } = interaction;
-    const { id } = target;
+    const { id, guildId } = interaction;
+    const { id: targetId } = target;
 
     if (!guildId)
       return 0;
 
+    if (id == targetId) {
+      Utils.reply(interaction, '자신의 망언을 추가할 수 없습니다.');
+      return 0;
+    }
+    
     const guild = await client.models.guild.findOne({ id: guildId });
 
     const channel = <TextChannel>interaction.guild?.channels.cache.get(guild.slang);
@@ -40,7 +45,7 @@ export default new Command({
       return 0;
     }
 
-    const user = await client.models.config.findOne({ id, guildId });
+    const user = await client.models.config.findOne({ id: targetId, guildId });
 
     if (user.slangs.includes(content)) {
       Utils.reply(interaction, '이 망언은 이미 추가되어있습니다.');
@@ -81,7 +86,7 @@ export default new Command({
       channel.send({ embeds: [embed] });
     }
 
-    (await client.models.config.updateOne({ id, guildId }, { $push: { slangs: content } })).matchedCount;
+    (await client.models.config.updateOne({ id: targetId, guildId }, { $push: { slangs: content } })).matchedCount;
     Utils.reply(interaction, `성공적으로 망언을 추가했습니다!\n망언 내용: ${content}`);
     return 1;
   },

@@ -30,13 +30,13 @@ export default new Command({
     }
 
     for (const user of civilWar.teams[0]) {
-      if (!user.voice || user.voice.channelId == null)
+      if (!user.voice || !user.voice.channelId)
         continue;
       user.voice.setChannel(channel1);
     }
 
     for (const user of civilWar.teams[1]) {
-      if (!user.voice || user.voice.channelId == null)
+      if (!user.voice || !user.voice.channelId)
         continue;
       user.voice.setChannel(channel2);
     }

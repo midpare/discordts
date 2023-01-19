@@ -2,6 +2,7 @@ import { Client } from '../structures/Client';
 import { BaseInteraction, CommandInteractionOptionResolver, CacheType, TextChannel, GuildMember, CommandInteractionOption, User, ApplicationCommandOptionType, ModalSubmitInteraction } from 'discord.js';
 import { Event } from '../managers/Event';
 import { Utils } from '../structures/Utils';
+import { InteractionOption } from '../structures/interactions/InteractionOptions';
 
 export default new Event({
   name: 'interactionCreate',
@@ -103,13 +104,20 @@ export default new Event({
       
       logChannel.send(`<t:${interaction.createdTimestamp.toString().substring(0, 10)}>\n${member.displayName}님이 "${commandName}"${options.data[0] ? `(${options.data.map(getOptions)})` : ''}명령어를 사용했습니다.`)
     } else if (interaction.isButton() || interaction.isStringSelectMenu() || interaction.isModalSubmit()) {
+      let event = client.interactions.get(interaction.customId);
+      
+      if (event) {
+        const options = {} as InteractionOption<any>
+        event.execute({ interaction, options, client });
+        return;
+      }
       const options = client.interactionOptions.get(interaction.customId);      
       if (!options) {
         interaction.reply({ content: '사용되지 않거나 종료된 상호작용입니다.', ephemeral: true });
         return;
       }
 
-      const event = client.interactions.get(options.cmd);
+      event = client.interactions.get(options.cmd);
       if (!event || !options.ids.includes(id)) {
         interaction.reply({ content: '이 상호작용을 사용할 수 없습니다.', ephemeral: true });
         return;

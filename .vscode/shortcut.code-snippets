@@ -36,7 +36,6 @@
 			"",
 			"export default new Interaction({",
 			"  name: '$1',",
-			"  deleted: ${2: true},",
 			"  execute: async ({ ${3:interaction}${4:, options}${5:, client} }) => {",
 			"    $6",  
 			"  },",

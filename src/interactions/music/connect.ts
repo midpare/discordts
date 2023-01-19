@@ -1,0 +1,32 @@
+import { getVoiceConnection, joinVoiceChannel } from '@discordjs/voice';
+import { ButtonInteraction, GuildMember } from 'discord.js';
+import { Interaction } from '../../managers/Interaction';
+
+export default new Interaction<ButtonInteraction, null>({
+  name: 'connect music',
+  execute: async ({ interaction }) => {
+    const { guild, member } = interaction;
+    if (!guild || !(member instanceof GuildMember))
+      return;
+
+    if (!member.voice.channelId) {
+      interaction.reply({ content: '먼저 음성채널에 접속해주시기 바랍니다.', ephemeral: true });
+      return;
+    }
+ 
+    const { id, voiceAdapterCreator } = guild;
+    const connection = getVoiceConnection(id);
+    if (connection) {
+      interaction.reply({ content: '이미 연결된 봇이 있습니다.', ephemeral: true });
+      return;
+    }
+
+    joinVoiceChannel({
+      channelId: member.voice.channelId,
+      guildId: id,
+      adapterCreator: voiceAdapterCreator,
+    });
+    
+    interaction.deferUpdate();    
+  },
+});

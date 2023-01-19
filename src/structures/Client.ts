@@ -7,6 +7,7 @@ import { InteractionOption } from './interactions/InteractionOptions';
 import { TicTacToe } from './interactions/tic-tac-toe';
 import { Command } from '../managers/Command';
 import mongoose from 'mongoose';
+import { Music } from './interactions/music';
 
 export class Client extends Discord.Client {
   public readonly commands: Collection<string, Command>;
@@ -16,7 +17,7 @@ export class Client extends Discord.Client {
   public readonly betting: Collection<Snowflake, Betting>;
   public readonly tictactoe: Collection<Array<Snowflake>, TicTacToe>;
   public readonly alarmMembers: Collection<Snowflake, GuildMember>;
-  public readonly slangs: Collection<Snowflake, Message>;
+  public readonly music: Collection<Snowflake, Music>
   public readonly civilWar: CivilWar;
   public readonly messages: Messages;
   public readonly models: Record<string, mongoose.Model<any, {}, {}, {}, any>>;
@@ -31,7 +32,7 @@ export class Client extends Discord.Client {
     this.betting = new Collection();
     this.tictactoe = new Collection();
     this.alarmMembers = new Collection();
-    this.slangs = new Collection();
+    this.music = new Collection();
     this.civilWar = new CivilWar();
     this.messages = new Messages();
     this.models = {};

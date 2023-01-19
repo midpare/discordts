@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, BaseGuildTextChannel, BaseGuildVoiceChannel, PermissionFlagsBits } from 'discord.js';
+import { ApplicationCommandOptionType, BaseGuildTextChannel, BaseGuildVoiceChannel, PermissionFlagsBits, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
 import { Utils } from '../../../structures/Utils';
 import { Command } from '../../../managers/Command';
 
@@ -29,6 +29,10 @@ export default new Command({
         {
           name: '망언',
           value: 'slang',
+        },
+        {
+          name: '노래',
+          value: 'music'
         },
         {
           name: '알람',
@@ -71,7 +75,7 @@ export default new Command({
   ],
   default_member_permissions: PermissionFlagsBits.Administrator,
   execute: async ({ interaction, options, client }) => {
-    const { guildId: id } = interaction
+    const { guildId: id } = interaction;
     const type = options.getString('채널유형', true);
     const channel1 = options.getChannel('채널1', true);
 
@@ -86,9 +90,42 @@ export default new Command({
 
         (await client.models.guild.updateOne({ id }, { $set: { [type]: [channel1.id, channel2.id] } })).matchedCount;
         break;
+      case 'music':        
+        if (!(channel1 instanceof BaseGuildTextChannel)) {
+          Utils.reply(interaction, '정확한 채팅채널을 입력해주시기 바랍니다.');
+          return 0;
+        }
+        
+        const embed = new EmbedBuilder()
+          .setTitle('재생목록')
+          .setDescription('현재 재생목록을 확인합니다.')
+    
+        const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+          new ButtonBuilder()
+            .setCustomId('add music')
+            .setStyle(ButtonStyle.Primary)
+            .setLabel('노래 추가'),
+          new ButtonBuilder()
+            .setCustomId('delete music')
+            .setStyle(ButtonStyle.Primary)
+            .setLabel('노래 삭제'),
+          new ButtonBuilder()
+            .setCustomId('connect music')
+            .setStyle(ButtonStyle.Primary)
+            .setLabel('연결'),
+        );
+          
+        const msg = await channel1.send({ embeds: [embed], components: [row] })
+        const music = {
+          channel: channel1.id,
+          message: msg,
+        };
+        
+        (await client.models.guild.updateOne({ id }, { $set: { music } })).matchedCount;
+        break;
       default:
         if (!(channel1 instanceof BaseGuildTextChannel)) {
-          Utils.reply(interaction, '정확한 채팅채널을 입력해주시기 바랍니다');
+          Utils.reply(interaction, '정확한 채팅채널을 입력해주시기 바랍니다.');
           return 0
         }
         if (type.split(' ')[0] == 'log') {

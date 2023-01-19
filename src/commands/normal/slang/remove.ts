@@ -25,11 +25,15 @@ export default new Command({
     const target = options.getUser('유저', true);
     const content = options.getString('내용', true);
 
-    const { guildId } = interaction;
-    const { id } = target;
+    const { id, guildId } = interaction;
+    const { id: targetId } = target;
 
     if (!guildId)
       return 0;
+
+    if (id == targetId) {
+      Utils.reply(interaction, '자신의 망언을 삭제할 수 없습니다.');
+    }
 
     const guild = await client.models.guild.findOne({ id: guildId });
     const channel = <TextChannel>interaction.guild?.channels.cache.get(guild.slang);
@@ -39,7 +43,7 @@ export default new Command({
       return 0;
     }
 
-    const user = await client.models.config.findOne({ id, guildId });
+    const user = await client.models.config.findOne({ id: targetId, guildId });
 
     if (!user.slangs.includes(content)) {
       Utils.reply(interaction, '이 유저는 이 망언을 보유하고 있지 않습니다.');
@@ -77,7 +81,7 @@ export default new Command({
       }
     }
 
-    (await client.models.config.updateOne({ id, guildId }, { $pull: { slangs: content }})).matchedCount;
+    (await client.models.config.updateOne({ id: targetId, guildId }, { $pull: { slangs: content }})).matchedCount;
     Utils.reply(interaction, `성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);
     return 1;
   },  

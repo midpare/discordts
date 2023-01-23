@@ -3,7 +3,7 @@ import { Interaction } from '../../managers/Interaction';
 import { Enforce } from '../../structures/interactions/enforce';
 
 export default new Interaction<StringSelectMenuInteraction, null>({
-  name: 'select_enforce',
+  name: 'select enforce',
   execute: async ({ interaction, options, client }) => {
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });

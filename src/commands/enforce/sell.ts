@@ -14,8 +14,7 @@ export default new Command({
 
     const user = await client.models.gambling.findOne({ id, guildId })
     
-    const customIds = Utils.uuid(2);
-    const [menuId, cancelId] = customIds;
+    const menuId = Utils.uuid();
     
     const selectMenuOptions = user.equipments.map((equipment: { name: string, rank: number }) => {
       if (equipment.rank > 1) {
@@ -43,7 +42,7 @@ export default new Command({
 
     const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()
-        .setCustomId(cancelId)
+        .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
         .setLabel('취소'),
     );
@@ -57,16 +56,14 @@ export default new Command({
         message.delete();
     }, 60 * 1000);
 
-    const defaultOption = {
+    client.interactionOptions.set(menuId, new InteractionOption({
       ids: [id],
       guildId: guildId!,
+      cmd: 'enforce sell',
+      customIds: [menuId],
       messages: [message],
-      customIds,
       data: user.equipments,
-    }
-
-    client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'enforce_sell' })));
-    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' })));
+    }));
 
     return 1;
   },

@@ -68,8 +68,8 @@ export class Enforce {
   }
 
   get button(): ActionRowBuilder<ButtonBuilder> {
-    const customIds = Utils.uuid(4);
-    const [enforceId, protectionId, increaseChanceId, cancelId] = customIds;
+    const customIds = Utils.uuid(3);
+    const [enforceId, protectionId, increaseChanceId] = customIds;
 
     const defaultOption = {
       ids: [this.id],
@@ -81,8 +81,7 @@ export class Enforce {
 
     this.client.interactionOptions.set(enforceId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'enforce' })))
     this.client.interactionOptions.set(protectionId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'protection' })));
-    this.client.interactionOptions.set(increaseChanceId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'increaseChance' })));
-    this.client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'enforce_end' })));
+    this.client.interactionOptions.set(increaseChanceId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'increase chance' })));
 
     return <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()
@@ -98,7 +97,7 @@ export class Enforce {
         .setStyle(ButtonStyle.Primary)
         .setLabel(this.increaseChance ? '확률증가권 해제' : '확률증가권 사용'),
       new ButtonBuilder()
-        .setCustomId(cancelId)
+        .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
         .setLabel('종료')
     );

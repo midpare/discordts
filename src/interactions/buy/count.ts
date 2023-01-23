@@ -3,7 +3,7 @@ import { Interaction } from '../../managers/Interaction';
 import { Buy } from '../../structures/interactions/buy';
 
 export default new Interaction<ButtonInteraction, Buy>({
-  name: 'buy-count',
+  name: 'buy count',
   execute: async ({ interaction, options, client }) => {
     const buy = options.data;
     const { item, count } = buy;

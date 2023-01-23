@@ -40,8 +40,7 @@ export default new Command({
       categories.set(category, commands)
     }
 
-    const customIds = Utils.uuid(2);
-    const [menuId, cancelId] = customIds;
+    const menuId = Utils.uuid();
     const menu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
@@ -51,7 +50,7 @@ export default new Command({
 
     const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()
-        .setCustomId(cancelId)
+        .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
         .setLabel('종료'),
     );
@@ -68,12 +67,18 @@ export default new Command({
       ids: [id],
       guildId,
       messages: [msg],
-      customIds,
+      customIds: [menuId],
       data: categories,
     }
 
-    client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'help' })));
-    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' })));
+    client.interactionOptions.set(menuId, new InteractionOption({
+      ids: [id],
+      guildId,
+      cmd: 'help',
+      messages: [msg],
+      customIds: [menuId],
+      data: categories,
+    }));
     return 1;
   },
 });

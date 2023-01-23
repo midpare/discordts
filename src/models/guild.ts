@@ -8,6 +8,7 @@ interface GuildType {
   gambling: Snowflake;
   command: Snowflake;
   slang: Snowflake;
+  slangAvailible: [Snowflake]
   music: {
     channel: Snowflake;
     message: Snowflake;
@@ -29,6 +30,7 @@ const guildInfo = new Schema<GuildType>({
   gambling: { type: String, default: '0' },
   command: { type: String, default: '0' },
   slang: { type: String, default: '0' },
+  slangAvailible: [{ type: String, default: '0' }],
   music: {
     channel: { type: String, default: '0' },
     message: { type: String, default: '0' },

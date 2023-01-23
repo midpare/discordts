@@ -25,19 +25,18 @@ export default new Command({
         }; 
       }
     }).filter((e: Object) => e != undefined);
-    const customIds = Utils.uuid(2)
-    const [ selectMenuId, cancelId ] = customIds;
+    const menuId = Utils.uuid();
 
     const selectMenuRow = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
       new StringSelectMenuBuilder()
-        .setCustomId(selectMenuId)
+        .setCustomId(menuId)
         .setPlaceholder('여기서 강화장비를 선택하세요')
         .setOptions(selectMenuOptions)
     );
 
     const buttonRow = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()
-        .setCustomId(cancelId)
+        .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
         .setLabel('취소'),
     );
@@ -50,17 +49,15 @@ export default new Command({
       if (!message.deletable)
         message.delete();
     }, 10 * 60 * 1000);
-
-    const defaultOption = {
+    
+    client.interactionOptions.set(menuId, new InteractionOption({
       ids: [id],
       guildId: guildId!,
       messages: [message], 
-      customIds: [selectMenuId],
+      cmd: 'select enforce',
+      customIds: [menuId],
       data: null
-    }
-    
-    client.interactionOptions.set(selectMenuId, new InteractionOption(Object.assign({}, { cmd: 'select_enforce' }, defaultOption)));
-    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, { cmd: 'cancel'}, defaultOption)));
+    }));
 
     return 1;
   },

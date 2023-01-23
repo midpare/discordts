@@ -53,7 +53,7 @@ export class Buy {
             .setLabel(`+${plus[j]}`),
         );
         
-        this.client.interactionOptions.set(customId, Object.assign({}, this.options, { customIds, cmd: 'update-count', data: this }));
+        this.client.interactionOptions.set(customId, Object.assign({}, this.options, { customIds, cmd: 'update count', data: this }));
       }
 
       rows.push(row);

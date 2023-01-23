@@ -1,7 +1,6 @@
-import { StringSelectMenuInteraction, GuildMember, BaseGuildTextChannel, Message } from 'discord.js';
+import { StringSelectMenuInteraction, GuildMember, BaseGuildTextChannel } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { createAudioPlayer, createAudioResource, getVoiceConnection, joinVoiceChannel } from '@discordjs/voice'
-import ytdl from 'ytdl-core';
+import { createAudioPlayer, getVoiceConnection, joinVoiceChannel } from '@discordjs/voice'
 import { Music } from '../../structures/interactions/music';
 
 export default new Interaction<StringSelectMenuInteraction, string>({
@@ -22,12 +21,13 @@ export default new Interaction<StringSelectMenuInteraction, string>({
     if (!(channel instanceof BaseGuildTextChannel)) 
       return;
     
-    let message: Message;
-    for (const [_, m] of (await channel.messages.fetch())) {
-      if (m.id == messageId) {
-        message = m
+    const getMessage = async () => {
+      for (const [_, m] of (await channel.messages.fetch())) {
+        if (m.id == messageId) {
+          return m;
+        }
       }
-    }
+    };
   
     const connection = getVoiceConnection(id) ?? joinVoiceChannel({
       channelId: member.voice.channelId,
@@ -35,24 +35,27 @@ export default new Interaction<StringSelectMenuInteraction, string>({
       adapterCreator: voiceAdapterCreator,
     });
     
-    const [videoId, title] = interaction.values[0].split(' ');
-    const audio = ytdl(`http://youtube.com/watch?v=${videoId}`, {
-      quality: 'highestaudio',
-    });
-    
-    const resource = createAudioResource(audio);
+    const { videoId, search, title } = client.interactionOptions.get(interaction.values[0])?.data;
+
+    const data = {
+      title,
+      search,
+      videoId,
+      requestBy: member.displayName,
+    }
     const player = createAudioPlayer();
 
-    const music = client.music.get(id);
+    let music = client.music.get(id);
     if (!music) {
-      client.music.set(id, new Music(connection, player, guild));  
+      const message = await getMessage();
       
-      player.play(resource);
-      connection?.subscribe(player);
-    } else {
-      music.pushResource(resource);
+      music = new Music(connection, player, message!)
+      client.music.set(id, music);
     }
-    const test = 10;
+
+    music.pushData(data);
+    
+    
     interaction.deferUpdate();
   },
 });

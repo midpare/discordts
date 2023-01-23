@@ -3,7 +3,6 @@
     "name": "discordbot",
     "script": "./dist/index.js",
     "insatances": "1",
-    "exec_mode": "cluster",
     "watch": true 
   }]
 }

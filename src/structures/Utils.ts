@@ -118,4 +118,13 @@ export class Utils {
     
     return result
   }
+
+  public static packing<T>(arr: Array<T>, n: number): Array<Array<T>> {
+    const box = Array.from(Array(Math.ceil(arr.length / n)), () => new Array(n))
+    for (let i in arr) {
+      const j = parseInt(i);
+      box[Math.floor(j / n)][j % n] = arr[i];
+    }
+    return box;
+  }
 }

@@ -73,7 +73,6 @@ export default new Command({
       required: false,
     },
   ],
-  default_member_permissions: PermissionFlagsBits.Administrator,
   execute: async ({ interaction, options, client }) => {
     const { guildId: id } = interaction;
     const type = options.getString('채널유형', true);

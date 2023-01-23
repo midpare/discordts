@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, EmbedBuilder, TextChannel } from 'discord.js';
+import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, EmbedBuilder, TextChannel } from 'discord.js';
 import { Command } from '../../../managers/Command';
 import { Utils } from '../../../structures/Utils';
 
@@ -25,7 +25,7 @@ export default new Command({
     const target = options.getUser('유저', true)
     const content = options.getString('내용', true);
 
-    const { id, guildId } = interaction;
+    const { user: { id }, guildId } = interaction;
     const { id: targetId } = target;
 
     if (!guildId)
@@ -62,29 +62,57 @@ export default new Command({
       const id = message.embeds[0].data.title?.split('(')[1]?.split(')')[0];
 
       if (id == target.id) {
-        for (let i = 0; i < user.slangs.length; i++) {
-          user.slangs[i] = `${i + 1}. ${user.slangs[i]}`;
-        }
-
-        user.slangs.push(`${user.slangs.length + 1}. ${content}`);
-
-        const embed = new EmbedBuilder()
-          .setTitle(`${user.name}(${user.id})님의 망언`)
-          .setDescription(user.slangs.join('\n'));
-        
-        message.edit({ embeds: [embed] });
         flag = 1;
         break;
       }
     }
-    
-    if (flag == 0) {
+
+    if (flag != 1) {
+      const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+        new ButtonBuilder()
+          .setCustomId('check slang')
+          .setLabel('망언 확인')
+          .setStyle(ButtonStyle.Primary)
+      );
+
       const embed = new EmbedBuilder()
         .setTitle(`${user.name}(${user.id})님의 망언`)
-        .setDescription(`1. ${content}`);
-      
-      channel.send({ embeds: [embed] });
+        .setDescription(`아래 버튼을 눌러 '${user.name}'님의 망언을 확인할 수 있습니다.`);
+      channel.send({ embeds: [embed], components: [row] });
     }
+    // const messages = await channel.messages.fetch();
+
+    // let flag = 0;
+
+    // for (const [_, message] of messages) {
+    //   if (message.embeds.length < 1)
+    //     continue;
+    //   const id = message.embeds[0].data.title?.split('(')[1]?.split(')')[0];
+
+    //   if (id == target.id) {
+    //     for (let i = 0; i < user.slangs.length; i++) {
+    //       user.slangs[i] = `${i + 1}. ${user.slangs[i]}`;
+    //     }
+
+    //     user.slangs.push(`${user.slangs.length + 1}. ${content}`);
+
+    //     const embed = new EmbedBuilder()
+    //       .setTitle(`${user.name}(${user.id})님의 망언`)
+    //       .setDescription(user.slangs.join('\n'));
+        
+    //     message.edit({ embeds: [embed] });
+    //     flag = 1;
+    //     break;
+    //   }
+    // }
+    
+    // if (flag == 0) {
+    //   const embed = new EmbedBuilder()
+    //     .setTitle(`${user.name}(${user.id})님의 망언`)
+    //     .setDescription(`1. ${content}`);
+      
+    //   channel.send({ embeds: [embed] });
+    // }
 
     (await client.models.config.updateOne({ id: targetId, guildId }, { $push: { slangs: content } })).matchedCount;
     Utils.reply(interaction, `성공적으로 망언을 추가했습니다!\n망언 내용: ${content}`);

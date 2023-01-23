@@ -15,8 +15,8 @@ export default new Interaction<StringSelectMenuInteraction, Buy | null>({
       options.data = buy;
     }
 
-    const customIds = Utils.uuid(4);
-    const [yes, countId, backId, cancelId] = customIds;
+    const customIds = Utils.uuid(3);
+    const [yes, countId, backId] = customIds;
 
     const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()
@@ -32,7 +32,7 @@ export default new Interaction<StringSelectMenuInteraction, Buy | null>({
         .setStyle(ButtonStyle.Primary)
         .setLabel('물품 변경'),
       new ButtonBuilder()
-        .setCustomId(cancelId)
+        .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
         .setLabel('취소'),
     );
@@ -40,7 +40,6 @@ export default new Interaction<StringSelectMenuInteraction, Buy | null>({
     client.interactionOptions.set(yes, new InteractionOption(Object.assign(options, { cmd: 'buy-yes' })));
     client.interactionOptions.set(countId, new InteractionOption(Object.assign(options, { cmd: 'buy-count' })));
     client.interactionOptions.set(backId, new InteractionOption(Object.assign(options, { cmd: 'buy-back' })));
-    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign(options, { cmd: 'cancel' })));
     
     options.data.send({ content: `"${label}" ${count}개를 ${(price * count).toLocaleString()}원(개당 ${price.toLocaleString()}원)에 구매하시겠습니까?.`, components: [row] });
     interaction.deferUpdate();

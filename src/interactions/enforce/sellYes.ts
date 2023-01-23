@@ -3,7 +3,7 @@ import { Interaction } from '../../managers/Interaction';
 import { enforceTable, Equipment } from '../../structures/interactions/enforce';
 
 export default new Interaction<ButtonInteraction, Equipment>({
-  name: 'enforce_sell_yes',
+  name: 'enforce sell yes',
   execute: async ({ interaction, options, client }) => {
     const { guildId, user: { id } } = interaction;
     

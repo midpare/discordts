@@ -19,8 +19,8 @@ export default new Command({
   usage: '구매',
   description: '여러가지 물품들을 구매합니다.',
   execute: async ({ interaction, client }) => {
-    const customIds = Utils.uuid(3);
-    const [menuId, countId, cancelId] = customIds;
+    const customIds = Utils.uuid(2);
+    const [menuId, countId] = customIds;
 
     const menuOptions = new Array();
 
@@ -43,7 +43,7 @@ export default new Command({
 
     const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()
-        .setCustomId(cancelId)
+        .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
         .setLabel('취소'),
     );
@@ -66,8 +66,7 @@ export default new Command({
     }
 
     client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'buy' })));
-    client.interactionOptions.set(countId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'buy-count' })));
-    client.interactionOptions.set(cancelId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' } )));
+    client.interactionOptions.set(countId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'buy count' })));
 
     return 1;
   },

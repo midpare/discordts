@@ -1,17 +1,18 @@
-import { ActionRowBuilder, ModalSubmitInteraction, StringSelectMenuBuilder } from 'discord.js';
+import { ActionRowBuilder, Message, ModalSubmitInteraction, StringSelectMenuBuilder } from 'discord.js';
 import { Utils } from '../../structures/Utils';
 import { Interaction } from '../../managers/Interaction';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 
 export default new Interaction<ModalSubmitInteraction, null>({
   name: 'select music',
   execute: async ({ interaction, client }) => {
-    const { value: title } = interaction.fields.fields.get('title')!;
+    const { value: search } = interaction.fields.fields.get('title')!;
     const { items } = await Utils.request({
       uri: 'https://www.googleapis.com/youtube/v3/search',
       method: 'GET',
       json: true,
       qs: {
-        q: title,
+        q: search,
         part: 'snippet',
         maxResults: 5,
         type: 'video',
@@ -19,11 +20,25 @@ export default new Interaction<ModalSubmitInteraction, null>({
       }
     });
 
-    const selectMenuOptions = items.map((e: { snippet: { title: string }, id: { videoId: string } }) => {
+    const customIds = Utils.uuid(5);
+    const selectMenuOptions = items.map((e: { snippet: { title: string }, id: { videoId: string } }, i: number) => {
+      client.interactionOptions.set(customIds[i], new InteractionOption({
+        ids: [interaction.user.id],
+        guildId: interaction.guildId!,
+        cmd: '',
+        customIds,
+        messages: [{} as Message],
+        data: {
+          videoId: e.id.videoId,
+          search,
+          title: e.snippet.title,
+        }
+      }));
+
       return {
-        label: e.snippet.title,
+        label: e.snippet.title.slice(0, 100),
         description: '위 노래를 재생합니다.',
-        value: e.id.videoId + ` ${title}`, 
+        value: customIds[i], 
       }
     });
 

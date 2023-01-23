@@ -14,7 +14,7 @@ export default new Interaction<StringSelectMenuInteraction, School>({
       const option = {
         label: `${i}학년`,
         description: `${i}학년을 선택합니다`,
-        value: `${i}`,
+        value: i.toString(),
       };
       menuOptions.push(option);
     }

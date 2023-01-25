@@ -16,7 +16,7 @@ export default new Interaction<ButtonInteraction, null>({
         .setLabel('메시지 삭제')
         .setStyle(ButtonStyle.Primary),
     );
-
+    
     if (!guild.slangAvailible.includes(id)) {
       const embed = new EmbedBuilder()
         .setTitle('망언을 확인할 권한이 없습니다.')

@@ -22,7 +22,9 @@ export default new Interaction<StringSelectMenuInteraction, Map<string, { name: 
       .setDescription(`${category} 관련 명령어를 확인합니다.\n<>는 필수, []는 선택사항입니다.`)
       .setFields(fields);
 
-    options.send(interaction, { embeds: [embed] });
+    
+    interaction.deferReply();
+    options.messages[0].edit({ embeds: [embed] })
     client.interactionOptions.set(interaction.customId, options);
   },
 });

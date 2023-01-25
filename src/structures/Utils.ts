@@ -116,7 +116,7 @@ export class Utils {
     else if (day > 0)
       `${day}일 ${hour}시간 ${minute}분 ` + result;
     
-    return result
+    return result;
   }
 
   public static packing<T>(arr: Array<T>, n: number): Array<Array<T>> {
@@ -125,6 +125,8 @@ export class Utils {
       const j = parseInt(i);
       box[Math.floor(j / n)][j % n] = arr[i];
     }
+    box[box.length - 1] = box[box.length - 1].filter(e => e); //remove empty items
+
     return box;
   }
 }

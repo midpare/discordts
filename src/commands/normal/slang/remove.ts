@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, TextChannel, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, CommandInteractionOptionResolver } from 'discord.js';
-import nextPage from '../../../interactions/nextPage';
+import nextPage from '../../../interactions/normal/movepage';
 import { Command } from '../../../managers/Command';
 import { InteractionOption } from '../../../structures/interactions/InteractionOptions';
 import { Utils } from '../../../structures/Utils';
@@ -45,37 +45,40 @@ export default new Command({
       return 0;
     }
     
-    const box = Utils.packing(user.slangs, 25);
-
     const customIds = Utils.uuid(3);
     const [menuId, nextId, previousId] = customIds;
 
     const selectMenuOptions = new Array();
-    for (const i in box[0]) {
+    for (const i in user.slangs) {
       const option = {
         label: `${parseInt(i) + 1}번 망언`,
-        description: box[0][i],
-        value: box[0][i],
+        description: user.slangs[i],
+        value: user.slangs[i],
       };
       selectMenuOptions.push(option);
     }
 
-    const message = (await channel.messages.fetch()).filter(m => m.embeds[0].data.title?.split('(')[1].split(')')[0] == targetId);
+    const selectMenuOptionsBox = Utils.packing(selectMenuOptions, 25);
 
+    const message = (await channel.messages.fetch()).filter(m => {
+      if (m.embeds.length > 0) 
+        return m.embeds[0].data.title?.split('(')[1]?.split(')')[0] == targetId
+    }).first();
+    
     const menu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳을 눌러 선택하세요')
-        .setOptions(selectMenuOptions),
+        .setOptions(selectMenuOptionsBox[0]),
     );
 
     const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
       new ButtonBuilder()
-        .setCustomId(previousId)
+        .setCustomId(nextId)
         .setStyle(ButtonStyle.Primary)
         .setLabel('이전 페이지'),
       new ButtonBuilder()
-        .setCustomId(nextId)
+        .setCustomId(previousId)
         .setStyle(ButtonStyle.Primary)
         .setLabel('다음 페이지'),
       new ButtonBuilder()
@@ -85,6 +88,7 @@ export default new Command({
     );
 
     interaction.reply({ content: '삭제할 망언을 선택해주세요', components: [menu, button] });
+
     const fetchMessage = await interaction.fetchReply();
     const defaultOption = {
       ids: [id],
@@ -92,87 +96,27 @@ export default new Command({
       customIds,
       messages: [fetchMessage],
     };
-
-    client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, defaultOption, {
+    
+    const menuOption = Object.assign({}, defaultOption, {
       cmd: 'delete slang',
       data: {
         id: targetId,
         message,
       },
-    })));
+    });
 
-    // for (const [_, message] of messages) {
-    //   if (message.embeds.length < 1)
-    //     continue;
-
-    //   const messageId = message.embeds[0].data.title?.split('(')[1].split(')')[0]
-
-    //   if (messageId == target.id) {
-    //     const box = Utils.packing(user.slangs, 25);
-
-    //     const customIds = Utils.uuid(4);
-    //     const [menuId, nextId, previousId, cancelId] = customIds;
-
-    //     const selectMenuOptions = new Array();
-    //     for (const i in box[0]) {
-    //       const option = {
-    //         label: `${parseInt(i) + 1}번 망언`,
-    //         description: box[0][i],
-    //         value: box[0][i],
-    //       };
-    //       selectMenuOptions.push(option);
-    //     }
-
-    //     const menu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
-    //       new StringSelectMenuBuilder()
-    //         .setCustomId(menuId)
-    //         .setPlaceholder('이곳을 눌러 선택하세요')
-    //         .setOptions(selectMenuOptions),
-    //     );
-
-    //     const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
-    //       new ButtonBuilder()
-    //         .setCustomId(previousId)
-    //         .setStyle(ButtonStyle.Primary)
-    //         .setLabel('이전 페이지'),
-    //       new ButtonBuilder()
-    //         .setCustomId(nextId)
-    //         .setStyle(ButtonStyle.Primary)
-    //         .setLabel('다음 페이지'),
-    //       new ButtonBuilder()
-    //         .setCustomId(cancelId)
-    //         .setStyle(ButtonStyle.Secondary)
-    //         .setLabel('취소'),
-    //     );
-
-    //     interaction.reply({ content: '삭제할 망언을 선택해주세요', components: [menu, button] });
-    //     const fetchMessage = await interaction.fetchReply();
-    //     const defaultOption = {
-    //       ids: [id],
-    //       guildId,
-    //       customIds,
-    //       messages: [fetchMessage],
-    //     };
-
-    //     client.interactionOptions.set(menuId, new InteractionOption(Object.assign({}, defaultOption, {
-    //       cmd: 'delete slang',
-    //       data: {
-    //         message,
-    //         id: targetId,
-    //       },
-    //     })));
-    //     client.interactionOptions.set(nextId, new InteractionOption(Object.assign({}, defaultOption, {
-    //       cmd: 'next page',
-    //       data: {
-    //         message,
-    //         id: targetId,
-    //       },
-    //     })));
-
-
-    //     break;
-    //   }
-    // }
+    const pageOption = new InteractionOption(Object.assign({}, defaultOption, { 
+      cmd: 'move page',
+      data: {
+        box: selectMenuOptionsBox,
+        present: 0,
+        messageOption: { content: '삭제할 망언을 선택해주세요' },
+        menuOption,
+      }
+    }));
+    client.interactionOptions.set(menuId, new InteractionOption(menuOption));
+    client.interactionOptions.set(nextId, pageOption);
+    client.interactionOptions.set(previousId, pageOption);
 
     return 1;
   },

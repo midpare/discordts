@@ -17,8 +17,9 @@ export default new Interaction<StringSelectMenuInteraction, { id: Snowflake, mes
     (await client.models.config.updateOne({ id, guildId }, { $pull: { slangs: content } })).matchedCount;
     
     const user = await client.models.config.findOne({ id, guildId });
-    if (user.slangs.length < 1) 
-      message.delete();
+    if (user.slangs.length < 1) {
+      message.delete()
+    }
     interaction.reply(`성공적으로 망언을 삭제했습니다!\n망언 내용: ${content}`);
   },
 });

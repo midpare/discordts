@@ -52,22 +52,12 @@ export default new Command({
       return 0;
     }
 
-    const messages = await channel.messages.fetch();
+    const message = (await channel.messages.fetch()).filter(m => {
+      if (m.embeds.length > 0) 
+        return m.embeds[0].data.title?.split('(')[1].split(')')[0] == targetId;
+    }).first();
 
-    let flag = 0;
-
-    for (const [_, message] of messages) {
-      if (message.embeds.length < 1)
-        continue;
-      const id = message.embeds[0].data.title?.split('(')[1]?.split(')')[0];
-
-      if (id == target.id) {
-        flag = 1;
-        break;
-      }
-    }
-
-    if (flag != 1) {
+    if (!message) {
       const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
         new ButtonBuilder()
           .setCustomId('check slang')
@@ -80,39 +70,6 @@ export default new Command({
         .setDescription(`아래 버튼을 눌러 '${user.name}'님의 망언을 확인할 수 있습니다.`);
       channel.send({ embeds: [embed], components: [row] });
     }
-    // const messages = await channel.messages.fetch();
-
-    // let flag = 0;
-
-    // for (const [_, message] of messages) {
-    //   if (message.embeds.length < 1)
-    //     continue;
-    //   const id = message.embeds[0].data.title?.split('(')[1]?.split(')')[0];
-
-    //   if (id == target.id) {
-    //     for (let i = 0; i < user.slangs.length; i++) {
-    //       user.slangs[i] = `${i + 1}. ${user.slangs[i]}`;
-    //     }
-
-    //     user.slangs.push(`${user.slangs.length + 1}. ${content}`);
-
-    //     const embed = new EmbedBuilder()
-    //       .setTitle(`${user.name}(${user.id})님의 망언`)
-    //       .setDescription(user.slangs.join('\n'));
-        
-    //     message.edit({ embeds: [embed] });
-    //     flag = 1;
-    //     break;
-    //   }
-    // }
-    
-    // if (flag == 0) {
-    //   const embed = new EmbedBuilder()
-    //     .setTitle(`${user.name}(${user.id})님의 망언`)
-    //     .setDescription(`1. ${content}`);
-      
-    //   channel.send({ embeds: [embed] });
-    // }
 
     (await client.models.config.updateOne({ id: targetId, guildId }, { $push: { slangs: content } })).matchedCount;
     Utils.reply(interaction, `성공적으로 망언을 추가했습니다!\n망언 내용: ${content}`);

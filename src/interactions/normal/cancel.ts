@@ -1,10 +1,9 @@
 import { ButtonInteraction } from 'discord.js';
-import { Interaction } from '../managers/Interaction';
+import { Interaction } from '../../managers/Interaction';
 
 export default new Interaction<ButtonInteraction, null>({
-  name: 'delete dm message',
+  name: 'cancel',
   execute: async ({ interaction }) => {
-    await interaction.user.createDM();
     interaction.message.delete();
-  }, 
+  },
 });

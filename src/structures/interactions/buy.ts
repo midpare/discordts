@@ -32,13 +32,7 @@ export class Buy {
   }
 
   get countButtons(): Array<ActionRowBuilder<ButtonBuilder>> {
-    const plus = [
-      1,
-      3,
-      5,
-      10,
-      30,
-    ];
+    const plus = [1, 5, 10, 20, 50]
 
     const rows = new Array();
     const customIds = Utils.uuid(12);

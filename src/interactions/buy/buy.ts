@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuInteraction, setPosition } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { Buy } from '../../structures/interactions/buy';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';

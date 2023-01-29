@@ -1,4 +1,4 @@
-import Discord, { ButtonInteraction, ClientOptions, Collection, GuildMember, Message, ModalSubmitInteraction, StringSelectMenuInteraction, Snowflake } from 'discord.js'
+import Discord, { ButtonInteraction, ClientOptions, Collection, GuildMember, ModalSubmitInteraction, StringSelectMenuInteraction, Snowflake } from 'discord.js'
 import { Betting } from './games/Betting';
 import { Interaction } from '../managers/Interaction';
 import { CivilWar } from './games/CivilWar';

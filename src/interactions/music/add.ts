@@ -3,7 +3,7 @@ import { Interaction } from '../../managers/Interaction';
 
 export default new Interaction<ButtonInteraction, null>({
   name: 'add music',
-  execute: async ({ interaction, options, client }) => {
+  execute: async ({ interaction }) => {
     const { guild, member } = interaction
     if (!guild || !(member instanceof GuildMember))
       return;
@@ -13,7 +13,7 @@ export default new Interaction<ButtonInteraction, null>({
       return;
     }
     const modal = new ModalBuilder()
-      .setCustomId('select music')
+      .setCustomId('select play')
       .setTitle('노래')
 
     const row = <ActionRowBuilder<TextInputBuilder>>new ActionRowBuilder()

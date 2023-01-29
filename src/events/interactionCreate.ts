@@ -1,5 +1,5 @@
 import { Client } from '../structures/Client';
-import { BaseInteraction, CommandInteractionOptionResolver, CacheType, TextChannel, GuildMember, CommandInteractionOption, User, ApplicationCommandOptionType, ModalSubmitInteraction } from 'discord.js';
+import { BaseInteraction, CommandInteractionOptionResolver, CacheType, TextChannel, GuildMember, CommandInteractionOption, ApplicationCommandOptionType } from 'discord.js';
 import { Event } from '../managers/Event';
 import { Utils } from '../structures/Utils';
 import { InteractionOption } from '../structures/interactions/InteractionOptions';

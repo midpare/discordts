@@ -25,8 +25,9 @@ export default async function (client: Client) {
     const rest = new REST().setToken(client.token ?? '');
     rest.put(Routes.applicationCommands(client.user?.id ?? ''), { body: commands })
       .then(commands => {
-        if (commands instanceof Array)
+        if (commands instanceof Array) {
           console.log(`Successfully set up ${commands.length} commands!`);
+        }
       });
   });
 }

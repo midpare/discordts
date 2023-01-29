@@ -21,13 +21,7 @@ export default new Interaction<StringSelectMenuInteraction, string>({
     if (!(channel instanceof BaseGuildTextChannel)) 
       return;
     
-    const getMessage = async () => {
-      for (const [_, m] of (await channel.messages.fetch())) {
-        if (m.id == messageId) {
-          return m;
-        }
-      }
-    };
+    const message = (await channel.messages.fetch()).filter(e => e.id == messageId).first();
   
     const connection = getVoiceConnection(id) ?? joinVoiceChannel({
       channelId: member.voice.channelId,
@@ -35,27 +29,25 @@ export default new Interaction<StringSelectMenuInteraction, string>({
       adapterCreator: voiceAdapterCreator,
     });
     
-    const { videoId, search, title } = client.interactionOptions.get(interaction.values[0])?.data;
+    const { url, search, title, duration } = client.interactionOptions.get(interaction.values[0])?.data;
 
     const data = {
+      url,
       title,
       search,
-      videoId,
+      duration,
       requestBy: member.displayName,
     }
     const player = createAudioPlayer();
 
     let music = client.music.get(id);
-    if (!music) {
-      const message = await getMessage();
-      
+    if (!music || !music.currunt) {      
       music = new Music(connection, player, message!)
       client.music.set(id, music);
     }
-
+    
     music.pushData(data);
-    
-    
+  
     interaction.deferUpdate();
   },
 });

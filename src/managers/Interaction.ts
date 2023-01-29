@@ -1,4 +1,4 @@
-import { ButtonInteraction, MessageComponentInteraction, ModalSubmitInteraction, StringSelectMenuInteraction } from 'discord.js';
+import { ButtonInteraction, ModalSubmitInteraction, StringSelectMenuInteraction } from 'discord.js';
 import { Client } from '../structures/Client';
 import { InteractionOption } from '../structures/interactions/InteractionOptions';
 

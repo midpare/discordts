@@ -2,26 +2,17 @@ import { ActionRowBuilder, Message, ModalSubmitInteraction, StringSelectMenuBuil
 import { Utils } from '../../structures/Utils';
 import { Interaction } from '../../managers/Interaction';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
+import { search } from 'play-dl'
 
 export default new Interaction<ModalSubmitInteraction, null>({
-  name: 'select music',
+  name: 'select play',
   execute: async ({ interaction, client }) => {
-    const { value: search } = interaction.fields.fields.get('title')!;
-    const { items } = await Utils.request({
-      uri: 'https://www.googleapis.com/youtube/v3/search',
-      method: 'GET',
-      json: true,
-      qs: {
-        q: search,
-        part: 'snippet',
-        maxResults: 5,
-        type: 'video',
-        key: process.env.YOUTUBE_API_KEY,
-      }
-    });
+    const { value: searchTitle } = interaction.fields.fields.get('title')!;
+    const result = await search(searchTitle, { limit: 5 });
 
     const customIds = Utils.uuid(5);
-    const selectMenuOptions = items.map((e: { snippet: { title: string }, id: { videoId: string } }, i: number) => {
+    const selectMenuOptions = result.map((e, i) => {
+      const { url, title, durationRaw: duration } = e;
       client.interactionOptions.set(customIds[i], new InteractionOption({
         ids: [interaction.user.id],
         guildId: interaction.guildId!,
@@ -29,14 +20,15 @@ export default new Interaction<ModalSubmitInteraction, null>({
         customIds,
         messages: [{} as Message],
         data: {
-          videoId: e.id.videoId,
-          search,
-          title: e.snippet.title,
+          url,
+          title,
+          search: searchTitle,
+          duration,
         }
       }));
 
       return {
-        label: e.snippet.title.slice(0, 100),
+        label: `(${duration}) ${title?.slice(0, 100 - duration.length - 3)}`,
         description: '위 노래를 재생합니다.',
         value: customIds[i], 
       }

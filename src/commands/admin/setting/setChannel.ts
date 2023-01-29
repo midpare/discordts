@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, BaseGuildTextChannel, BaseGuildVoiceChannel, PermissionFlagsBits, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } from 'discord.js';
+import { ApplicationCommandOptionType, BaseGuildTextChannel, BaseGuildVoiceChannel, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, PermissionFlagsBits } from 'discord.js';
 import { Utils } from '../../../structures/Utils';
 import { Command } from '../../../managers/Command';
 
@@ -73,6 +73,7 @@ export default new Command({
       required: false,
     },
   ],
+  default_member_permissions: PermissionFlagsBits.Administrator,
   execute: async ({ interaction, options, client }) => {
     const { guildId: id } = interaction;
     const type = options.getString('채널유형', true);
@@ -105,7 +106,7 @@ export default new Command({
             .setStyle(ButtonStyle.Primary)
             .setLabel('노래 추가'),
           new ButtonBuilder()
-            .setCustomId('delete music')
+            .setCustomId('select delete')
             .setStyle(ButtonStyle.Primary)
             .setLabel('노래 삭제'),
           new ButtonBuilder()

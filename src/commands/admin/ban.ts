@@ -46,7 +46,6 @@ export default new Command({
 
     const target = options.getMember('유저');
     const time = options.getString('시간');
-    let timeStr = null
     const reason = options.getString('사유') ?? '없음';
 
     if (!(target instanceof GuildMember)) {
@@ -65,7 +64,6 @@ export default new Command({
     }
     
     if (time && ms(time)) {
-      timeStr = Utils.getTime(ms(time))
       setTimeout(() => {
         guild?.members.unban(target)
       }, ms(time));

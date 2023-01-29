@@ -4,7 +4,7 @@ import { Enforce } from '../../structures/interactions/enforce';
 
 export default new Interaction<ButtonInteraction, Enforce>({
   name: 'increase chance',
-  execute: async ({ interaction, options, client }) => {
+  execute: async ({ interaction, options }) => {
     const enforce = options.data;
 
     enforce.increaseChance = !enforce.increaseChance

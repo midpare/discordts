@@ -1,4 +1,4 @@
-import { Interaction, Message, MessageComponentInteraction, MessageEditOptions, Snowflake } from 'discord.js';
+import { Message, Snowflake } from 'discord.js';
 
 export class InteractionOption<T> {
   public ids: Snowflake[];

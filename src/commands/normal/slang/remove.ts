@@ -1,5 +1,4 @@
-import { ApplicationCommandOptionType, TextChannel, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, CommandInteractionOptionResolver } from 'discord.js';
-import nextPage from '../../../interactions/normal/movepage';
+import { ApplicationCommandOptionType, TextChannel, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { Command } from '../../../managers/Command';
 import { InteractionOption } from '../../../structures/interactions/InteractionOptions';
 import { Utils } from '../../../structures/Utils';

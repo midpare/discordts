@@ -1,16 +1,16 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Message, MessageEditOptions, Snowflake } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageEditOptions } from "discord.js";
 import { Client } from "../Client";
 import { Utils } from "../Utils";
 import { InteractionOption } from "./InteractionOptions";
 
-const items = [
-  {
-    id: 'protection',
-    label: '파괴방지권',
-    price: 750000,
-    description: '장비 강화 시 파괴를 막을 수 있습니다.',
-  },
-];
+// const items = [
+//   {
+//     id: 'protection',
+//     label: '파괴방지권',
+//     price: 750000,
+//     description: '장비 강화 시 파괴를 막을 수 있습니다.',
+//   },
+// ];
 
 interface Item {
   id: string;

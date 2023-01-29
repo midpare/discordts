@@ -20,8 +20,8 @@ export default new Command({
       required: false,
     },
   ],
-  execute: async ({ interaction, options, client }) => {
-    const { guildId, member } = interaction;
+  execute: async ({ interaction }) => {
+    const { member } = interaction;
 
     if (!(member instanceof GuildMember)) 
       return 0;

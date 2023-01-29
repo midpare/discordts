@@ -11,7 +11,6 @@ export default async function (client: Client) {
 
     if (!(file instanceof Interaction))
       continue;
-    
     if (client.interactions.get(file.name)) 
       throw `name duplicated! command name: ${file.name}, path: ${path}`
 

@@ -125,7 +125,7 @@ export class Utils {
       const j = parseInt(i);
       box[Math.floor(j / n)][j % n] = arr[i];
     }
-    box[box.length - 1] = box[box.length - 1].filter(e => e); //remove empty items
+    box[box.length - 1] = box[box.length - 1].filter(e => e);
 
     return box;
   }

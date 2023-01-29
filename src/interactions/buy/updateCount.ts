@@ -8,7 +8,7 @@ interface BuyD extends Buy {
 
 export default new Interaction<ButtonInteraction, BuyD>({
   name: 'update count',
-  execute: async ({ interaction, options, client }) => {
+  execute: async ({ options }) => {
     const buy = options.data;
     const { count } = buy
 

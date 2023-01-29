@@ -62,15 +62,6 @@ export default new Command({
     interaction.reply({ embeds: [embed], components: [menu, button] });
 
     const msg = await interaction.fetchReply();
-
-    const defaultOption = {
-      ids: [id],
-      guildId,
-      messages: [msg],
-      customIds: [menuId],
-      data: categories,
-    }
-
     client.interactionOptions.set(menuId, new InteractionOption({
       ids: [id],
       guildId,

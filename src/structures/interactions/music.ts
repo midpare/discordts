@@ -1,4 +1,4 @@
-import { AudioPlayer, AudioPlayerStatus, AudioResource, VoiceConnection, createAudioResource, VoiceConnectionStatus } from "@discordjs/voice";
+import { AudioPlayer, AudioPlayerStatus, AudioResource, VoiceConnection, createAudioResource } from "@discordjs/voice";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, italic, Message, APISelectMenuOption } from "discord.js";
 import { stream } from "play-dl";
 
@@ -16,7 +16,19 @@ export class Music {
     this.connection = connection;
     this.message = message;
 
-    this.player.on(AudioPlayerStatus.Idle, this.playNext);
+    this.player.on(AudioPlayerStatus.Idle, async () => {
+      const data = this.queue.shift();
+      if (!data) {
+        this.currunt = null;
+        this.connection.destroy();
+      } else {
+        this.currunt = data;
+        const resource = await this.getResource(data)
+        this.player.play(resource);
+      }
+      
+      this.message.edit({ embeds: [this.embed], components: [this.button] });
+    });
   }
 
   public async pushData(data: Data) {
@@ -25,7 +37,7 @@ export class Music {
       
       const resource = await this.getResource(data);
       this.player.play(resource);
-      this.connection?.subscribe(this.player);
+      this.connection.subscribe(this.player);
     } else 
       this.queue.push(data);
     
@@ -42,25 +54,10 @@ export class Music {
   public delete(i: number) {
     if (i < 1) {
       this.player.stop();
-      this.playNext();
     } else {
       this.queue.splice(i - 1, 1);
       this.message.edit({ embeds: [this.embed], components: [this.button] });
     }
-  }
-
-  public async playNext() {
-    const data = this.queue.shift();
-    if (!data) {
-      this.currunt = null;
-      this.connection.destroy();
-    } else {
-      this.currunt = data;
-      const resource = await this.getResource(data)
-      this.player.play(resource);
-    }
-    
-    this.message.edit({ embeds: [this.embed], components: [this.button] });
   }
 
   public get button(): ActionRowBuilder<ButtonBuilder> {

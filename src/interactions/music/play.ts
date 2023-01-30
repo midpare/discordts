@@ -6,6 +6,8 @@ import { Music } from '../../structures/interactions/music';
 export default new Interaction<StringSelectMenuInteraction, string>({
   name: 'play music',
   execute: async ({ interaction, client }) => {
+    interaction.deferUpdate();
+
     const { guild, member } = interaction;
     if (!guild || !(member instanceof GuildMember))
       return;
@@ -27,6 +29,7 @@ export default new Interaction<StringSelectMenuInteraction, string>({
       channelId: member.voice.channelId,
       guildId: id,
       adapterCreator: voiceAdapterCreator,
+      selfDeaf: false,
     });
     
     const { url, search, title, duration } = client.interactionOptions.get(interaction.values[0])?.data;
@@ -41,13 +44,13 @@ export default new Interaction<StringSelectMenuInteraction, string>({
     const player = createAudioPlayer();
 
     let music = client.music.get(id);
-    if (!music || !music.currunt) {      
+    if (!music) {      
       music = new Music(connection, player, message!)
       client.music.set(id, music);
+    } else if(music && !music.currunt) {
+      music.connection = connection;
     }
     
     music.pushData(data);
-  
-    interaction.deferUpdate();
   },
 });

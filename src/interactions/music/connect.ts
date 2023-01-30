@@ -4,7 +4,9 @@ import { Interaction } from '../../managers/Interaction';
 
 export default new Interaction<ButtonInteraction, null>({
   name: 'connect music',
-  execute: async ({ interaction }) => {
+  execute: async ({ interaction, client }) => {
+    interaction.deferUpdate();    
+
     const { guild, member } = interaction;
     if (!guild || !(member instanceof GuildMember))
       return;
@@ -15,18 +17,24 @@ export default new Interaction<ButtonInteraction, null>({
     }
  
     const { id, voiceAdapterCreator } = guild;
-    const connection = getVoiceConnection(id);
-    if (connection) {
-      interaction.reply({ content: '이미 연결된 봇이 있습니다.', ephemeral: true });
+    let connection = getVoiceConnection(id);
+    
+    if (connection?.joinConfig.channelId == member.voice.channelId) {
+      interaction.reply({ content: '이미 봇이 연결되어 있습니다.', ephemeral: true });
       return;
     }
 
-    joinVoiceChannel({
+    connection = joinVoiceChannel({
       channelId: member.voice.channelId,
       guildId: id,
       adapterCreator: voiceAdapterCreator,
+      selfDeaf: false,
     });
-    
-    interaction.deferUpdate();    
+
+    const music = client.music.get(id);
+    if (music) {
+      connection.subscribe(music.player);
+      music.connection = connection;
+    }
   },
 });

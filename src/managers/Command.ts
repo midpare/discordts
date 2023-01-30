@@ -1,10 +1,4 @@
-import { 
-  LocalizationMap, 
-  ApplicationCommandType, 
-  ChatInputCommandInteraction, 
-  CommandInteractionOptionResolver, 
-  ApplicationCommandOptionData,
-} from 'discord.js'
+import { LocalizationMap, ApplicationCommandType, ChatInputCommandInteraction, CommandInteractionOptionResolver, ApplicationCommandOptionData } from 'discord.js'
 import { Client } from '../structures/Client';
 
 type ExecuteType = (options: {

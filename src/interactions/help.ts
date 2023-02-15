@@ -24,7 +24,7 @@ export default new Interaction<StringSelectMenuInteraction, Map<string, { name: 
 
     
     interaction.deferReply();
-    options.messages[0].edit({ embeds: [embed] })
+    options.message.edit({ embeds: [embed] })
     client.interactionOptions.set(interaction.customId, options);
   },
 });

@@ -1,25 +1,28 @@
-import { ActionRowBuilder, ApplicationCommandOptionType, bold, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
+import { ActionRowBuilder, ApplicationCommandOptionType, bold, ButtonBuilder, ButtonStyle, EmbedBuilder, GuildMember } from 'discord.js';
 import { Command } from '../../managers/Command';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 export default new Command({
-  name: '틱택토',
+  name: '오목',
   aliases: ['tictactoe'],
   category: '게임',
-  usage: '틱택토 <유저>',
-  description: '[유저]와 틱택토 게임을 합니다.',
+  usage: '오목 <유저>',
+  description: '[유저]와 오목을 합니다.',
   options: [
     {
       name: '유저',
-      description: '틱택토를 할 유저를 입력합니다.',
+      description: '오목을 할 유저를 입력합니다.',
       type: ApplicationCommandOptionType.User,
       required: true,
     },
   ],
   execute: async ({ interaction, options, client }) => {
-    const target = options.getUser('유저', true);
-    if (target.bot) {
+    const target = options.getMember('유저');
+    if (!(target instanceof GuildMember) || !(interaction.member instanceof GuildMember))
+      return 0;
+
+    if (target.user.bot) {
       Utils.reply(interaction, '봇을 맨션할 수 없습니다.')
       return 0
     }
@@ -35,7 +38,7 @@ export default new Command({
 
     const customIds = Utils.uuid(2);
     const [yes, no] = customIds;
-    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId(yes)
         .setStyle(ButtonStyle.Success)
@@ -48,27 +51,25 @@ export default new Command({
 
 
     const embed = new EmbedBuilder()
-      .setTitle('⚔ 틱택토')
-      .setDescription(`${bold(interaction.user.username)}가 ${bold(target.username)}에게 틱택토 매치를 신청했습니다!`)
+      .setTitle('⚔ 오목')
+      .setDescription(`${bold(interaction.member.displayName)}님이 ${bold(target.displayName)}님에게 오목 대결을 신청했습니다!`)
 
     interaction.reply({ embeds: [embed], components: [row] })
-    const msg = await interaction.fetchReply();
+    const message = await interaction.fetchReply();
     setTimeout(() => {
-      if (msg.deletable)
-        msg.delete();
+      if (!message.editable)
+        message.delete();
     }, 60 * 1000);
 
     const defaultOption = {
       ids: [target.id],
       guildId,
-      messages: [msg],
+      message,
       customIds,
-      data: {
-        players: [interaction.user, target],
-      },
+      data: [interaction.member, target],
     }
 
-    client.interactionOptions.set(yes, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'accept-tic-tac-toe' })));
+    client.interactionOptions.set(yes, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'accept gomoku' })));
     client.interactionOptions.set(no, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'cancel' })));
     
     return 1;

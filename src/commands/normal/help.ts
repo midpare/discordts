@@ -41,14 +41,14 @@ export default new Command({
     }
 
     const menuId = Utils.uuid();
-    const menu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+    const menu = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳에서 카테고리를 선택하세요')
         .setOptions(menuOptions)
     );
 
-    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    const button = new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
@@ -61,12 +61,12 @@ export default new Command({
 
     interaction.reply({ embeds: [embed], components: [menu, button] });
 
-    const msg = await interaction.fetchReply();
+    const message = await interaction.fetchReply();
     client.interactionOptions.set(menuId, new InteractionOption({
       ids: [id],
       guildId,
       cmd: 'help',
-      messages: [msg],
+      message,
       customIds: [menuId],
       data: categories,
     }));

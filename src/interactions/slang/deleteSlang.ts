@@ -5,10 +5,10 @@ export default new Interaction<StringSelectMenuInteraction, { id: Snowflake, mes
   name: 'delete slang',
   execute: async ({ interaction, options, client }) => {
     const content = interaction.values[0];
-    const { data: { id, message }, messages } = options;
+    const { data: { id, message }, message: messages } = options;
     const { guildId } = interaction;
 
-    messages[0]?.delete();
+    messages?.delete();
     interaction.fetchReply().then((m) => {
       setTimeout(() => {
         m.delete()

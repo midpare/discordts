@@ -16,7 +16,7 @@ export default new Interaction<ButtonInteraction, null>({
       .setCustomId('select play')
       .setTitle('노래')
 
-    const row = <ActionRowBuilder<TextInputBuilder>>new ActionRowBuilder()
+    const row = new ActionRowBuilder<TextInputBuilder>()
       .setComponents(new TextInputBuilder()
         .setCustomId('title')
         .setLabel('노래의 제목을 입력해주세요')

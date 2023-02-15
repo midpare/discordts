@@ -1,6 +1,7 @@
 import { ButtonInteraction, ChatInputCommandInteraction, GuildMember, StringSelectMenuInteraction } from 'discord.js';
 import request from 'request';
 import fs from 'fs';
+import { CanvasRenderingContext2D, Image } from 'canvas';
 
 export class Utils {
   public static dateCal(date: Date, days: number): string {
@@ -106,21 +107,21 @@ export class Utils {
     const hour = time % (60 * 60 * 1000);
     const minute = time % (60 * 1000);
     const second = time % 1000;
-    
+
     let result = `${second}초`;
 
-    if (minute > 0) 
+    if (minute > 0)
       `${minute}분 ` + result;
     else if (hour > 0)
       `${hour}시간 ${minute}분 ` + result;
     else if (day > 0)
       `${day}일 ${hour}시간 ${minute}분 ` + result;
-    
+
     return result;
   }
 
   public static packing<T>(arr: Array<T>, n: number): Array<Array<T>> {
-    const box = Array.from(Array(Math.ceil(arr.length / n)), () => new Array(n))
+    const box = this.matrix(Math.ceil(arr.length / n), n)
     for (let i in arr) {
       const j = parseInt(i);
       box[Math.floor(j / n)][j % n] = arr[i];
@@ -128,5 +129,28 @@ export class Utils {
     box[box.length - 1] = box[box.length - 1].filter(e => e);
 
     return box;
+  }
+
+  public static matrix<T>(m: number, n: number, initial?: T): any[][] {
+    const matrix = new Array();
+    for (let i = 0; i < m; i += 1) {
+      const arr = new Array();
+      if (initial != undefined) {
+        for (let j = 0; j < n; j += 1) {
+          arr.push(initial);
+        }
+      }
+      matrix.push(arr);
+    }
+    return matrix;
+  };
+
+  public static getImage(ctx: CanvasRenderingContext2D, buffer: Buffer) {
+    const image = new Image()
+    image.onload = () => ctx.drawImage(image, 0, 0)
+    image.onerror = err => { throw err }
+    image.src = buffer;
+
+    return image;
   }
 }

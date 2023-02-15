@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js';
+import { ApplicationCommandOptionType, PermissionFlagsBits, TextChannel } from 'discord.js';
 import { Utils } from '../../../structures/Utils';
 import { Command } from '../../../managers/Command';
 
@@ -65,12 +65,19 @@ export default new Command({
   execute: async ({ interaction, options, client }) => {
     const { guildId: id } = interaction;
     const type = options.getString('채널유형', true);
+    const guild = await client.models.guild.findOne({ id })
+
     if (type.split(' ')[0] == 'log') {
       await client.models.guild.updateOne({ id }, { $set: { [`log.${type.split(' ')[1]}`]: '0' } }, { upsert: true })
     } else {
+      if (type == 'music' && guild.music.channel != '0') {
+        const channel = <TextChannel>interaction.guild?.channels.cache.get(guild.music.channel)
+        const message = (await channel.messages.fetch()).filter(e => e.id == guild.music.message).first()
+        message?.delete();
+      } 
       (await client.models.guild.updateOne({ id }, { $set: { [type]: '0' } })).matchedCount;
     }
-
+    console.log(1);
     Utils.reply(interaction, '성공적으로 채널을 삭제했습니다!');
     return 1;
   },

@@ -5,7 +5,7 @@ export class InteractionOption<T> {
   public guildId: Snowflake;
   public cmd: string;
   public customIds: string[];
-  public messages: Array<Message>;
+  public message: Message;
   public data: T;
 
   constructor(option: InteractionOption<T>) {
@@ -13,7 +13,7 @@ export class InteractionOption<T> {
     this.guildId = option.guildId;
     this.cmd = option.cmd;
     this.customIds = option.customIds;
-    this.messages = option.messages;
+    this.message = option.message;
     this.data = option.data;
   }
 }

@@ -10,7 +10,7 @@ export default new Interaction<ButtonInteraction, Enforce>({
     if (interaction.member instanceof GuildMember)
       interaction.channel?.send(`${interaction.member.displayName}님이 "${enforce.equipment.name}"을(를) ${enforce.equipment.rank}강까지 강화했습니다!`)
 
-    options.messages[0].delete();
+    options.message.delete();
     interaction.deferUpdate();
   },
 });

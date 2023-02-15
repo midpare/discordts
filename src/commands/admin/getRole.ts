@@ -20,7 +20,7 @@ export default new Command({
     }
 
     
-    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId('getRole')
         .setStyle(ButtonStyle.Primary)

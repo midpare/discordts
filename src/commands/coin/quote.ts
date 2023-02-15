@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentBuilder } from 'discord.js';
 import { Command } from '../../managers/Command';
 
 export default new Command({
@@ -8,7 +8,7 @@ export default new Command({
   usage: '코인현황',
   description: '현재 코인들의 시세를 확인합니다.',
   execute: async ({ interaction }) => {
-    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setURL('https://upbit.com/exchange')
         .setStyle(ButtonStyle.Link)

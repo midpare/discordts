@@ -19,14 +19,14 @@ export default new Interaction<StringSelectMenuInteraction, School>({
       menuOptions.push(option);
     }
     
-    const selectMenu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().addComponents(
+    const selectMenu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳을 눌러 선택해주세요')
         .setOptions(menuOptions)
     );
 
-    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
+    const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder() 
         .setCustomId(cancel)
         .setStyle(ButtonStyle.Secondary)
@@ -37,7 +37,7 @@ export default new Interaction<StringSelectMenuInteraction, School>({
         .setLabel('뒤로가기')
     );
 
-    options.messages[0].edit({ content: '자신의 학년을 선택해주시기 바랍니다.', components: [ selectMenu, button ] });
+    options.message.edit({ content: '자신의 학년을 선택해주시기 바랍니다.', components: [ selectMenu, button ] });
     interaction.deferUpdate();
     
     options.customIds = customIds;

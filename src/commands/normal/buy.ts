@@ -34,14 +34,14 @@ export default new Command({
       menuOptions.push(option)
     }
 
-    const selectMenu = <ActionRowBuilder<StringSelectMenuBuilder>> new ActionRowBuilder().setComponents(
+    const selectMenu = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('여기에서 구매하고 싶은 물품을 선택해주세요.')
         .setOptions(menuOptions)
     );
 
-    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    const button = new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
@@ -60,7 +60,7 @@ export default new Command({
     const defaultOption = {
       ids: [interaction.user.id],
       guildId: interaction.guildId!,
-      messages: [message],
+      message,
       customIds,
       data: null,
     }

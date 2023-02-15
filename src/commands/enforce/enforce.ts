@@ -27,14 +27,14 @@ export default new Command({
     }).filter((e: Object) => e != undefined);
     const menuId = Utils.uuid();
 
-    const selectMenuRow = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+    const selectMenuRow = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('여기서 강화장비를 선택하세요')
         .setOptions(selectMenuOptions)
     );
 
-    const buttonRow = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    const buttonRow = new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
@@ -53,7 +53,7 @@ export default new Command({
     client.interactionOptions.set(menuId, new InteractionOption({
       ids: [id],
       guildId: guildId!,
-      messages: [message], 
+      message, 
       cmd: 'select enforce',
       customIds: [menuId],
       data: null

@@ -89,14 +89,14 @@ export default new Command({
       return 0;
     }
 
-    const selectMenu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().addComponents(
+    const selectMenu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳을 눌러 선택해주세요')
         .setOptions(menuOptions)
     )
 
-    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
+    const button = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId(cancel)
         .setStyle(ButtonStyle.Secondary)
@@ -105,17 +105,17 @@ export default new Command({
 
     interaction.editReply({ content: '자신이 현재 속한 지역을 선택해주시기 바랍니다.', components: [selectMenu, button] });
     
-    const msg = await interaction.fetchReply();
+    const message = await interaction.fetchReply();
 
     setTimeout(() => {
-      if (!msg.delete)
-        msg.delete()
+      if (!message.delete)
+        message.delete()
     }, 2 * 60 * 1000);
 
     const defaultOption = {
       ids: [id],
       guildId,
-      messages: [msg],
+      message,
       customIds,
       data: schoolName
     }

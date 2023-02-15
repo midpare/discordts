@@ -31,7 +31,7 @@ export default new Interaction<ButtonInteraction, Enforce>({
       enforce.equipment.rank++;
       
       if (enforce.equipment.rank > 9) {
-        options.messages[0].delete();
+        options.message.delete();
         interaction.channel?.send(`<@${id}>축하합니다! "${enforce.equipment.name}"을(를) 10강까지 강화했습니다!`);
       } else
         enforce.send({ content: `강화에 성공하셨습니다!\n${enforce.equipment.rank - 1}강 -> ${enforce.equipment.rank}강`, components: [enforce.button], embeds: [enforce.embed] });

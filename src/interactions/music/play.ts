@@ -23,7 +23,7 @@ export default new Interaction<StringSelectMenuInteraction, string>({
     if (!(channel instanceof BaseGuildTextChannel)) 
       return;
     
-    const message = (await channel.messages.fetch()).filter(e => e.id == messageId).first();
+    const musicMesssage = (await channel.messages.fetch()).filter(e => e.id == messageId).first();
   
     const connection = getVoiceConnection(id) ?? joinVoiceChannel({
       channelId: member.voice.channelId,
@@ -32,8 +32,9 @@ export default new Interaction<StringSelectMenuInteraction, string>({
       selfDeaf: false,
     });
     
-    const { url, search, title, duration } = client.interactionOptions.get(interaction.values[0])?.data;
-
+    const { message, data: { url, search, title, duration }} = client.interactionOptions.get(interaction.values[0])!
+    message.delete();
+    
     const data = {
       url,
       title,
@@ -45,7 +46,7 @@ export default new Interaction<StringSelectMenuInteraction, string>({
 
     let music = client.music.get(id);
     if (!music) {      
-      music = new Music(connection, player, message!)
+      music = new Music(connection, player, musicMesssage!)
       client.music.set(id, music);
     } else if(music && !music.currunt) {
       music.connection = connection;

@@ -11,7 +11,7 @@ export default new Interaction<StringSelectMenuInteraction, School>({
     const _class = interaction.values[0];
 
     const user = await school.findOne({ id, guildId });
-    const msg = options.messages[0]
+    const msg = options.message
     
     if (!user) {
       const newSchoolInfo = new school({ id, guildId, name, cityCode, cityName, schoolCode, schoolName, grade, class: _class });

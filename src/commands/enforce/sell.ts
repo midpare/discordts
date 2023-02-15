@@ -33,14 +33,14 @@ export default new Command({
       return 0;
     }
 
-    const selectMenu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+    const selectMenu = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳에서 판매할 아이템을 선택해주세요.')
         .setOptions(selectMenuOptions)
     );
 
-    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    const button = new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId('cancel')
         .setStyle(ButtonStyle.Secondary)
@@ -61,7 +61,7 @@ export default new Command({
       guildId: guildId!,
       cmd: 'enforce sell',
       customIds: [menuId],
-      messages: [message],
+      message,
       data: user.equipments,
     }));
 

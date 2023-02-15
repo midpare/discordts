@@ -16,7 +16,7 @@ export default new Command({
     if (!guildId)
       return 0;
 
-    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().addComponents(
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setLabel(client.messages.yes)
         .setStyle(ButtonStyle.Success)
@@ -29,17 +29,18 @@ export default new Command({
 
 
     interaction.reply({ content: '정말 파산하시겠습니까? 파산하시면 돈과 빚이 모두 0원으로 돌아가며 한시간동안 도박을 할 수 없습니다.', components: [row] })
+    
+    const message = await interaction.fetchReply();
+    
     setTimeout(() => {
-      if (!msg.deletable) 
-        msg.delete();
+      if (!message.deletable) 
+        message.delete();
     }, 60 * 1000);
-
-    const msg = await interaction.fetchReply();
 
     const defaultOption = {
       ids: [id],
       guildId,
-      messages: [msg],
+      message,
       customIds,
       data: null
     }

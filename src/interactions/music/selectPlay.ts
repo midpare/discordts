@@ -18,7 +18,7 @@ export default new Interaction<ModalSubmitInteraction, null>({
         guildId: interaction.guildId!,
         cmd: '',
         customIds,
-        messages: [{} as Message],
+        message: {} as Message,
         data: {
           url,
           title,
@@ -34,7 +34,7 @@ export default new Interaction<ModalSubmitInteraction, null>({
       }
     });
 
-    const row = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+    const row = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId('play music')
         .setOptions(selectMenuOptions)

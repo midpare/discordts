@@ -19,7 +19,7 @@ export default new Interaction({
       return;
     }
 
-    const row = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+    const row = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId('delete music')
         .setPlaceholder('이곳을 눌러 선택해주세요.')

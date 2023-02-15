@@ -4,7 +4,7 @@ import { Interaction } from '../managers/Interaction';
 import { CivilWar } from './games/CivilWar';
 import { Messages } from '../language/message';
 import { InteractionOption } from './interactions/InteractionOptions';
-import { TicTacToe } from './interactions/tic-tac-toe';
+import { Gomoku } from './interactions/gomoku';
 import { Command } from '../managers/Command';
 import mongoose from 'mongoose';
 import { Music } from './interactions/music';
@@ -15,7 +15,7 @@ export class Client extends Discord.Client {
   public readonly interactionOptions: Collection<string, InteractionOption<any>>;
   public readonly coin: Collection<string, string>;
   public readonly betting: Collection<Snowflake, Betting>;
-  public readonly tictactoe: Collection<Array<Snowflake>, TicTacToe>;
+  public readonly gomoku: Collection<Snowflake, Gomoku>;
   public readonly alarmMembers: Collection<Snowflake, GuildMember>;
   public readonly music: Collection<Snowflake, Music>
   public readonly civilWar: CivilWar;
@@ -30,7 +30,7 @@ export class Client extends Discord.Client {
     this.interactionOptions = new Collection();
     this.coin = new Collection();
     this.betting = new Collection();
-    this.tictactoe = new Collection();
+    this.gomoku = new Collection();
     this.alarmMembers = new Collection();
     this.music = new Collection();
     this.civilWar = new CivilWar();

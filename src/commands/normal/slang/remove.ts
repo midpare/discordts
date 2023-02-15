@@ -64,14 +64,14 @@ export default new Command({
         return m.embeds[0].data.title?.split('(')[1]?.split(')')[0] == targetId
     }).first();
     
-    const menu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+    const menu = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳을 눌러 선택하세요')
         .setOptions(selectMenuOptionsBox[0]),
     );
 
-    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    const button = new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId(nextId)
         .setStyle(ButtonStyle.Primary)
@@ -93,7 +93,7 @@ export default new Command({
       ids: [id],
       guildId,
       customIds,
-      messages: [fetchMessage],
+      message: fetchMessage,
     };
     
     const menuOption = Object.assign({}, defaultOption, {

@@ -10,7 +10,7 @@ export default new Interaction<ButtonInteraction, null>({
     const { user: { id }, guildId } = interaction;
     const guild = await client.models.guild.findOne({ id: guildId });
   
-    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    const row = new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId('delete dm message')
         .setLabel('메시지 삭제')

@@ -58,7 +58,7 @@ export default new Command({
     }).first();
 
     if (!message) {
-      const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+      const row = new ActionRowBuilder<ButtonBuilder>().setComponents(
         new ButtonBuilder()
           .setCustomId('check slang')
           .setLabel('망언 확인')

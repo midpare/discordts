@@ -50,7 +50,7 @@ export class Enforce {
     this.protection = false;
     this.increaseChance = false;
     this.money = user.money;
-    this.message = data.messages[0];
+    this.message = data.message;
   }
 
   get embed(): EmbedBuilder {
@@ -74,7 +74,7 @@ export class Enforce {
     const defaultOption = {
       ids: [this.id],
       guildId: this.guildId,
-      messages: [this.message],
+      message: this.message,
       customIds,
       data: this,
     }
@@ -83,7 +83,7 @@ export class Enforce {
     this.client.interactionOptions.set(protectionId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'protection' })));
     this.client.interactionOptions.set(increaseChanceId, new InteractionOption(Object.assign({}, defaultOption, { cmd: 'increase chance' })));
 
-    return <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    return new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId(enforceId)
         .setStyle(ButtonStyle.Primary)

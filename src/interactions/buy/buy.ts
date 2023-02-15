@@ -18,7 +18,7 @@ export default new Interaction<StringSelectMenuInteraction, Buy | null>({
     const customIds = Utils.uuid(3);
     const [yes, countId, backId] = customIds;
 
-    const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    const row = new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId(yes)
         .setStyle(ButtonStyle.Primary)

@@ -61,7 +61,7 @@ export class Music {
   }
 
   public get button(): ActionRowBuilder<ButtonBuilder> {
-    return <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    return new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId('add music')
         .setStyle(ButtonStyle.Primary)

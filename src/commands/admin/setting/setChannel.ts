@@ -98,13 +98,9 @@ export default new Command({
         
         const embed = new EmbedBuilder()
           .setTitle('재생목록')
-          .setDescription('현재 재생목록을 확인합니다.')
+          .setDescription('채팅으로 제목 또는 URL을 입력해 노래를 추가할 수 있습니다.');
     
-        const row = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
-          new ButtonBuilder()
-            .setCustomId('add music')
-            .setStyle(ButtonStyle.Primary)
-            .setLabel('노래 추가'),
+        const row = new ActionRowBuilder<ButtonBuilder>().setComponents(
           new ButtonBuilder()
             .setCustomId('select delete')
             .setStyle(ButtonStyle.Primary)

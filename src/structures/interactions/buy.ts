@@ -69,6 +69,6 @@ export class Buy {
   }
 
   public async send(options: MessageEditOptions) {
-    this.options.messages[0] = await this.options.messages[0].edit(options)
+    this.options.message = await this.options.message.edit(options)
   }
 }

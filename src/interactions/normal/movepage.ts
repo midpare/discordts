@@ -26,21 +26,21 @@ export default new Interaction<ButtonInteraction, {
         break;
     }
 
-    const { messages: [ message ], data: { box, present, messageOption, menuOption } } = options;
+    const { message: messages, data: { box, present, messageOption, menuOption } } = options;
     
     const customIds = Utils.uuid(3);
     const [menuId, nextId, previousId] = customIds;
 
     interaction.deferUpdate();
       
-    const menu = <ActionRowBuilder<StringSelectMenuBuilder>>new ActionRowBuilder().setComponents(
+    const menu = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
       new StringSelectMenuBuilder()
         .setCustomId(menuId)
         .setPlaceholder('이곳을 눌러 선택하세요')
         .setOptions(box[present]),
     );
 
-    const button = <ActionRowBuilder<ButtonBuilder>>new ActionRowBuilder().setComponents(
+    const button = new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
         .setCustomId(previousId)
         .setStyle(ButtonStyle.Primary)
@@ -55,7 +55,7 @@ export default new Interaction<ButtonInteraction, {
         .setLabel('취소'),
     );
 
-    message.edit(Object.assign(messageOption, { components: [menu, button] }));
+    messages.edit(Object.assign(messageOption, { components: [menu, button] }));
 
     client.interactionOptions.set(menuId, new InteractionOption(menuOption));
     client.interactionOptions.set(nextId, options);

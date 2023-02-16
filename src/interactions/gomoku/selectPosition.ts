@@ -33,5 +33,7 @@ export default new Interaction<ButtonInteraction, null>({
     interaction.showModal(modal);
 
     client.interactionOptions.set(customId, new InteractionOption(Object.assign({}, options, { cmd: 'gomoku setRock' })));
+    const gomoku = client.gomoku.get(interaction.user.id);
+    gomoku?.setInteractionOptions(options.message);
   },
 });

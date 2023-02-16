@@ -77,7 +77,6 @@ export default new Command({
       } 
       (await client.models.guild.updateOne({ id }, { $set: { [type]: '0' } })).matchedCount;
     }
-    console.log(1);
     Utils.reply(interaction, '성공적으로 채널을 삭제했습니다!');
     return 1;
   },

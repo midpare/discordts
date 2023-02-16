@@ -44,6 +44,7 @@ export class Gomoku {
 
 public checkWin(): number {
   const m = this.matrix;
+
   for (let i = 0; i < 15; i++) {
     for (let j = 0; j < 15; j++) {
       if (!m[i][j] && !m[i][j + 4])
@@ -53,20 +54,21 @@ public checkWin(): number {
       for (let k = 1; k < 5; k++) {
         if (m[i][j]) {
           if (i < 11 && m[i][j] == m[i + k][j])
-            dir[0] += m[i][j];
+            dir[0]++;
           else if (j < 11 && m[i][j] == m[i][j + k])
-            dir[1] += m[i][j];
+            dir[1]++;
           else if ((i < 11 && j < 11) && m[i][j] == m[i + k][j + k])
-            dir[2] += m[i][j];
+            dir[2]++;
         } else if (m[i][j + 4]) {
           if ((i < 11 && j < 11) && m[i][j + 4] == m[i + k][j + 4 - k]) {
-            dir[3] += m[i][j + 4];
+            dir[3]++;
           }
         }
       }
-      for (const winner of dir) {
-        if (winner != 0 && winner % 4 == 0) 
-          return winner / 4
+      for (const i in dir) {
+        const winner = dir[i];
+        if (winner == 4) 
+          return 1;
       }
     }
   }

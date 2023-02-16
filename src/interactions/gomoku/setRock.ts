@@ -25,13 +25,11 @@ export default new Interaction<ModalSubmitInteraction, null>({
     
     gomoku?.setRock(x, y);
 
-    const winner = gomoku.checkWin();
-
     const { embed, file } = gomoku;
      
-    if (winner != 0) {
+    if (gomoku.checkWin()) {
       const users = gomoku.players.map(e => bold(e.displayName))
-      embed.setDescription(`${winner == 1 ? users[0] : users[1]}님이 승리했습니다!`);
+      embed.setDescription(`${gomoku.turn ? users[1] : users[0]}님이 승리했습니다!`);
       
       options.message.edit({ embeds: [embed], files: [file] })
       return;

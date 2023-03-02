@@ -1,5 +1,5 @@
 import { loadImage } from 'canvas';
-import { ButtonInteraction, GuildMember } from 'discord.js';
+import { ButtonInteraction, channelLink, ChannelType, GuildMember } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { Gomoku } from '../../structures/interactions/gomoku';
 
@@ -19,7 +19,9 @@ export default new Interaction<ButtonInteraction, Array<GuildMember>>({
     const { file, embed, components } = gomoku;
 
     options.message.delete();
-    const message = await interaction.channel?.send({ embeds: [embed], components, files: [file] });
-    gomoku.setInteractionOptions(message!);
+    if (interaction.channel?.type == ChannelType.GuildText) {      
+      const message = await interaction.channel?.send({ embeds: [embed], components, files: [file] });
+      gomoku.setInteractionOptions(message!);
+    }
   },
 });

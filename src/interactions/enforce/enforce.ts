@@ -1,4 +1,4 @@
-import { ButtonInteraction } from 'discord.js';
+import { ButtonInteraction, ChannelType } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
 import { Enforce } from '../../structures/interactions/enforce';
 
@@ -26,10 +26,12 @@ export default new Interaction<ButtonInteraction, Enforce>({
     }
 
     const rand = Math.floor(Math.random() * 100);
+    if (interaction.channel?.type != ChannelType.GuildText)
+      return;
 
     if (rand < success) {
       enforce.item.rank++;
-      
+
       if (enforce.item.rank > 9) {
         options.message.delete();
         interaction.channel?.send(`<@${id}>축하합니다! "${enforce.item.name}"을(를) 10강까지 강화했습니다!`);
@@ -39,7 +41,7 @@ export default new Interaction<ButtonInteraction, Enforce>({
       (await client.models.gambling.updateOne({ id, guildId, items: equipment }, { $inc: { 'items.$.rank': 1, money: -money } })).matchedCount;
     } else if (rand < success + fail && rand >= success) {
       let minus = -1
-      if (equipment.rank < 2) 
+      if (equipment.rank < 2)
         minus = 0
 
       enforce.item.rank += minus;
@@ -52,7 +54,7 @@ export default new Interaction<ButtonInteraction, Enforce>({
         (await client.models.gambling.updateOne({ id, guildId, items: equipment }, { $inc: { money: -money } })).matchedCount;
       } else {
         enforce.message.delete();
-        interaction.channel?.send({ content: `<@${id}>안타깝네요! "${equipment.name}"장비가 파괴되었습니다.` });
+        interaction.channel.send({ content: `<@${id}>안타깝네요! "${equipment.name}"장비가 파괴되었습니다.` });
         (await client.models.gambling.updateOne({ id, guildId }, { $pull: { items: equipment } })).matchedCount;
       }
     }

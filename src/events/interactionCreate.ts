@@ -104,10 +104,10 @@ export default new Event({
       
       logChannel.send(`<t:${interaction.createdTimestamp.toString().substring(0, 10)}>\n${member.displayName}님이 "${commandName}"${options.data[0] ? `(${options.data.map(getOptions)})` : ''}명령어를 사용했습니다.`)
     } else if (interaction.isButton() || interaction.isStringSelectMenu() || interaction.isModalSubmit()) {
-      let event = client.interactions.get(interaction.customId);
+      let event = client.interactions.get(interaction.customId.split(' ')[0]);
       
       if (event) {
-        const options = {} as InteractionOption<any>
+        const options = {} as InteractionOption<any>;
         event.execute({ interaction, options, client });
         return;
       }

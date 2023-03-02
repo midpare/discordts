@@ -1,4 +1,4 @@
-import { ButtonStyle, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder } from 'discord.js';
+import { ButtonStyle, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ChannelType } from 'discord.js';
 import { Command } from '../../managers/Command';
 import { Utils } from '../../structures/Utils';
 
@@ -26,8 +26,8 @@ export default new Command({
         .setStyle(ButtonStyle.Primary)
         .setLabel('역할 받기'),
     );
-
-    interaction.channel?.send({ content: '이 버튼을 눌러 역할을 받으세요.', components: [row] });
+    if (interaction.channel?.type == ChannelType.GuildText)
+      interaction.channel.send({ content: '이 버튼을 눌러 역할을 받으세요.', components: [row] });
     Utils.reply(interaction, '성공적으로 역할 받기 버튼을 생성했습니다!');
     return 1;
   },

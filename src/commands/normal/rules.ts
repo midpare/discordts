@@ -1,4 +1,4 @@
-import { EmbedBuilder } from 'discord.js';
+import { ChannelType, EmbedBuilder } from 'discord.js';
 import { Rules } from '../../language/rules';
 import { Command } from '../../managers/Command';
 import { Utils } from '../../structures/Utils';
@@ -18,7 +18,8 @@ export default new Command({
     }
 
     Utils.reply(interaction, '아래에서 규칙을 확인하세요.');
-    interaction.channel?.send({ embeds: [embed] });
+    if (interaction.channel?.type == ChannelType.GuildText)
+      interaction.channel.send({ embeds: [embed] });
     return 1;
   },
 });

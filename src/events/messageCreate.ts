@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageCreateOptions, PermissionFlagsBits, StringSelectMenuBuilder, TextChannel, TextInputBuilder, TextInputStyle } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, MessageCreateOptions, PermissionFlagsBits, StringSelectMenuBuilder, TextChannel, TextInputBuilder, TextInputStyle } from 'discord.js';
 import { Event } from '../managers/Event';
 import { Utils } from '../structures/Utils';
 import { search } from 'play-dl'
@@ -49,7 +49,9 @@ export default new Event({
           .setLabel('취소')
           .setStyle(ButtonStyle.Secondary),
       );
-      const message = await msg.channel.send({ content: `<@${msg.author.id}>검색결과 5개 중 원하는 노래를 선택해주세요.`, components: [menu, button] });
+      if (msg.channel.type != ChannelType.GuildText) 
+        return; 
+      const message = await msg.channel?.send({ content: `<@${msg.author.id}>검색결과 5개 중 원하는 노래를 선택해주세요.`, components: [menu, button] });
       if (msg.guild?.members.cache.get(client.user?.id!)?.permissions.has(PermissionFlagsBits.ManageMessages)) {
         msg.delete();
       }

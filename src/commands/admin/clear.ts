@@ -34,7 +34,7 @@ export default new Command({
       return 0;
 
 
-    let msgs = (await channel.messages.fetch({ limit: 99 })).sort((interaction1, interaction2) => interaction2.createdTimestamp - interaction1.createdTimestamp);
+    let msgs = (await channel.messages.fetch({ limit: 99 })).sort((msg1, msg2) => msg1.createdTimestamp - msg2.createdTimestamp);
 
     if (target) {
       msgs = msgs.filter(msg => msg.author.id == target.id);

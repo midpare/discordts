@@ -5,8 +5,6 @@ import { Interaction } from '../../managers/Interaction';
 export default new Interaction<ButtonInteraction, null>({
   name: 'connect music',
   execute: async ({ interaction, client }) => {
-    interaction.deferUpdate();    
-
     const { guild, member } = interaction;
     if (!guild || !(member instanceof GuildMember))
       return;
@@ -23,6 +21,7 @@ export default new Interaction<ButtonInteraction, null>({
       interaction.reply({ content: '이미 봇이 연결되어 있습니다.', ephemeral: true });
       return;
     }
+    interaction.deferUpdate();    
 
     connection = joinVoiceChannel({
       channelId: member.voice.channelId,

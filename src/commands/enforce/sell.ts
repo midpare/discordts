@@ -16,7 +16,7 @@ export default new Command({
     
     const menuId = Utils.uuid();
     
-    const selectMenuOptions = user.equipments.map((equipment: { name: string, rank: number }) => {
+    const selectMenuOptions = user.items.map((equipment: { name: string, rank: number }) => {
       if (equipment.rank > 1) {
         const { sell } = enforceTable[equipment.rank - 2]
         return {
@@ -62,7 +62,7 @@ export default new Command({
       cmd: 'enforce sell',
       customIds: [menuId],
       message,
-      data: user.equipments,
+      data: user.items,
     }));
 
     return 1;

@@ -11,12 +11,12 @@ export default new Command({
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ guildId, id });
 
-    if (!user.equipments[0]) {
+    if (!user.items[0]) {
       Utils.reply(interaction, '보유한 장비가 없습니다.');
       return 0;
     }
 
-    const equipments = user.equipments.map((e: { name: String, rank: number }) => {
+    const items = user.items.map((e: { name: String, rank: number }) => {
       return {
         name: e.name,
         value: `강화 횟수: ${e.rank}강`,
@@ -26,8 +26,8 @@ export default new Command({
 
     const embed = new EmbedBuilder()
       .setTitle(`${user.name}님의 장비`)
-      .setDescription(`${equipments.length}/5개 보유중`)
-      .setFields(equipments);
+      .setDescription(`${items.length}/5개 보유중`)
+      .setFields(items);
     
     interaction.reply({ embeds: [embed] });
     return 1;

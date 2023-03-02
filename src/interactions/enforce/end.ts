@@ -8,7 +8,7 @@ export default new Interaction<ButtonInteraction, Enforce>({
     const enforce = options.data;
     
     if (interaction.member instanceof GuildMember)
-      interaction.channel?.send(`${interaction.member.displayName}님이 "${enforce.equipment.name}"을(를) ${enforce.equipment.rank}강까지 강화했습니다!`)
+      interaction.channel?.send(`${interaction.member.displayName}님이 "${enforce.item.name}"을(를) ${enforce.item.rank}강까지 강화했습니다!`)
 
     options.message.delete();
     interaction.deferUpdate();

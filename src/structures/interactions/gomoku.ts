@@ -42,38 +42,38 @@ export class Gomoku {
     this.turn = !this.turn;
   }
 
-public checkWin(): number {
-  const m = this.matrix;
+  public checkWin(): boolean {
+    const m = this.matrix;
 
-  for (let i = 0; i < 15; i++) {
-    for (let j = 0; j < 15; j++) {
-      if (!m[i][j] && !m[i][j + 4])
-        continue;
+    for (let i = 0; i < 15; i++) {
+      for (let j = 0; j < 15; j++) {
+        if (!m[i][j] && !m[i][j + 4])
+          continue;
 
-      const dir = new Array(4).fill(0)
-      for (let k = 1; k < 5; k++) {
-        if (m[i][j]) {
-          if (i < 11 && m[i][j] == m[i + k][j])
-            dir[0]++;
-          else if (j < 11 && m[i][j] == m[i][j + k])
-            dir[1]++;
-          else if ((i < 11 && j < 11) && m[i][j] == m[i + k][j + k])
-            dir[2]++;
-        } else if (m[i][j + 4]) {
-          if ((i < 11 && j < 11) && m[i][j + 4] == m[i + k][j + 4 - k]) {
-            dir[3]++;
+        const dir = new Array(4).fill(0)
+        for (let k = 1; k < 5; k++) {
+          if (m[i][j]) {
+            if (i < 11 && m[i][j] == m[i + k][j])
+              dir[0]++;
+            else if (j < 11 && m[i][j] == m[i][j + k])
+              dir[1]++;
+            else if ((i < 11 && j < 11) && m[i][j] == m[i + k][j + k])
+              dir[2]++;
+          } else if (m[i][j + 4]) {
+            if ((i < 11 && j < 11) && m[i][j + 4] == m[i + k][j + 4 - k]) {
+              dir[3]++;
+            }
           }
         }
-      }
-      for (const i in dir) {
-        const winner = dir[i];
-        if (winner == 4) 
-          return 1;
+        for (const i in dir) {
+          const winner = dir[i];
+          if (winner == 4)
+            return true;
+        }
       }
     }
+    return false;
   }
-  return 0;
-}
 
   public setInteractionOptions(message: Message) {
     const defaultOption = {

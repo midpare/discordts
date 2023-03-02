@@ -26,7 +26,7 @@ export default new Interaction<ModalSubmitInteraction, null>({
     gomoku?.setRock(x, y);
 
     const { embed, file } = gomoku;
-     
+    
     if (gomoku.checkWin()) {
       const users = gomoku.players.map(e => bold(e.displayName))
       embed.setDescription(`${gomoku.turn ? users[1] : users[0]}님이 승리했습니다!`);

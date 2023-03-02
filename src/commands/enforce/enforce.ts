@@ -12,11 +12,11 @@ export default new Command({
     const { guildId, user: { id } } = interaction;
     const user = await client.models.gambling.findOne({ id, guildId });
     
-    if (!user.equipments[0]) {
+    if (!user.items[0]) {
       Utils.reply(interaction, '보유하고 있는 장비가 없습니다.');
       return 0;
     }
-    const selectMenuOptions = user.equipments.map((e: { name: string, rank: number }) => {
+    const selectMenuOptions = user.items.map((e: { name: string, rank: number }) => {
       if (e.rank < 10) {
         return {
           label: e.name,

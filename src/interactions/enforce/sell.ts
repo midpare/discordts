@@ -1,11 +1,11 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuInteraction } from 'discord.js';
 import { Interaction } from '../../managers/Interaction';
-import { enforceTable, Equipment } from '../../structures/interactions/enforce';
+import { enforceTable, Item } from '../../structures/interactions/enforce';
 import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { Utils } from '../../structures/Utils';
 
 
-export default new Interaction<StringSelectMenuInteraction, Array<Equipment>>({
+export default new Interaction<StringSelectMenuInteraction, Array<Item>>({
   name: 'enforce sell',
   execute: async ({ interaction, options, client }) => {
     const equipment = options.data.filter((e: { name: string }) => e.name == interaction.values[0])[0];

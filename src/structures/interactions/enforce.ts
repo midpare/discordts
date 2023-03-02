@@ -24,7 +24,7 @@ interface Table {
   sell: number
 }
 
-export interface Equipment {
+export interface Item {
   name: string,
   rank: number,
 }
@@ -34,19 +34,19 @@ export class Enforce {
   public readonly id: Snowflake;
   public readonly guildId: Snowflake;
   public readonly enforceTable: Array<Table> = enforceTable;
-  public equipment: Equipment
+  public item: Item
   public protection: boolean;
   public increaseChance: boolean;
   public message: Message
   public money: number;
 
   constructor(client: Client, data: InteractionOption<null>, itemName: string, user: GamblingType) {
-    const equipment = user.equipments.filter(e => e.name == itemName)[0];
+    const equipment = user.items.filter(e => e.name == itemName)[0];
 
     this.client = client
     this.id = data.ids[0];
     this.guildId = data.guildId;
-    this.equipment = equipment;
+    this.item = equipment;
     this.protection = false;
     this.increaseChance = false;
     this.money = user.money;
@@ -54,14 +54,14 @@ export class Enforce {
   }
 
   get embed(): EmbedBuilder {
-    const { success, fail, breaking, money } = this.enforceTable[this.equipment.rank - 1];
+    const { success, fail, breaking, money } = this.enforceTable[this.item.rank - 1];
 
-    const sell = this.equipment.rank < 2 ? '없음' : this.enforceTable[this.equipment.rank - 2].sell.toLocaleString() + '원'
+    const sell = this.item.rank < 2 ? '없음' : this.enforceTable[this.item.rank - 2].sell.toLocaleString() + '원'
     return new EmbedBuilder()
-      .setTitle(`"${this.equipment.name}" 강화메뉴(강화비용: ${money.toLocaleString()}원)`)
+      .setTitle(`"${this.item.name}" 강화메뉴(강화비용: ${money.toLocaleString()}원)`)
       .setDescription(`성공확률: ${success}%, 실패확률: ${fail}%, 파괴확률: ${breaking}%\n잔액: ${this.money.toLocaleString()}원, 판매비용: ${sell}`)
       .setFields([
-        { name: '강화횟수', value: `${this.equipment.rank}강`, inline: true },
+        { name: '강화횟수', value: `${this.item.rank}강`, inline: true },
         { name: '파괴방지권', value: this.protection ? '사용 중' : '미 사용', inline: true },
         { name: '확률증가권', value: this.increaseChance ? '사용 중' : '미 사용', inline: true },
       ]);

@@ -4,7 +4,6 @@ import { GuildMember, StringSelectMenuInteraction } from 'discord.js';
 export default new Interaction<StringSelectMenuInteraction, null>({
   name: 'delete music',
   execute: async ({ interaction, client }) => {
-    interaction.deferUpdate();
     const { guild, member } = interaction;
     if (!guild || !(member instanceof GuildMember))
       return;
@@ -19,6 +18,7 @@ export default new Interaction<StringSelectMenuInteraction, null>({
       interaction.reply({ content: '이미 재생이 종료된 노래입니다.', ephemeral: true });
       return;
     }
+    interaction.deferUpdate();
 
     music.delete(parseInt(interaction.values[0]));
   },

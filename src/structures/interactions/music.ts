@@ -63,10 +63,6 @@ export class Music {
   public get button(): ActionRowBuilder<ButtonBuilder> {
     return new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
-        .setCustomId('add music')
-        .setStyle(ButtonStyle.Primary)
-        .setLabel('노래 추가'),
-      new ButtonBuilder()
         .setCustomId('select delete')
         .setStyle(ButtonStyle.Primary)
         .setLabel('노래 삭제'),
@@ -80,7 +76,7 @@ export class Music {
   public get embed(): EmbedBuilder {
     const embed = new EmbedBuilder()
       .setTitle('재생목록')
-      .setDescription('현재 재생목록을 확인합니다.');
+      .setDescription('현재 재생목록을 확인합니다.\n채팅으로 제목을 입력해 노래를 추가할 수 있습니다.');
     if (this.currunt == null)
       return embed;
 

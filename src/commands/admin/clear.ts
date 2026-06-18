@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js';
-import { Command } from '../../managers/Command';
-import { Utils } from '../../structures/Utils';
+import { Command } from '../../managers/Command.js';
+import { Utils } from '../../structures/Utils.js';
 
 export default new Command({
   name: 'clear',
@@ -53,6 +53,7 @@ export default new Command({
       msgs.first()?.delete();
       return 0;
     }
+    await interaction.deferReply({ ephemeral: true });
 
     channel.bulkDelete(msgs, true);
     Utils.reply(interaction, client.messages.admin.clear.success(count));

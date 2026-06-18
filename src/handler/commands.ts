@@ -1,14 +1,20 @@
-import { REST, Routes } from 'discord.js';
-import { Command } from '../managers/Command';
-import { Client } from '../structures/Client';
-import { Utils } from '../structures/Utils';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { Events, REST, Routes } from 'discord.js';
+import { Command } from '../managers/Command.js';
+import { MidpareClient } from '../structures/Client.js';
+import { Utils } from '../structures/Utils.js';
 
-export default async function (client: Client) {
+
+export default async function (client: MidpareClient) {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+
   const CommandsFiles = new Array();
   Utils.getPath(CommandsFiles, __dirname + '/../commands');
 
   //Wait for bot to login
-  client.on('ready', async () => {
+  client.on(Events.ClientReady, async () => {
     let commands = new Array();
     for (const path of CommandsFiles) {
       const file = (await import(path)).default;

@@ -1,5 +1,5 @@
 import { TextChannel } from 'discord.js';
-import { Command } from '../../managers/Command';
+import { Command } from '../../managers/Command.js';
 
 export default new Command({
   name: '초대링크',

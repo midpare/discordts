@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageEditOptions } from "discord.js";
-import { Client } from "../Client";
-import { Utils } from "../Utils";
-import { InteractionOption } from "./InteractionOptions";
+import { MidpareClient } from "../Client.js";
+import { Utils } from "../Utils.js";
+import { InteractionOption } from "./InteractionOptions.js";
 
 // const items = [
 //   {
@@ -22,9 +22,9 @@ export class Buy {
   public item: Item;
   public count: number;
   private options: InteractionOption<Buy | null>;
-  private client: Client;
+  private client: MidpareClient;
 
-  constructor(client: Client, item: Item, options: InteractionOption<Buy | null>) {
+  constructor(client: MidpareClient, item: Item, options: InteractionOption<Buy | null>) {
     this.item = item; 
     this.count = 1;
     this.options = options;

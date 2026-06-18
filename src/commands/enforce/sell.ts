@@ -1,8 +1,8 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from 'discord.js';
-import { Command } from '../../managers/Command';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
-import { Utils } from '../../structures/Utils';
-import { enforceTable } from '../../structures/interactions/enforce';
+import { Command } from '../../managers/Command.js';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions.js';
+import { Utils } from '../../structures/Utils.js';
+import { enforceTable } from '../../structures/interactions/enforce.js';
 
 export default new Command({
   name: '장비판매',

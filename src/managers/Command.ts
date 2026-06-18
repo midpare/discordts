@@ -1,10 +1,10 @@
 import { LocalizationMap, ApplicationCommandType, ChatInputCommandInteraction, CommandInteractionOptionResolver, ApplicationCommandOptionData } from 'discord.js'
-import { Client } from '../structures/Client';
+import { MidpareClient } from '../structures/Client.js';
 
 type ExecuteType = (options: {
   interaction: ChatInputCommandInteraction;
   options: CommandInteractionOptionResolver;
-  client: Client;
+  client: MidpareClient;
 }) => Promise<number>;
 
 export class Command {

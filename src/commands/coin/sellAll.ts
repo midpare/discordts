@@ -1,6 +1,6 @@
-import { Utils } from '../../structures/Utils';
+import { Utils } from '../../structures/Utils.js';
 import { ApplicationCommandOptionType } from 'discord.js';
-import { Command } from '../../managers/Command';
+import { Command } from '../../managers/Command.js';
 
 export default new Command({
   name: '코인풀매도',

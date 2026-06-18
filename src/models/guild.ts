@@ -1,9 +1,10 @@
 import { Snowflake } from 'discord.js';
 import { Schema } from 'mongoose';
-import { Model } from '../managers/Model';
+import { Model } from '../managers/Model.js';
 
 interface GuildType {
   id: Snowflake;
+  name: String;
   punishment: Snowflake;
   gambling: Snowflake;
   command: Snowflake;
@@ -26,6 +27,7 @@ interface GuildType {
 
 const guildInfo = new Schema<GuildType>({
   id: String,
+  name: String,
   punishment: { type: String, default: '0' },
   gambling: { type: String, default: '0' },
   command: { type: String, default: '0' },

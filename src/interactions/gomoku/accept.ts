@@ -1,7 +1,7 @@
 import { loadImage } from 'canvas';
 import { ButtonInteraction, channelLink, ChannelType, GuildMember } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
-import { Gomoku } from '../../structures/interactions/gomoku';
+import { Interaction } from '../../managers/Interaction.js';
+import { Gomoku } from '../../structures/interactions/gomoku.js';
 
 export default new Interaction<ButtonInteraction, Array<GuildMember>>({
   name: 'accept gomoku',

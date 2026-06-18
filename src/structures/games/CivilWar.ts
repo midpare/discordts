@@ -22,5 +22,4 @@ export class CivilWar {
   public isEmpty(): boolean {
     return this.teams[0].length < 1 && this.teams[1].length < 1;
   }
-
 }

@@ -1,10 +1,13 @@
 import { bold, ModalSubmitInteraction } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
+import { Interaction } from '../../managers/Interaction.js';
 
 export default new Interaction<ModalSubmitInteraction, null>({
   name: 'gomoku setRock',
   execute: async ({ interaction, options, client }) => {
-    const [x, y] = interaction.fields.fields.map((e) => parseInt(e.value) - 1);
+    if (!interaction.isModalSubmit()) return;
+    
+    const x = parseInt(interaction.fields.getTextInputValue('x'), 10) - 1;
+    const y = parseInt(interaction.fields.getTextInputValue('y'), 10) - 1;
 
     const id = interaction.user.id;
     const gomoku = client.gomoku.get(id)!;

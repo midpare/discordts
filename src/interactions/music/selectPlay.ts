@@ -1,13 +1,13 @@
 import { ActionRowBuilder, Message, ModalSubmitInteraction, StringSelectMenuBuilder } from 'discord.js';
-import { Utils } from '../../structures/Utils';
-import { Interaction } from '../../managers/Interaction';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
 import { search } from 'play-dl'
+import { Utils } from '../../structures/Utils.js';
+import { Interaction } from '../../managers/Interaction.js';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions.js';
 
 export default new Interaction<ModalSubmitInteraction, null>({
   name: 'select play',
   execute: async ({ interaction, client }) => {
-    const { value: searchTitle } = interaction.fields.fields.get('title')!;
+    const searchTitle = interaction.fields.getTextInputValue('title');
     const result = await search(searchTitle, { limit: 5 });
 
     const customIds = Utils.uuid(5);

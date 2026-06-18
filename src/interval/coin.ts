@@ -1,5 +1,5 @@
-import { Interval } from '../managers/Interval';
-import { Utils } from '../structures/Utils';
+import { Interval } from '../managers/Interval.js';
+import { Utils } from '../structures/Utils.js';
 
 export default new Interval({
   execute: async (client) => {

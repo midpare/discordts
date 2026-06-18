@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, StringSelectMenuInteraction } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
-import { School } from '../../structures/interactions/school';
-import { Utils } from '../../structures/Utils';
+import { Interaction } from '../../managers/Interaction.js';
+import { School } from '../../structures/interactions/school.js';
+import { Utils } from '../../structures/Utils.js';
 
 export default new Interaction<StringSelectMenuInteraction, School>({
   name: 'class',

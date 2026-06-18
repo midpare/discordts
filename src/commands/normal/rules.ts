@@ -1,7 +1,7 @@
 import { ChannelType, EmbedBuilder } from 'discord.js';
-import { Rules } from '../../language/rules';
-import { Command } from '../../managers/Command';
-import { Utils } from '../../structures/Utils';
+import { Rules } from '../../language/rules.js';
+import { Command } from '../../managers/Command.js';
+import { Utils } from '../../structures/Utils.js';
 
 export default new Command({
   name: '규칙',

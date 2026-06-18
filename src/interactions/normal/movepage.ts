@@ -1,24 +1,26 @@
 import { ButtonInteraction, APISelectMenuOption, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, MessageEditOptions } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
-import { Utils } from '../../structures/Utils';
+import { Interaction } from '../../managers/Interaction.js';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions.js';
+import { Utils } from '../../structures/Utils.js';
 
 export default new Interaction<ButtonInteraction, {
-  box: Array<APISelectMenuOption[]>,
-  present: number,
-  messageOption: MessageEditOptions,
-  menuOption: InteractionOption<unknown>,
+  box: Array<APISelectMenuOption[]>;
+  present: number;
+  messageOption: MessageEditOptions;
+  menuOption: InteractionOption<unknown>;
+  action: string;
 }>({
   name: 'move page',
   execute: async ({ interaction, options, client }) => {
-    switch(interaction.component.label) {
-      case '이전 페이지':
+    switch (options.data.action) {
+      case 'prev':
         if (options.data.present < 1) {
           options.data.present = options.data.box.length;
         }
         options.data.present -= 1;
         break;
-      case '다음 페이지':
+
+      case 'next':
         options.data.present += 1;
         if (options.data.box.length <= options.data.present) {
           options.data.present = 0;

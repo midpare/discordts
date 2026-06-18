@@ -1,11 +1,11 @@
 import { ButtonInteraction, ModalSubmitInteraction, StringSelectMenuInteraction } from 'discord.js';
-import { Client } from '../structures/Client';
-import { InteractionOption } from '../structures/interactions/InteractionOptions';
+import { MidpareClient } from '../structures/Client.js';
+import { InteractionOption } from '../structures/interactions/InteractionOptions.js';
 
 type ExecuteType<T extends ButtonInteraction | ModalSubmitInteraction | StringSelectMenuInteraction, O> = (options: {
   interaction: T,
   options: InteractionOption<O>;
-  client: Client
+  client: MidpareClient
 }) => Promise<void>;
 
 export class Interaction<T extends ButtonInteraction | ModalSubmitInteraction | StringSelectMenuInteraction, O> {

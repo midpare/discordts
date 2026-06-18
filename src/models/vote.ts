@@ -1,6 +1,6 @@
 import { Snowflake } from 'discord.js';
 import { Schema } from 'mongoose';
-import { Model } from '../managers/Model';
+import { Model } from '../managers/Model.js';
 
 interface VoteType {
   id: Snowflake;

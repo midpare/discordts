@@ -1,6 +1,6 @@
-import { Client } from '../structures/Client';
+import { MidpareClient } from '../structures/Client.js';
 
-type ExecuteType = (client: Client) => Promise<void>
+type ExecuteType = (client: MidpareClient) => Promise<void>
 
 export class Interval {
   public readonly immediate: boolean;

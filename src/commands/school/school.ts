@@ -1,6 +1,6 @@
 import { EmbedBuilder, Colors, ApplicationCommandOptionType } from 'discord.js';
-import { Command } from '../../managers/Command';
-import { Utils } from '../../structures/Utils';
+import { Command } from '../../managers/Command.js';
+import { Utils } from '../../structures/Utils.js';
 
 const weekArr = ['월', '화', '수', '목', '금'];
 const choices = new Array();

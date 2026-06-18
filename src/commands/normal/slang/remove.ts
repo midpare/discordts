@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, TextChannel, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
-import { Command } from '../../../managers/Command';
-import { InteractionOption } from '../../../structures/interactions/InteractionOptions';
-import { Utils } from '../../../structures/Utils';
+import { Command } from '../../../managers/Command.js';
+import { InteractionOption } from '../../../structures/interactions/InteractionOptions.js';
+import { Utils } from '../../../structures/Utils.js';
 
 export default new Command({
   name: '망언삭제',
@@ -45,7 +45,7 @@ export default new Command({
     }
     
     const customIds = Utils.uuid(3);
-    const [menuId, nextId, previousId] = customIds;
+    const [menuId, nextId, prevId] = customIds;
 
     const selectMenuOptions = new Array();
     for (const i in user.slangs) {
@@ -73,11 +73,11 @@ export default new Command({
 
     const button = new ActionRowBuilder<ButtonBuilder>().setComponents(
       new ButtonBuilder()
-        .setCustomId(nextId)
+        .setCustomId(prevId)
         .setStyle(ButtonStyle.Primary)
         .setLabel('이전 페이지'),
       new ButtonBuilder()
-        .setCustomId(previousId)
+        .setCustomId(nextId)
         .setStyle(ButtonStyle.Primary)
         .setLabel('다음 페이지'),
       new ButtonBuilder()
@@ -104,18 +104,32 @@ export default new Command({
       },
     });
 
-    const pageOption = new InteractionOption(Object.assign({}, defaultOption, { 
+    const pageBaseData = {
+      box: selectMenuOptionsBox,
+      present: 0,
+      messageOption: { content: '삭제할 망언을 선택해주세요' },
+      menuOption,
+    };
+
+    const prevPageOption = new InteractionOption(Object.assign({}, defaultOption, {
       cmd: 'move page',
       data: {
-        box: selectMenuOptionsBox,
-        present: 0,
-        messageOption: { content: '삭제할 망언을 선택해주세요' },
-        menuOption,
-      }
+        ...pageBaseData,
+        action: 'prev',
+      },
     }));
+
+    const nextPageOption = new InteractionOption(Object.assign({}, defaultOption, {
+      cmd: 'move page',
+      data: {
+        ...pageBaseData,
+        action: 'next',
+      },
+    }));
+
     client.interactionOptions.set(menuId, new InteractionOption(menuOption));
-    client.interactionOptions.set(nextId, pageOption);
-    client.interactionOptions.set(previousId, pageOption);
+    client.interactionOptions.set(nextId, nextPageOption);
+    client.interactionOptions.set(prevId, prevPageOption);
 
     return 1;
   },

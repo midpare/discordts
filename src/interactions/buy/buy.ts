@@ -1,8 +1,8 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuInteraction } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
-import { Buy } from '../../structures/interactions/buy';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
-import { Utils } from '../../structures/Utils';
+import { Interaction } from '../../managers/Interaction.js';
+import { Buy } from '../../structures/interactions/buy.js';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions.js';
+import { Utils } from '../../structures/Utils.js';
 
 export default new Interaction<StringSelectMenuInteraction, Buy | null>({
   name: 'buy',

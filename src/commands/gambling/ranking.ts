@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
-import { Command } from '../../managers/Command';
+import { Command } from '../../managers/Command.js';
 
 export default new Command({
   name: '랭킹',

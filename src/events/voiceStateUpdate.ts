@@ -1,8 +1,8 @@
-import { TextChannel } from 'discord.js';
-import { Event } from '../managers/Event';
+import { Events, TextChannel } from 'discord.js';
+import { Event } from '../managers/Event.js';
 
 export default new Event({
-  name: 'voiceStateUpdate',
+  name: Events.VoiceStateUpdate,
   execute: async (client, oldState, newState) => {
     const guild = await client.models.guild.findOne({ id: newState.guild.id });
     const logChannel = <TextChannel>newState.guild.channels.cache.get(guild.log.voice);

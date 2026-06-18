@@ -1,8 +1,8 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuInteraction } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
-import { enforceTable, Item } from '../../structures/interactions/enforce';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
-import { Utils } from '../../structures/Utils';
+import { Interaction } from '../../managers/Interaction.js';
+import { enforceTable, Item } from '../../structures/interactions/enforce.js';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions.js';
+import { Utils } from '../../structures/Utils.js';
 
 
 export default new Interaction<StringSelectMenuInteraction, Array<Item>>({

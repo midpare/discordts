@@ -1,4 +1,4 @@
-import { Interaction } from '../../managers/Interaction';
+import { Interaction } from '../../managers/Interaction.js';
 import { GuildMember, StringSelectMenuInteraction } from 'discord.js';
 
 export default new Interaction<StringSelectMenuInteraction, null>({

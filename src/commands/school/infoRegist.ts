@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from 'discord.js';
-import { Command } from '../../managers/Command';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
-import { Utils } from '../../structures/Utils';
+import { Command } from '../../managers/Command.js';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions.js';
+import { Utils } from '../../structures/Utils.js';
 
 const cities = [
   '서울특별시', '부산광역시',

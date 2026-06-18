@@ -1,8 +1,8 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Message, MessageEditOptions, Snowflake } from "discord.js";
-import { GamblingType } from "../../models/gambling";
-import { Client } from "../Client";
-import { InteractionOption } from "./InteractionOptions";
-import { Utils } from "../Utils";
+import { GamblingType } from "../../models/gambling.js";
+import { MidpareClient } from "../Client.js";
+import { InteractionOption } from "./InteractionOptions.js";
+import { Utils } from "../Utils.js";
 
 export const enforceTable = [
   { success: 95, fail: 4, breaking: 1, money: 10000, sell: 10000 },
@@ -30,7 +30,7 @@ export interface Item {
 }
 
 export class Enforce {
-  public readonly client: Client
+  public readonly client: MidpareClient
   public readonly id: Snowflake;
   public readonly guildId: Snowflake;
   public readonly enforceTable: Array<Table> = enforceTable;
@@ -40,7 +40,7 @@ export class Enforce {
   public message: Message
   public money: number;
 
-  constructor(client: Client, data: InteractionOption<null>, itemName: string, user: GamblingType) {
+  constructor(client: MidpareClient, data: InteractionOption<null>, itemName: string, user: GamblingType) {
     const equipment = user.items.filter(e => e.name == itemName)[0];
 
     this.client = client

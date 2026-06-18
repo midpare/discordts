@@ -1,11 +1,11 @@
 import { Canvas, CanvasRenderingContext2D, createCanvas, Image } from "canvas"
 import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle, GuildMember, Message, bold, EmbedBuilder } from "discord.js";
-import { Utils } from "../Utils";
-import { Client } from "../Client";
-import { InteractionOption } from "./InteractionOptions";
+import { Utils } from "../Utils.js";
+import { MidpareClient } from "../Client.js";
+import { InteractionOption } from "./InteractionOptions.js";
 
 export class Gomoku {
-  client: Client;
+  client: MidpareClient;
 
   image: Image;
   canvas: Canvas;
@@ -16,7 +16,7 @@ export class Gomoku {
   customIds: Array<string>;
   matrix: number[][];
 
-  constructor(client: Client, image: Image, players: Array<GuildMember>) {
+  constructor(client: MidpareClient, image: Image, players: Array<GuildMember>) {
     this.client = client;
 
     this.image = image;

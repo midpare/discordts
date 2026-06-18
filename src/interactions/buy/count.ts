@@ -1,6 +1,6 @@
 import { ButtonInteraction } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
-import { Buy } from '../../structures/interactions/buy';
+import { Interaction } from '../../managers/Interaction.js';
+import { Buy } from '../../structures/interactions/buy.js';
 
 export default new Interaction<ButtonInteraction, Buy>({
   name: 'buy count',

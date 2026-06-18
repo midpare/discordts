@@ -1,5 +1,5 @@
-import { Command } from '../../managers/Command';
-import { Utils } from '../../structures/Utils';
+import { Command } from '../../managers/Command.js';
+import { Utils } from '../../structures/Utils.js';
 import { ApplicationCommandOptionType } from 'discord.js';
 
 export default new Command({

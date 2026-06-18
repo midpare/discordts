@@ -1,5 +1,5 @@
-import { Interaction } from '../../managers/Interaction';
 import { ActionRowBuilder, GuildMember, StringSelectMenuBuilder } from 'discord.js';
+import { Interaction } from '../../managers/Interaction.js';
 
 export default new Interaction({
   name: 'select delete',

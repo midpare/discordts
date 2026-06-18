@@ -1,12 +1,12 @@
-import { Client } from '../structures/Client';
-import { BaseInteraction, CommandInteractionOptionResolver, CacheType, TextChannel, GuildMember, CommandInteractionOption, ApplicationCommandOptionType } from 'discord.js';
-import { Event } from '../managers/Event';
-import { Utils } from '../structures/Utils';
-import { InteractionOption } from '../structures/interactions/InteractionOptions';
+import { BaseInteraction, CommandInteractionOptionResolver, CacheType, Events, TextChannel, GuildMember, CommandInteractionOption, ApplicationCommandOptionType } from 'discord.js';
+import { MidpareClient } from '../structures/Client.js';
+import { Event } from '../managers/Event.js';
+import { Utils } from '../structures/Utils.js';
+import { InteractionOption } from '../structures/interactions/InteractionOptions.js';
 
 export default new Event({
-  name: 'interactionCreate',
-  execute: async (client: Client, interaction: BaseInteraction) => {
+  name: Events.InteractionCreate,
+  execute: async (client: MidpareClient, interaction: BaseInteraction) => {
     const { guildId, user: { id } } = interaction;
 
     if (interaction.isChatInputCommand()) {
@@ -86,7 +86,8 @@ export default new Event({
         switch(e.name) {
           case '돈':
             return `${e.name}: ${e.value}원`
-          case '수량' ||'개수':
+          case '수량':
+          case '개수':
             return `${e.name}: ${e.value}개`   
         }
         switch(e.type) {
@@ -123,7 +124,6 @@ export default new Event({
         interaction.reply({ content: '이 상호작용을 사용할 수 없습니다.', ephemeral: true });
         return;
       }
-
 
       for (const id of options.customIds) {
         client.interactionOptions.delete(id);

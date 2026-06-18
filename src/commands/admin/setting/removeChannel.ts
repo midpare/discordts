@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, PermissionFlagsBits, TextChannel } from 'discord.js';
-import { Utils } from '../../../structures/Utils';
-import { Command } from '../../../managers/Command';
+import { Utils } from '../../../structures/Utils.js';
+import { Command } from '../../../managers/Command.js';
 
 export default new Command({
   name: '채널삭제',

@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
-import { Utils } from '../../structures/Utils';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
-import { Command } from '../../managers/Command';
+import { Utils } from '../../structures/Utils.js';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions.js';
+import { Command } from '../../managers/Command.js';
 
 export default new Command({
   name: '파산',

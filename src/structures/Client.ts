@@ -1,15 +1,15 @@
-import Discord, { ButtonInteraction, ClientOptions, Collection, GuildMember, ModalSubmitInteraction, StringSelectMenuInteraction, Snowflake } from 'discord.js'
-import { Betting } from './games/Betting';
-import { Interaction } from '../managers/Interaction';
-import { CivilWar } from './games/CivilWar';
-import { Messages } from '../language/message';
-import { InteractionOption } from './interactions/InteractionOptions';
-import { Gomoku } from './interactions/gomoku';
-import { Command } from '../managers/Command';
 import mongoose from 'mongoose';
-import { Music } from './interactions/music';
+import { ButtonInteraction, Client, ClientOptions, Collection, GuildMember, ModalSubmitInteraction, StringSelectMenuInteraction, Snowflake } from 'discord.js'
+import { Betting } from './games/Betting.js';
+import { Interaction } from '../managers/Interaction.js';
+import { CivilWar } from './games/CivilWar.js';
+import { Messages } from '../language/message.js';
+import { InteractionOption } from './interactions/InteractionOptions.js';
+import { Gomoku } from './interactions/gomoku.js';
+import { Command } from '../managers/Command.js';
+import { Music } from './interactions/music.js';
 
-export class Client extends Discord.Client {
+export class MidpareClient extends Client {
   public readonly commands: Collection<string, Command>;
   public readonly interactions: Collection<string, Interaction<ButtonInteraction | ModalSubmitInteraction | StringSelectMenuInteraction, unknown>>;
   public readonly interactionOptions: Collection<string, InteractionOption<any>>;

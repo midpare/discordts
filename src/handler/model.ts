@@ -1,9 +1,13 @@
-import { Model } from '../managers/Model';
-import { Client } from '../structures/Client';
-import { Utils } from '../structures/Utils';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { Model } from '../managers/Model.js';
+import { MidpareClient } from '../structures/Client.js';
+import { Utils } from '../structures/Utils.js';
 
-export default async function (client: Client) {
+export default async function (client: MidpareClient) {
   const modelFiles = new Array();
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
   Utils.getPath(modelFiles, __dirname + '/../models');
 
   for (const path of modelFiles) {

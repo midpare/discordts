@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentBuilder } from 'discord.js';
-import { Command } from '../../managers/Command';
+import { Command } from '../../managers/Command.js';
 
 export default new Command({
   name: '코인현황',

@@ -1,7 +1,7 @@
-import { Interaction } from '../../managers/Interaction';
 import { ModalBuilder, TextInputBuilder, ButtonInteraction, TextInputStyle, ActionRowBuilder, GuildMember } from 'discord.js';
-import { Utils } from '../../structures/Utils';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
+import { Interaction } from '../../managers/Interaction.js';
+import { Utils } from '../../structures/Utils.js';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions.js';
 
 export default new Interaction<ButtonInteraction, null>({
   name: 'gomoku selectPosition',

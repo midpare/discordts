@@ -1,6 +1,6 @@
 import { StringSelectMenuInteraction } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
-import { School } from '../../structures/interactions/school';
+import { Interaction } from '../../managers/Interaction.js';
+import { School } from '../../structures/interactions/school.js';
 
 export default new Interaction<StringSelectMenuInteraction, School>({
   name: 'upload',

@@ -1,6 +1,6 @@
 import { StringSelectMenuInteraction } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
-import { Enforce } from '../../structures/interactions/enforce';
+import { Interaction } from '../../managers/Interaction.js';
+import { Enforce } from '../../structures/interactions/enforce.js';
 
 export default new Interaction<StringSelectMenuInteraction, null>({
   name: 'select enforce',

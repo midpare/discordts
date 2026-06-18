@@ -1,6 +1,6 @@
 import { Message, Snowflake, ChatInputCommandInteraction } from 'discord.js';
-import { Client } from '../Client';
-import { Utils } from '../Utils';
+import { MidpareClient } from '../Client.js';
+import { Utils } from '../Utils.js';
 
 type BetName = 'bet1' | 'bet2';
 
@@ -9,9 +9,9 @@ export class Betting {
   public readonly title: string;
   public readonly bet1: BetNode;
   public readonly bet2: BetNode;
-  private readonly client: Client;
+  private readonly client: MidpareClient;
   
-  constructor(starter: Snowflake, title: string, name1: string, name2: string, client: Client) {
+  constructor(starter: Snowflake, title: string, name1: string, name2: string, client: MidpareClient) {
     this.starter = starter;
     this.title = title;
     this.bet1 = new BetNode(name1, client);
@@ -65,9 +65,9 @@ export class BetNode {
     id: Snowflake;
     money: number;
   }>;
-  private readonly client: Client
+  private readonly client: MidpareClient
 
-  constructor(name: string, client: Client) {
+  constructor(name: string, client: MidpareClient) {
     this.name = name;
     this.user = new Array();
     this.client = client;

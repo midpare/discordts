@@ -1,5 +1,5 @@
 import { ModalBuilder, TextInputBuilder, ButtonInteraction, TextInputStyle, ActionRowBuilder, GuildMember } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
+import { Interaction } from '../../managers/Interaction.js';
 
 export default new Interaction<ButtonInteraction, null>({
   name: 'add music',

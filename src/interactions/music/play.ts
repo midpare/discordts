@@ -1,7 +1,7 @@
 import { StringSelectMenuInteraction, GuildMember, BaseGuildTextChannel } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
 import { createAudioPlayer, getVoiceConnection, joinVoiceChannel } from '@discordjs/voice'
-import { Music } from '../../structures/interactions/music';
+import { Interaction } from '../../managers/Interaction.js';
+import { Music } from '../../structures/interactions/music.js';
 
 export default new Interaction<StringSelectMenuInteraction, string>({
   name: 'play music',

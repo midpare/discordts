@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder } from '@discordjs/builders';
 import { ButtonInteraction, ButtonStyle, Colors, EmbedBuilder } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
+import { Interaction } from '../../managers/Interaction.js';
 
 export default new Interaction<ButtonInteraction, null>({
   name: 'check slang',

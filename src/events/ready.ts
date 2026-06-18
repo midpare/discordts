@@ -1,23 +1,41 @@
-import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextChannel, REST, Routes } from 'discord.js';
-import { Event } from '../managers/Event';
-import { Client } from '../structures/Client';
+import { Events } from 'discord.js';
+import { Event } from '../managers/Event.js';
+import { MidpareClient } from '../structures/Client.js';
+
+const KEEP_GUILD_IDS = new Set([
+  '910521119713394738',
+  '1056562122529710110',
+  '1372970709730594957',
+  '1473375841047150738'
+]);
 
 export default new Event({
-  name: 'ready',
-  execute: async (client: Client) => {
-    console.log(`Successfully logged in to ${client.guilds.cache.size} servers!`);
+  name: Events.ClientReady,
+  execute: async (client: MidpareClient) => {
+    for (const guild of client.guilds.cache.values()) {
+      const exist = await client.models.guild.findOne({ id: guild.id });
 
-    const users = [
-      '699942311215366174', '659008807963328514', '915562060631400468',
-      '766274189346209823', '446068726849208341', '849997691832500244',
-      '607788765624270859', '783889899359043594', '716196838973243433', 
-      '917682046095216690'
-    ];
+      if (exist)
+        continue;
 
-    const guild = client.guilds.cache.get('910521119713394738')!
-    for (const id of users) {
-      const user = guild.members.cache.get(id)?.user!;
-      await user.createDM();
+      await client.models.guild.create({
+        id: guild.id,
+        name: guild.name,
+      });
+      const members = await guild.members.fetch();
+      for (const member of members.values()) {
+        const { id, displayName: name, guild: { id: guildId } } = member;
+        const guild = await client.models.guild.findOne({ id: guildId });
+
+    
+        const exist = await client.models.config.findOne({ id, name, guildId });
+        if (exist)
+          return;
+
+        const newUser = new client.models.config({ id, name, guildId });
+        newUser.save();
+      }
     }
+    console.log(`Successfully logged in to ${client.guilds.cache.size} servers!`);
   },
 });

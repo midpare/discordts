@@ -1,5 +1,5 @@
 import { StringSelectMenuInteraction, Snowflake, Message } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
+import { Interaction } from '../../managers/Interaction.js';
 
 export default new Interaction<StringSelectMenuInteraction, { id: Snowflake, message: Message<true> }>({
   name: 'delete slang',

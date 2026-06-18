@@ -1,14 +1,14 @@
 import { ButtonBuilder } from '@discordjs/builders';
 import { ActionRowBuilder, ButtonStyle, StringSelectMenuBuilder } from 'discord.js';
-import { Command } from '../../managers/Command';
-import { InteractionOption } from '../../structures/interactions/InteractionOptions';
-import { Utils } from '../../structures/Utils';
+import { Command } from '../../managers/Command.js';
+import { InteractionOption } from '../../structures/interactions/InteractionOptions.js';
+import { Utils } from '../../structures/Utils.js';
 
 const items = [
   {
     id: 'protection',
     label: '파괴방지권',
-    price: 750000,
+    price: 75000,
     description: '장비 강화 시 파괴를 막을 수 있습니다.',
   },
 ]

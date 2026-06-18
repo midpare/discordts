@@ -1,6 +1,6 @@
 import { getVoiceConnection, joinVoiceChannel } from '@discordjs/voice';
 import { ButtonInteraction, GuildMember } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
+import { Interaction } from '../../managers/Interaction.js';
 
 export default new Interaction<ButtonInteraction, null>({
   name: 'connect music',

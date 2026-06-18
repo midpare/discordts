@@ -1,5 +1,5 @@
 import { EmbedBuilder, StringSelectMenuInteraction } from 'discord.js';
-import { Interaction } from '../managers/Interaction';
+import { Interaction } from '../managers/Interaction.js';
 
 export default new Interaction<StringSelectMenuInteraction, Map<string, { name: string, description: string }[]>>({
   name: 'help',
@@ -23,7 +23,7 @@ export default new Interaction<StringSelectMenuInteraction, Map<string, { name: 
       .setFields(fields);
 
     
-    interaction.deferReply();
+    interaction.deferUpdate();
     options.message.edit({ embeds: [embed] })
     client.interactionOptions.set(interaction.customId, options);
   },

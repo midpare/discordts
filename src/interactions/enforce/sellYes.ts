@@ -1,6 +1,6 @@
 import { ButtonInteraction, ChannelType, GuildMember } from 'discord.js';
-import { Interaction } from '../../managers/Interaction';
-import { enforceTable, Item } from '../../structures/interactions/enforce';
+import { Interaction } from '../../managers/Interaction.js';
+import { enforceTable, Item } from '../../structures/interactions/enforce.js';
 
 export default new Interaction<ButtonInteraction, Item>({
   name: 'enforce sell yes',

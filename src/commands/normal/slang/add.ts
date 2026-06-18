@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, EmbedBuilder, TextChannel } from 'discord.js';
-import { Command } from '../../../managers/Command';
-import { Utils } from '../../../structures/Utils';
+import { Command } from '../../../managers/Command.js';
+import { Utils } from '../../../structures/Utils.js';
 
 export default new Command({
   name: '망언추가',

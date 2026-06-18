@@ -1,8 +1,8 @@
-import { TextChannel } from 'discord.js';
-import { Event } from '../managers/Event';
+import { Events, TextChannel } from 'discord.js';
+import { Event } from '../managers/Event.js';
 
 export default new Event({
-  name: 'guildMemberRemove',
+  name: Events.GuildMemberRemove,
   execute: async (client, member) => {
     const { id, guild: { id: guildId } } = member;
     (await client.models.config.deleteOne({ id, guildId })).deletedCount;
@@ -13,7 +13,6 @@ export default new Event({
       return;
 
     const date = new Date().getTime()
-    logChannel.send(`<t:${date.toString().substring(0, 10)}>\n${member.displayName}#${member.user.discriminator}님이 퇴장했습니다.`);
+    logChannel.send(`<t:${date.toString().substring(0, 10)}>\n${member.displayName}#${member.user.tag}님이 퇴장했습니다.`);
   }
 });
-

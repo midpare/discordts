@@ -2,7 +2,7 @@
 	"GetCommand": {
 		"prefix": "cm",
 		"body": [
-			"import { Command } from '../../managers/Command';",
+			"import { Command } from '../../managers/Command.js';",
 			"",
 			
 			"export default new Command({",

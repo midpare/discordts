@@ -1,7 +1,7 @@
-import { Betting } from '../../structures/games/Betting'
 import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
-import { Command } from '../../managers/Command';
-import { Utils } from '../../structures/Utils';
+import { Betting } from '../../structures/games/Betting.js'
+import { Command } from '../../managers/Command.js';
+import { Utils } from '../../structures/Utils.js';
 
 export default new Command({
   name: '베팅시작',
